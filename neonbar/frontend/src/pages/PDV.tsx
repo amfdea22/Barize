@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { pdvService, pedidosService } from '../services/api';
+import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2, Upload, X } from 'lucide-react';
+import { pdvService, pedidosService, uploadService } from '../services/api';
+import Modal from '../components/Modal';
 import Button from '../components/Button';
-import type { Produto, PedidoCreate } from '../types';
+import Input from '../components/Input';
+import type { Produto, ProdutoCreate, PedidoCreate } from '../types';
 
 export default function PDV() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -12,6 +14,18 @@ export default function PDV() {
   const [categoriaFilter, setCategoriaFilter] = useState<string>('all');
   const [cart, setCart] = useState<{ produto: Produto; quantidade: number }[]>([]);
   const [saleOk, setSaleOk] = useState(false);
+
+  // Create product modal
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [customCategory, setCustomCategory] = useState('');
+  const [form, setForm] = useState<ProdutoCreate>({
+    nome: '', descricao: '', categoria: '', preco_venda: 0,
+    codigo_barras: '', imagem: '', foto_url: '', tempo_preparo: undefined,
+  });
 
   useEffect(() => {
     pdvService.listarProdutos()
@@ -77,6 +91,61 @@ export default function PDV() {
     }
   };
 
+  const resetForm = () => {
+    setForm({ nome: '', descricao: '', categoria: '', preco_venda: 0, codigo_barras: '', imagem: '', foto_url: '', tempo_preparo: undefined });
+    setIsNewCategory(false);
+    setCustomCategory('');
+    setCreateError('');
+    setUploading(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowCreateModal(false);
+    resetForm();
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setCreateError('');
+    try {
+      const res = await uploadService.uploadImagem(file);
+      setForm(f => ({ ...f, foto_url: res.data.url }));
+    } catch (err: any) {
+      setCreateError('Falha no upload: ' + (err?.response?.data?.detail || err.message));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleCreate = async () => {
+    setCreateError('');
+    if (!form.nome.trim()) { setCreateError('Nome é obrigatório'); return; }
+    if (form.preco_venda <= 0) { setCreateError('Preço deve ser maior que zero'); return; }
+    const categoria = isNewCategory ? customCategory.trim() : form.categoria;
+    if (!categoria) { setCreateError('Selecione ou crie uma categoria'); return; }
+
+    setCreating(true);
+    try {
+      await pdvService.criarProduto({ ...form, categoria });
+      setShowCreateModal(false);
+      resetForm();
+      const res = await pdvService.listarProdutos();
+      setProdutos(res.data);
+    } catch (err: any) {
+      if (err?.response?.status === 409) {
+        setCreateError('Já existe um produto com este nome');
+      } else if (err?.response?.status === 403) {
+        setCreateError('Você não tem permissão para criar produtos');
+      } else {
+        setCreateError(err?.response?.data?.detail || 'Erro ao criar produto');
+      }
+    } finally {
+      setCreating(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -109,6 +178,9 @@ export default function PDV() {
               </button>
             ))}
           </div>
+          <Button variant="primary" size="sm" onClick={() => setShowCreateModal(true)} icon={<Plus size={16} />}>
+            Novo Produto
+          </Button>
         </div>
 
         {error && (
@@ -216,6 +288,75 @@ export default function PDV() {
           </Button>
         </div>
       </div>
+
+      {/* Modal: Novo Produto */}
+      <Modal open={showCreateModal} onClose={handleCloseModal} title="Novo Produto" size="lg">
+        <div className="space-y-4">
+          <Input label="Nome" value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} placeholder="Ex: Mojito" required />
+
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Descrição</label>
+            <textarea value={form.descricao || ''} onChange={e => setForm(f => ({ ...f, descricao: e.target.value }))} placeholder="Breve descrição do produto..." rows={2} className="w-full bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40" />
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Categoria</label>
+            <select value={isNewCategory ? '__new__' : form.categoria || ''} onChange={e => { if (e.target.value === '__new__') { setIsNewCategory(true); setForm(f => ({ ...f, categoria: '' })); } else { setIsNewCategory(false); setForm(f => ({ ...f, categoria: e.target.value })); } }}
+              className="w-full bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none">
+              <option value="">Selecione...</option>
+              {categorias.filter(c => c !== 'all').map(cat => (<option key={cat} value={cat}>{cat}</option>))}
+              <option value="__new__">+ Nova Categoria</option>
+            </select>
+            {isNewCategory && (
+              <Input placeholder="Nome da nova categoria" value={customCategory} onChange={e => setCustomCategory(e.target.value)} className="mt-2" />
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Input label="Preço de Venda (R$)" type="number" step="0.01" min="0" value={form.preco_venda || ''} onChange={e => setForm(f => ({ ...f, preco_venda: parseFloat(e.target.value) || 0 }))} required />
+            <Input label="Tempo de Preparo (min)" type="number" min="0" value={form.tempo_preparo || ''} onChange={e => setForm(f => ({ ...f, tempo_preparo: parseInt(e.target.value) || undefined }))} />
+          </div>
+
+          <Input label="Código de Barras" value={form.codigo_barras || ''} onChange={e => setForm(f => ({ ...f, codigo_barras: e.target.value }))} placeholder="Opcional" />
+
+          <Input label="Emoji (fallback)" value={form.imagem || ''} onChange={e => setForm(f => ({ ...f, imagem: e.target.value }))} placeholder="Ex: 🍹" maxLength={10} />
+
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Foto do Produto</label>
+            {form.foto_url ? (
+              <div className="relative w-32 h-32">
+                <img src={form.foto_url} alt="Preview" className="w-full h-full object-cover rounded-lg" />
+                <button onClick={() => setForm(f => ({ ...f, foto_url: '' }))}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-[var(--color-error)] rounded-full flex items-center justify-center text-white hover:bg-[var(--color-error)]/80 transition-colors cursor-pointer">
+                  <X size={12} />
+                </button>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-[rgba(255,255,255,0.1)] rounded-lg cursor-pointer hover:border-[var(--color-primary)]/50 transition-colors">
+                <Upload size={24} className="text-[var(--color-outline)]" />
+                <span className="text-sm text-[var(--color-outline)]">
+                  {uploading ? 'Enviando...' : 'Clique para fazer upload da imagem'}
+                </span>
+                <input type="file" accept="image/*" className="hidden" disabled={uploading} onChange={handleFileSelect} />
+              </label>
+            )}
+          </div>
+
+          {createError && (
+            <div className="flex items-center gap-sm px-md py-sm rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30 text-sm text-[var(--color-error)]" role="alert">
+              <AlertCircle size={14} />
+              <span>{createError}</span>
+            </div>
+          )}
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[rgba(255,255,255,0.08)]">
+            <Button variant="ghost" onClick={handleCloseModal}>Cancelar</Button>
+            <Button onClick={handleCreate} loading={creating} disabled={creating || uploading}>
+              Criar Produto
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

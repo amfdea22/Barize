@@ -54,4 +54,4 @@
 - **Contexto**: Auditoria completa revelou que 8 produtos existem com emoji mas sem `foto_url`. 52 imagens em `uploads/` sem associação. 4 endpoints e 5 páginas frontend sem exibição de imagens. Scripts apontam para DB errado.
 - **Decisão**: Abordagem em 4 fases — (1) corrigir backend + scripts, (2) corrigir types TS, (3) adicionar thumbnails nas páginas, (4) criar UI Admin para vincular imagens. Componente `ProductThumbnail` compartilhado com fallback de 3 níveis.
 - **Consequências**: [+] Consistência visual entre todos os módulos, [+] Imagens reais nos produtos, [+] Scripts funcionam de qualquer diretório, [-] Requer execução manual do `assign_images.py`
-- **Status**: Proposto (SDD-002 em draft)
+- **Status**: Implementado (commit 5261681)

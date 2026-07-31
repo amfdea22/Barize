@@ -80,6 +80,17 @@ export interface Produto {
   tempo_preparo?: number;
 }
 
+export interface ProdutoCreate {
+  nome: string;
+  descricao?: string;
+  categoria?: string;
+  preco_venda: number;
+  codigo_barras?: string;
+  imagem?: string;
+  foto_url?: string;
+  tempo_preparo?: number;
+}
+
 export interface ProdutoLote {
   id: number;
   produto_id: number;
