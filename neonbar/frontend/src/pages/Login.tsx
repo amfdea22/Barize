@@ -56,7 +56,7 @@ export default function Login() {
         <div className="hidden md:flex md:w-1/2 lg:w-3/5 min-w-0 relative bg-surface-container-lowest overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-background/20 to-background" />
           <div className="absolute inset-0 z-10 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-          <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCycyplQKy7jy4SkCc7NSGjaUM3T69Hu5IM2Q9mnJQKra68Nr0e7dzDrkhJVEvdKjdizVRcRluEApoTF_-QIq13PMOeIgVqTIuutsX4TamNqA_mPkBx9-0P_x9grIton1ryFqNuxUoaF8szmfZC4m1SLDwQlYt9OkMprEmVmSiD6eDCfkiXNfdJDGiuNefvt9g6kcyhQ48gatihPUZxgXeKKW7zU8ikD9Oj8xfRB7gM5mI-LkQlQ66R6SQt-Gpt_058AQ-0t-4lL4')" }} />
+          <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('/uploads/login_bg.jpg')" }} />
           <div className="absolute bottom-xl left-xl right-xl z-20">
             <div className="inline-flex items-center gap-sm bg-primary/10 border border-primary/20 backdrop-blur-md px-md py-xs rounded-full mb-md">
               <span className="w-2 h-2 bg-primary-fixed-dim rounded-full animate-pulse" />
@@ -149,7 +149,7 @@ export default function Login() {
       </main>
 
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay z-[100]"
-        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')" }} />
+        style={{ backgroundImage: "url('/uploads/carbon-fibre.png')" }} />
     </div>
   );
 }
