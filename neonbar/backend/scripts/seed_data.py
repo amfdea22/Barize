@@ -13,6 +13,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.database import get_engine, Base, SessionLocal
 from app.models.usuario import Usuario
 from app.models.insumo import Insumo
+from app.models.lote import Lote
+from app.models.produto_lote import ProdutoLote
 from app.models.produto import Produto
 from app.models.receita import Receita
 from app.models.movimentacao import Movimentacao
@@ -148,6 +150,43 @@ def seed():
                     db.add(receita)
             db.commit()
             print("[OK] Receitas criadas")
+
+        # ─── Lotes (para etiquetas) ───
+        if db.query(Lote).count() == 0:
+            from datetime import date, timedelta
+            import random
+
+            hoje = date.today()
+            lotes_criados = 0
+            for insumo in db.query(Insumo).all():
+                qtd_lotes = random.randint(1, 3)
+                for i in range(qtd_lotes):
+                    dias_val = random.choice([15, 30, 45, 60, 90, 120, -5, -10])
+                    lote = Lote(
+                        insumo_id=insumo.id,
+                        codigo_lote=f"LOTE-{insumo.id}-{i+1:03d}",
+                        quantidade_atual=random.randint(10, 5000),
+                        data_fabricacao=hoje - timedelta(days=random.randint(1, 60)),
+                        data_validade=hoje + timedelta(days=dias_val) if dias_val > 0 else hoje + timedelta(days=dias_val),
+                    )
+                    db.add(lote)
+                    lotes_criados += 1
+            db.commit()
+
+            for produto in db.query(Produto).all():
+                qtd_lotes = random.randint(1, 2)
+                for i in range(qtd_lotes):
+                    dias_val = random.choice([15, 30, 45, 60])
+                    plote = ProdutoLote(
+                        produto_id=produto.id,
+                        codigo_lote=f"PLOTE-{produto.id}-{i+1:03d}",
+                        quantidade=random.randint(5, 50),
+                        data_validade=hoje + timedelta(days=dias_val),
+                    )
+                    db.add(plote)
+                    lotes_criados += 1
+            db.commit()
+            print(f"[OK] {lotes_criados} lotes criados para etiquetas")
 
         print("\n[DONE] Seed concluído com sucesso!")
         print("Credenciais de acesso:")
