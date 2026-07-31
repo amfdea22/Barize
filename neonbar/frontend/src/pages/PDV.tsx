@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2, Upload, X } from 'lucide-react';
+import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2, Upload, X, Pencil } from 'lucide-react';
 import { pdvService, pedidosService, uploadService } from '../services/api';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
@@ -26,6 +26,28 @@ export default function PDV() {
     nome: '', descricao: '', categoria: '', preco_venda: 0,
     codigo_barras: '', imagem: '', foto_url: '', tempo_preparo: undefined,
   });
+
+  // Edit product
+  const [editingProduct, setEditingProduct] = useState<Produto | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  useEffect(() => {
+    if (editingProduct) {
+      setForm({
+        nome: editingProduct.nome,
+        descricao: editingProduct.descricao || '',
+        categoria: editingProduct.categoria || '',
+        preco_venda: editingProduct.preco_venda,
+        codigo_barras: editingProduct.codigo_barras || '',
+        imagem: editingProduct.imagem || '',
+        foto_url: editingProduct.foto_url || '',
+        tempo_preparo: editingProduct.tempo_preparo,
+      });
+      setIsNewCategory(false);
+      setCreateError('');
+    }
+  }, [editingProduct]);
 
   useEffect(() => {
     pdvService.listarProdutos()
@@ -97,11 +119,34 @@ export default function PDV() {
     setCustomCategory('');
     setCreateError('');
     setUploading(false);
+    setEditingProduct(null);
+    setConfirmDelete(false);
   };
 
   const handleCloseModal = () => {
     setShowCreateModal(false);
     resetForm();
+  };
+
+  const handleDelete = async () => {
+    if (!editingProduct) return;
+    setDeleting(true);
+    try {
+      await pdvService.excluirProduto(editingProduct.id);
+      handleCloseModal();
+      const res = await pdvService.listarProdutos();
+      setProdutos(res.data);
+    } catch (err: any) {
+      if (err?.response?.status === 404) {
+        setCreateError('Produto foi removido por outro usuário. Atualize a lista.');
+      } else if (err?.response?.status === 403) {
+        setCreateError('Você não tem permissão para excluir produtos');
+      } else {
+        setCreateError(err?.response?.data?.detail || 'Erro ao excluir produto');
+      }
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +164,7 @@ export default function PDV() {
     }
   };
 
-  const handleCreate = async () => {
+  const handleSave = async () => {
     setCreateError('');
     if (!form.nome.trim()) { setCreateError('Nome é obrigatório'); return; }
     if (form.preco_venda <= 0) { setCreateError('Preço deve ser maior que zero'); return; }
@@ -128,7 +173,12 @@ export default function PDV() {
 
     setCreating(true);
     try {
-      await pdvService.criarProduto({ ...form, categoria });
+      const data = { ...form, categoria };
+      if (editingProduct) {
+        await pdvService.atualizarProduto(editingProduct.id, data);
+      } else {
+        await pdvService.criarProduto(data);
+      }
       setShowCreateModal(false);
       resetForm();
       const res = await pdvService.listarProdutos();
@@ -137,9 +187,11 @@ export default function PDV() {
       if (err?.response?.status === 409) {
         setCreateError('Já existe um produto com este nome');
       } else if (err?.response?.status === 403) {
-        setCreateError('Você não tem permissão para criar produtos');
+        setCreateError(editingProduct ? 'Você não tem permissão para editar produtos' : 'Você não tem permissão para criar produtos');
+      } else if (err?.response?.status === 404) {
+        setCreateError('Produto foi removido por outro usuário. Atualize a lista.');
       } else {
-        setCreateError(err?.response?.data?.detail || 'Erro ao criar produto');
+        setCreateError(err?.response?.data?.detail || 'Erro ao salvar produto');
       }
     } finally {
       setCreating(false);
@@ -195,6 +247,10 @@ export default function PDV() {
             {filtered.map(p => (
               <div key={p.id} onClick={() => addToCart(p)}
                 className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] hover:border-[var(--color-primary)]/40 transition-all cursor-pointer active:scale-[0.97] overflow-hidden">
+                <button onClick={(e) => { e.stopPropagation(); setEditingProduct(p); }}
+                  className="absolute top-2 right-2 w-7 h-7 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white/80 hover:bg-[var(--color-primary)]/80 hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer">
+                  <Pencil size={13} />
+                </button>
                 <div className="aspect-[4/3] bg-[var(--color-surface-container-high)] overflow-hidden">
                   {p.foto_url ? (
                     <img src={p.foto_url} alt={p.nome} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -289,8 +345,8 @@ export default function PDV() {
         </div>
       </div>
 
-      {/* Modal: Novo Produto */}
-      <Modal open={showCreateModal} onClose={handleCloseModal} title="Novo Produto" size="lg">
+      {/* Modal: Novo Produto / Editar Produto */}
+      <Modal open={showCreateModal || !!editingProduct} onClose={handleCloseModal} title={editingProduct ? 'Editar Produto' : 'Novo Produto'} size="lg">
         <div className="space-y-4">
           <Input label="Nome" value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} placeholder="Ex: Mojito" required />
 
@@ -349,11 +405,27 @@ export default function PDV() {
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[rgba(255,255,255,0.08)]">
-            <Button variant="ghost" onClick={handleCloseModal}>Cancelar</Button>
-            <Button onClick={handleCreate} loading={creating} disabled={creating || uploading}>
-              Criar Produto
-            </Button>
+          <div className="flex items-center justify-between pt-4 border-t border-[rgba(255,255,255,0.08)]">
+            <div>
+              {editingProduct && !confirmDelete && (
+                <Button variant="ghost" onClick={() => setConfirmDelete(true)} className="text-[var(--color-error)] hover:bg-[var(--color-error)]/10">
+                  Excluir
+                </Button>
+              )}
+              {confirmDelete && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-[var(--color-error)]">Confirmar exclusão?</span>
+                  <Button size="sm" variant="ghost" onClick={() => setConfirmDelete(false)}>Cancelar</Button>
+                  <Button size="sm" onClick={handleDelete} loading={deleting} className="bg-[var(--color-error)] hover:bg-[var(--color-error)]/80">Sim, Excluir</Button>
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" onClick={handleCloseModal}>Cancelar</Button>
+              <Button onClick={handleSave} loading={creating} disabled={creating || uploading}>
+                {editingProduct ? 'Salvar' : 'Criar Produto'}
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>

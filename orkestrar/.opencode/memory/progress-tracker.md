@@ -22,6 +22,7 @@
 | 8 | Fase 4 — Monitoramento: metrics middleware, enhanced health, telemetry hook | build | ✅ Concluído |
 | 9 | SDD-001: Recuperar imagens e funcionalidades do menu Comandas | architect | 📋 SDD criado (draft) |
 | 10 | SDD-002: Recuperar registros e imagens no sistema (auditoria + plano) | architect + explore + ui-designer | ✅ Concluído |
+| 11 | Criar produto + upload imagem no PDV | build | ✅ Concluído |
 
 ## Checkpoints
 
