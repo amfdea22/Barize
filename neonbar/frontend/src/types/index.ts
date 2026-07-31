@@ -627,7 +627,7 @@ export interface MetasFinanceiras {
   metas_padrao: Record<string, { meta: number; realizado: number }>;
 }
 
-// ─── POP ───
+// ─── POP / Checklist ───
 export interface POP {
   id: number;
   titulo: string;
@@ -635,23 +635,22 @@ export interface POP {
   categoria?: string;
   passos: Array<{ ordem: number; descricao: string; tempo_estimado?: number }>;
   frequencia: string;
+  momento?: 'abertura' | 'durante' | 'fechamento';
+  exigencia_fluxo?: Record<'baixo' | 'medio' | 'alto', 'sempre' | 'opcional' | 'nao_aplicavel'>;
   setor?: string;
+  ordem?: number;
   ativo: boolean;
   created_at?: string;
 }
 
-export interface POPPendente {
-  id: number;
-  titulo: string;
-  descricao?: string;
-  categoria?: string;
-  passos: Array<{ ordem: number; descricao: string; tempo_estimado?: number }>;
-  frequencia: string;
-  setor?: string;
-  concluido_hoje: boolean;
+export interface POPPendente extends POP {
+  concluido_periodo: boolean;
   ultima_execucao?: string;
   ultimo_status?: string;
 }
+
+export type FluxoEstabelecimento = 'baixo' | 'medio' | 'alto';
+export type PeriodoChecklist = 'diario' | 'semanal' | 'mensal';
 
 // ─── Precificação ───
 export interface PrecificacaoItem {

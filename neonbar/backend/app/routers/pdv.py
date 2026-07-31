@@ -56,7 +56,7 @@ def criar_produto(
         descricao=data.descricao,
         categoria=data.categoria,
         preco_venda=data.preco_venda,
-        codigo_barras=data.codigo_barras,
+        codigo_barras=data.codigo_barras or None,
         imagem=data.imagem,
         foto_url=data.foto_url,
         tempo_preparo=data.tempo_preparo,
@@ -66,7 +66,7 @@ def criar_produto(
         db.commit()
     except IntegrityError:
         db.rollback()
-        raise HTTPException(status_code=409, detail="Produto com este nome já existe")
+        raise HTTPException(status_code=409, detail="Já existe um produto com este nome ou código de barras")
     db.refresh(produto)
 
     AuditService.registrar(
@@ -112,7 +112,7 @@ def atualizar_produto(
     if data.preco_venda is not None:
         produto.preco_venda = data.preco_venda
     if data.codigo_barras is not None:
-        produto.codigo_barras = data.codigo_barras
+        produto.codigo_barras = data.codigo_barras or None
     if data.imagem is not None:
         produto.imagem = data.imagem
     if data.foto_url is not None:
@@ -122,7 +122,11 @@ def atualizar_produto(
     if data.tempo_preparo is not None:
         produto.tempo_preparo = data.tempo_preparo
 
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Já existe um produto com este nome ou código de barras")
     db.refresh(produto)
 
     AuditService.registrar(

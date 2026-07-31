@@ -139,6 +139,15 @@ def init_db():
                 conn.execute(text("ALTER TABLE pedidos ADD COLUMN tempo_preparo_estimado INTEGER"))
                 conn.commit()
                 logger.info("[BARIZE] Colunas de tempo adicionadas à tabela pedidos")
+
+            # Colunas do checklist (momento, exigencia_fluxo, ordem) em pops
+            pop_cols = [row[1] for row in conn.execute(text("PRAGMA table_info('pops')")).fetchall()]
+            if 'momento' not in pop_cols:
+                conn.execute(text("ALTER TABLE pops ADD COLUMN momento VARCHAR(20)"))
+                conn.execute(text("ALTER TABLE pops ADD COLUMN exigencia_fluxo JSON"))
+                conn.execute(text("ALTER TABLE pops ADD COLUMN ordem INTEGER"))
+                conn.commit()
+                logger.info("[BARIZE] Colunas de checklist adicionadas à tabela pops")
     except Exception:
         pass  # Tabela pode não existir ainda
 

@@ -1,15 +1,41 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional
-from datetime import datetime, date, timezone
+from datetime import datetime, date, timezone, timedelta
 from loguru import logger
 
 from ..database import get_db
 from ..models.usuario import Usuario
 from ..models.pop import POP, ExecucaoPOP
 from ..services.auth_service import get_current_user
+from ..schemas.pop import PopCreate, PopUpdate, PopResponse, PopPendente, PopExecucao
 
 router = APIRouter(prefix="/pops", tags=["POP - Procedimentos"])
+
+PERIODOS = {"diario": 1, "semanal": 7, "mensal": 30}
+
+
+def _fluxo_aplicavel(pop: POP, fluxo: Optional[str]) -> bool:
+    if not fluxo or not pop.exigencia_fluxo:
+        return True
+    return pop.exigencia_fluxo.get(fluxo) != "nao_aplicavel"
+
+
+def _serialize(pop: POP) -> dict:
+    return {
+        "id": pop.id,
+        "titulo": pop.titulo,
+        "descricao": pop.descricao,
+        "categoria": pop.categoria,
+        "passos": pop.passos or [],
+        "frequencia": pop.frequencia,
+        "momento": pop.momento,
+        "exigencia_fluxo": pop.exigencia_fluxo or {},
+        "setor": pop.setor,
+        "ordem": pop.ordem or 0,
+        "ativo": bool(pop.ativo),
+        "created_at": pop.created_at.isoformat() if pop.created_at else None,
+    }
 
 
 @router.get("/")
@@ -17,6 +43,8 @@ def listar_pops(
     categoria: Optional[str] = Query(default=None),
     frequencia: Optional[str] = Query(default=None),
     setor: Optional[str] = Query(default=None),
+    momento: Optional[str] = Query(default=None),
+    fluxo: Optional[str] = Query(default=None),
     apenas_ativos: bool = Query(default=True),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
@@ -30,60 +58,56 @@ def listar_pops(
         query = query.filter(POP.frequencia == frequencia)
     if setor:
         query = query.filter(POP.setor == setor)
+    if momento:
+        query = query.filter(POP.momento == momento)
 
-    pops = query.order_by(POP.categoria, POP.titulo).all()
-    return [
-        {
-            "id": p.id,
-            "titulo": p.titulo,
-            "descricao": p.descricao,
-            "categoria": p.categoria,
-            "passos": p.passos or [],
-            "frequencia": p.frequencia,
-            "setor": p.setor,
-            "ativo": bool(p.ativo),
-            "created_at": p.created_at.isoformat() if p.created_at else None,
-        }
-        for p in pops
-    ]
+    pops = query.order_by(POP.frequencia, POP.setor, POP.momento, POP.ordem).all()
+    if fluxo:
+        pops = [p for p in pops if _fluxo_aplicavel(p, fluxo)]
+    return [_serialize(p) for p in pops]
 
 
-@router.post("/")
+@router.post("/", response_model=PopResponse, status_code=201)
 def criar_pop(
-    data: dict,
+    data: PopCreate,
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
     pop = POP(
-        titulo=data["titulo"],
-        descricao=data.get("descricao"),
-        categoria=data.get("categoria"),
-        passos=data.get("passos", []),
-        frequencia=data.get("frequencia", "diario"),
-        setor=data.get("setor"),
+        titulo=data.titulo,
+        descricao=data.descricao,
+        categoria=data.categoria,
+        passos=data.passos,
+        frequencia=data.frequencia,
+        momento=data.momento,
+        exigencia_fluxo=data.exigencia_fluxo,
+        setor=data.setor,
+        ordem=data.ordem or 0,
     )
     db.add(pop)
     db.commit()
     db.refresh(pop)
     logger.info(f"[POP] Criado: {pop.titulo}")
-    return {"mensagem": "POP criado com sucesso", "id": pop.id}
+    return pop
 
 
-@router.put("/{pop_id}")
+@router.put("/{pop_id}", response_model=PopResponse)
 def atualizar_pop(
     pop_id: int,
-    data: dict,
+    data: PopUpdate,
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
     pop = db.query(POP).filter(POP.id == pop_id).first()
     if not pop:
         raise HTTPException(status_code=404, detail="POP não encontrado")
-    for campo in ["titulo", "descricao", "categoria", "passos", "frequencia", "setor", "ativo"]:
-        if campo in data:
-            setattr(pop, campo, data[campo])
+    for campo in ["titulo", "descricao", "categoria", "passos", "frequencia", "momento", "exigencia_fluxo", "setor", "ordem", "ativo"]:
+        valor = getattr(data, campo, None)
+        if valor is not None:
+            setattr(pop, campo, valor)
     db.commit()
-    return {"mensagem": "POP atualizado com sucesso"}
+    db.refresh(pop)
+    return pop
 
 
 @router.delete("/{pop_id}")
@@ -102,40 +126,45 @@ def excluir_pop(
 
 @router.get("/pendentes")
 def listar_pendentes(
+    frequencia: Optional[str] = Query(default=None),
+    momento: Optional[str] = Query(default=None),
+    fluxo: Optional[str] = Query(default=None),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
     hoje = datetime.now(timezone.utc).date()
-    inicio_dt = datetime.combine(hoje, datetime.min.time())
-    fim_dt = datetime.combine(hoje, datetime.max.time())
 
-    pops_ativos = db.query(POP).filter(POP.ativo == 1).all()
+    query = db.query(POP).filter(POP.ativo == 1)
+    if frequencia:
+        query = query.filter(POP.frequencia == frequencia)
+    if momento:
+        query = query.filter(POP.momento == momento)
+
+    pops = query.order_by(POP.frequencia, POP.setor, POP.momento, POP.ordem).all()
     resultado = []
 
-    for pop in pops_ativos:
-        ja_executado = db.query(ExecucaoPOP).filter(
+    for pop in pops:
+        if not _fluxo_aplicavel(pop, fluxo):
+            continue
+
+        dias = PERIODOS.get(pop.frequencia or "diario", 1)
+        inicio_periodo = datetime.combine(hoje, datetime.min.time()) - timedelta(days=dias - 1)
+
+        execucoes = db.query(ExecucaoPOP).filter(
             ExecucaoPOP.pop_id == pop.id,
-            ExecucaoPOP.realizado_em >= inicio_dt,
-            ExecucaoPOP.realizado_em <= fim_dt,
             ExecucaoPOP.status == "concluido",
-        ).first()
+            ExecucaoPOP.realizado_em >= inicio_periodo,
+        ).order_by(ExecucaoPOP.realizado_em.desc()).first()
 
         ultima_exec = db.query(ExecucaoPOP).filter(
             ExecucaoPOP.pop_id == pop.id,
         ).order_by(ExecucaoPOP.realizado_em.desc()).first()
 
-        resultado.append({
-            "id": pop.id,
-            "titulo": pop.titulo,
-            "descricao": pop.descricao,
-            "categoria": pop.categoria,
-            "passos": pop.passos or [],
-            "frequencia": pop.frequencia,
-            "setor": pop.setor,
-            "concluido_hoje": ja_executado is not None,
-            "ultima_execucao": ultima_exec.realizado_em.isoformat() if ultima_exec else None,
-            "ultimo_status": ultima_exec.status if ultima_exec else None,
-        })
+        item = _serialize(pop)
+        item["concluido_periodo"] = execucoes is not None
+        item["ultima_execucao"] = ultima_exec.realizado_em.isoformat() if ultima_exec else None
+        item["ultimo_status"] = ultima_exec.status if ultima_exec else None
+        resultado.append(item)
 
     return resultado
 
@@ -143,7 +172,7 @@ def listar_pendentes(
 @router.post("/{pop_id}/executar")
 def executar_pop(
     pop_id: int,
-    data: Optional[dict] = None,
+    data: Optional[PopExecucao] = None,
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -151,12 +180,12 @@ def executar_pop(
     if not pop:
         raise HTTPException(status_code=404, detail="POP não encontrado")
 
-    payload = data or {}
+    payload = data or PopExecucao()
     execucao = ExecucaoPOP(
         pop_id=pop_id,
-        realizado_por=payload.get("realizado_por", current_user.nome),
+        realizado_por=payload.realizado_por or current_user.nome,
         status="concluido",
-        observacao=payload.get("observacao"),
+        observacao=payload.observacao,
     )
     db.add(execucao)
     db.commit()

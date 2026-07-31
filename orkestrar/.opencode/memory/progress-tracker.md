@@ -23,6 +23,11 @@
 | 9 | SDD-001: Recuperar imagens e funcionalidades do menu Comandas | architect | 📋 SDD criado (draft) |
 | 10 | SDD-002: Recuperar registros e imagens no sistema (auditoria + plano) | architect + explore + ui-designer | ✅ Concluído |
 | 11 | Criar produto + upload imagem no PDV | build | ✅ Concluído |
+| 12 | Editar/excluir produto no PDV | build | ✅ Concluído |
+| 13 | Bug 500 no PDV (UNIQUE codigo_barras) — normalizar ''→NULL + IntegrityError→409 | build | ✅ Concluído |
+| 14 | Renomear menu "POP's" → "Checklist" | architect + build | ✅ Concluído |
+| 15 | Checklist profissional (79 itens) por período (diário/semanal/mensal) + fluxo (baixo/médio/alto) | architect + build | ✅ Concluído |
+| 16 | Implementar cadastro de funcionários no Admin (TC-024) | build | 🔄 Em andamento |
 
 ## Checkpoints
 

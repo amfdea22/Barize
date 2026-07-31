@@ -185,7 +185,7 @@ export default function PDV() {
       setProdutos(res.data);
     } catch (err: any) {
       if (err?.response?.status === 409) {
-        setCreateError('Já existe um produto com este nome');
+        setCreateError(err?.response?.data?.detail || 'Já existe um produto com este nome ou código de barras');
       } else if (err?.response?.status === 403) {
         setCreateError(editingProduct ? 'Você não tem permissão para editar produtos' : 'Você não tem permissão para criar produtos');
       } else if (err?.response?.status === 404) {

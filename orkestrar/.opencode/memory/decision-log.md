@@ -55,3 +55,11 @@
 - **Decisão**: Abordagem em 4 fases — (1) corrigir backend + scripts, (2) corrigir types TS, (3) adicionar thumbnails nas páginas, (4) criar UI Admin para vincular imagens. Componente `ProductThumbnail` compartilhado com fallback de 3 níveis.
 - **Consequências**: [+] Consistência visual entre todos os módulos, [+] Imagens reais nos produtos, [+] Scripts funcionam de qualquer diretório, [-] Requer execução manual do `assign_images.py`
 - **Status**: Implementado (commit 5261681)
+
+## Checklist Profissional por Período e Fluxo
+
+- **Data**: 2026-07-30
+- **Contexto**: O menu "POP's" tinha apenas 2 itens seedados e a lógica de pendências ignorava a frequência (itens semanais/mensais apareciam como pendentes todo dia). Necessidade de um checklist completo e profissional para o operacional do bar.
+- **Decisão**: Estruturar o módulo como checklist por período (Diário 47 / Semanal 20 / Mensal 12 = 79 itens), com adaptação por fluxo do estabelecimento (Baixo/Médio/Alto). Mudanças: (1) colunas novas `momento`, `exigencia_fluxo` (JSON) e `ordem` no model POP + ALTER TABLE em database.py; (2) schema Pydantic criado (schemas/pop.py — módulo era o único sem schema); (3) `GET /pops/pendentes` corrigido para calcular vencimento por frequência (diário=1, semanal=7, mensal=30 dias) e filtros `?fluxo=` e `?frequencia=`; (4) seed idempotente `scripts/seed_pops.py`; (5) UI POPs.tsx refatorada com abas por período, seções por setor/momento, seletor de fluxo (persistido em localStorage), modal de execução com "feito por"+observação e barras de progresso.
+- **Consequências**: [+] Checklist operacional completo e padronizado, [+] Pendências calculadas corretamente por vencimento, [+] Adaptação por fluxo sem duplicação de itens, [-] Colunas novas exigem ALTER TABLE em bancos existentes (feito via database.py init_db), [-] Fluxo é preferência local (localStorage), não por estabelecimento no servidor
+- **Status**: Implementado

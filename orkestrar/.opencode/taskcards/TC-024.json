@@ -1,0 +1,29 @@
+{
+  "id": "TC-024",
+  "title": "Implementar cadastro de funcionários no Admin",
+  "status": "executing",
+  "taskType": "card",
+  "createdAt": "2026-07-30T23:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar área de cadastro de funcionários no menu Administração, com modelo de dados separado, CRUD completo e integração com usuários do sistema.",
+  "acceptanceCriteria": [
+    "Modelo Funcionario criado com migração Alembic",
+    "Router /admin/funcionarios com CRUD completo (admin/gerente)",
+    "Schema Pydantic com validação",
+    "Aba 'Funcionários' no Admin.tsx",
+    "Modal com tabs: Dados Pessoais | Contrato | Escala | Vínculo Sistema",
+    "Botão 'Vincular Usuário' funcional",
+    "Filtros: cargo, status ativo, busca nome/CPF"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/models/funcionario.py",
+    "neonbar/backend/app/models/usuario.py",
+    "neonbar/backend/app/schemas/funcionario.py",
+    "neonbar/backend/app/routers/funcionarios.py",
+    "neonbar/frontend/src/types/index.ts",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/pages/Admin.tsx"
+  ],
+  "notes": "Seguir design recomendado pelo arquiteto (modelo separado, FK opcional para Usuario)."
+}

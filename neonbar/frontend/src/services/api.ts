@@ -407,12 +407,13 @@ export const pagamentoService = {
 /* ─── Copos Quebrados ─── */
 /* ─── POP / Checklist ─── */
 export const popsService = {
-  listar: (params?: { categoria?: string; frequencia?: string; setor?: string }) =>
+  listar: (params?: { categoria?: string; frequencia?: string; setor?: string; momento?: string; fluxo?: string }) =>
     api.get('/pops/', { params }),
   criar: (data: any) => api.post('/pops/', data),
   atualizar: (id: number, data: any) => api.put(`/pops/${id}`, data),
   excluir: (id: number) => api.delete(`/pops/${id}`),
-  pendentes: () => api.get('/pops/pendentes'),
+  pendentes: (params?: { frequencia?: string; momento?: string; fluxo?: string }) =>
+    api.get('/pops/pendentes', { params }),
   executar: (id: number, data?: { realizado_por?: string; observacao?: string }) =>
     api.post(`/pops/${id}/executar`, data || {}),
   relatorio: (params?: { data_inicio?: string; data_fim?: string }) =>

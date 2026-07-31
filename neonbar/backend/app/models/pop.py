@@ -12,7 +12,10 @@ class POP(Base):
     categoria = Column(String(100), nullable=True)
     passos = Column(JSON, nullable=True)
     frequencia = Column(String(20), nullable=True, default="diario")
+    momento = Column(String(20), nullable=True)
+    exigencia_fluxo = Column(JSON, nullable=True)
     setor = Column(String(100), nullable=True)
+    ordem = Column(Integer, nullable=True, default=0)
     ativo = Column(Integer, nullable=False, default=1)
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)

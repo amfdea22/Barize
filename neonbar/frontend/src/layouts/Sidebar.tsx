@@ -46,7 +46,7 @@ const navItems = [
   { to: '/financeiro', icon: TrendingUp, label: 'Financeiro' },
   { to: '/dre', icon: BarChart3, label: 'DRE' },
   { to: '/fornecedores', icon: Truck, label: 'Fornecedores' },
-  { to: '/pops', icon: ClipboardList, label: 'POP\'s' },
+  { to: '/pops', icon: ClipboardList, label: 'Checklist' },
 ];
 
 const adminNavItems = [
