@@ -1,0 +1,31 @@
+﻿{
+    "taskType":  "card",
+    "createdBy":  "architect",
+    "id":  "TC-022",
+    "createdAt":  "2026-07-29T00:00:00.000Z",
+    "acceptanceCriteria":  [
+                               "Todas as referências visuais e textuais a NeonBar/NeonBar Pro alteradas para BARIZE",
+                               "Configurações de infraestrutura (Docker, Nginx, domínios, envs) atualizadas de neonbar para barize",
+                               "localStorage migrado com segurança (suporte a chaves antigas com fallback)",
+                               "Testes e documentação atualizados e passando"
+                           ],
+    "agent":  "build",
+    "objective":  "Renomear todas as referências, UI, configurações e infraestrutura de NeonBar para BARIZE",
+    "files":  [
+                  "neonbar/README.md",
+                  "neonbar/docker-compose.yml",
+                  "neonbar/infra/docker-compose.yml",
+                  "neonbar/infra/nginx/neonbar.conf",
+                  "neonbar/backend/app/main.py",
+                  "neonbar/backend/app/config.py",
+                  "neonbar/frontend/index.html",
+                  "neonbar/frontend/src/pages/Login.tsx",
+                  "neonbar/frontend/src/layouts/Sidebar.tsx",
+                  "neonbar/frontend/src/services/api.ts",
+                  "neonbar/docs/GO_LIVE_CHECKLIST.md",
+                  "neonbar/docs/ARQUITETURA_FISICA.md",
+                  "neonbar/tests/test_worker.py"
+              ],
+    "status":  "completed",
+    "title":  "Renomear sistema de NeonBar para BARIZE"
+}

@@ -1,0 +1,439 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "build",
+  "instructions": [
+    "orkestrar/AGENTS.md",
+    "orkestrar/.opencode/rules/workflow-deterministico.md",
+    "orkestrar/.opencode/rules/guardrails.md",
+    "orkestrar/.opencode/rules/diretrizes-gerais.md",
+    "orkestrar/.opencode/rules/padroes-codigo.md",
+    "orkestrar/.opencode/rules/memoria-persistente.md",
+    "orkestrar/.opencode/rules/file-scope-control.md",
+    "orkestrar/.opencode/rules/sdd.md",
+    "orkestrar/.opencode/rules/smallspec.md",
+    "orkestrar/.opencode/rules/context-engineering.md",
+    "orkestrar/.opencode/agents/build.md"
+  ],
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "temperature": 0.3,
+      "description": "Default agent for implementation. Full permissions.",
+      "edit": "allow",
+      "bash": {
+        "*": "allow"
+      },
+      "tasks": {
+        "_default": "deny",
+        "architect": "allow",
+        "code-reviewer": "allow",
+        "test-writer": "allow",
+        "refactorer": "allow",
+        "debugger": "allow",
+        "documenter": "allow",
+        "security-auditor": "ask",
+        "database-specialist": "allow",
+        "devops-engineer": "allow",
+        "performance-engineer": "allow",
+        "ui-designer": "allow",
+        "qa-engineer": "allow"
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "temperature": 0.1,
+      "description": "Use before complex changes. Analysis only.",
+      "color": "#FFA500",
+      "edit": "deny",
+      "bash": {
+        "git *": "allow",
+        "grep *": "allow",
+        "*": "ask"
+      }
+    },
+    "revisor": {
+      "mode": "primary",
+      "temperature": 0.1,
+      "description": "PR review and code analysis. Tab to alternate.",
+      "color": "#ff6b6b",
+      "edit": "deny",
+      "bash": {
+        "git *": "allow",
+        "grep *": "allow",
+        "*": "deny"
+      },
+      "webfetch": "deny"
+    },
+    "architect": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Architect. Validates designs, suggests patterns, documents decisions.",
+      "edit": "deny",
+      "bash": {
+        "grep *": "allow",
+        "ls *": "allow",
+        "*": "deny"
+      }
+    },
+    "code-reviewer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Code reviewer focused on security, performance, and best practices.",
+      "steps": 15,
+      "edit": "deny",
+      "bash": {
+        "git diff*": "allow",
+        "git log*": "allow",
+        "grep *": "allow",
+        "*": "deny"
+      },
+      "webfetch": "deny"
+    },
+    "test-writer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.2,
+      "description": "Expert in writing unit, integration, and e2e tests.",
+      "edit": "allow",
+      "bash": {
+        "npm test*": "allow",
+        "npx vitest*": "allow",
+        "npx jest*": "allow",
+        "*": "ask"
+      }
+    },
+    "refactorer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.2,
+      "description": "Code refactoring without changing behavior.",
+      "edit": "allow",
+      "bash": {
+        "npm *": "allow",
+        "npx *": "allow",
+        "*": "ask"
+      }
+    },
+    "debugger": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Debugging expert. Analyzes logs, stack traces, behavior.",
+      "edit": "ask",
+      "bash": {
+        "npm *": "allow",
+        "npx *": "allow",
+        "node *": "allow",
+        "*": "ask"
+      }
+    },
+    "documenter": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.3,
+      "description": "Technical writer. Creates and maintains docs, README, JSDoc.",
+      "edit": "allow",
+      "bash": {
+        "*": "deny"
+      }
+    },
+    "security-auditor": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Security auditor. Identifies vulnerabilities and bad practices.",
+      "edit": "deny",
+      "bash": {
+        "grep *": "allow",
+        "npm audit*": "allow",
+        "npx audit*": "allow",
+        "*": "ask"
+      }
+    },
+    "database-specialist": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Database specialist. Schema design, queries, migrations, ORM.",
+      "edit": "ask",
+      "bash": {
+        "grep *": "allow",
+        "*": "ask"
+      }
+    },
+    "devops-engineer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "DevOps engineer. CI/CD, Docker, deploy, infrastructure.",
+      "edit": "ask",
+      "bash": {
+        "npm *": "allow",
+        "npx *": "allow",
+        "docker *": "ask",
+        "*": "ask"
+      }
+    },
+    "performance-engineer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.1,
+      "description": "Performance engineer. Benchmarking, profiling, optimization.",
+      "edit": "deny",
+      "bash": {
+        "grep *": "allow",
+        "npm *": "allow",
+        "npx *": "allow",
+        "*": "ask"
+      }
+    },
+    "ui-designer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.3,
+      "description": "UI/UX designer. Design system, accessibility, responsiveness.",
+      "edit": "allow",
+      "bash": {
+        "grep *": "allow",
+        "*": "ask"
+      }
+    },
+    "qa-engineer": {
+      "mode": "subagent",
+      "hidden": false,
+      "temperature": 0.2,
+      "description": "QA engineer. Integration/e2e tests, regression, test strategy.",
+      "edit": "allow",
+      "bash": {
+        "npm test*": "allow",
+        "npx vitest*": "allow",
+        "npx playwright*": "allow",
+        "*": "ask"
+      }
+    }
+  },
+  "command": {
+    "testar": {
+      "template": "orkestrar/.opencode/commands/testar.md",
+      "agent": "build",
+      "description": "Run test suite and analyze failures"
+    },
+    "revisar": {
+      "template": "orkestrar/.opencode/commands/revisar.md",
+      "agent": "revisor",
+      "description": "Review code from recent commits",
+      "subTask": true
+    },
+    "corrigir": {
+      "template": "orkestrar/.opencode/commands/corrigir.md",
+      "agent": "debugger",
+      "description": "Debug and fix bugs",
+      "subTask": true
+    },
+    "fluxo": {
+      "template": "orkestrar/.opencode/commands/fluxo.md",
+      "agent": "build",
+      "description": "Force deterministic workflow (residual — workflow is now automatic for tasks)"
+    },
+    "direto": {
+      "template": "orkestrar/.opencode/commands/direto.md",
+      "agent": "build",
+      "description": "Bypass workflow — quick answer without stages (residual)"
+    },
+    "status": {
+      "template": "orkestrar/.opencode/commands/status.md",
+      "agent": "build",
+      "description": "Show workflow status, progress, next steps"
+    },
+    "checkpoint": {
+      "template": "orkestrar/.opencode/commands/checkpoint.md",
+      "agent": "build",
+      "description": "Save current progress checkpoint"
+    },
+    "card": {
+      "template": "orkestrar/.opencode/commands/card.md",
+      "agent": "build",
+      "description": "Create task card in backlog"
+    },
+    "cards": {
+      "template": "orkestrar/.opencode/commands/cards.md",
+      "agent": "build",
+      "description": "List active, backlog and cancelled task cards"
+    },
+    "card-iniciar": {
+      "template": "orkestrar/.opencode/commands/card-iniciar.md",
+      "agent": "build",
+      "description": "Start execution of a task card"
+    },
+    "card-concluir": {
+      "template": "orkestrar/.opencode/commands/card-concluir.md",
+      "agent": "build",
+      "description": "Complete a task card"
+    },
+    "card-cancelar": {
+      "template": "orkestrar/.opencode/commands/card-cancelar.md",
+      "agent": "build",
+      "description": "Cancel a task card (remove from active flow)"
+    },
+    "voltar": {
+      "template": "orkestrar/.opencode/commands/voltar.md",
+      "agent": "build",
+      "description": "Roll back to previous workflow step after failure"
+    },
+    "sdd": {
+      "template": "orkestrar/.opencode/commands/sdd.md",
+      "agent": "build",
+      "description": "Create new Software Design Document"
+    },
+    "sdds": {
+      "template": "orkestrar/.opencode/commands/sdds.md",
+      "agent": "build",
+      "description": "List SDDs (active/approved/completed)"
+    },
+    "smallspec": {
+      "template": "orkestrar/.opencode/commands/smallspec.md",
+      "agent": "build",
+      "description": "Create new smallSpec"
+    },
+    "smallspecs": {
+      "template": "orkestrar/.opencode/commands/smallspecs.md",
+      "agent": "build",
+      "description": "List smallSpecs (active/completed)"
+    },
+    "sop": {
+      "template": "orkestrar/.opencode/commands/sop.md",
+      "agent": "build",
+      "description": "Create new Standard Operating Procedure"
+    },
+    "sops": {
+      "template": "orkestrar/.opencode/commands/sops.md",
+      "agent": "build",
+      "description": "List SOPs (active/review/deprecated)"
+    },
+    "sop-promote": {
+      "template": "orkestrar/.opencode/commands/sop-promote.md",
+      "agent": "build",
+      "description": "Promote a SOP to new status (draft→active→review→deprecated)"
+    },
+    "doctor": {
+      "template": "orkestrar/.opencode/commands/doctor.md",
+      "agent": "build",
+      "description": "Run installation diagnostics (validate config, environment, structure)"
+    },
+    "tutorial": {
+      "template": "orkestrar/.opencode/commands/tutorial.md",
+      "agent": "build",
+      "description": "Start interactive tutorial walkthrough"
+    },
+    "upgrade": {
+      "template": "orkestrar/.opencode/commands/upgrade.md",
+      "agent": "build",
+      "description": "Upgrade project config to latest framework version"
+    },
+    "create": {
+      "template": "orkestrar/.opencode/commands/create.md",
+      "agent": "build",
+      "description": "Scaffold new project from starter template"
+    },
+    "registry": {
+      "template": "orkestrar/.opencode/commands/registry.md",
+      "agent": "build",
+      "description": "Manage local skill/plugin registry"
+    },
+    "architect": {
+      "template": "orkestrar/.opencode/commands/architect.md",
+      "agent": "architect",
+      "description": "AI-assisted architectural analysis and ADR suggestions",
+      "subTask": true
+    },
+    "retomar": {
+      "template": "orkestrar/.opencode/commands/retomar.md",
+      "agent": "build",
+      "description": "Resume a task card after review — review → executing",
+      "subTask": true
+    },
+    "review": {
+      "template": "orkestrar/.opencode/commands/review.md",
+      "agent": "revisor",
+      "description": "Request review of a task card — move para review",
+      "subTask": true
+    },
+    "rfc": {
+      "template": "orkestrar/.opencode/commands/rfc.md",
+      "agent": "build",
+      "description": "Create a new RFC (Request for Comments)"
+    },
+    "adr": {
+      "template": "orkestrar/.opencode/commands/adr.md",
+      "agent": "architect",
+      "description": "Criar novo Architecture Decision Record",
+      "subTask": true
+    },
+    "adrs": {
+      "template": "orkestrar/.opencode/commands/adrs.md",
+      "agent": "architect",
+      "description": "Listar ADRs (active/approved/deprecated)",
+      "subTask": true
+    },
+    "changelog": {
+      "template": "orkestrar/.opencode/commands/changelog.md",
+      "agent": "build",
+      "description": "Gerar ou exibir CHANGELOG do projeto"
+    },
+    "debt": {
+      "template": "orkestrar/.opencode/commands/debt.md",
+      "agent": "build",
+      "description": "Gerenciar dívida técnica"
+    },
+    "graph": {
+      "template": "orkestrar/.opencode/commands/graph.md",
+      "agent": "architect",
+      "description": "Visualizar grafo de dependências",
+      "subTask": true
+    },
+    "impact": {
+      "template": "orkestrar/.opencode/commands/impact.md",
+      "agent": "architect",
+      "description": "Analisar impacto de mudanças",
+      "subTask": true
+    },
+    "sbom": {
+      "template": "orkestrar/.opencode/commands/sbom.md",
+      "agent": "security-auditor",
+      "description": "Gerar SBOM (SPDX 2.3)",
+      "subTask": true
+    },
+    "test-quality": {
+      "template": "orkestrar/.opencode/commands/test-quality.md",
+      "agent": "qa-engineer",
+      "description": "Analisar qualidade dos testes do projeto",
+      "subTask": true
+    }
+  },
+  "permission": {
+    "edit": "ask",
+    "bash: git *": "allow",
+    "bash: rm -rf *": "deny",
+    "bash: rm -r *": "deny",
+    "bash: del *": "deny",
+    "bash: *": "ask"
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "tail_turns": 5,
+    "reserved": 10000
+  },
+  "experimental": {
+    "primary_tools": [
+      "edit",
+      "write"
+    ]
+  },
+  "tool_output": {
+    "max_lines": 1500,
+    "max_bytes": 40000
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "nextId": 2,
+  "documents": {
+    "SDD-001": {
+      "id": "SDD-001",
+      "title": "Refatoração do PDV.tsx — Extração de Componentes",
+      "status": "draft",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "author": "build"
+    }
+  }
+}

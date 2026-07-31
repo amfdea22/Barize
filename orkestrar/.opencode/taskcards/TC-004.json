@@ -1,0 +1,25 @@
+{
+  "id": "TC-004",
+  "title": "Corrigir erro interno do servidor no Dashboard (colunas faltantes no banco)",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Corrigir o erro 'Erro interno do servidor' no Dashboard causado por colunas faltantes no banco SQLite (insumos.controlado, produtos.modo_preparo, etc.)",
+  "acceptanceCriteria": [
+    "Dashboard carrega sem erro 'Erro interno do servidor'",
+    "Todas as colunas faltantes adicionadas via ALTER TABLE",
+    "Migrations Alembic configuradas para ambiente dev SQLite",
+    "Logging adicionado no global exception handler para facilitar debug futuro"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/services/estoque_service.py",
+    "neonbar/backend/app/routers/relatorios.py",
+    "neonbar/backend/app/main.py",
+    "neonbar/backend/app/models/insumo.py",
+    "neonbar/backend/app/models/produto.py"
+  ],
+  "tests": [],
+  "notes": "Causa raiz: coluna controlado não existe na tabela insumos do SQLite. Modelo foi atualizado mas migração nunca rodou. Debugger aplicou ALTER TABLE direto. Architect recomendou try/except nas rotas + logger.exception no global handler."
+}

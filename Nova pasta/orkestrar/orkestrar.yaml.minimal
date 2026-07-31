@@ -1,0 +1,107 @@
+# =============================================================================
+# Orkestra v1.0 — Minimal Configuration File
+# =============================================================================
+# Este é o template mínimo para começar com o Orkestra.
+# Edite este arquivo para definir seu projeto e execute:
+#   npx orkestra build
+#
+# Para a configuração completa com todas as opções, veja orkestra.yaml.full
+# =============================================================================
+
+meta:
+  name: Meu Projeto
+  version: 1.0.0
+  description: Descrição do meu projeto
+
+stack:
+  language: TypeScript + Node.js
+  framework: '' # optional: e.g., React, Next.js, FastAPI, Gin
+  appType: Monolito Tradicional # Monolito, Front+Back, BFF, Website, SPA, PWA
+  testFramework: Vitest
+  packageManager: npm
+  architecture: Source in src/, tests alongside modules (*.test.ts)
+  codeConventions:
+    - TypeScript strict mode enabled
+    - Public functions must have JSDoc
+    - Unit tests required for all business logic
+
+design:
+  # Source of truth: DESIGN.md at the project root for the complete design system.
+  # Minimal color tokens below for quick start.
+  source: DESIGN.md
+  colors:
+    - token: primary
+      light: '#2563EB'
+      dark: '#60A5FA'
+      usage: Main buttons, links, headers
+    - token: background
+      light: '#FFFFFF'
+      dark: '#0F172A'
+      usage: Page background
+    - token: text-primary
+      light: '#111827'
+      dark: '#F1F5F9'
+      usage: Main text
+
+agents:
+  - name: build
+    mode: primary
+    model: auto
+    temperature: 0.3
+    editPermission: allow
+    expertise:
+      - Full-Stack Development
+    methodology:
+      - Follow deterministic workflow
+      - Run tests before and after changes
+    tools:
+      - npx vitest run
+      - npx tsc --noEmit
+      - git
+    checklist:
+      - Code compiles without errors
+      - All tests pass
+      - Lint passes
+
+commands:
+  - command: /testar
+    description: Run test suite and analyze failures
+    agent: build
+  - command: /status
+    description: Show workflow status and progress
+    agent: build
+
+workflows:
+  - name: feature
+    description: Deterministic workflow for feature development
+    steps:
+      - step: planejamento
+        agent: build
+        action: Analyze requirements and document approach
+      - step: implementacao
+        agent: build
+        action: Implement following the plan
+      - step: revisao
+        agent: build
+        action: Review code and validate quality
+      - step: testes
+        agent: build
+        action: Run tests and verify coverage
+      - step: merge
+        agent: build
+        action: Commit following Conventional Commits
+
+guardrails:
+  levels:
+    - level: 1
+      name: Scope Guard
+      description: Verify task is within scope
+    - level: 2
+      name: Pre-flight Check
+      description: Validate understanding of existing code
+    - level: 3
+      name: Validation Gate
+      description: Code compiles, lint passes, tests pass
+    - level: 4
+      name: Security Gate
+      description: No secrets exposed

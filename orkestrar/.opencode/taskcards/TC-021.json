@@ -1,0 +1,17 @@
+{
+  "id": "TC-021",
+  "title": "Edição de Comandas — backend PATCH + frontend modal",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-26T06:50:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "completedAt": "2026-07-29T00:00:00.000Z",
+  "files": [
+    "backend/app/schemas/pedido.py",
+    "backend/app/routers/pedidos.py",
+    "frontend/src/types/index.ts",
+    "frontend/src/services/api.ts",
+    "frontend/src/pages/Comandas.tsx"
+  ]
+}

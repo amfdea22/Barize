@@ -1,0 +1,68 @@
+Checklist de Implementação: Backend em Python (FastAPI)
+Este checklist estruturado orienta o desenvolvimento do backend do software de gestão de bar utilizando o ecossistema Python moderno (FastAPI, SQLAlchemy assíncrono e WebSockets).
+
+Fase 1: Setup do Ambiente e Arquitetura Base
+ Gerenciamento de Dependências: Inicializar o projeto utilizando Poetry ou Hatch para controle de pacotes e ambientes virtuais.
+ Estrutura de Pastas (Modular): Organizar o projeto em camadas (ex: api/, core/, models/, schemas/, services/, repositories/).
+
+Configurações Globais: Implementar o gerenciamento de variáveis de ambiente utilizando Pydantic-Settings.
+
+ Servidor ASGI: Configurar o Uvicorn com suporte a workers assíncronos para alta concorrência.
+
+Fase 2: Banco de Dados e Modelagem (SQLAlchemy + Alembic)
+ Conexão Assíncrona: Configurar a conexão com o PostgreSQL utilizando asyncpg e SQLAlchemy 2.0 (syntax moderna com Mapped e mapped_column).
+
+Migrações: Configurar o Alembic para controle de versão do esquema do banco de dados.
+
+Modelos Multitenant & Core: Desenvolver as tabelas relacionais principais:
+
+Tenant (Estabelecimento / Lojas)
+
+User & Role (Garçom, Cozinha, Caixa, Gerente com RBAC)
+
+Category & Product (Cardápio, insumos e fichas técnicas para CMV)
+
+Table & Tab (Mesas e Comandas)
+
+Order & OrderItem (Itens lançados e status de produção)
+
+CashRegister & Transaction (Abertura/Fechamento de caixa e financeiro)
+
+Fase 3: Autenticação e Segurança
+JWT Authentication: Implementar emissão e validação de tokens JWT para autenticação de funcionários.
+
+ Controle de Acesso (RBAC): Criar dependências no FastAPI (Depends) para restringir endpoints com base no papel do usuário (ex: apenas gerentes acessam o financeiro).
+
+Segurança de Dados: Garantir isolamento de dados por tenant_id em todas as consultas ao banco de dados.
+
+Fase 4: Core de Negócio e Regras de Operação
+ Gestão de Comandas: Endpoints para abertura, agrupamento, transferência de mesas e divisão de contas.
+
+Lançamento de Pedidos: Validação de estoque disponível antes de confirmar o pedido no salão.
+
+Motor de Baixa de Estoque (CMV): Implementar lógica de serviço para decrementar insumos automaticamente com base na ficha técnica do produto vendido.
+
+Módulo de Caixa: Rotas para abertura de caixa, registro de pagamentos (Dinheiro, Cartão, Pix) e conferência cega de fechamento.
+
+Fase 5: Tempo Real (KDS - Kitchen Display System)
+WebSockets: Configurar endpoints WebSocket no FastAPI para gerenciar conexões persistentes com as telas da cozinha e do bar.
+
+Fila de Pedidos: Desenvolver o gerenciador de estado para transição de status (Received -> Preparing -> Ready -> Delivered) com notificação instantânea para os terminais.
+
+Fase 6: Relatórios e Painel Gerencial
+ Agregações de Vendas: Criar consultas otimizadas para faturamento por período, ticket médio e horários de pico.
+
+Cálculo de CMV: Endpoint para apuração do Custo da Mercadoria Vendida integrado ao faturamento diário.
+
+DRE Simplificado: Rotas para consolidação de receitas, despesas operacionais e lucro bruto.
+
+Fase 7: Testes, Qualidade de Código e Deploy
+Testes Automatizados: Escrever testes unitários e de integração utilizando Pytest e httpx.AsyncClient.
+
+Qualidade de Código: Configurar Ruff para linting e formatação automática de código Python.
+
+ Containerização: Criar o Dockerfile otimizado para a aplicação e o docker-compose.yml integrando API, PostgreSQL e Redis (para cache/sessões).
+
+Pipeline de CI/CD: Configurar automação no GitHub Actions para execução de testes e build de imagens.
+
+Deploy em Produção: Realizar o deploy em uma VPS (utilizando Nginx como reverse proxy e Gunicorn/Uvicorn em modo cluster) ou plataforma Cloud (AWS/Render).

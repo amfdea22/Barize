@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "updatedAt": null,
+  "currentSession": {
+    "agent": null,
+    "subagentes": [],
+    "task": null,
+    "workflowStep": null,
+    "status": "idle",
+    "startedAt": null
+  },
+  "checkpoints": []
+}

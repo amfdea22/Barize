@@ -1,0 +1,12 @@
+/card inserir opção Cardápio Digital Básico
+
+/card inserir opção de pagamentos no caixa
+
+/card criar opção de editar pedido
+/card criar opção de gerar etiqueta de insumos
+/card criar menu de ficha técnica
+/card cadastrar receita
+/card cadastrar produtos
+/card ajustar a área de Novo insumo
+/card melhorar o painel caixa
+/card visualizar comanda

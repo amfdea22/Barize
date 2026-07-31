@@ -1,0 +1,295 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/orkestrar/tokens-schema/v1/colors.json",
+  "description": "Paleta de cores do projeto Obsidian Flow — extraída do DESIGN.md",
+  "version": "1.0.0",
+  "source": "DESIGN.md",
+  "lastSynced": "2026-07-18",
+  "tokens": {
+    "surface": {
+      "value": "#111319",
+      "type": "color",
+      "category": "surface",
+      "description": "Fundo principal — canvas base"
+    },
+    "surface-dim": {
+      "value": "#111319",
+      "type": "color",
+      "category": "surface",
+      "description": "Fundo dim — variante escura do surface"
+    },
+    "surface-bright": {
+      "value": "#373940",
+      "type": "color",
+      "category": "surface",
+      "description": "Superfície brilhante para elevação"
+    },
+    "surface-container-lowest": {
+      "value": "#0c0e14",
+      "type": "color",
+      "category": "surface-container",
+      "description": "Container mais baixo — camada inferior"
+    },
+    "surface-container-low": {
+      "value": "#191b22",
+      "type": "color",
+      "category": "surface-container",
+      "description": "Container baixo"
+    },
+    "surface-container": {
+      "value": "#1e1f26",
+      "type": "color",
+      "category": "surface-container",
+      "description": "Container padrão — cards, modais"
+    },
+    "surface-container-high": {
+      "value": "#282a30",
+      "type": "color",
+      "category": "surface-container",
+      "description": "Container alto — hover states"
+    },
+    "surface-container-highest": {
+      "value": "#33343b",
+      "type": "color",
+      "category": "surface-container",
+      "description": "Container mais alto — elevated surfaces"
+    },
+    "on-surface": {
+      "value": "#e2e2eb",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre superfície"
+    },
+    "on-surface-variant": {
+      "value": "#c9c4d8",
+      "type": "color",
+      "category": "text",
+      "description": "Texto variante sobre superfície"
+    },
+    "inverse-surface": {
+      "value": "#e2e2eb",
+      "type": "color",
+      "category": "surface",
+      "description": "Superfície invertida (para modo claro)"
+    },
+    "inverse-on-surface": {
+      "value": "#2e3037",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre superfície invertida"
+    },
+    "outline": {
+      "value": "#938ea1",
+      "type": "color",
+      "category": "border",
+      "description": "Borda padrão"
+    },
+    "outline-variant": {
+      "value": "#484555",
+      "type": "color",
+      "category": "border",
+      "description": "Borda variante — menos contraste"
+    },
+    "primary": {
+      "value": "#cabeff",
+      "type": "color",
+      "category": "primary",
+      "description": "Cor primária — roxo orkestrar"
+    },
+    "on-primary": {
+      "value": "#31009a",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre primária"
+    },
+    "primary-container": {
+      "value": "#937dff",
+      "type": "color",
+      "category": "primary",
+      "description": "Container de primária"
+    },
+    "on-primary-container": {
+      "value": "#2a0088",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre container primário"
+    },
+    "inverse-primary": {
+      "value": "#603de2",
+      "type": "color",
+      "category": "primary",
+      "description": "Primária invertida"
+    },
+    "secondary": {
+      "value": "#bdf4ff",
+      "type": "color",
+      "category": "secondary",
+      "description": "Cor secundária — teal/ciano"
+    },
+    "on-secondary": {
+      "value": "#00363d",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre secundária"
+    },
+    "secondary-container": {
+      "value": "#00e3fd",
+      "type": "color",
+      "category": "secondary",
+      "description": "Container de secundária"
+    },
+    "on-secondary-container": {
+      "value": "#00616d",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre container secundário"
+    },
+    "tertiary": {
+      "value": "#ffafd3",
+      "type": "color",
+      "category": "tertiary",
+      "description": "Cor terciária — rosa"
+    },
+    "on-tertiary": {
+      "value": "#620040",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre terciária"
+    },
+    "tertiary-container": {
+      "value": "#e364a7",
+      "type": "color",
+      "category": "tertiary",
+      "description": "Container de terciária"
+    },
+    "on-tertiary-container": {
+      "value": "#560038",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre container terciário"
+    },
+    "error": {
+      "value": "#ffb4ab",
+      "type": "color",
+      "category": "status",
+      "description": "Cor de erro"
+    },
+    "on-error": {
+      "value": "#690005",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre erro"
+    },
+    "error-container": {
+      "value": "#93000a",
+      "type": "color",
+      "category": "status",
+      "description": "Container de erro"
+    },
+    "on-error-container": {
+      "value": "#ffdad6",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre container de erro"
+    },
+    "primary-fixed": {
+      "value": "#e6deff",
+      "type": "color",
+      "category": "primary",
+      "description": "Primária fixa (tom mais claro)"
+    },
+    "primary-fixed-dim": {
+      "value": "#cabeff",
+      "type": "color",
+      "category": "primary",
+      "description": "Primária fixa dim"
+    },
+    "on-primary-fixed": {
+      "value": "#1c0062",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre primária fixa"
+    },
+    "on-primary-fixed-variant": {
+      "value": "#4717ca",
+      "type": "color",
+      "category": "text",
+      "description": "Texto variante sobre primária fixa"
+    },
+    "secondary-fixed": {
+      "value": "#9cf0ff",
+      "type": "color",
+      "category": "secondary",
+      "description": "Secundária fixa"
+    },
+    "secondary-fixed-dim": {
+      "value": "#00daf3",
+      "type": "color",
+      "category": "secondary",
+      "description": "Secundária fixa dim"
+    },
+    "on-secondary-fixed": {
+      "value": "#001f24",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre secundária fixa"
+    },
+    "on-secondary-fixed-variant": {
+      "value": "#004f58",
+      "type": "color",
+      "category": "text",
+      "description": "Texto variante sobre secundária fixa"
+    },
+    "tertiary-fixed": {
+      "value": "#ffd8e7",
+      "type": "color",
+      "category": "tertiary",
+      "description": "Terciária fixa"
+    },
+    "tertiary-fixed-dim": {
+      "value": "#ffafd3",
+      "type": "color",
+      "category": "tertiary",
+      "description": "Terciária fixa dim"
+    },
+    "on-tertiary-fixed": {
+      "value": "#3d0026",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre terciária fixa"
+    },
+    "on-tertiary-fixed-variant": {
+      "value": "#85145a",
+      "type": "color",
+      "category": "text",
+      "description": "Texto variante sobre terciária fixa"
+    },
+    "background": {
+      "value": "#111319",
+      "type": "color",
+      "category": "surface",
+      "description": "Fundo da página"
+    },
+    "on-background": {
+      "value": "#e2e2eb",
+      "type": "color",
+      "category": "text",
+      "description": "Texto sobre fundo"
+    },
+    "surface-variant": {
+      "value": "#33343b",
+      "type": "color",
+      "category": "surface",
+      "description": "Variante de superfície"
+    }
+  },
+  "categories": {
+    "surface": "Cores de fundo e superfície",
+    "surface-container": "Cores de container em cascata (lowest → highest)",
+    "primary": "Cores primárias (roxo)",
+    "secondary": "Cores secundárias (teal/ciano)",
+    "tertiary": "Cores terciárias (rosa)",
+    "status": "Cores de status (erro, warning, success, info)",
+    "text": "Cores de texto on-*",
+    "border": "Cores de borda (outline)"
+  }
+}

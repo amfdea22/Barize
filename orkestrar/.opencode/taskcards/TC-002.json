@@ -1,0 +1,22 @@
+{
+  "id": "TC-002",
+  "title": "Verificar problema da classe max-w nas divs em todas as telas",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Verificar occurrences de max-w-lg/max-w-md em todas as telas e remover constraints que quebram layout w-full",
+  "acceptanceCriteria": [
+    "Varredura completa de todos os .tsx/.ts/.jsx do frontend",
+    "Login.tsx: max-w-md já removido na sessão anterior",
+    "Modal.tsx: default md size alterado de max-w-lg para max-w-md, demais sizes ajustados",
+    "Estoque.tsx: max-w-[160px] e max-w-[120px] são intencionais (progress bars)",
+    "Nenhuma constraint fantasma quebrando layout w-full"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/components/Modal.tsx"
+  ],
+  "tests": [],
+  "notes": "Solução final Modal.tsx: sm=max-w-2xl, md=max-w-2xl, lg=max-w-3xl, xl=max-w-4xl, full=max-w-[90vw]. Login.tsx: max-w-* removido, min-w-0 adicionado nos flex panels."
+}

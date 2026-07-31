@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "nextId": 3,
+  "cards": {
+    "TC-001": {
+      "title": "cadastrar receitas",
+      "status": "completed",
+      "createdAt": "2026-07-28T20:04:00-03:00"
+    },
+    "TC-002": {
+      "title": "inserir opção de pagamentos no caixa",
+      "status": "completed",
+      "createdAt": "2026-07-28T20:05:00-03:00"
+    }
+  }
+}

@@ -1,0 +1,660 @@
+meta:
+  name: neonbar
+  version: 1.0.0
+  description: Gestao de bares
+stack:
+  language:
+    - Python 3.12+
+    - TypeScript 6.0
+  framework: FastAPI (backend) + React 19 (frontend)
+  appType: Front e Back Separados
+  cssFramework: Tailwind CSS 4
+  testFramework:
+    backend: pytest
+    frontend: null
+  packageManager:
+    backend: pip
+    frontend: npm
+  architecture: Multi-serviço conteinerizado (5 serviços: db, backend, worker-impressao, worker-alertas, nginx)
+  databases:
+    production: PostgreSQL 16
+    development: SQLite
+    orm: SQLAlchemy 2.0
+    migration: Alembic
+  auth:
+    method: JWT + bcrypt
+    library: python-jose + passlib
+  server:
+    framework: Uvicorn
+    proxy: Nginx (modo quiosque)
+  logging:
+    library: Loguru
+  workers:
+    - worker-impressao (ESC/POS printing)
+    - worker-alertas (Discord/Telegram/Slack notifications)
+  sourceDir:
+    backend: neonbar/backend/app/
+    frontend: neonbar/frontend/src/
+  codeConventions:
+    - Python type hints (mypy), ruff para lint
+    - TypeScript strict mode, oxlint para lint
+    - Commits follow Conventional Commits
+    - Public functions must have docstrings (Python) / JSDoc (TypeScript)
+    - Unit tests required for all backend business logic (pytest)
+    - PRs must pass lint + tests before merge
+    - UI follows DESIGN.md guidelines
+design:
+  source: DESIGN.md
+agents:
+  - name: build
+    mode: primary
+    model: auto
+    temperature: 0.3
+    description: Default agent for implementation. Full permissions.
+    editPermission: allow
+    bashPermissions:
+      - scope: "*"
+        rule: allow
+    taskPermissions:
+      default: deny
+      overrides:
+        architect: allow
+        code-reviewer: allow
+        test-writer: allow
+        refactorer: allow
+        debugger: allow
+        documenter: allow
+        security-auditor: ask
+        database-specialist: allow
+        devops-engineer: allow
+        performance-engineer: allow
+        ui-designer: allow
+        qa-engineer: allow
+  - name: plan
+    mode: primary
+    model: auto
+    temperature: 0.1
+    color: "#FFA500"
+    description: Use before complex changes. Analysis only.
+    editPermission: deny
+    bashPermissions:
+      - scope: git *
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: revisor
+    mode: primary
+    model: auto
+    temperature: 0.1
+    description: PR review and code analysis. Tab to alternate.
+    color: "#ff6b6b"
+    editPermission: deny
+    bashPermissions:
+      - scope: git *
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: deny
+    webfetchPermission: deny
+  - name: architect
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Architect. Validates designs, suggests patterns, documents decisions.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: ls *
+        rule: allow
+      - scope: "*"
+        rule: deny
+  - name: code-reviewer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    steps: 15
+    description: Code reviewer focused on security, performance, and best practices.
+    editPermission: deny
+    bashPermissions:
+      - scope: git diff*
+        rule: allow
+      - scope: git log*
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: deny
+    webfetchPermission: deny
+  - name: test-writer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: Expert in writing unit, integration, and e2e tests.
+    editPermission: allow
+    bashPermissions:
+      - scope: pytest *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: refactorer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: Code refactoring without changing behavior.
+    editPermission: allow
+    bashPermissions:
+      - scope: pytest *
+        rule: allow
+      - scope: ruff *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: debugger
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Debugging expert. Analyzes logs, stack traces, behavior.
+    editPermission: ask
+    bashPermissions:
+      - scope: pytest *
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: documenter
+    mode: subagent
+    model: auto
+    temperature: 0.3
+    description: Technical writer. Creates and maintains docs, README, JSDoc.
+    editPermission: allow
+    bashPermissions:
+      - scope: "*"
+        rule: deny
+  - name: security-auditor
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Security auditor. Identifies vulnerabilities and bad practices.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: npm audit*
+        rule: allow
+      - scope: npx audit*
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: database-specialist
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Database specialist. Schema design, queries, migrations, ORM.
+    editPermission: ask
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: devops-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: DevOps engineer. CI/CD, Docker, deploy, infrastructure.
+    editPermission: ask
+    bashPermissions:
+      - scope: docker *
+        rule: allow
+      - scope: docker-compose *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: performance-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Performance engineer. Benchmarking, profiling, optimization.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: npm *
+        rule: allow
+      - scope: npx *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: ui-designer
+    mode: subagent
+    model: auto
+    temperature: 0.3
+    description: UI/UX designer. Design system, accessibility, responsiveness.
+    editPermission: allow
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: qa-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: QA engineer. Integration/e2e tests, regression, test strategy.
+    editPermission: allow
+    bashPermissions:
+      - scope: pytest *
+        rule: allow
+      - scope: "*"
+        rule: ask
+commands:
+  - command: /testar
+    description: Run test suite and analyze failures (backend only — frontend has no test framework)
+    agent: build
+  - command: /revisar
+    description: Review code from recent commits
+    agent: revisor
+    subTask: true
+  - command: /corrigir <descrição>
+    description: Debug and fix bugs
+    agent: debugger
+    subTask: true
+  - command: /fluxo <tarefa>
+    description: Start complete deterministic workflow
+    agent: build
+  - command: /status
+    description: Show workflow status, progress, next steps
+    agent: build
+  - command: /checkpoint
+    description: Save current progress checkpoint
+    agent: build
+  - command: /card <descrição>
+    description: Create task card in backlog
+    agent: build
+  - command: /cards
+    description: List active, backlog and cancelled task cards
+    agent: build
+    instructions: >
+      AÇÃO REAL — faça a listagem abaixo, não apenas leia este arquivo.
+
+
+      1. Leia `index.json` na pasta de task cards para obter o índice
+
+      2. Separe os cards por status usando o campo `status` no index.json
+
+      3. Exiba em FORMATO DE TABELA com colunas alinhadas exatamente como
+      abaixo:
+
+
+      ### ▶️ Active (N)
+
+      | ID | Título | Prioridade |
+
+      |----|--------|------------|
+
+      | TC-XXX | Título do card | high |
+
+
+      ### 📥 Backlog (N)
+
+      | ID | Título | Prioridade |
+
+      |----|--------|------------|
+
+      | TC-XXX | Título do card | medium |
+
+
+      ### ✅ Completed (N)
+
+      TC-001, TC-002, TC-003 (apenas IDs, sem tabela)
+
+
+      ### ❌ Cancelled (N)
+
+      TC-001 (Título), TC-012 (Título)
+
+
+      4. Regras:
+         - **Active**: emoji ▶️, tabela completa
+         - **Backlog**: emoji 📥, tabela completa
+         - **Completed**: emoji ✅, apenas IDs separados por vírgula
+         - **Cancelled**: emoji ❌, IDs com título entre parênteses
+      5. Se uma categoria estiver vazia, mostre "Nenhum"
+
+      6. Sugira o próximo card a iniciar (se houver backlog)
+
+      7. Se NÃO houver cards em NENHUMA categoria, mostre "Nenhum card
+      encontrado."
+  - command: /card-iniciar <id>
+    description: Start execution of a task card
+    agent: build
+  - command: /card-concluir <id>
+    description: Complete a task card
+    agent: build
+  - command: /card-cancelar <id>
+    description: Cancel a task card (remove from active flow)
+    agent: build
+  - command: /voltar
+    description: Roll back to previous workflow step after failure
+    agent: build
+  - command: /sdd <título>
+    description: Create new Software Design Document
+    agent: build
+  - command: /sdds
+    description: List SDDs (active/approved/completed)
+    agent: build
+  - command: /smallspec <título>
+    description: Create new smallSpec
+    agent: build
+  - command: /smallspecs
+    description: List smallSpecs (active/completed)
+    agent: build
+  - command: /sop <título>
+    description: Create new Standard Operating Procedure
+    agent: build
+  - command: /sops
+    description: List SOPs (active/review/deprecated)
+    agent: build
+  - command: /sop-promote <id> <status>
+    description: Promote a SOP to new status (draft→active→review→deprecated)
+    agent: build
+  - command: /doctor
+    description: Run installation diagnostics (validate config, environment, structure)
+    agent: build
+  - command: /direto <pergunta>
+    description: Bypass workflow — quick answer without stages
+    agent: build
+  - command: /tutorial
+    description: Start interactive tutorial walkthrough
+    agent: build
+  - command: /upgrade
+    description: Upgrade project config to latest framework version
+    agent: build
+  - command: /create
+    description: Scaffold new project from starter template
+    agent: build
+  - command: /registry
+    description: Manage local skill/plugin registry
+    agent: build
+  - command: /architect
+    description: AI-assisted architectural analysis and ADR suggestions
+    agent: build
+workflows:
+  - name: feature
+    steps:
+      - step: PLANEJAMENTO
+        agent: plan or @architect
+        action: Analyze requirements, design solution, document ADR
+        gate: User approves plan
+      - step: IMPLEMENTAÇÃO
+        agent: build
+        action: Write code following approved plan
+        gate: Code compiles and lint passes
+      - step: REVISÃO
+        agent: revisor or @code-reviewer
+        action: Review security, performance, best practices
+        gate: Review approved without critical issues
+      - step: TESTES
+        agent: "@test-writer + build"
+        action: Write/update tests, run full suite
+        gate: 100% tests passing
+      - step: MERGE
+        agent: build
+        action: Commit following Conventional Commits
+        gate: Commit created with standard message
+  - name: bugfix
+    steps:
+      - step: REPRODUÇÃO
+        agent: "@debugger"
+        action: Reproduce bug consistently
+        gate: Bug reproduced
+      - step: DIAGNÓSTICO
+        agent: "@debugger"
+        action: Identify root cause
+        gate: Root cause identified
+      - step: CORREÇÃO
+        agent: "@debugger (edit: ask) or build (edit: allow)"
+        action: Implement fix
+        gate: Fix implemented
+      - step: VERIFICAÇÃO
+        agent: build
+        action: Validate fix with tests
+        gate: Tests pass and bug does not reproduce
+guardrails:
+  levels:
+    - level: Scope Guard
+      checks:
+        - Is the task within my scope/role?
+        - Do I have permission to modify the involved files?
+        - Does the task violate AI limits?
+    - level: Pre-flight Check
+      checks:
+        - Do I understand the existing code?
+        - Will my change break existing functionality?
+        - Do current tests pass?
+        - Does the change follow project standards?
+        - Am I modifying config files without permission?
+    - level: Validation Gate
+      checks:
+        - Code compiles without errors
+        - Lint passes without warnings/errors
+        - Tests pass
+        - No unintended files modified (git diff)
+        - Change consistent with DESIGN.md (if applicable)
+    - level: Security Gate
+      checks:
+        - No secrets/tokens exposed in code or commits
+        - No vulnerable dependencies introduced
+        - No security rules disabled
+        - No endpoints/routes exposed without auth
+  denyRules:
+    - operation: rm -rf
+      reason: Too destructive
+    - operation: Modify opencode.json without permission
+      reason: Harness configuration
+    - operation: Disable lint/security rules
+      reason: Security
+    - operation: Install dependencies without approval
+      reason: Dependency control
+    - operation: Expose secrets in code/commits
+      reason: Security
+  requireApproval:
+    - operation: Deploy
+      reason: Production impact
+    - operation: Push to main/master
+      reason: Risk of breaking production
+    - operation: Modify CI/CD pipelines
+      reason: Infrastructure
+    - operation: Database migrations
+      reason: Risk of data loss
+  perAgentMapping:
+    build:
+      - Scope Guard
+      - Pre-flight Check
+      - Validation Gate
+      - Security Gate
+    plan:
+      - Scope Guard
+    revisor:
+      - Scope Guard
+    architect:
+      - Scope Guard
+    code-reviewer:
+      - Scope Guard
+    test-writer:
+      - Scope Guard
+      - Validation Gate
+    refactorer:
+      - Scope Guard
+      - Pre-flight Check
+      - Validation Gate
+    debugger:
+      - Scope Guard
+      - Security Gate
+    documenter:
+      - Scope Guard
+    security-auditor:
+      - Scope Guard
+      - Security Gate
+    database-specialist:
+      - Scope Guard
+    devops-engineer:
+      - Scope Guard
+      - Security Gate
+    performance-engineer:
+      - Scope Guard
+    ui-designer:
+      - Scope Guard
+      - Validation Gate
+    qa-engineer:
+      - Scope Guard
+      - Validation Gate
+memory:
+  directory: .opencode/memory/
+  levels:
+    - level: L3
+      file: decision-log.md
+      format: ADR (Architecture Decision Record)
+      description: Technical decisions (ADRs)
+      consultWhen: BEFORE making any technical decision
+      writeWhen: AFTER making an important decision
+    - level: L2
+      file: progress-tracker.md
+      format: Markdown with checklists
+      description: Task progress across sessions
+      consultWhen: At START of each session
+      writeWhen: When starting/completing tasks
+    - level: L2
+      file: context-map.md
+      format: Markdown table
+      description: Map of analyzed/modified files
+      consultWhen: BEFORE analyzing a file
+      writeWhen: AFTER analyzing or modifying files
+    - level: L1
+      file: session-state.json
+      format: Lightweight JSON
+      description: Current session state
+      consultWhen: To know current session state
+      writeWhen: On every state transition
+  goldenRule: ALWAYS consult memory before acting, ALWAYS update after acting
+taskCards:
+  maxActive: 3
+  fields:
+    - field: Objetivo
+      description: What needs to be done
+    - field: Descrição
+      description: Context and details
+    - field: Aceite Técnico
+      description: Acceptance criteria
+    - field: Escopo
+      description: What's included/excluded
+    - field: Guardrails
+      description: Rules to observe
+    - field: Restrições
+      description: Technical limitations
+    - field: Arquivos Envolvidos
+      description: Contract — only modify listed files
+    - field: Dependências
+      description: Prerequisites
+    - field: Testes
+      description: How to validate
+    - field: Checklist Final
+      description: Validation before completing
+  cycle:
+    - /card → backlog
+    - /card-iniciar → active (isolated git branch)
+    - /card-concluir → completed (auto-review + commit + PR)
+sdd:
+  sections:
+    - Contexto
+    - Objetivos
+    - Arquitetura
+    - Alternativas
+    - Segurança
+    - Plano
+    - Checklist
+    - Referências
+  workflow:
+    - /sdd → active/ (draft)
+    - /sdds → approved/
+    - (implement)
+    - completed/
+smallspec:
+  sections:
+    - User Stories
+    - Critérios
+    - Abordagem Técnica
+    - Arquivos
+    - Edge Cases
+    - Dependências
+    - Checklist
+  workflow:
+    - /smallspec → active/
+    - /smallspecs → approved/
+    - (implement)
+    - completed/
+sop:
+  sections:
+    - Objetivo
+    - Pré-requisitos
+    - Passos
+    - Verificação Pós-Execução
+    - Rollback
+    - Referências
+  workflow:
+    - /sop → active/ (draft)
+    - /sops → review/
+    - (revisão periódica)
+    - deprecated/
+limitesIa:
+  - rule: DO NOT modify opencode.json, tsconfig.json without asking
+  - rule: DO NOT install dependencies without explicit approval
+  - rule: DO NOT deploy without authorization
+  - rule: DO NOT rewrite entire files unnecessarily
+  - rule: DO NOT change architecture without consulting @architect
+  - rule: DO NOT disable or modify security or lint rules
+  - rule: DO NOT expose secrets, tokens, or API keys in code or commits
+  - rule: DO NOT skip validation gates in the deterministic workflow
+  - rule: DO NOT ignore guardrails — if a guardrail fails, stop and report
+skills:
+  - name: contexto-projeto
+    description: General project context
+    whenToUse: Use when understanding structure, stack, or config before technical
+      decisions
+  - name: padroes-codigo
+    description: Project code standards
+    whenToUse: Use when writing or reviewing TypeScript code for consistency
+  - name: fluxo-git
+    description: Git workflow
+    whenToUse: Use when committing, branching, rebasing, or resolving conflicts
+  - name: decisoes-arquitetura
+    description: ADRs (Architecture Decision Records)
+    whenToUse: Use when consulting, creating, or modifying documented architectural
+      decisions
+  - name: workflow-deterministico
+    description: Deterministic workflow with steps, gates, and handoffs
+    whenToUse: Use when executing a structured workflow or checking current step
+  - name: memoria-persistente
+    description: Persistent memory (decisions, progress, context)
+    whenToUse: Use when consulting past decisions, checking progress, or logging new
+      decisions
+  - name: guardrails
+    description: Protection system with scope, pre-flight, validation, and security checks
+    whenToUse: Use when starting tasks, before modifying, after modifying, or in
+      sensitive operations
+  - name: taskcards
+    description: Atomic task cards with 10-field structure
+    whenToUse: Use when creating, listing, starting, or completing task cards
+  - name: sdd
+    description: Software Design Document for complex/greenfield decisions
+    whenToUse: Use when creating, reviewing, or consulting an SDD
+  - name: smallspec
+    description: smallSpec for medium features (1-3 user stories)
+    whenToUse: Use when documenting a medium-sized feature
+  - name: docker
+    description: Docker Compose, containers, multi-service orchestration
+    whenToUse: Use when working with Docker, docker-compose, or container infrastructure

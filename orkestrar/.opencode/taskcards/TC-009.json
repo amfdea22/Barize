@@ -1,0 +1,22 @@
+{
+  "id": "TC-009",
+  "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
+  "status": "backlog",
+  "statusHistory": [],
+  "createdAt": "2026-07-26T04:53:07.565Z",
+  "updatedAt": "2026-07-26T04:53:07.565Z",
+  "path": ".opencode/taskcards/TC-009.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Ajustar o tamanho das imagens dos produtos para que os nomes fiquem completamente visíveis na interface",
+  "acceptanceCriteria": [
+    "Imagens dos produtos não cortam ou sobrepõem os nomes",
+    "Nomes dos produtos são legíveis em todos os viewports",
+    "Layout responsivo mantém proporções corretas entre imagem e texto",
+    "Nenhuma quebra de layout em mobile ou desktop"
+  ],
+  "filesInvolved": [],
+  "tests": [],
+  "notes": ""
+}

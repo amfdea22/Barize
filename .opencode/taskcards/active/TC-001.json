@@ -1,0 +1,14 @@
+{
+  "id": "TC-001",
+  "title": "cadastrar receitas",
+  "status": "analyzing",
+  "priority": "medium",
+  "createdAt": "2026-07-28T20:04:00-03:00",
+  "createdBy": "user",
+  "description": "Funcionalidade para cadastro de receitas (ingredientes, quantidades, modo de preparo)",
+  "fields": {
+    "Objetivo": "Permitir cadastro de receitas com ingredientes, quantidades e modo de preparo",
+    "Arquivos Envolvidos": "neonbar/backend/app/routers/pdv.py, neonbar/backend/app/models/receita.py, neonbar/backend/app/schemas/receita.py",
+    "Dependencias": "TC-005 (paginação)"
+  }
+}

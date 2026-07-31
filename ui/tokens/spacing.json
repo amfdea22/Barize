@@ -1,0 +1,48 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/orkestrar/tokens-schema/v1/spacing.json",
+  "description": "Escala de espaçamento do projeto Obsidian Flow — baseada no DESIGN.md e Tailwind CSS",
+  "version": "1.0.0",
+  "source": "DESIGN.md",
+  "lastSynced": "2026-07-18",
+  "unit": "4px",
+  "scale": {
+    "0": { "value": "0px", "rem": "0rem", "description": "Sem espaçamento" },
+    "0.5": { "value": "2px", "rem": "0.125rem", "description": "Micro espaçamento" },
+    "1": { "value": "4px", "rem": "0.25rem", "description": "Unidade base — 1× unit" },
+    "1.5": { "value": "6px", "rem": "0.375rem", "description": "1.5× unit" },
+    "2": { "value": "8px", "rem": "0.5rem", "description": "2× unit — padding compacto" },
+    "2.5": { "value": "10px", "rem": "0.625rem", "description": "2.5× unit" },
+    "3": { "value": "12px", "rem": "0.75rem", "description": "3× unit" },
+    "3.5": { "value": "14px", "rem": "0.875rem", "description": "3.5× unit" },
+    "4": { "value": "16px", "rem": "1rem", "description": "4× unit — gutter, padding padrão" },
+    "5": { "value": "20px", "rem": "1.25rem", "description": "5× unit" },
+    "6": { "value": "24px", "rem": "1.5rem", "description": "6× unit — card padding" },
+    "7": { "value": "28px", "rem": "1.75rem", "description": "7× unit" },
+    "8": { "value": "32px", "rem": "2rem", "description": "8× unit — margin desktop" },
+    "9": { "value": "36px", "rem": "2.25rem", "description": "9× unit" },
+    "10": { "value": "40px", "rem": "2.5rem", "description": "10× unit" },
+    "11": { "value": "44px", "rem": "2.75rem", "description": "11× unit" },
+    "12": { "value": "48px", "rem": "3rem", "description": "12× unit" },
+    "14": { "value": "56px", "rem": "3.5rem", "description": "14× unit" },
+    "16": { "value": "64px", "rem": "4rem", "description": "16× unit — seção grande" },
+    "20": { "value": "80px", "rem": "5rem", "description": "20× unit" },
+    "24": { "value": "96px", "rem": "6rem", "description": "24× unit" }
+  },
+  "layout": {
+    "gutter": "16px",
+    "margin-mobile": "16px",
+    "margin-desktop": "32px",
+    "container-max": "1440px",
+    "card-padding": "24px",
+    "grid-columns-desktop": 12,
+    "grid-columns-mobile": 4
+  },
+  "borderRadius": {
+    "sm": "0.125rem",
+    "DEFAULT": "0.25rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "full": "9999px"
+  }
+}

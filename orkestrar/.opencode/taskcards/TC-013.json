@@ -1,0 +1,12 @@
+{
+    "taskType": "card",
+    "createdBy": "user",
+    "id": "TC-013",
+    "createdAt": "2026-07-26T02:31:19.765Z",
+    "agent": "build",
+    "statusHistory": [],
+    "updatedAt": "2026-07-26T02:31:19.765Z",
+    "status": "backlog",
+    "path": ".opencode/taskcards/TC-013.json",
+    "title": "Inserir opção Cardápio Digital Básico"
+}

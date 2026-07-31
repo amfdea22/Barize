@@ -1,0 +1,7 @@
+{
+  "version": "1",
+  "description": "UI Freeze Registry — componentes visuais aprovados que não podem ser modificados sem autorização explícita.",
+  "policy": "Qualquer arquivo listado em 'frozen' está BLOQUEADO para edição por agentes. Apenas o usuário pode descongelar via /unfreeze <component>.",
+  "frozen": [],
+  "history": []
+}

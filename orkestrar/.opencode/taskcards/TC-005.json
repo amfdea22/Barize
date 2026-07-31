@@ -1,0 +1,22 @@
+{
+  "id": "TC-005",
+  "title": "Adicionar paginação nos endpoints de listagem (produtos, insumos, relatórios)",
+  "status": "executing",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar parâmetros limit/offset/sort nos endpoints GET de listagem para evitar queries de milhares de registros",
+  "acceptanceCriteria": [
+    "Endpoints de produtos, insumos e relatórios aceitam ?limit=50&offset=0",
+    "Frontend usa IntersectionObserver ou paginação tradicional",
+    "Nenhuma quebra em listas existentes (default limit=50 se omitido)"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/routers/pdv.py",
+    "neonbar/backend/app/routers/estoque.py",
+    "neonbar/backend/app/routers/relatorios.py"
+  ],
+  "tests": [],
+  "notes": "Recomendado pelo @architect — prepara o sistema para catálogo grande sem degradação"
+}

@@ -1,0 +1,399 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mockup: Card Component — Obsidian Flow</title>
+  <!--
+    ============================================================
+    MOCKUP VISUAL — Card Component
+    Design System: Obsidian Flow
+    ============================================================
+    Este HTML mockup representa o componente de Card com todas
+    as variações esperadas: header, body, footer, image variant,
+    e estados (normal, hover, active).
+    ============================================================
+    Metadados:
+      Nome: Card Component
+      Tipo: component
+      Formato: html
+      Breakpoints: mobile, desktop
+      Componentes: card, card-header, card-body, card-footer, card-image
+      Estados: normal, hover, active, disabled
+    ============================================================
+  -->
+  <style>
+    :root {
+      --color-surface: #111319;
+      --color-surface-container: #1e1f26;
+      --color-surface-container-high: #282a30;
+      --color-surface-container-highest: #33343b;
+      --color-on-surface: #e2e2eb;
+      --color-on-surface-variant: #c9c4d8;
+      --color-primary: #cabeff;
+      --color-on-primary: #31009a;
+      --color-primary-container: #937dff;
+      --color-error: #ffb4ab;
+      --color-outline: #938ea1;
+      --color-outline-variant: #484555;
+      --color-success: #4ade80;
+      --font-headline: 'Geist', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-label: 'JetBrains Mono', monospace, ui-monospace;
+      --radius-lg: 8px;
+      --spacing-card: 24px;
+      --spacing-unit: 4px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-surface);
+      color: var(--color-on-surface);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .section-title {
+      font-family: var(--font-headline);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-on-surface);
+      margin-bottom: 16px;
+    }
+
+    /* ==========================================================
+       [CARD BASE] Componente Card
+       Fundo: surface-container | Borda: 1px outline-variant
+       Border-radius: 8px | Overflow: hidden
+       Estados: hover eleva borda para primary
+    ========================================================== */
+    .card {
+      background: var(--color-surface-container);
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      max-width: 400px;
+    }
+
+    /* Hover state */
+    .card:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 1px rgba(202, 190, 255, 0.1);
+    }
+
+    /* Active state */
+    .card:active {
+      border-color: var(--color-primary-container);
+      background: var(--color-surface-container-high);
+    }
+
+    /* Disabled state */
+    .card.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* ==========================================================
+       [CARD HEADER] Topo do card
+       Padding: 24px 24px 16px | Borda inferior: outline-variant
+       Elementos: título, subtitle, action
+    ========================================================== */
+    .card-header {
+      padding: var(--spacing-card) var(--spacing-card) 16px;
+      border-bottom: 1px solid var(--color-outline-variant);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-header-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-title {
+      font-family: var(--font-headline);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-on-surface);
+      line-height: 1.4;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-on-surface-variant);
+      line-height: 1.5;
+    }
+
+    .card-header-action {
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================
+       [CARD BODY] Corpo do card
+       Padding: 16px 24px 24px
+       Pode conter texto, listas, formulários
+    ========================================================== */
+    .card-body {
+      padding: 16px var(--spacing-card) var(--spacing-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-body-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-on-surface-variant);
+    }
+
+    /* ==========================================================
+       [CARD FOOTER] Rodapé do card
+       Padding: 16px 24px | Borda superior: outline-variant
+       Elementos: ações (botões)
+    ========================================================== */
+    .card-footer {
+      padding: 16px var(--spacing-card);
+      border-top: 1px solid var(--color-outline-variant);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* ==========================================================
+       [CARD IMAGE] Variante com imagem
+       Imagem no topo (acima do header) | Aspect ratio: 16:9
+    ========================================================== */
+    .card-image-wrapper {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--color-surface-container-highest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card-image-placeholder {
+      font-family: var(--font-label);
+      font-size: 13px;
+      color: var(--color-outline);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================================
+       [BUTTON TOKENS] Mini botões para o footer
+    ========================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-on-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-container);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-on-surface-variant);
+    }
+
+    .btn-ghost:hover {
+      background: var(--color-surface-container-high);
+      color: var(--color-on-surface);
+    }
+
+    /* ==========================================================
+       [CARDS GRID] Grade de demonstração
+    ========================================================== */
+    .cards-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 16px; }
+      .cards-demo { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ==========================================================
+       [DEMO] Card Padrão com Header, Body e Footer
+  ========================================================== -->
+  <section aria-label="Demonstração de cards">
+    <h1 class="section-title">Componente Card — Variações</h1>
+
+    <div class="cards-demo">
+      <!--
+        ============================================================
+        [CARD 1] Card Padrão
+        Estrutura: header + body + footer
+        Uso: conteúdo informacional com ações no rodapé
+        ============================================================
+      -->
+      <article class="card" role="article" aria-label="Card padrão com header, body e footer">
+        <!-- [HEADER] Título + subtítulo -->
+        <div class="card-header">
+          <div class="card-header-content">
+            <h3 class="card-title">Monitoramento de Serviços</h3>
+            <p class="card-subtitle">Última atualização: 2 minutos atrás</p>
+          </div>
+          <div class="card-header-action">
+            <span class="badge" style="background:rgba(202,190,255,0.12);color:var(--color-primary);font-family:var(--font-label);font-size:11px;padding:2px 8px;border-radius:4px;">ativo</span>
+          </div>
+        </div>
+
+        <!-- [BODY] Conteúdo do card -->
+        <div class="card-body">
+          <p class="card-body-text">
+            Visualize o status de todos os serviços monitorados pelo orkestrar.
+            Este card exibe métricas agregadas de uptime, latência e alertas
+            para o conjunto de serviços selecionado.
+          </p>
+          <div style="display:flex;gap:16px;margin-top:8px;">
+            <div>
+              <span style="font-family:var(--font-label);font-size:11px;color:var(--color-outline);display:block;">UPTIME</span>
+              <span style="font-family:var(--font-headline);font-size:20px;font-weight:600;">99.97%</span>
+            </div>
+            <div>
+              <span style="font-family:var(--font-label);font-size:11px;color:var(--color-outline);display:block;">LATÊNCIA</span>
+              <span style="font-family:var(--font-headline);font-size:20px;font-weight:600;">42ms</span>
+            </div>
+            <div>
+              <span style="font-family:var(--font-label);font-size:11px;color:var(--color-outline);display:block;">ALERTAS</span>
+              <span style="font-family:var(--font-headline);font-size:20px;font-weight:600;color:var(--color-error);">3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- [FOOTER] Ações do card -->
+        <div class="card-footer">
+          <button class="btn btn-ghost" aria-label="Descartar">Descartar</button>
+          <button class="btn btn-primary" aria-label="Visualizar detalhes">Visualizar</button>
+        </div>
+      </article>
+
+      <!--
+        ============================================================
+        [CARD 2] Card com Imagem
+        Estrutura: image + header + body
+        Uso: conteúdo visual com destaque para imagem
+        ============================================================
+      -->
+      <article class="card" role="article" aria-label="Card com imagem no topo">
+        <!-- [IMAGE] Imagem no topo do card -->
+        <div class="card-image-wrapper" role="img" aria-label="Gráfico de desempenho">
+          <span class="card-image-placeholder">[ gráfico: performance ]</span>
+        </div>
+
+        <!-- [HEADER] Título -->
+        <div class="card-header">
+          <div class="card-header-content">
+            <h3 class="card-title">Desempenho por Serviço</h3>
+            <p class="card-subtitle">Distribuição de latência nos últimos 7 dias</p>
+          </div>
+        </div>
+
+        <!-- [BODY] Descrição -->
+        <div class="card-body">
+          <p class="card-body-text">
+            Análise detalhada de desempenho por serviço. O gráfico acima
+            mostra a distribuição de latência para cada endpoint monitorado,
+            com destaque para outliers e padrões sazonais.
+          </p>
+        </div>
+      </article>
+
+      <!--
+        ============================================================
+        [CARD 3] Card Compacto (sem footer)
+        Estrutura: header + body apenas
+        Uso: widgets de dashboard, cards informacionais
+        ============================================================
+      -->
+      <article class="card" role="article" aria-label="Card compacto sem footer">
+        <!-- [HEADER] Título apenas -->
+        <div class="card-header" style="border-bottom:none;padding-bottom:0;">
+          <div class="card-header-content">
+            <h3 class="card-title">Status do Sistema</h3>
+          </div>
+        </div>
+
+        <!-- [BODY] Lista de status -->
+        <div class="card-body" style="padding-top:12px;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-outline-variant);">
+              <span style="font-size:13px;font-weight:500;">api-gateway</span>
+              <span style="color:var(--color-success);font-family:var(--font-label);font-size:11px;">● online</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-outline-variant);">
+              <span style="font-size:13px;font-weight:500;">auth-service</span>
+              <span style="color:var(--color-success);font-family:var(--font-label);font-size:11px;">● online</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-outline-variant);">
+              <span style="font-size:13px;font-weight:500;">event-processor</span>
+              <span style="color:var(--color-warning, #fbbf24);font-family:var(--font-label);font-size:11px;">● degradado</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+              <span style="font-size:13px;font-weight:500;">data-sync</span>
+              <span style="color:var(--color-error);font-family:var(--font-label);font-size:11px;">● offline</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!--
+        ============================================================
+        [CARD 4] Card Desabilitado
+        Estrutura: header + body + footer (opaco, sem interação)
+        Uso: conteúdo indisponível ou bloqueado
+        ============================================================
+      -->
+      <article class="card disabled" role="article" aria-label="Card desabilitado" aria-disabled="true">
+        <div class="card-header">
+          <div class="card-header-content">
+            <h3 class="card-title">Relatório Avançado</h3>
+            <p class="card-subtitle">Disponível na versão Pro</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-body-text">
+            Esta funcionalidade requer uma licença avançada do orkestrar.
+            Atualize seu plano para acessar relatórios detalhados com
+            análise preditiva e recomendação automatizada.
+          </p>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" disabled aria-label="Fazer upgrade">Fazer Upgrade</button>
+        </div>
+      </article>
+    </div>
+  </section>
+</body>
+</html>

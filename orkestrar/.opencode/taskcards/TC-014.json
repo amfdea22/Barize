@@ -1,0 +1,28 @@
+﻿{
+    "tests":  [
+
+              ],
+    "id":  "TC-014",
+    "notes":  "",
+    "agent":  "build",
+    "filesInvolved":  [
+
+                      ],
+    "title":  "Inserir barra de rolagem para manter tamanhos padrões de visualização das fotos dos produtos com descrição e preços como no menu bebidas",
+    "createdBy":  "user",
+    "taskType":  "card",
+    "statusHistory":  [
+
+                      ],
+    "status":  "completed",
+    "acceptanceCriteria":  [
+                                "Cards do PDV têm o mesmo tamanho em Todas as Bebidas e em categorias específicas",
+                                "Scrollbar sempre visível (overflow-y: scroll) para evitar variação de largura",
+                                "Descrição e preços visíveis em todos os cards",
+                                "Comportamento igual ao do menu bebidas/drinks"
+                            ],
+    "path":  ".opencode/taskcards/TC-014.json",
+    "objective":  "Inserir barra de rolagem para manter tamanhos padrões de visualização das fotos dos produtos com descrição e preços, similar ao que já existe no menu de bebidas",
+    "createdAt":  "2026-07-26T05:45:02.529Z",
+    "updatedAt":  "2026-07-26T05:45:02.529Z"
+}

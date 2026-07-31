@@ -1,0 +1,1048 @@
+meta:
+  name: "[Your Project Name]"
+  version: 1.0.0
+  description: Describe your project
+stack:
+  language: TypeScript + Node.js
+  framework: ""
+  appType: Monolito Tradicional
+  cssFramework: Tailwind CSS
+  testFramework: Vitest
+  packageManager: npm
+  architecture: "{{architectureName}}"
+  codeConventions:
+    - TypeScript strict mode enabled
+    - Commits follow Conventional Commits
+    - Public functions must have JSDoc
+    - Unit tests required for all business logic
+    - PRs must pass lint + tests before merge
+    - UI follows DESIGN.md guidelines (if applicable)
+design:
+  source: DESIGN.md
+agents:
+  - name: build
+    mode: primary
+    model: auto
+    temperature: 0.3
+    description: Default agent for implementation. Full permissions.
+    editPermission: allow
+    bashPermissions:
+      - scope: "*"
+        rule: allow
+    taskPermissions:
+      default: deny
+      overrides:
+        architect: allow
+        code-reviewer: allow
+        test-writer: allow
+        refactorer: allow
+        debugger: allow
+        documenter: allow
+        security-auditor: ask
+        database-specialist: allow
+        devops-engineer: allow
+        performance-engineer: allow
+        ui-designer: allow
+        qa-engineer: allow
+  - name: plan
+    mode: primary
+    model: auto
+    temperature: 0.1
+    color: "#FFA500"
+    description: Use before complex changes. Analysis only.
+    editPermission: deny
+    bashPermissions:
+      - scope: git *
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: revisor
+    mode: primary
+    model: auto
+    temperature: 0.1
+    description: PR review and code analysis. Tab to alternate.
+    color: "#ff6b6b"
+    editPermission: deny
+    bashPermissions:
+      - scope: git *
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: deny
+    webfetchPermission: deny
+  - name: architect
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Architect. Validates designs, suggests patterns, documents decisions.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: ls *
+        rule: allow
+      - scope: "*"
+        rule: deny
+  - name: code-reviewer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    steps: 15
+    description: Code reviewer focused on security, performance, and best practices.
+    editPermission: deny
+    bashPermissions:
+      - scope: git diff*
+        rule: allow
+      - scope: git log*
+        rule: allow
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: deny
+    webfetchPermission: deny
+  - name: test-writer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: Expert in writing unit, integration, and e2e tests.
+    editPermission: allow
+    bashPermissions:
+      - scope: npm test*
+        rule: allow
+      - scope: npx vitest*
+        rule: allow
+      - scope: npx jest*
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: refactorer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: Code refactoring without changing behavior.
+    editPermission: allow
+    bashPermissions:
+      - scope: npm *
+        rule: allow
+      - scope: npx *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: debugger
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Debugging expert. Analyzes logs, stack traces, behavior.
+    editPermission: ask
+    bashPermissions:
+      - scope: npm *
+        rule: allow
+      - scope: npx *
+        rule: allow
+      - scope: node *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: documenter
+    mode: subagent
+    model: auto
+    temperature: 0.3
+    description: Technical writer. Creates and maintains docs, README, JSDoc.
+    editPermission: allow
+    bashPermissions:
+      - scope: "*"
+        rule: deny
+  - name: security-auditor
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Security auditor. Identifies vulnerabilities and bad practices.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: npm audit*
+        rule: allow
+      - scope: npx audit*
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: database-specialist
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Database specialist. Schema design, queries, migrations, ORM.
+    editPermission: ask
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: devops-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: DevOps engineer. CI/CD, Docker, deploy, infrastructure.
+    editPermission: ask
+    bashPermissions:
+      - scope: npm *
+        rule: allow
+      - scope: npx *
+        rule: allow
+      - scope: docker *
+        rule: ask
+      - scope: "*"
+        rule: ask
+  - name: performance-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.1
+    description: Performance engineer. Benchmarking, profiling, optimization.
+    editPermission: deny
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: npm *
+        rule: allow
+      - scope: npx *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: ui-designer
+    mode: subagent
+    model: auto
+    temperature: 0.3
+    description: UI/UX designer. Design system, accessibility, responsiveness.
+    editPermission: allow
+    bashPermissions:
+      - scope: grep *
+        rule: allow
+      - scope: "*"
+        rule: ask
+  - name: qa-engineer
+    mode: subagent
+    model: auto
+    temperature: 0.2
+    description: QA engineer. Integration/e2e tests, regression, test strategy.
+    editPermission: allow
+    bashPermissions:
+      - scope: npm test*
+        rule: allow
+      - scope: npx vitest*
+        rule: allow
+      - scope: npx playwright*
+        rule: allow
+      - scope: "*"
+        rule: ask
+commands:
+  - command: /testar
+    description: Run test suite and analyze failures
+    agent: build
+    instructions: |
+      1. Execute a suite de testes: `npx vitest run`
+      2. Analise o resultado:
+         a. Se todos passarem → reporte sucesso (quantidade de testes, tempo)
+         b. Se houver falhas → analise cada uma:
+            - Identifique o módulo/arquivo com falha
+            - Leia o teste e o código correspondente
+            - Diagnostique a causa raiz
+            - Sugira correção específica
+      3. Se o usuário autorizar, aplique as correções e reexecute
+      4. Reporte cobertura de código se disponível
+  - command: /revisar
+    description: Review code from recent commits
+    agent: revisor
+    subTask: true
+    instructions: |
+      1. Obtenha as mudanças recentes: `git diff HEAD~1 --name-only`
+         - Se não houver mudanças, use `git log --oneline -5`
+         - Se solicitado revisão específica, use `git diff <ref>`
+      2. Leia o diff completo de cada arquivo modificado
+      3. Analise: lógica, segurança, performance, boas práticas, TypeScript strict
+      4. Se houver issues críticas, delegue para @code-reviewer
+      5. Reporte: resumo, problemas (com severidade), sugestões e checklist
+  - command: /corrigir <descrição>
+    arguments:
+      - name: descrição
+        type: string
+        required: true
+        description: Descrição livre do item
+    description: Debug and fix bugs
+    agent: debugger
+    subTask: true
+    instructions: |
+      1. Entenda o bug descrito pelo usuário
+      2. Delegue para @debugger para investigação:
+         a. Reproduzir o bug consistentemente
+         b. Isolar o módulo problemático
+         c. Identificar a causa raiz
+         d. Propor correção mínima
+      3. Após aprovação do plano:
+         a. Implementar a correção
+         b. Adicionar teste de regressão
+         c. Executar suite: `npx vitest run`
+         d. Verificar TypeScript: `npx tsc --noEmit`
+      4. Reporte: causa raiz, correção aplicada, testes passando
+  - command: /fluxo <tarefa>
+    arguments:
+      - name: tarefa
+        type: string
+        required: true
+        description: Descrição da tarefa
+    description: Force deterministic workflow (residual — workflow is now automatic for tasks)
+    agent: build
+    instructions: |
+      1. Ative o Workflow Determinístico completo para a tarefa descrita
+      2. Siga rigorosamente as etapas:
+         a. [PLANEJAMENTO] Analisar requisitos com @plan ou @architect
+         b. [APROVAÇÃO] Apresentar plano e aguardar aprovação do usuário
+         c. [IMPLEMENTAÇÃO] Escrever código seguindo o plano aprovado
+         d. [REVISÃO] Revisar código com @code-reviewer
+         e. [TESTES] Executar suite completa: `npx vitest run`
+         f. [MERGE] Commitar seguindo Conventional Commits
+      3. Aplicar gates em cada etapa: Scope Guard → Pre-flight → Validation → Security
+      4. Atualizar memory/progress-tracker.md a cada etapa
+  - command: /direto <pergunta>
+    arguments:
+      - name: pergunta
+        type: string
+        required: true
+        description: Pergunta a ser respondida
+    description: Bypass workflow — quick answer without stages (residual)
+    agent: build
+    instructions: |
+      1. Responda diretamente à pergunta SEM ativar o workflow determinístico
+      2. Use apenas leitura e análise — não modifique arquivos a menos que solicitado
+      3. Se precisar pesquisar: use grep para encontrar padrões, leia arquivos relevantes
+      4. Se a pergunta for complexa demais, sugira usar /fluxo
+  - command: /status
+    description: Show workflow status, progress, next steps
+    agent: build
+    instructions: |
+      1. Leia memory/progress-tracker.md para estado atual do workflow
+      2. Leia memory/session-state.json para contexto da sessão
+      3. Liste task cards ativos em .opencode/taskcards/active/
+      4. Verifique memory/context-map.md para arquivos modificados
+      5. Reporte:
+         - Passo atual do workflow
+         - Cards ativos com status
+         - Modificações recentes
+         - Próximos passos sugeridos
+      6. Se não houver workflow ativo, sugira iniciar uma nova tarefa
+  - command: /checkpoint
+    description: Save current progress checkpoint
+    agent: build
+    instructions: |
+      1. Salve o estado atual do workflow como checkpoint
+      2. Registre em memory/session-state.json:
+         - Passo atual do workflow
+         - Arquivos modificados (git diff --name-only)
+         - Resultados de testes (se executados)
+         - Timestamp e descrição
+      3. Adicione entrada em memory/progress-tracker.md:
+         "Checkpoint salvo: <timestamp> - <descrição>"
+      4. Se git branch estiver disponível, sugira commit temporário
+  - command: /card <descrição>
+    arguments:
+      - name: descrição
+        type: string
+        required: true
+        description: Descrição livre do item
+    description: Create task card in backlog
+    agent: build
+    instructions: |
+      1. Use TaskCardManager.createTask() para criar o card:
+         const manager = getTaskCardManager({ harness: adapter });
+         manager.init();
+         const task = manager.createTask({ title: '<descrição>' }, 'user');
+      2. O card é criado em backlog com ID auto-incrementado (TC-001, TC-002...)
+      3. Informe o ID: "✅ Card TC-001 criado em backlog."
+      4. Sugira usar /card-iniciar para iniciar a execução
+  - command: /cards
+    description: List active, backlog and cancelled task cards
+    agent: build
+    instructions: |
+      AÇÃO REAL — faça a listagem abaixo.
+
+      1. Importe/carregue o TaskCardManager: const manager = getTaskCardManager({ harness: adapter });
+      2. Chame manager.reload() e depois manager.listCards() para obter todos os cards
+      3. Agrupe por status e exiba em TABELA MARKDOWN:
+
+      ### ▶️ Active (N)
+      | ID | Título | Prioridade |
+      |----|--------|------------|
+      | TC-XXX | Título do card | high |
+
+      ### 📥 Backlog (N)
+      | ID | Título | Prioridade |
+      |----|--------|------------|
+      | TC-XXX | Título do card | medium |
+
+      ### ✅ Completed (N)
+      TC-001, TC-002, TC-003 (apenas IDs, sem tabela)
+
+      ### ❌ Cancelled (N)
+      TC-001 (Título), TC-012 (Título)
+
+      4. Regras:
+         - **Active**: emoji ▶️, tabela completa
+         - **Backlog**: emoji 📥, tabela completa
+         - **Completed**: emoji ✅, apenas IDs separados por vírgula
+         - **Cancelled**: emoji ❌, IDs com título entre parênteses
+      5. Se categoria vazia → "Nenhum"
+      6. Sugira o próximo card a iniciar (se houver backlog)
+      7. Se NÃO houver cards em NENHUMA categoria → "Nenhum card encontrado."
+  - command: /card-iniciar <id>
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+    description: Start execution of a task card
+    agent: build
+    instructions: |
+      1. Use TaskCardManager.startTask() para iniciar:
+         const manager = getTaskCardManager({ harness: adapter });
+         manager.init();
+         const result = await manager.startTask('<id>', 'build');
+      2. Se o card está em backlog → vai para analyzing (não executing)
+      3. Após análise completa, chame startTask() novamente (analyzing → ready)
+      4. Se o usuário aprovou, chame startTask() mais uma vez (ready → executing)
+      5. Apenas quando card estiver em executing, inicie o Workflow Determinístico
+  - command: /card-concluir <id>
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+    description: Complete a task card
+    agent: build
+    instructions: |
+      1. VALIDAR: card DEVE estar em 'verified' (testes passaram)
+      2. Usar TaskCardManager.completeTask() para finalizar:
+         const manager = getTaskCardManager({ harness: adapter });
+         manager.init();
+         const { success, error } = await manager.completeTask('<id>', 'user');
+      3. APENAS usuário pode concluir — agentes NÃO podem auto-finalizar
+      4. Se o usuário rejeitar: use startTask() para voltar a executing
+      5. Faça commit seguindo Conventional Commits
+  - command: /card-cancelar <id>
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+    description: Cancel a task card (remove from active flow)
+    agent: build
+    instructions: |
+      1. Encontre o card em .opencode/taskcards/active/ ou backlog/
+      2. Se estiver ativo: reverta mudanças relacionadas e descarte branch se houver
+      3. Mova para .opencode/taskcards/cancelled/ (crie diretório se necessário)
+      4. Atualize status para "cancelled" e registre motivo
+      5. Atualize memory/progress-tracker.md
+  - command: /voltar
+    description: Roll back to previous workflow step after failure
+    agent: build
+    instructions: |
+      1. Leia memory/session-state.json para último checkpoint
+      2. Leia memory/progress-tracker.md para o passo anterior
+      3. Se houver checkpoint salvo:
+         a. Reverta mudanças desde o checkpoint
+         b. OU restaure manualmente os arquivos
+      4. Atualize memory/progress-tracker.md:
+         - Marque o passo atual como "REVERTIDO"
+         - Registre a reversão com timestamp
+      5. Se não houver checkpoint, use git log para referência
+  - command: /sdd <título>
+    arguments:
+      - name: título
+        type: string
+        required: true
+        description: Título do documento
+    description: Create new Software Design Document
+    agent: build
+    instructions: |
+      1. Crie um SDD em .opencode/sdd/active/ — nome: <título-em-kebab-case>.md
+      2. Estrutura:
+         # SDD: <Título>
+         ## Contexto
+         ## Objetivos
+         ## Arquitetura
+         ## Alternativas
+         ## Segurança
+         ## Plano
+         ## Checklist
+         ## Referências
+      3. Se o usuário forneceu detalhes, preencha as seções
+      4. Informe que está em active/ e como aprovar (/sdds)
+  - command: /sdds
+    description: List SDDs (active/approved/completed)
+    agent: build
+    instructions: |
+      AÇÃO REAL — faça a listagem abaixo, não apenas leia este arquivo.
+
+      1. Leia `.opencode/sdd/index.json` para obter o índice de SDDs
+      2. Verifique cada SDD nas pastas: `active/`, `approved/`, `completed/`
+      3. Exiba uma tabela formatada: Título | Status | Data de criação
+      4. Se houver SDDs em `active/`, sugira prosseguir com revisão e aprovação
+      5. Se não houver SDDs, informe: "Nenhum SDD encontrado."
+  - command: /smallspec <título>
+    arguments:
+      - name: título
+        type: string
+        required: true
+        description: Título do documento
+    description: Create new smallSpec
+    agent: build
+    instructions: |
+      1. Crie um smallSpec em .opencode/smallspec/active/ — nome: <título>.md
+      2. Estrutura:
+         # smallSpec: <Título>
+         ## User Stories
+         ## Critérios de Aceite
+         ## Abordagem Técnica
+         ## Arquivos Envolvidos
+         ## Edge Cases
+         ## Dependências
+         ## Checklist
+      3. Preencha com base nas informações do usuário
+      4. Informe status e como ver (/smallspecs)
+  - command: /smallspecs
+    description: List smallSpecs (active/completed)
+    agent: build
+    instructions: |
+      AÇÃO REAL — faça a listagem abaixo, não apenas leia este arquivo.
+
+      1. Leia `.opencode/smallspec/index.json` para obter o índice
+      2. Verifique cada smallSpec nas pastas: `active/`, `approved/`, `completed/`
+      3. Exiba uma tabela formatada: Título | Status | Data de criação
+      4. Se não houver smallSpecs, informe: "Nenhum smallSpec encontrado."
+  - command: /sop <título>
+    arguments:
+      - name: título
+        type: string
+        required: true
+        description: Título do documento
+    description: Create new Standard Operating Procedure
+    agent: build
+    instructions: |
+      1. Crie um SOP em .opencode/sop/active/ — nome: <título>.md
+      2. Estrutura:
+         # SOP: <Título>
+         ## Objetivo
+         ## Pré-requisitos
+         ## Passos
+         ## Verificação Pós-Execução
+         ## Rollback
+         ## Referências
+      3. Preencha com base nas instruções do usuário
+      4. Informe status e como ver (/sops)
+  - command: /sops
+    description: List SOPs (active/review/deprecated)
+    agent: build
+    instructions: |
+      AÇÃO REAL — faça a listagem abaixo, não apenas leia este arquivo.
+
+      1. Leia `.opencode/sop/index.json` para obter o índice de SOPs
+      2. Verifique cada SOP nas pastas: `active/`, `review/`, `deprecated/`
+      3. Exiba uma tabela formatada: Título | Status | Data de criação
+      4. SOPs em `review/` precisam de promoção via `/sop-promote`
+      5. Se não houver SOPs, informe: "Nenhum SOP encontrado."
+  - command: /sop-promote <id> <status>
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+    description: Promote a SOP to new status (draft→active→review→deprecated)
+    agent: build
+    instructions: |
+      1. Encontre o SOP pelo ID/título
+      2. Mova para o diretório de status correspondente
+      3. Atualize o status no arquivo com data
+      4. Valide a transição (ex: draft→deprecated é inválido)
+  - command: /doctor
+    description: Run installation diagnostics (validate config, environment, structure)
+    agent: build
+    instructions: |
+      1. Execute diagnóstico completo:
+         a. Verificar Node.js (versão >= 18)
+         b. Verificar dependências (node_modules existe)
+         c. Verificar orkestrar.yaml (válido) e opencode.json (existe)
+         d. Verificar estrutura do projeto
+         e. `npx tsc --noEmit` — erros de compilação?
+         f. `npx vitest run` — testes passam?
+      2. Reporte: ✓ para sucesso, ✗ para falha com detalhes e sugestão
+      3. Se falha crítica: sugira comando para corrigir
+         - Config: `npx orkestrar init --update`
+         - Dependências: `npm install`
+  - command: /tutorial
+    description: Start interactive tutorial walkthrough
+    agent: build
+    instructions: |
+      1. Inicie tutorial interativo sobre o framework
+      2. Apresente: agentes, slash commands, workflow determinístico
+      3. Guie pelos comandos básicos:
+         - /status — ver estado
+         - /doctor — verificar instalação
+         - /card "tarefa" — criar card
+         - /fluxo "tarefa" — executar workflow
+      4. Ofereça ajuda contextual e exemplos práticos
+  - command: /upgrade
+    description: Upgrade project config to latest framework version
+    agent: build
+    instructions: |
+      1. Verifique a versão atual (package.json)
+      2. Verifique a versão mais recente disponível
+      3. Se houver nova versão:
+         a. Mostre o changelog
+         b. Execute: `npx orkestrar upgrade`
+         c. Recompile: `npm run build`
+         d. Regenerar artefatos: `npx orkestrar build`
+      4. Se atualizado, informe a versão atual
+  - command: /create
+    description: Scaffold new project from starter template
+    agent: build
+    instructions: |
+      1. Use: `npx orkestrar create <nome-do-projeto>` para scaffold
+      2. Se o usuário quiser configurar o projeto atual, sugira `npx orkestrar init`
+      3. Templates disponíveis: básico, react, node-lib
+  - command: /registry
+    description: Manage local skill/plugin registry
+    agent: build
+    instructions: |
+      1. Gerencie o registry de skills e plugins
+      2. CLI: `npx orkestrar registry list|add <path>|remove <name>`
+      3. Liste registros atuais em .opencode/registry/
+      4. Siga as instruções do usuário (listar, adicionar, remover)
+  - command: /architect
+    description: AI-assisted architectural analysis and ADR suggestions
+    agent: architect
+    subTask: true
+    instructions: |
+      AÇÃO REAL — realize as ações abaixo, não apenas leia este arquivo.
+
+      1. Analise a arquitetura atual (padrões, diretórios, dependências)
+      2. Identifique riscos e pontos de melhoria
+      3. Sugira padrões de projeto aplicáveis
+      4. Documente decisões como ADR em memory/decision-log.md
+      5. Avalie impacto entre componentes
+      6. Apresente resultado com recomendações
+  - command: /retomar <id>
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+    description: Resume a task card after review — review → executing
+    agent: build
+    subTask: true
+    instructions: |
+      1. Use TaskCardManager.resumeTask() para transicionar review → executing
+      2. Valide retorno (error, success)
+      3. Se sucesso: continue o workflow de onde parou
+      4. Reporte: "⚙️ Card <id> retomado após revisão."
+  - command: /review <id> [--reason "<motivo>"]
+    arguments:
+      - name: id
+        type: string
+        required: true
+        description: Card/SOP/RFC ID
+      - name: motivo
+        type: string
+        required: true
+        description: Valor para motivo
+    description: Request review of a task card — move para review
+    agent: revisor
+    subTask: true
+    instructions: |
+      1. Use TaskCardManager.reviewTask() para transicionar para review
+      2. Valide retorno:
+         - Se "terminal": card está em estado terminal
+         - Se "já está em revisão": card já está em review
+      3. Se sucesso: reporte motivo da revisão
+  - command: /rfc <título>
+    arguments:
+      - name: título
+        type: string
+        required: true
+        description: Título do documento
+    description: Create a new RFC (Request for Comments)
+    agent: build
+    instructions: |
+      1. Verificar estrutura .opencode/rfc/ (criar se não existir)
+      2. Gerar ID RFC-NNNN baseado no nextId do index.json
+      3. Copiar template de templates/.opencode/rfcs/0000-template.md
+      4. Atualizar index.json (nextId+1)
+      5. Exibir confirmação com ID e path
+  - command: /adr <título>
+    arguments:
+      - name: título
+        type: string
+        required: true
+        description: Título do documento
+    description: Criar novo Architecture Decision Record
+    agent: architect
+    subTask: true
+  - command: /adrs
+    description: Listar ADRs (active/approved/deprecated)
+    agent: architect
+    subTask: true
+  - command: /changelog [generate|latest]
+    arguments:
+      - name: subcommand
+        type: enum
+        required: false
+        description: 'Subcomando opcional: generate | latest'
+    description: Gerar ou exibir CHANGELOG do projeto
+    agent: build
+  - command: /debt <add|list|close|dashboard>
+    arguments:
+      - name: add|list|close|dashboard
+        type: string
+        required: true
+        description: Valor para add|list|close|dashboard
+    description: Gerenciar dívida técnica
+    agent: build
+  - command: /graph <mermaid|dot|table>
+    arguments:
+      - name: mermaid|dot|table
+        type: string
+        required: true
+        description: Valor para mermaid|dot|table
+    description: Visualizar grafo de dependências
+    agent: architect
+    subTask: true
+  - command: /impact <descrição>
+    arguments:
+      - name: descrição
+        type: string
+        required: true
+        description: Descrição livre do item
+    description: Analisar impacto de mudanças
+    agent: architect
+    subTask: true
+  - command: /sbom [json|table]
+    arguments:
+      - name: subcommand
+        type: enum
+        required: false
+        description: 'Subcomando opcional: json | table'
+    description: Gerar SBOM (SPDX 2.3)
+    agent: security-auditor
+    subTask: true
+  - command: /test-quality
+    description: Analisar qualidade dos testes do projeto
+    agent: qa-engineer
+    subTask: true
+workflows:
+  - name: pre-build
+    steps:
+      - step: DOCTOR
+        agent: build
+        action: Check environment health (doctor)
+        gate: pre-flight
+        circuitBreaker:
+          threshold: 2
+          resetTimeout: 15000
+      - step: VALIDATION
+        agent: build
+        action: Run pre-build validation (tsc, eslint)
+        gate: validation
+  - name: post-build
+    steps:
+      - step: TESTES
+        agent: build
+        action: Run full test suite after build
+        gate: validation
+      - step: COVERAGE
+        agent: build
+        action: Verify test coverage meets threshold
+        gate: allow-failure
+  - name: feature
+    steps:
+      - step: PLANEJAMENTO
+        agent: plan or @architect
+        action: Analyze requirements, design solution, document ADR
+        gate: User approves plan
+      - step: IMPLEMENTAÇÃO
+        agent: build
+        action: Write code following approved plan
+        gate: Code compiles and lint passes
+        circuitBreaker:
+          threshold: 3
+          resetTimeout: 30000
+      - step: REVISÃO
+        agent: revisor or @code-reviewer
+        action: Review security, performance, best practices
+        gate: Review approved without critical issues
+        circuitBreaker:
+          threshold: 3
+          resetTimeout: 30000
+      - step: TESTES
+        agent: "@test-writer + build"
+        action: Write/update tests, run full suite
+        gate: 100% tests passing
+      - step: MERGE
+        agent: build
+        action: Commit following Conventional Commits
+        gate: Commit created with standard message
+        circuitBreaker:
+          threshold: 2
+          resetTimeout: 60000
+  - name: bugfix
+    steps:
+      - step: REPRODUÇÃO
+        agent: "@debugger"
+        action: Reproduce bug consistently
+        gate: Bug reproduced
+      - step: DIAGNÓSTICO
+        agent: "@debugger"
+        action: Identify root cause
+        gate: Root cause identified
+      - step: CORREÇÃO
+        agent: "@debugger (edit: ask) or build (edit: allow)"
+        action: Implement fix
+        gate: Fix implemented
+        circuitBreaker:
+          threshold: 3
+          resetTimeout: 30000
+      - step: VERIFICAÇÃO
+        agent: build
+        action: Validate fix with tests
+        gate: Tests pass and bug does not reproduce
+        circuitBreaker:
+          threshold: 3
+          resetTimeout: 30000
+guardrails:
+  levels:
+    - level: Scope Guard
+      checks:
+        - Is the task within my scope/role?
+        - Do I have permission to modify the involved files?
+        - Does the task violate AI limits?
+    - level: Pre-flight Check
+      checks:
+        - Do I understand the existing code?
+        - Will my change break existing functionality?
+        - Do current tests pass?
+        - Does the change follow project standards?
+        - Am I modifying config files without permission?
+    - level: Validation Gate
+      checks:
+        - Code compiles without errors
+        - Lint passes without warnings/errors
+        - Tests pass
+        - No unintended files modified (git diff)
+        - Change consistent with DESIGN.md (if applicable)
+    - level: Security Gate
+      checks:
+        - No secrets/tokens exposed in code or commits
+        - No vulnerable dependencies introduced
+        - No security rules disabled
+        - No endpoints/routes exposed without auth
+  denyRules:
+    - operation: rm -rf
+      reason: Too destructive
+    - operation: Modify opencode.json without permission
+      reason: Harness configuration
+    - operation: Modify tsconfig.json without permission
+      reason: Compiler configuration
+    - operation: Disable lint/security rules
+      reason: Security
+    - operation: Install dependencies without approval
+      reason: Dependency control
+    - operation: Expose secrets in code/commits
+      reason: Security
+  requireApproval:
+    - operation: Deploy
+      reason: Production impact
+    - operation: Push to main/master
+      reason: Risk of breaking production
+    - operation: Modify CI/CD pipelines
+      reason: Infrastructure
+    - operation: Database migrations
+      reason: Risk of data loss
+  perAgentMapping:
+    build:
+      - Scope Guard
+      - Pre-flight Check
+      - Validation Gate
+      - Security Gate
+    plan:
+      - Scope Guard
+    revisor:
+      - Scope Guard
+    architect:
+      - Scope Guard
+    code-reviewer:
+      - Scope Guard
+    test-writer:
+      - Scope Guard
+      - Validation Gate
+    refactorer:
+      - Scope Guard
+      - Pre-flight Check
+      - Validation Gate
+    debugger:
+      - Scope Guard
+      - Security Gate
+    documenter:
+      - Scope Guard
+    security-auditor:
+      - Scope Guard
+      - Security Gate
+    database-specialist:
+      - Scope Guard
+    devops-engineer:
+      - Scope Guard
+      - Security Gate
+    performance-engineer:
+      - Scope Guard
+    ui-designer:
+      - Scope Guard
+      - Validation Gate
+    qa-engineer:
+      - Scope Guard
+      - Validation Gate
+memory:
+  directory: .opencode/memory/
+  levels:
+    - level: L3
+      file: decision-log.md
+      format: ADR (Architecture Decision Record)
+      description: Technical decisions (ADRs)
+      consultWhen: BEFORE making any technical decision
+      writeWhen: AFTER making an important decision
+    - level: L2
+      file: progress-tracker.md
+      format: Markdown with checklists
+      description: Task progress across sessions
+      consultWhen: At START of each session
+      writeWhen: When starting/completing tasks
+    - level: L2
+      file: context-map.md
+      format: Markdown table
+      description: Map of analyzed/modified files
+      consultWhen: BEFORE analyzing a file
+      writeWhen: AFTER analyzing or modifying files
+    - level: L1
+      file: session-state.json
+      format: Lightweight JSON
+      description: Current session state
+      consultWhen: To know current session state
+      writeWhen: On every state transition
+  goldenRule: ALWAYS consult memory before acting, ALWAYS update after acting
+taskCards:
+  maxActive: 3
+  fields:
+    - field: Objetivo
+      description: What needs to be done
+    - field: Descrição
+      description: Context and details
+    - field: Aceite Técnico
+      description: Acceptance criteria
+    - field: Escopo
+      description: What's included/excluded
+    - field: Guardrails
+      description: Rules to observe
+    - field: Restrições
+      description: Technical limitations
+    - field: Arquivos Envolvidos
+      description: Contract — only modify listed files
+    - field: Dependências
+      description: Prerequisites
+    - field: Testes
+      description: How to validate
+    - field: Checklist Final
+      description: Validation before completing
+  cycle:
+    - /card → backlog
+    - /card-iniciar → active (isolated git branch)
+    - /card-concluir → completed (auto-review + commit + PR)
+sdd:
+  sections:
+    - Contexto
+    - Objetivos
+    - Arquitetura
+    - Alternativas
+    - Segurança
+    - Plano
+    - Checklist
+    - Referências
+  workflow:
+    - /sdd → active/ (draft)
+    - /sdds → approved/
+    - (implement)
+    - completed/
+smallspec:
+  sections:
+    - User Stories
+    - Critérios
+    - Abordagem Técnica
+    - Arquivos
+    - Edge Cases
+    - Dependências
+    - Checklist
+  workflow:
+    - /smallspec → active/
+    - /smallspecs → approved/
+    - (implement)
+    - completed/
+sop:
+  sections:
+    - Objetivo
+    - Pré-requisitos
+    - Passos
+    - Verificação Pós-Execução
+    - Rollback
+    - Referências
+  workflow:
+    - /sop → active/ (draft)
+    - /sops → review/
+    - (revisão periódica)
+    - deprecated/
+limitesIa:
+  - rule: DO NOT modify opencode.json, tsconfig.json without asking
+  - rule: DO NOT install dependencies without explicit approval
+  - rule: DO NOT deploy without authorization
+  - rule: DO NOT rewrite entire files unnecessarily
+  - rule: DO NOT change architecture without consulting @architect
+  - rule: DO NOT disable or modify security or lint rules
+  - rule: DO NOT expose secrets, tokens, or API keys in code or commits
+  - rule: DO NOT skip validation gates in the deterministic workflow
+  - rule: DO NOT ignore guardrails — if a guardrail fails, stop and report
+skills:
+  - name: contexto-projeto
+    description: General project context
+    whenToUse: Use when understanding structure, stack, or config before technical decisions
+  - name: padroes-codigo
+    description: Project code standards
+    whenToUse: Use when writing or reviewing TypeScript code for consistency
+  - name: fluxo-git
+    description: Git workflow
+    whenToUse: Use when committing, branching, rebasing, or resolving conflicts
+  - name: decisoes-arquitetura
+    description: ADRs (Architecture Decision Records)
+    whenToUse: Use when consulting, creating, or modifying documented architectural decisions
+  - name: workflow-deterministico
+    description: Deterministic workflow with steps, gates, and handoffs
+    whenToUse: Use when executing a structured workflow or checking current step
+  - name: memoria-persistente
+    description: Persistent memory (decisions, progress, context)
+    whenToUse: Use when consulting past decisions, checking progress, or logging new decisions
+  - name: guardrails
+    description: Protection system with scope, pre-flight, validation, and security checks
+    whenToUse: Use when starting tasks, before modifying, after modifying, or in sensitive operations
+  - name: taskcards
+    description: Atomic task cards with 10-field structure
+    whenToUse: Use when creating, listing, starting, or completing task cards
+  - name: sdd
+    description: Software Design Document for complex/greenfield decisions
+    whenToUse: Use when creating, reviewing, or consulting an SDD
+  - name: smallspec
+    description: smallSpec for medium features (1-3 user stories)
+    whenToUse: Use when documenting a medium-sized feature

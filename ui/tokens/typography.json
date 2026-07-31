@@ -1,0 +1,92 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/orkestrar/tokens-schema/v1/typography.json",
+  "description": "Escala tipográfica do projeto Obsidian Flow — baseada no DESIGN.md",
+  "version": "1.0.0",
+  "source": "DESIGN.md",
+  "lastSynced": "2026-07-18",
+  "fontFamilies": {
+    "headline": {
+      "value": "Geist",
+      "fallback": "system-ui, -apple-system, sans-serif",
+      "description": "Font family para títulos e headlines"
+    },
+    "body": {
+      "value": "Inter",
+      "fallback": "system-ui, -apple-system, sans-serif",
+      "description": "Font family para corpo de texto"
+    },
+    "label": {
+      "value": "JetBrains Mono",
+      "fallback": "monospace, ui-monospace",
+      "description": "Font family para labels, métricas e código"
+    }
+  },
+  "fontSizes": {
+    "headline-lg": {
+      "value": "32px",
+      "desktop": "32px",
+      "mobile": "24px",
+      "lineHeight": "40px",
+      "mobile-lineHeight": "32px",
+      "weight": 600,
+      "letterSpacing": "-0.02em",
+      "description": "Headline larga — título principal de página"
+    },
+    "headline-md": {
+      "value": "24px",
+      "lineHeight": "32px",
+      "weight": 600,
+      "letterSpacing": "-0.01em",
+      "description": "Headline média — título de seção"
+    },
+    "headline-sm": {
+      "value": "20px",
+      "lineHeight": "28px",
+      "weight": 500,
+      "description": "Headline pequena — subtítulo"
+    },
+    "body-lg": {
+      "value": "16px",
+      "lineHeight": "24px",
+      "weight": 400,
+      "description": "Corpo grande — texto principal amplo"
+    },
+    "body-md": {
+      "value": "14px",
+      "lineHeight": "20px",
+      "weight": 400,
+      "description": "Corpo médio — texto padrão"
+    },
+    "body-sm": {
+      "value": "12px",
+      "lineHeight": "16px",
+      "weight": 400,
+      "description": "Corpo pequeno — legendas, metadados"
+    },
+    "label-md": {
+      "value": "13px",
+      "lineHeight": "18px",
+      "weight": 500,
+      "letterSpacing": "0.02em",
+      "description": "Label médio — labels de formulário, badges"
+    },
+    "label-sm": {
+      "value": "11px",
+      "lineHeight": "14px",
+      "weight": 500,
+      "letterSpacing": "0.05em",
+      "description": "Label pequeno — timestamps, código inline"
+    }
+  },
+  "weights": {
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700
+  },
+  "lineHeights": {
+    "tight": 1.25,
+    "normal": 1.5,
+    "relaxed": 1.625
+  }
+}

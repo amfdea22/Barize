@@ -1,0 +1,15 @@
+{
+  "id": "TC-018",
+  "title": "Corrigir scrollbar do PDV e alinhar altura com layout",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-26T06:15:00.000Z",
+  "completedAt": "2026-07-26T06:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "files": [
+    "frontend/src/pages/PDV.tsx",
+    "frontend/src/index.css",
+    "frontend/src/layouts/MainLayout.tsx"
+  ]
+}

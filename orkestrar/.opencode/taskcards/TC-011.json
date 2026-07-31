@@ -1,0 +1,12 @@
+{
+  "id": "TC-011",
+  "title": "Padronizar tamanho da visualização de todas as bebidas igual ao de bebidas/drinks",
+  "status": "backlog",
+  "statusHistory": [],
+  "createdAt": "2026-07-26T05:07:58.951Z",
+  "updatedAt": "2026-07-26T05:07:58.951Z",
+  "path": ".opencode/taskcards/TC-011.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build"
+}

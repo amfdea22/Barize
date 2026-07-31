@@ -1,0 +1,40 @@
+# NeonBar - Dependências
+# Versão: 1.0.0
+
+# Web Framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# Database
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Auth & Security
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.9
+
+# Logging
+loguru==0.7.2
+
+# ESC/POS Printing (Integração de Hardware)
+python-escpos==3.1
+
+# Async Workers
+httpx==0.27.0
+
+# Tasks / Scheduling
+apscheduler==3.10.4
+
+# CORS & Middleware
+slowapi==0.1.9  # Rate limiting
+
+# Dev / Quality
+ruff==0.4.4
+pytest==8.2.0
+
+# Utils
+python-dotenv==1.0.1

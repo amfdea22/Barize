@@ -1,0 +1,25 @@
+{
+  "id": "TC-007",
+  "title": "Adicionar suporte a fotos de drinks e coquetéis no PDV (emoji + foto_url)",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar campo foto_url no model Produto + corrigir bug do campo imagem que não persiste no banco + exibir foto ou emoji no grid do PDV",
+  "acceptanceCriteria": [
+    "Produtos podem ter foto real (URL) além do emoji atual",
+    "Campo imagem (emoji) persiste no banco ao criar/editar produto",
+    "PDV exibe foto real se disponível, senão emoji, senão ícone padrão",
+    "Modal de criar/editar produto tem campo opcional para URL da foto"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/models/produto.py",
+    "neonbar/backend/app/schemas/produto.py",
+    "neonbar/backend/app/routers/pdv.py",
+    "neonbar/frontend/src/pages/PDV.tsx",
+    "neonbar/frontend/src/types/index.ts"
+  ],
+  "tests": [],
+  "notes": "Abordagem híbrida: emoji (rápido) + foto_url (opcional, sem upload - URL externa). Bug: criar_produto e atualizar_produto não salvam campo imagem."
+}

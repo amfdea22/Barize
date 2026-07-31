@@ -1,0 +1,22 @@
+{
+  "id": "TC-001",
+  "title": "Resolver classe max-w das divs da tela de login",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Remover max-w-lg/max-w-md das divs da tela de login para que o layout ocupe 100% da largura sem constraints",
+  "acceptanceCriteria": [
+    "Formulário de login ocupa 100% da largura do painel direito (w-full sem max-w)",
+    "Texto do painel esquerdo ocupa largura total sem max-w constraint",
+    "Layout responsivo mantém proporção 60/40 entre painéis em desktop",
+    "Nenhum conteúdo é cortado ou espremido em qualquer viewport"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Login.tsx",
+    "neonbar/frontend/src/index.css"
+  ],
+  "tests": [],
+  "notes": "Resolvido durante sessão: removido max-w-lg (era max-w-md) do form wrapper, removido max-w-md do text overlay do painel esquerdo, adicionado min-w-0 nos flex panels"
+}

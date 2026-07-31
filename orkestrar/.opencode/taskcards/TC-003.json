@@ -1,0 +1,21 @@
+{
+  "id": "TC-003",
+  "title": "Corrigir input de busca sobrepondo botões na tela de relatórios",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Corrigir sobreposição do input de busca sobre os botões de filtro em Relatorios.tsx",
+  "acceptanceCriteria": [
+    "Input de busca não sobrepõe os botões em nenhum viewport",
+    "Layout responsivo mantém input e botões lado a lado em desktop",
+    "Input respeita max-w-xs em telas maiores via sm:max-w-xs",
+    "Nenhuma quebra de layout em mobile"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Relatorios.tsx"
+  ],
+  "tests": [],
+  "notes": "Solução final: container flex flex-col sm:flex-row. Wrapper do input: relative shrink-0 (sem w-full nem max-w-xs). Botões com shrink-0 + min-w-0. O w-full + sm:max-w-xs causavam sobreposição ao forçar largura no flex item."
+}

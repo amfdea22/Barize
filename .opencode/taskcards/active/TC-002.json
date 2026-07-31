@@ -1,0 +1,14 @@
+{
+  "id": "TC-002",
+  "title": "inserir opção de pagamentos no caixa",
+  "status": "completed",
+  "priority": "medium",
+  "createdAt": "2026-07-28T20:05:00-03:00",
+  "createdBy": "user",
+  "description": "Adicionar funcionalidade de pagamentos (dinheiro, cartão, pix) ao módulo de caixa",
+  "fields": {
+    "Objetivo": "Permitir registrar pagamentos no caixa com diferentes formas de pagamento",
+    "Arquivos Envolvidos": "neonbar/backend/app/routers/caixa.py, neonbar/backend/app/routers/pagamentos.py, neonbar/frontend/src/pages/Caixa.tsx, neonbar/backend/app/models/pagamento.py",
+    "Dependencias": ""
+  }
+}

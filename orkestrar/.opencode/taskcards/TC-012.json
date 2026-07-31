@@ -1,0 +1,14 @@
+﻿{
+    "taskType":  "card",
+    "createdBy":  "user",
+    "id":  "TC-012",
+    "createdAt":  "2026-07-26T05:19:28.558Z",
+    "agent":  "build",
+    "statusHistory":  [
+
+                      ],
+    "updatedAt":  "2026-07-26T05:19:28.558Z",
+    "status":  "backlog",
+    "path":  ".opencode/taskcards/TC-012.json",
+    "title":  "Padronizar tamanho das fotos e visualização dos nomes e preços do produto da área de todas as bebidas para ficar igual à área drinks"
+}

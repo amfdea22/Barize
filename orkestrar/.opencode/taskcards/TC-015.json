@@ -1,0 +1,25 @@
+﻿{
+    "tests":  [
+
+              ],
+    "id":  "TC-015",
+    "notes":  "",
+    "agent":  "build",
+    "filesInvolved":  [
+
+                      ],
+    "title":  "Distribuir as imagens do cardápio digital de forma organizada e inserir barra de rolagem lateral",
+    "createdBy":  "user",
+    "taskType":  "card",
+    "statusHistory":  [
+
+                      ],
+    "status":  "completed",
+    "acceptanceCriteria":  [
+
+                           ],
+    "path":  ".opencode/taskcards/TC-015.json",
+    "objective":  "Distribuir as imagens do cardápio digital de forma organizada e inserir barra de rolagem lateral para navegação",
+    "createdAt":  "2026-07-26T02:45:32.870Z",
+    "updatedAt":  "2026-07-26T02:45:32.870Z"
+}

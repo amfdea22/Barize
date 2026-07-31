@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BARIZE Pro - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#131313",
+                    "on-tertiary-fixed-variant": "#5700c9",
+                    "secondary-fixed-dim": "#ffb950",
+                    "on-tertiary-fixed": "#23005b",
+                    "primary-fixed": "#9cf0ff",
+                    "on-secondary-fixed": "#291800",
+                    "surface-dim": "#131313",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "tertiary": "#f2e9ff",
+                    "on-tertiary-container": "#6c00f7",
+                    "on-primary-fixed": "#001f24",
+                    "on-primary": "#00363d",
+                    "surface-container": "#201f1f",
+                    "on-primary-container": "#00626e",
+                    "tertiary-fixed-dim": "#d1bcff",
+                    "primary-fixed-dim": "#00daf3",
+                    "tertiary-fixed": "#e9ddff",
+                    "outline": "#849396",
+                    "error": "#ffb4ab",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary": "#3c0090",
+                    "on-secondary-fixed-variant": "#624000",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004f58",
+                    "secondary-fixed": "#ffddb3",
+                    "on-error-container": "#ffdad6",
+                    "inverse-on-surface": "#313030",
+                    "surface-tint": "#00daf3",
+                    "on-secondary-container": "#684300",
+                    "inverse-surface": "#e5e2e1",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-container": "#feaa00",
+                    "primary-container": "#00e5ff",
+                    "outline-variant": "#3b494c",
+                    "tertiary-container": "#d9c8ff",
+                    "primary": "#c3f5ff",
+                    "on-secondary": "#452b00",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-surface-variant": "#bac9cc",
+                    "background": "#131313",
+                    "secondary": "#ffcf8f",
+                    "inverse-primary": "#006875",
+                    "surface-variant": "#353534",
+                    "surface-bright": "#393939",
+                    "on-background": "#e5e2e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target": "48px",
+                    "sm": "8px",
+                    "gutter": "12px",
+                    "xl": "40px",
+                    "xs": "4px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "data-display": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "data-display": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .neon-glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 218, 243, 0.2);
+        }
+        .neon-border-cyan:focus-within {
+            box-shadow: 0 0 10px rgba(0, 218, 243, 0.4);
+            border-color: #00daf3;
+        }
+        .backdrop-blur-xl {
+            backdrop-filter: blur(24px);
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #e5e2e1;
+            -webkit-box-shadow: 0 0 0px 1000px #1c1b1b inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen overflow-hidden flex flex-col">
+<!-- TopAppBar (Transactional - Suppressed Nav, Keep Brand/Help) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-touch-target bg-surface/80 backdrop-blur-md">
+<div class="font-headline-lg-mobile text-headline-lg-mobile tracking-tight text-primary dark:text-primary-fixed-dim">
+            BARIZE Pro
+        </div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 transition-transform" style="font-variation-settings: 'FILL' 0;">
+                help_outline
+            </button>
+</div>
+</header>
+<main class="flex-grow flex flex-col md:flex-row h-screen pt-touch-target">
+<!-- Left Side: Visual / Atmosphere -->
+<div class="hidden md:flex md:w-1/2 lg:w-3/5 relative overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-background/20 to-background"></div>
+<div class="absolute inset-0 z-10 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="A cinematic, high-contrast photograph of a premium cocktail bar at midnight. The scene features deep charcoal and obsidian surfaces with sharp, vibrant neon cyan and amber accent lighting reflecting off polished glass and steel. High-end spirit bottles are silhouetted against a glowing backbar. The atmosphere is sophisticated, dark, and energetic, conveying a modern nightlife management experience." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCycyplQKy7jy4SkCc7NSGjaUM3T69Hu5IM2Q9mnJQKra68Nr0e7dzDrkhJVEvdKjdizVRcRluEApoTF_-QIq13PMOeIgVqTIuutsX4TamNqA_mPkBx9-0P_x9grIton1ryFqNuxUoaF8szmfZC4m1SLDwQlYt9OkMprEmVmSiD6eDCfkiXNfdJDGiuNefvt9g6kcyhQ48gatihPUZxgXeKKW7zU8ikD9Oj8xfRB7gM5mI-LkQlQ66R6SQt-Gpt_058AQ-0t-4lL4')">
+</div>
+<!-- Dynamic Atmosphere Elements -->
+<div class="absolute bottom-xl left-xl z-20 max-w-md">
+<div class="inline-flex items-center gap-sm bg-primary/10 border border-primary/20 backdrop-blur-md px-md py-xs rounded-full mb-md">
+<span class="w-2 h-2 bg-primary-fixed-dim rounded-full animate-pulse"></span>
+<span class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-widest">Sistema Operacional</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Maximize seu fluxo.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A plataforma líder da indústria para operações de bebidas de alta velocidade.</p>
+</div>
+</div>
+<!-- Right Side: Login Form Container -->
+<div class="flex-grow flex items-center justify-center p-lg md:p-xl lg:w-2/5 bg-background relative">
+<!-- Subtle Radial Glow Background -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="w-full max-w-md z-10">
+<div class="mb-xl text-center md:text-left">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Bem-vindo, Capitão.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Acesso seguro ao terminal de operações.</p>
+</div>
+<form class="space-y-lg" onsubmit="event.preventDefault();">
+<!-- Input: Email/Username -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-unit" for="identity">IDENTIDADE DO OPERADOR</label>
+<div class="relative group neon-border-cyan rounded transition-all duration-300">
+<input class="w-full h-touch-target bg-surface-container-low border border-outline-variant focus:border-primary-fixed-dim focus:ring-0 rounded px-md font-body-md text-on-surface placeholder:text-on-surface-variant/40" id="identity" placeholder="E-mail ou nome de usuário" type="text"/>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary-fixed-dim transition-colors" style="font-variation-settings: 'FILL' 0;">person</span>
+</div>
+</div>
+<!-- Input: Password -->
+<div class="space-y-xs">
+<div class="flex justify-between items-center px-unit">
+<label class="font-label-md text-label-md text-on-surface-variant" for="password">SENHA / PIN SEGURO</label>
+<a class="font-label-md text-label-md text-secondary hover:text-secondary-fixed-dim transition-colors" href="#">Esqueceu a senha?</a>
+</div>
+<div class="relative group neon-border-cyan rounded transition-all duration-300">
+<input class="w-full h-touch-target bg-surface-container-low border border-outline-variant focus:border-primary-fixed-dim focus:ring-0 rounded px-md font-body-md text-on-surface placeholder:text-on-surface-variant/40" id="password" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary-fixed-dim transition-colors" style="font-variation-settings: 'FILL' 0;">lock</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-md py-sm">
+<label class="flex items-center gap-md cursor-pointer group">
+<div class="relative w-5 h-5 flex items-center justify-center">
+<input class="peer absolute opacity-0 w-full h-full cursor-pointer" type="checkbox"/>
+<div class="w-5 h-5 border-2 border-outline-variant rounded-sm bg-surface peer-checked:bg-primary-fixed-dim peer-checked:border-primary-fixed-dim transition-all"></div>
+<span class="material-symbols-outlined text-[16px] text-surface absolute opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 0;">check</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Lembrar de mim</span>
+</label>
+</div>
+<button class="w-full h-touch-target bg-primary-fixed-dim text-surface font-headline-md text-headline-md rounded hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-sm neon-glow-cyan" id="submit-btn" type="submit">
+                        Entrar
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">login</span>
+</button>
+</form>
+<!-- Footer Integration -->
+<div class="mt-xl pt-xl border-t border-outline-variant/10 text-center flex flex-col items-center gap-sm">
+<div class="flex gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Suporte</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Segurança</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Privacidade</a>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant mt-sm opacity-50 uppercase tracking-tighter">© 2024 BARIZE Pro. Sistemas operacionais.</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Visual Polish: Glitch/Noise overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay z-[100]" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
+<script>
+        // Simple micro-interaction for the login button
+        const loginBtn = document.getElementById('submit-btn');
+        loginBtn.addEventListener('click', (e) => {
+            if(!loginBtn.classList.contains('loading')) {
+                const originalText = loginBtn.innerHTML;
+                loginBtn.innerHTML = `<span class="animate-spin material-symbols-outlined">refresh</span> Conectando...`;
+                loginBtn.classList.add('opacity-80', 'cursor-not-allowed', 'loading');
+                
+                setTimeout(() => {
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.classList.remove('opacity-80', 'cursor-not-allowed', 'loading');
+                }, 2000);
+            }
+        });
+    </script>
+</body></html>

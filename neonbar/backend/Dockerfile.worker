@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────
+# barize - Dockerfile do Worker de Impressão/Alertas
+# Pilar 4: Worker independente
+# ─────────────────────────────────────────────────────────────
+
+FROM python:3.12-slim AS builder
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+    libusb-1.0-0-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ─── Imagem final ───────────────────────────────────────────
+FROM python:3.12-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
+    libusb-1.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+RUN mkdir -p /var/log/barize
+RUN useradd -m -u 1000 barize && chown -R barize:barize /app /var/log/barize
+USER barize
+
+COPY app/ /app/app/
+
+# Por padrão, roda o worker de impressão
+CMD ["python", "-m", "app.worker.impressao_worker"]

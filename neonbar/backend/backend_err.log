@@ -1,0 +1,18 @@
+INFO:     Started server process [15524]
+INFO:     Waiting for application startup.
+--- Logging error in Loguru Handler #1 ---
+Record was: {'elapsed': datetime.timedelta(seconds=2, microseconds=368441), 'exception': None, 'extra': {}, 'file': (name='main.py', path='C:\\Users\\Deah\\Desktop\\radateste\\neonbar\\backend\\app\\main.py'), 'function': 'lifespan', 'level': (name='INFO', no=20, icon='\u2139\ufe0f'), 'line': 74, 'message': '\u2550\u2550\u2550 NeonBar - ERP para Bares v1.0.0 \u2550\u2550\u2550', 'module': 'main', 'name': 'app.main', 'process': (id=15524, name='MainProcess'), 'thread': (id=13460, name='MainThread'), 'time': datetime(2026, 7, 16, 20, 16, 38, 486936, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=75600), 'Hora oficial do Brasil'))}
+Traceback (most recent call last):
+  File "C:\Users\Deah\Desktop\radateste\neonbar\backend\.venv\Lib\site-packages\loguru\_handler.py", line 206, in emit
+    self._sink.write(str_record)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\Deah\Desktop\radateste\neonbar\backend\.venv\Lib\site-packages\loguru\_simple_sinks.py", line 16, in write
+    self._stream.write(message)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Deah\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 56-58: character maps to <undefined>
+--- End of logging error ---
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)

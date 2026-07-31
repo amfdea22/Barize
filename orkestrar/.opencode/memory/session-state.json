@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-07-28T19:33:00-03:00",
+  "currentSession": {
+    "agent": "build",
+    "subagentes": ["architect"],
+    "task": "Corrigir servidor ASGI não bindar no Windows",
+    "workflowStep": "VERIFICAÇÃO",
+    "status": "active",
+    "startedAt": "2026-07-28T19:31:00-03:00"
+  },
+  "checkpoints": [
+    {
+      "timestamp": "2026-07-28T19:33:00-03:00",
+      "description": "Server fix aplicado e verificado. Health check retorna 200.",
+      "files": ["neonbar/backend/app/main.py"]
+    }
+  ]
+}

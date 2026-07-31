@@ -1,0 +1,355 @@
+{
+  "nextId": 24,
+  "cards": {
+    "TC-002": {
+      "id": "TC-002",
+      "title": "Verificar problema da classe max-w nas divs em todas as telas",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Verificar occurrences de max-w-lg/max-w-md em todas as telas e remover constraints que quebram layout w-full",
+      "acceptanceCriteria": [
+        "Varredura completa de todos os .tsx/.ts/.jsx do frontend",
+        "Login.tsx: max-w-md jÃ¡ removido na sessÃ£o anterior",
+        "Modal.tsx: default md size alterado de max-w-lg para max-w-md, demais sizes ajustados",
+        "Estoque.tsx: max-w-[160px] e max-w-[120px] sÃ£o intencionais (progress bars)",
+        "Nenhuma constraint fantasma quebrando layout w-full"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/components/Modal.tsx"
+      ],
+      "tests": [],
+      "notes": "SoluÃ§Ã£o final Modal.tsx: sm=max-w-2xl, md=max-w-2xl, lg=max-w-3xl, xl=max-w-4xl, full=max-w-[90vw]. Login.tsx: max-w-* removido, min-w-0 adicionado nos flex panels."
+    },
+    "TC-007": {
+      "id": "TC-007",
+      "title": "Adicionar suporte a fotos de drinks e coquetÃ©is no PDV (emoji + foto_url)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Adicionar campo foto_url no model Produto + corrigir bug do campo imagem que nÃ£o persiste no banco + exibir foto ou emoji no grid do PDV",
+      "acceptanceCriteria": [
+        "Produtos podem ter foto real (URL) alÃ©m do emoji atual",
+        "Campo imagem (emoji) persiste no banco ao criar/editar produto",
+        "PDV exibe foto real se disponÃ­vel, senÃ£o emoji, senÃ£o Ã­cone padrÃ£o",
+        "Modal de criar/editar produto tem campo opcional para URL da foto"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/models/produto.py",
+        "neonbar/backend/app/schemas/produto.py",
+        "neonbar/backend/app/routers/pdv.py",
+        "neonbar/frontend/src/pages/PDV.tsx",
+        "neonbar/frontend/src/types/index.ts"
+      ],
+      "tests": [],
+      "notes": "Abordagem hÃ­brida: emoji (rÃ¡pido) + foto_url (opcional, sem upload - URL externa). Bug: criar_produto e atualizar_produto nÃ£o salvam campo imagem."
+    },
+    "TC-006": {
+      "id": "TC-006",
+      "title": "Corrigir erro interno no PDV ao finalizar comanda (tabela pagamentos ausente)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir o erro 500 ao finalizar comanda no PDV â€” tabela pagamentos nÃ£o criada porque Pagamento nÃ£o Ã© importado antes de create_all()",
+      "acceptanceCriteria": [
+        "Finalizar comanda no PDV nÃ£o retorna erro interno",
+        "Tabela pagamentos existe no banco apÃ³s init_db()",
+        "Campo nota do frontend tem correspondente no backend schema",
+        "IntegrityError em criar_produto retorna 409 em vez de 500"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/database.py",
+        "neonbar/backend/app/routers/pdv.py"
+      ],
+      "tests": [],
+      "notes": "Causa raiz real: 1) main.py chamava Base.metadata.create_all() diretamente sem importar modelos â€” init_db() nunca era invocado. 2) App usava neonbar_dev.db mas ALTER TABLE foi aplicado em neonbar.db (arquivos diferentes). SoluÃ§Ã£o: main.py agora chama init_db() + coluna imagem adicionada no neonbar_dev.db."
+    },
+    "TC-005": {
+      "id": "TC-005",
+      "title": "Adicionar paginaÃ§Ã£o nos endpoints de listagem (produtos, insumos, relatÃ³rios)",
+      "status": "executing",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Adicionar parÃ¢metros limit/offset/sort nos endpoints GET de listagem para evitar queries de milhares de registros",
+      "acceptanceCriteria": [
+        "Endpoints de produtos, insumos e relatÃ³rios aceitam ?limit=50&offset=0",
+        "Frontend usa IntersectionObserver ou paginaÃ§Ã£o tradicional",
+        "Nenhuma quebra em listas existentes (default limit=50 se omitido)"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/pdv.py",
+        "neonbar/backend/app/routers/estoque.py",
+        "neonbar/backend/app/routers/relatorios.py"
+      ],
+      "tests": [],
+      "notes": "Recomendado pelo @architect â€” prepara o sistema para catÃ¡logo grande sem degradaÃ§Ã£o"
+    },
+    "TC-004": {
+      "id": "TC-004",
+      "title": "Corrigir erro interno do servidor no Dashboard (colunas faltantes no banco)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir o erro 'Erro interno do servidor' no Dashboard causado por colunas faltantes no banco SQLite (insumos.controlado, produtos.modo_preparo, etc.)",
+      "acceptanceCriteria": [
+        "Dashboard carrega sem erro 'Erro interno do servidor'",
+        "Todas as colunas faltantes adicionadas via ALTER TABLE",
+        "Migrations Alembic configuradas para ambiente dev SQLite",
+        "Logging adicionado no global exception handler para facilitar debug futuro"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/services/estoque_service.py",
+        "neonbar/backend/app/routers/relatorios.py",
+        "neonbar/backend/app/main.py",
+        "neonbar/backend/app/models/insumo.py",
+        "neonbar/backend/app/models/produto.py"
+      ],
+      "tests": [],
+      "notes": "Causa raiz: coluna controlado nÃ£o existe na tabela insumos do SQLite. Modelo foi atualizado mas migraÃ§Ã£o nunca rodou. Debugger aplicou ALTER TABLE direto. Architect recomendou try/except nas rotas + logger.exception no global handler."
+    },
+    "TC-003": {
+      "id": "TC-003",
+      "title": "Corrigir input de busca sobrepondo botÃµes na tela de relatÃ³rios",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir sobreposiÃ§Ã£o do input de busca sobre os botÃµes de filtro em Relatorios.tsx",
+      "acceptanceCriteria": [
+        "Input de busca nÃ£o sobrepÃµe os botÃµes em nenhum viewport",
+        "Layout responsivo mantÃ©m input e botÃµes lado a lado em desktop",
+        "Input respeita max-w-xs em telas maiores via sm:max-w-xs",
+        "Nenhuma quebra de layout em mobile"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Relatorios.tsx"
+      ],
+      "tests": [],
+      "notes": "SoluÃ§Ã£o final: container flex flex-col sm:flex-row. Wrapper do input: relative shrink-0 (sem w-full nem max-w-xs). BotÃµes com shrink-0 + min-w-0. O w-full + sm:max-w-xs causavam sobreposiÃ§Ã£o ao forÃ§ar largura no flex item."
+    },
+    "TC-001": {
+      "id": "TC-001",
+      "title": "Resolver classe max-w das divs da tela de login",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-25T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Remover max-w-lg/max-w-md das divs da tela de login para que o layout ocupe 100% da largura sem constraints",
+      "acceptanceCriteria": [
+        "FormulÃ¡rio de login ocupa 100% da largura do painel direito (w-full sem max-w)",
+        "Texto do painel esquerdo ocupa largura total sem max-w constraint",
+        "Layout responsivo mantÃ©m proporÃ§Ã£o 60/40 entre painÃ©is em desktop",
+        "Nenhum conteÃºdo Ã© cortado ou espremido em qualquer viewport"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Login.tsx",
+        "neonbar/frontend/src/index.css"
+      ],
+      "tests": [],
+      "notes": "Resolvido durante sessÃ£o: removido max-w-lg (era max-w-md) do form wrapper, removido max-w-md do text overlay do painel esquerdo, adicionado min-w-0 nos flex panels"
+    },
+    "TC-009": {
+      "id": "TC-009",
+      "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-07-26T04:53:07.565Z",
+      "updatedAt": "2026-07-26T04:53:07.565Z",
+      "path": ".opencode/taskcards/TC-009.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Ajustar o tamanho das imagens dos produtos para que os nomes fiquem completamente visÃ­veis na interface",
+      "acceptanceCriteria": [
+        "Imagens dos produtos nÃ£o cortam ou sobrepÃµem os nomes",
+        "Nomes dos produtos sÃ£o legÃ­veis em todos os viewports",
+        "Layout responsivo mantÃ©m proporÃ§Ãµes corretas entre imagem e texto",
+        "Nenhuma quebra de layout em mobile ou desktop"
+      ],
+      "filesInvolved": [],
+      "tests": [],
+      "notes": ""
+    },
+    "TC-011": {
+      "id": "TC-011",
+      "title": "Padronizar tamanho da visualizaÃ§Ã£o de todas as bebidas igual ao de bebidas/drinks",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-07-26T05:07:58.951Z",
+      "updatedAt": "2026-07-26T05:07:58.951Z",
+      "path": ".opencode/taskcards/TC-011.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-012": {
+      "taskType": "card",
+      "createdBy": "user",
+      "id": "TC-012",
+      "createdAt": "2026-07-26T05:19:28.558Z",
+      "agent": "build",
+      "statusHistory": [],
+      "updatedAt": "2026-07-26T05:19:28.558Z",
+      "status": "backlog",
+      "path": ".opencode/taskcards/TC-012.json",
+      "title": "Padronizar tamanho das fotos e visualizaÃ§Ã£o dos nomes e preÃ§os do produto da Ã¡rea de todas as bebidas para ficar igual Ã  Ã¡rea drinks"
+    },
+    "TC-013": {
+      "taskType": "card",
+      "createdBy": "user",
+      "id": "TC-013",
+      "createdAt": "2026-07-26T02:31:19.765Z",
+      "agent": "build",
+      "statusHistory": [],
+      "updatedAt": "2026-07-26T02:31:19.765Z",
+      "status": "backlog",
+      "path": ".opencode/taskcards/TC-013.json",
+      "title": "Inserir opÃ§Ã£o CardÃ¡pio Digital BÃ¡sico"
+    },
+    "TC-014": {
+      "id": "TC-014",
+      "agent": "build",
+      "createdAt": "2026-07-26T05:44:54.629Z",
+      "taskType": "card",
+      "createdBy": "user",
+      "title": "Inserir barra de rolagem para manter tamanhos padrões de visualização das fotos dos produtos com descrição e preços como no menu bebidas",
+      "status": "completed"
+    },
+    "TC-015": {
+      "id": "TC-015",
+      "agent": "build",
+      "createdAt": "2026-07-26T02:45:32.870Z",
+      "taskType": "card",
+      "createdBy": "user",
+      "title": "Distribuir as imagens do cardápio digital de forma organizada e inserir barra de rolagem lateral",
+      "status": "completed"
+    },
+    "TC-016": {
+      "id": "TC-016",
+      "title": "TC-015 scrollbar não está visível no cardápio digital",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-07-26T05:50:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-017": {
+      "id": "TC-017",
+      "title": "Inserir barra de rolagem no painel do PDV para ver todas as bebidas",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-07-26T06:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-018": {
+      "id": "TC-018",
+      "title": "Corrigir scrollbar do PDV e alinhar altura com layout",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-26T06:15:00.000Z",
+      "completedAt": "2026-07-26T06:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "files": [
+        "frontend/src/pages/PDV.tsx",
+        "frontend/src/index.css",
+        "frontend/src/layouts/MainLayout.tsx"
+      ]
+    },
+    "TC-019": {
+      "id": "TC-019",
+      "title": "gerar QRcode para cardápio digital",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-07-26T06:35:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-020": {
+      "id": "TC-020",
+      "title": "visualizar comanda",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-26T06:40:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-021": {
+      "id": "TC-021",
+      "title": "Edição de Comandas — backend PATCH + frontend modal",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-07-26T06:50:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "files": [
+        "backend/app/schemas/pedido.py",
+        "backend/app/routers/pedidos.py",
+        "frontend/src/types/index.ts",
+        "frontend/src/services/api.ts",
+        "frontend/src/pages/Comandas.tsx"
+      ]
+    },
+    "TC-022": {
+      "id": "TC-022",
+      "title": "Sistema de Etiquetas de Validade e Controle",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-26T08:00:00.000Z",
+      "completedAt": "2026-07-26T08:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "files": [
+        "backend/app/models/produto_lote.py",
+        "backend/app/schemas/produto_lote.py",
+        "backend/app/routers/produto_lotes.py",
+        "backend/app/schemas/etiqueta.py",
+        "backend/app/routers/etiquetas.py",
+        "backend/app/models/__init__.py",
+        "backend/app/main.py",
+        "frontend/src/types/index.ts",
+        "frontend/src/services/api.ts",
+        "frontend/src/pages/Etiquetas.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/layouts/Sidebar.tsx",
+        "frontend/src/index.css"
+      ]
+    },
+    "TC-023": {
+      "id": "TC-023",
+      "title": "Corrigir tempo decorrido negativo (-171:-25) no Dashboard — fuso horário UTC no OrderCard",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-07-28T00:00:00.000Z",
+      "completedAt": "2026-07-28T00:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir exibição de tempo decorrido negativo no Dashboard (OrderCard) e Comandas causado por timestamp UTC sem sufixo sendo interpretado como UTC-3 pelo JavaScript",
+      "acceptanceCriteria": [
+        "OrderCard.tsx não exibe mais valores negativos como -171:-25",
+        "parseDate trata timestamps UTC sem sufixo Z/+ corretamente (subtrai timezoneOffset)",
+        "Timer atualiza a cada 30s no OrderCard",
+        "Comandas.tsx usa mesmo parseDate corrigido (antes usava Date.parse())"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/components/OrderCard.tsx",
+        "neonbar/frontend/src/pages/Comandas.tsx"
+      ],
+      "tests": [],
+      "notes": "Causa raiz: backend salva datetime UTC sem sufixo 'Z'. new Date() interpreta como local (UTC-3), gerando diff de ~-171 min. Solução: parseDate detecta strings sem timezone e aplica getTime() - getTimezoneOffset()*60000."
+    }
+  }
+}

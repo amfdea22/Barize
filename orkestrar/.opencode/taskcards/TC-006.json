@@ -1,0 +1,22 @@
+{
+  "id": "TC-006",
+  "title": "Corrigir erro interno no PDV ao finalizar comanda (tabela pagamentos ausente)",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-25T19:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Corrigir o erro 500 ao finalizar comanda no PDV — tabela pagamentos não criada porque Pagamento não é importado antes de create_all()",
+  "acceptanceCriteria": [
+    "Finalizar comanda no PDV não retorna erro interno",
+    "Tabela pagamentos existe no banco após init_db()",
+    "Campo nota do frontend tem correspondente no backend schema",
+    "IntegrityError em criar_produto retorna 409 em vez de 500"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/database.py",
+    "neonbar/backend/app/routers/pdv.py"
+  ],
+  "tests": [],
+  "notes": "Causa raiz real: 1) main.py chamava Base.metadata.create_all() diretamente sem importar modelos — init_db() nunca era invocado. 2) App usava neonbar_dev.db mas ALTER TABLE foi aplicado em neonbar.db (arquivos diferentes). Solução: main.py agora chama init_db() + coluna imagem adicionada no neonbar_dev.db."
+}

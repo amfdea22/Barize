@@ -1,0 +1,16 @@
+{
+  "id": "TC-023",
+  "title": "Refatoração e correção de erros de compilação TypeScript no frontend",
+  "status": "in_progress",
+  "taskType": "card",
+  "agent": "refactorer",
+  "files": [
+    "frontend/src/pages/Dashboard.tsx",
+    "frontend/src/pages/Etiquetas.tsx",
+    "frontend/src/pages/FichaTecnica.tsx",
+    "frontend/src/pages/Financeiro.tsx",
+    "frontend/src/pages/PDV.tsx",
+    "frontend/src/pages/Relatorios.tsx",
+    "frontend/src/types/index.ts"
+  ]
+}

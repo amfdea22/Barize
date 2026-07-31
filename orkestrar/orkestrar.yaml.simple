@@ -1,0 +1,26 @@
+# =============================================================================
+# Orkestra — Simple Configuration (~30 lines)
+# =============================================================================
+# This is the simplest way to start with Orkestra.
+# Only the essential fields — everything else uses smart defaults.
+#
+# Next steps:
+#   1. Edit `name` below to match your project
+#   2. Run `npx orkestra build`
+#   3. Run `orkestra reveal` to see hidden sections
+# =============================================================================
+
+meta:
+  name: Meu Projeto
+  version: 1.0.0
+  description: Meu projeto com Orkestra
+
+stack:
+  language: TypeScript + Node.js
+  framework: '' # optional: e.g., React, Next.js, FastAPI, Gin
+  appType: Monolito Tradicional # Monolito, Front+Back, BFF, Website, SPA, PWA
+  testFramework: Vitest
+  packageManager: npm
+  architecture: Source in src/, tests alongside modules (*.test.ts)
+
+# Design system: see DESIGN.md at the project root for the complete design language.

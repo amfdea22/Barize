@@ -1,0 +1,17 @@
+{
+  "name": "taskcards-audit",
+  "protocolVersion": "1.0",
+  "createdAt": "2026-07-26T04:53:07.555Z",
+  "checkpoints": [
+    {
+      "id": "CP-TC-009-1785041587568",
+      "timestamp": "2026-07-26T04:53:07.569Z",
+      "contentHash": "a61999ab3e1b14dbb1502c249b1e51115efaff8f9686bea5a444684b1f60247c",
+      "previousHash": null,
+      "chainHash": "1258678a6dde1664e688ca2fc42d6d6005b1b6b0e143fca7666014dcdcbf4a06",
+      "signature": "8e09c2d8014fd0623d9cf22a42598d29a2378847b32fe7f10346128e384eeffe",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    }
+  ]
+}
