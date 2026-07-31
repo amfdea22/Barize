@@ -95,22 +95,23 @@ def seed():
         # ─── Produtos ───
         if db.query(Produto).count() == 0:
             produtos_data = [
-                ("Caipirinha", "Drinks", 18.00, "Clássico brasileiro"),
-                ("Caipiroska", "Drinks", 20.00, "Com vodka"),
-                ("Gin Tônica", "Drinks", 25.00, "Gin com água tônica"),
-                ("Cerveja Long Neck", "Cervejas", 9.00, "300ml"),
-                ("Refrigerante", "Bebidas", 6.00, "Lata 350ml"),
-                ("Suco de Laranja", "Bebidas", 8.00, "Natural"),
-                ("Porção de Batata", "Porções", 22.00, "Frita com cheddar"),
-                ("Água Mineral", "Bebidas", 5.00, "500ml"),
+                ("Caipirinha", "Drinks", 18.00, "Clássico brasileiro", "🍋"),
+                ("Caipiroska", "Drinks", 20.00, "Com vodka", "🍸"),
+                ("Gin Tônica", "Drinks", 25.00, "Gin com água tônica", "🍹"),
+                ("Cerveja Long Neck", "Cervejas", 9.00, "300ml", "🍺"),
+                ("Refrigerante", "Bebidas", 6.00, "Lata 350ml", "🥤"),
+                ("Suco de Laranja", "Bebidas", 8.00, "Natural", "🧃"),
+                ("Porção de Batata", "Porções", 22.00, "Frita com cheddar", "🍟"),
+                ("Água Mineral", "Bebidas", 5.00, "500ml", "💧"),
             ]
             produtos = []
-            for nome, cat, preco, desc in produtos_data:
+            for nome, cat, preco, desc, emoji in produtos_data:
                 produto = Produto(
                     nome=nome,
                     categoria=cat,
                     preco_venda=preco,
                     descricao=desc,
+                    imagem=emoji,
                     ativo=1,
                 )
                 produtos.append(produto)

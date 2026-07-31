@@ -8,7 +8,7 @@ import type { ProdutoLote, ProdutoLoteCreate, Produto } from '../types';
 const Admin: React.FC = () => {
   const { usuario } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'monitoramento' | 'lotes' | 'fichas'>('monitoramento');
+  const [activeTab, setActiveTab] = useState<'monitoramento' | 'lotes' | 'fichas' | 'imagens'>('monitoramento');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,6 +35,10 @@ const Admin: React.FC = () => {
   const [fichas, setFichas] = useState<any[]>([]);
   const [selectedFicha, setSelectedFicha] = useState<any | null>(null);
   const [showFichaModal, setShowFichaModal] = useState(false);
+
+  // Imagens state
+  const [images, setImages] = useState<any[]>([]);
+  const [imagesLoading, setImagesLoading] = useState(false);
   const [fichaForm, setFichaForm] = useState({
     dificuldade: '',
     teor_alcoolico: '',
@@ -63,6 +67,7 @@ const Admin: React.FC = () => {
   useEffect(() => {
     if (activeTab === 'lotes') loadLotes();
     if (activeTab === 'fichas') loadFichas();
+    if (activeTab === 'imagens') loadImages();
   }, [activeTab]);
 
   const loadMonitoramento = async () => {
@@ -103,6 +108,18 @@ const Admin: React.FC = () => {
       setError('Erro ao carregar lotes: ' + (err.response?.data?.detail || err.message));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadImages = async () => {
+    try {
+      setImagesLoading(true);
+      const res = await adminService.listImages();
+      setImages(res.data.images || []);
+    } catch (err: any) {
+      setError('Erro ao carregar imagens: ' + (err.response?.data?.detail || err.message));
+    } finally {
+      setImagesLoading(false);
     }
   };
 
@@ -266,6 +283,15 @@ const Admin: React.FC = () => {
             role="tab"
           >
             <i className="bi bi-file-text me-1"></i> Fichas Técnicas
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className={`nav-link ${activeTab === 'imagens' ? 'active' : ''}`}
+            onClick={() => setActiveTab('imagens')}
+            role="tab"
+          >
+            <i className="bi bi-images me-1"></i> Imagens
           </button>
         </li>
       </ul>
@@ -634,6 +660,54 @@ const Admin: React.FC = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab: Imagens */}
+      {activeTab === 'imagens' && (
+        <div className="row">
+          <div className="col-12 mb-4">
+            <div className="card">
+              <div className="card-header d-flex justify-content-between align-items-center">
+                <h5 className="mb-0"><i className="bi bi-images me-2"></i> Imagens Disponíveis ({images.length})</h5>
+                <button className="btn btn-sm btn-outline-primary" onClick={loadImages} disabled={imagesLoading}>
+                  <i className="bi bi-arrow-clockwise me-1"></i> Atualizar
+                </button>
+              </div>
+              <div className="card-body">
+                {imagesLoading ? (
+                  <div className="text-center py-4"><div className="spinner-border text-primary"></div></div>
+                ) : images.length === 0 ? (
+                  <div className="text-center py-4 text-muted">
+                    <i className="bi bi-images fs-1 d-block mb-2"></i>
+                    Nenhuma imagem encontrada. Faça upload pelo endpoint <code>POST /api/v1/upload/imagem</code>.
+                  </div>
+                ) : (
+                  <div className="row g-3">
+                    {images.map((img: any) => (
+                      <div key={img.filename} className="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <div className="card h-100">
+                          <div className="card-img-top bg-dark d-flex align-items-center justify-content-center" style={{ height: 140 }}>
+                            <img
+                              src={img.url}
+                              alt={img.filename}
+                              className="img-fluid"
+                              style={{ maxHeight: '100%', objectFit: 'contain' }}
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="card-body p-2 text-center">
+                            <small className="text-muted d-block text-truncate">{img.filename}</small>
+                            <small className="text-muted">{img.size_kb} KB</small>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

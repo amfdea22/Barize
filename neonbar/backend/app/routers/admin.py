@@ -47,6 +47,49 @@ def health_check_db(db: Session = Depends(get_db)):
         raise HTTPException(status_code=503, detail=f"Banco de dados indisponível: {e}")
 
 
+@router.get("/images")
+def list_images(current_user: Usuario = Depends(get_current_user)):
+    """Lista imagens disponíveis no diretório de uploads (admin)."""
+    verificar_role(current_user, ["admin", "gerente"])
+    uploads_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
+    images = []
+    for f in sorted(os.listdir(uploads_dir)):
+        if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
+            path = os.path.join(uploads_dir, f)
+            size = os.path.getsize(path)
+            images.append({
+                "filename": f,
+                "url": f"/uploads/{f}",
+                "size_bytes": size,
+                "size_kb": round(size / 1024, 1),
+            })
+    return {"images": images}
+
+
+@router.post("/produtos/{produto_id}/imagem")
+def assign_product_image(
+    produto_id: int,
+    filename: str,
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Atribui uma imagem do uploads a um produto (admin/gerente)."""
+    verificar_role(current_user, ["admin", "gerente"])
+    uploads_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
+    path = os.path.join(uploads_dir, filename)
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail="Imagem não encontrada no servidor")
+
+    from ..models.produto import Produto
+    produto = db.query(Produto).filter(Produto.id == produto_id).first()
+    if not produto:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+
+    produto.foto_url = f"/uploads/{filename}"
+    db.commit()
+    logger.info(f"[Admin] Imagem '{filename}' atribuída ao produto #{produto_id} ({produto.nome})")
+    return {"url": produto.foto_url, "produto_id": produto_id, "produto_nome": produto.nome}
+
 @router.get("/metrics")
 def system_metrics(current_user: Usuario = Depends(get_current_user)):
     """Métricas de requisições por endpoint (admin)."""

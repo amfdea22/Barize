@@ -266,6 +266,9 @@ export const adminService = {
   metrics: () => api.get('/admin/metrics'),
   logs: (lines = 50) => api.get(`/admin/logs?lines=${lines}`),
   setLogLevel: (level: string) => api.post(`/admin/logs/level?level=${level}`),
+  listImages: () => api.get('/admin/images'),
+  assignProductImage: (produtoId: number, filename: string) =>
+    api.post(`/admin/produtos/${produtoId}/imagem?filename=${encodeURIComponent(filename)}`),
   getPrinterConfig: () => api.get('/admin/printer-config'),
   updatePrinterConfig: (data: import('../types').PrinterConfigUpdate) => api.put('/admin/printer-config', data),
   testPrinter: (data: import('../types').PrinterConfig) =>
