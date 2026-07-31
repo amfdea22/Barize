@@ -1,27 +1,44 @@
-import { useState, useEffect } from 'react';
-import { Trash2 } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { pdvService, pedidosService } from '../services/api';
 import Button from '../components/Button';
 import type { Produto, PedidoCreate } from '../types';
 
 export default function PDV() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [cart, setCart] = useState<{ produto: Produto; quantidade: number }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+  const [categoriaFilter, setCategoriaFilter] = useState<string>('all');
+  const [cart, setCart] = useState<{ produto: Produto; quantidade: number }[]>([]);
+  const [saleOk, setSaleOk] = useState(false);
 
   useEffect(() => {
-    pdvService.listarProdutos().then(res => {
-      setProdutos(res.data);
-      setLoading(false);
-    });
+    pdvService.listarProdutos()
+      .then(res => { setProdutos(res.data); setLoading(false); })
+      .catch(() => { setError('Erro ao carregar produtos'); setLoading(false); });
   }, []);
+
+  const categorias = useMemo(() => {
+    const cats = new Set(produtos.map(p => p.categoria).filter(Boolean));
+    return ['all', ...Array.from(cats)] as string[];
+  }, [produtos]);
+
+  const filtered = useMemo(() => {
+    return produtos.filter(p => {
+      if (categoriaFilter !== 'all' && p.categoria !== categoriaFilter) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        return p.nome.toLowerCase().includes(q) || (p.categoria || '').toLowerCase().includes(q);
+      }
+      return true;
+    });
+  }, [produtos, categoriaFilter, search]);
 
   const addToCart = (produto: Produto) => {
     setCart(prev => {
       const existing = prev.find(item => item.produto.id === produto.id);
-      if (existing) {
-        return prev.map(item => item.produto.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item);
-      }
+      if (existing) return prev.map(item => item.produto.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item);
       return [...prev, { produto, quantidade: 1 }];
     });
   };
@@ -30,46 +47,173 @@ export default function PDV() {
     setCart(prev => prev.filter(item => item.produto.id !== produtoId));
   };
 
-  const finalizeSale = async () => {
-    const pedido: PedidoCreate = {
-      itens: cart.map(item => ({
-        nome: item.produto.nome,
-        quantidade: item.quantidade,
-        preco: item.produto.preco_venda
-      })),
-      observacao: 'Venda PDV'
-    };
-    await pedidosService.criar(pedido);
-    setCart([]);
-    alert('Venda finalizada!');
+  const changeQty = (produtoId: number, delta: number) => {
+    setCart(prev => prev.map(item => {
+      if (item.produto.id !== produtoId) return item;
+      const newQty = item.quantidade + delta;
+      return newQty <= 0 ? null : { ...item, quantidade: newQty };
+    }).filter(Boolean) as typeof cart);
   };
 
   const total = cart.reduce((sum, item) => sum + item.produto.preco_venda * item.quantidade, 0);
 
-  if (loading) return <div className="p-4">Carregando...</div>;
+  const finalizeSale = async () => {
+    try {
+      setError('');
+      const pedido: PedidoCreate = {
+        itens: cart.map(item => ({
+          nome: item.produto.nome,
+          quantidade: item.quantidade,
+          preco: item.produto.preco_venda
+        })),
+        observacao: 'Venda PDV'
+      };
+      await pedidosService.criar(pedido);
+      setCart([]);
+      setSaleOk(true);
+      setTimeout(() => setSaleOk(false), 3000);
+    } catch (err: any) {
+      setError(err?.response?.data?.detail || 'Erro ao finalizar venda');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[var(--color-primary-container)] border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm text-[var(--color-outline)]">Carregando produtos...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-full gap-4 p-4">
-      <div className="flex-1 grid grid-cols-3 gap-4">
-        {produtos.map(p => (
-          <div key={p.id} className="p-4 bg-[var(--color-surface-container)] rounded-lg border border-[rgba(255,255,255,0.1)] cursor-pointer hover:bg-[var(--color-surface-container-high)]" onClick={() => addToCart(p)}>
-            <h3 className="font-bold text-[var(--color-on-surface)]">{p.nome}</h3>
-            <p className="text-[var(--color-primary)]">R$ {p.preco_venda.toFixed(2)}</p>
+    <div className="flex h-full gap-lg p-lg">
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex items-center gap-md mb-lg flex-wrap">
+          <div className="relative flex-1 max-w-sm">
+            <Search size={18} className="absolute left-sm top-1/2 -translate-y-1/2 text-[var(--color-outline)]" />
+            <input type="text" placeholder="Buscar produto..." value={search} onChange={e => setSearch(e.target.value)}
+              className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors" />
           </div>
-        ))}
+          <div className="flex gap-1 flex-wrap">
+            {categorias.map(cat => (
+              <button key={cat} onClick={() => setCategoriaFilter(cat)}
+                className={`px-md h-[36px] rounded-lg text-label-sm transition-all cursor-pointer ${
+                  categoriaFilter === cat
+                    ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]'
+                    : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)]'
+                }`}>
+                {cat === 'all' ? 'Todos' : cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {error && (
+          <div className="flex items-center gap-sm px-md py-sm rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30 text-body-md text-[var(--color-error)] mb-lg" role="alert">
+            <AlertCircle size={16} />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <div className="flex-1 overflow-y-auto min-h-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-md">
+            {filtered.map(p => (
+              <div key={p.id} onClick={() => addToCart(p)}
+                className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] hover:border-[var(--color-primary)]/40 transition-all cursor-pointer active:scale-[0.97] overflow-hidden">
+                <div className="aspect-[4/3] bg-[var(--color-surface-container-high)] overflow-hidden">
+                  {p.foto_url ? (
+                    <img src={p.foto_url} alt={p.nome} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : p.imagem ? (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-4xl group-hover:scale-110 transition-transform duration-500">{p.imagem}</span>
+                    </div>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <ShoppingCart size={32} className="text-[var(--color-on-surface-variant)]/30" />
+                    </div>
+                  )}
+                </div>
+                <div className="p-3 space-y-1">
+                  <h3 className="text-body-md font-semibold text-[var(--color-on-surface)] truncate">{p.nome}</h3>
+                  <p className="text-data-display text-[var(--color-primary)] font-bold">R$ {p.preco_venda.toFixed(2)}</p>
+                  {p.categoria && (
+                    <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                      {p.categoria}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filtered.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-32 text-[var(--color-outline)] text-sm gap-2">
+              <Search size={28} className="opacity-30" />
+              <span>Nenhum produto encontrado</span>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="w-80 bg-[var(--color-surface-container)] p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-4 text-[var(--color-on-surface)]">Carrinho</h2>
-        {cart.map(item => (
-          <div key={item.produto.id} className="flex justify-between mb-2 text-[var(--color-on-surface)]">
-            <span>{item.produto.nome} x{item.quantidade}</span>
-            <span>R$ {(item.produto.preco_venda * item.quantidade).toFixed(2)}</span>
-            <button onClick={() => removeFromCart(item.produto.id)} className="text-[var(--color-error)]"><Trash2 size={16} /></button>
+
+      <div className="w-80 shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] flex flex-col">
+        <div className="p-lg border-b border-[rgba(255,255,255,0.06)]">
+          <h2 className="text-headline-md font-bold text-[var(--color-on-surface)] flex items-center gap-2">
+            <ShoppingCart size={20} /> Carrinho
+          </h2>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-lg space-y-3 min-h-0">
+          {cart.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-32 text-[var(--color-outline)] text-sm gap-2">
+              <ShoppingCart size={28} className="opacity-30" />
+              <span>Carrinho vazio</span>
+            </div>
+          ) : cart.map(item => (
+            <div key={item.produto.id} className="flex items-center gap-3 p-3 bg-[var(--color-surface-container-high)] rounded-lg">
+              <div className="flex-1 min-w-0">
+                <p className="text-body-md font-medium text-[var(--color-on-surface)] truncate">{item.produto.nome}</p>
+                <p className="text-label-sm text-[var(--color-on-surface-variant)]">
+                  R$ {item.produto.preco_venda.toFixed(2)} x {item.quantidade}
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <button onClick={() => changeQty(item.produto.id, -1)}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">
+                  <Minus size={14} />
+                </button>
+                <span className="w-8 text-center text-body-md font-mono text-[var(--color-on-surface)]">
+                  {item.quantidade}
+                </span>
+                <button onClick={() => changeQty(item.produto.id, 1)}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">
+                  <Plus size={14} />
+                </button>
+              </div>
+              <button onClick={() => removeFromCart(item.produto.id)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-colors cursor-pointer">
+                <Trash2 size={14} />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-lg border-t border-[rgba(255,255,255,0.06)] space-y-3">
+          {saleOk && (
+            <div className="flex items-center gap-2 px-md py-sm rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
+              <CheckCircle2 size={16} />
+              <span>Venda finalizada com sucesso!</span>
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <span className="text-body-md text-[var(--color-on-surface-variant)]">Total</span>
+            <span className="text-headline-md font-bold text-[var(--color-on-surface)]">R$ {total.toFixed(2)}</span>
           </div>
-        ))}
-        <div className="mt-4 border-t border-[rgba(255,255,255,0.1)] pt-4">
-          <p className="text-lg font-bold text-[var(--color-on-surface)]">Total: R$ {total.toFixed(2)}</p>
-          <Button className="w-full mt-4" onClick={finalizeSale}>Finalizar Venda</Button>
+          <Button className="w-full" onClick={finalizeSale} disabled={cart.length === 0}>
+            Finalizar Venda
+          </Button>
         </div>
       </div>
     </div>
