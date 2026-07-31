@@ -20,6 +20,8 @@
 | 6 | Fase 2 — Segurança: security headers, password policy, CSP | build | ✅ Concluído |
 | 7 | Fase 3 — UX/A11y: Skeleton, ErrorBoundary, EmptyState, ARIA, focus-visible | build | ✅ Concluído |
 | 8 | Fase 4 — Monitoramento: metrics middleware, enhanced health, telemetry hook | build | ✅ Concluído |
+| 9 | SDD-001: Recuperar imagens e funcionalidades do menu Comandas | architect | 📋 SDD criado (draft) |
+| 10 | SDD-002: Recuperar registros e imagens no sistema (auditoria + plano) | architect + explore + ui-designer | 📋 SDD criado (draft) |
 
 ## Checkpoints
 

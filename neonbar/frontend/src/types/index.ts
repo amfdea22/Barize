@@ -661,6 +661,8 @@ export interface PrecificacaoItem {
   cmv_35: number;
   cmv_40: number;
   possui_receita: boolean;
+  foto_url?: string;
+  imagem?: string;
 }
 
 export interface CenarioPrecificacao {
@@ -690,6 +692,8 @@ export interface PrecificacaoDetalhe {
     percentual_custo: number;
   }>;
   cenarios: CenarioPrecificacao[];
+  foto_url?: string;
+  imagem?: string;
 }
 
 // ─── Análise de Estoque ───

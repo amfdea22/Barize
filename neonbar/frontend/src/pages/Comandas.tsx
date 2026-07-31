@@ -18,6 +18,7 @@ import { pedidosService, pdvService } from '../services/api';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import ProductThumbnail from '../components/ProductThumbnail';
 import type { Pedido } from '../types';
 
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
@@ -38,7 +39,7 @@ export default function Comandas() {
   const [editForm, setEditForm] = useState({ mesa: '', cliente: '', observacao: '', tempo_preparo_estimado: 0, itens: [] as { nome: string; quantidade: number; preco: number; observacao?: string }[] });
   const [savingEdit, setSavingEdit] = useState(false);
   const [editError, setEditError] = useState('');
-  const [produtos, setProdutos] = useState<{ id: number; nome: string; preco_venda: number }[]>([]);
+  const [produtos, setProdutos] = useState<{ id: number; nome: string; preco_venda: number; foto_url?: string; imagem?: string }[]>([]);
   const [addItemMode, setAddItemMode] = useState(false);
   const [selectedProduto, setSelectedProduto] = useState<number | ''>('');
 
@@ -82,7 +83,7 @@ export default function Comandas() {
 
   useEffect(() => {
     pdvService.listarProdutos().then(res => {
-      setProdutos(Array.isArray(res.data) ? res.data.map((p: any) => ({ id: p.id, nome: p.nome, preco_venda: p.preco_venda })) : []);
+      setProdutos(Array.isArray(res.data) ? res.data.map((p: any) => ({ id: p.id, nome: p.nome, preco_venda: p.preco_venda, foto_url: p.foto_url, imagem: p.imagem })) : []);
     }).catch(() => {});
   }, []);
 
@@ -258,12 +259,15 @@ export default function Comandas() {
                 {isExpanded && (
                   <div className="px-lg pb-md border-t border-[rgba(255,255,255,0.06)]">
                     <div className="pt-md space-y-1">
-                      {pedido.itens?.map((item: any, idx: number) => (
+                      {pedido.itens?.map((item: any, idx: number) => {
+                        const prod = produtos.find(p => p.nome.toLowerCase() === (item.nome || item.produto_nome || '').toLowerCase());
+                        return (
                         <div key={idx} className="flex items-center justify-between py-1">
                           <div className="flex items-center gap-2 min-w-0">
                             <span className="text-label-sm font-mono text-[var(--color-primary)] w-6 shrink-0">
                               {item.quantidade}x
                             </span>
+                            <ProductThumbnail foto_url={prod?.foto_url} imagem={prod?.imagem} size="sm" alt={item.nome || item.produto_nome} />
                             <span className="text-body-md text-[var(--color-on-surface)] truncate">
                               {item.nome || item.produto_nome || 'Item'}
                             </span>
@@ -272,7 +276,8 @@ export default function Comandas() {
                             R$ {(item.preco * item.quantidade || 0).toFixed(2)}
                           </span>
                         </div>
-                      ))}
+                      );
+                      })}
                     </div>
                     {pedido.observacao && (
                       <div className="mt-2 text-[11px] text-[var(--color-secondary-container)] italic">

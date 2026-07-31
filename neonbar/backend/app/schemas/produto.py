@@ -52,8 +52,6 @@ class ProdutoResponse(ProdutoBase):
     ingredientes: Optional[str] = None
     custo_total: Optional[float] = None
     preco_sugerido: Optional[float] = None
-    foto_url: Optional[str] = None
-
     model_config = ConfigDict(from_attributes=True)
 
 

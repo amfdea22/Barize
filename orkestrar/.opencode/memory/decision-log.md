@@ -6,31 +6,52 @@
 |---|---|---|---|---|
 | ADR-007 | 2026-07-28 | For√ßar WindowsSelectorEventLoopPolicy em Windows com Python ‚â•3.12 | Proposto |
 
-## ADR-008: EstratÈgia de Estabilidade do Backend em Desenvolvimento
+## ADR-008: EstratÔøΩgia de Estabilidade do Backend em Desenvolvimento
 
 - **Data**: 2026-07-28
-- **Contexto**: O backend FastAPI (uvicorn) È iniciado manualmente em um shell interativo. Quando o shell/bash tool encerra por timeout, o processo uvicorn È morto, causando erro "Erro ao conectar ao servidor" no frontend. O projeto usa Python 3.14 com venv, SQLite em dev, e o frontend Vite faz proxy para localhost:8000.
+- **Contexto**: O backend FastAPI (uvicorn) ÔøΩ iniciado manualmente em um shell interativo. Quando o shell/bash tool encerra por timeout, o processo uvicorn ÔøΩ morto, causando erro "Erro ao conectar ao servidor" no frontend. O projeto usa Python 3.14 com venv, SQLite em dev, e o frontend Vite faz proxy para localhost:8000.
 
-- **Decis„o**: Adotar uma estratÈgia hÌbrida com 3 camadas:
+- **DecisÔøΩo**: Adotar uma estratÔøΩgia hÔøΩbrida com 3 camadas:
 
-  1. **Script start-dev.ps1** (PowerShell) que inicia o backend como processo detached usando Start-Process -NoNewWindow com logging para arquivo. O script cria o diretÛrio de logs (logs/ local), configura o .venv, e inicia o uvicorn com --reload. O processo pode ser parado com Stop-Process pelo nome.
+  1. **Script start-dev.ps1** (PowerShell) que inicia o backend como processo detached usando Start-Process -NoNewWindow com logging para arquivo. O script cria o diretÔøΩrio de logs (logs/ local), configura o .venv, e inicia o uvicorn com --reload. O processo pode ser parado com Stop-Process pelo nome.
 
   2. **Retry/Reconnect no frontend**: Adicionar interceptor no axios (pi.ts) que detecta ERR_CONNECTION_REFUSED / Network Error e tenta reconectar com backoff exponencial (3 tentativas, intervalos de 1s, 2s, 4s). Exibir toast "Servidor reconectando..." durante as tentativas.
 
-  3. **Health check polling**: O frontend passa a fazer polling do endpoint /admin/health a cada 10s. Se falhar, ativa o modo "offline" (exibe banner "Servidor indisponÌvel" e desabilita aÁıes de escrita). Quando o health retorna 200, restaura o funcionamento normal.
+  3. **Health check polling**: O frontend passa a fazer polling do endpoint /admin/health a cada 10s. Se falhar, ativa o modo "offline" (exibe banner "Servidor indisponÔøΩvel" e desabilita aÔøΩÔøΩes de escrita). Quando o health retorna 200, restaura o funcionamento normal.
 
-  OpÁıes rejeitadas:
-  - **nssm (Windows Service)**: Exige instalaÁ„o global e elevaÁ„o de admin. N„o pr·tico para dev.
-  - **Docker**: J· existe Dockerfile, mas --reload n„o funciona bem com bind mounts no Windows (Watching de arquivos È lento e inst·vel). Reservado para produÁ„o.
+  OpÔøΩÔøΩes rejeitadas:
+  - **nssm (Windows Service)**: Exige instalaÔøΩÔøΩo global e elevaÔøΩÔøΩo de admin. NÔøΩo prÔøΩtico para dev.
+  - **Docker**: JÔøΩ existe Dockerfile, mas --reload nÔøΩo funciona bem com bind mounts no Windows (Watching de arquivos ÔøΩ lento e instÔøΩvel). Reservado para produÔøΩÔøΩo.
   - **Windows Scheduled Task**: Muito overhead para dev, sem hot-reload adequado.
 
-- **ConsequÍncias**:
-  [+]\$ackend sempre disponÌvel durante sess„o dev
-  [+]\$rontend resiliente a quedas tempor·rias
+- **ConsequÔøΩncias**:
+  [+]\$ackend sempre disponÔøΩvel durante sessÔøΩo dev
+  [+]\$rontend resiliente a quedas temporÔøΩrias
   [+]\$hot-reload preservado (uvicorn --reload)
-  [+]\$inÌcio/parada simples (um script .ps1)
-  [-]\$processo detached n„o È gerenciado visualmente (sem janela)
-  [-]\$consumo de recursos mesmo quando n„o usado (precisa kill manual)
-  [-]\$logs v„o para arquivo, n„o para stdout do terminal
+  [+]\$inÔøΩcio/parada simples (um script .ps1)
+  [-]\$processo detached nÔøΩo ÔøΩ gerenciado visualmente (sem janela)
+  [-]\$consumo de recursos mesmo quando nÔøΩo usado (precisa kill manual)
+  [-]\$logs vÔøΩo para arquivo, nÔøΩo para stdout do terminal
 
 - **Status**: Proposto
+
+## SDD-001: Recuperar Imagens e Funcionalidades do Menu Comandas
+
+- **Data**: 2026-07-30
+- **Contexto**: O menu Comandas (KDS) n√£o exibe imagens dos produtos, n√£o possui bot√µes de a√ß√£o para avan√ßar status (Novo ‚Üí Preparando ‚Üí Pronto ‚Üí Entregue), e n√£o tem ordena√ß√£o inteligente ou auto-refresh.
+- **Decis√£o**: Implementar apenas no front-end (`Comandas.tsx`) sem altera√ß√µes no backend:
+  1. Lookup table em mem√≥ria (`produtosLookup`) para mapear `nome ‚Üí foto_url/imagem`
+  2. Thumbnails nos itens expandidos com fallback `foto_url ‚Üí imagem ‚Üí √≠cone`
+  3. Bot√µes contextuais de status por status atual do pedido
+  4. Ordena√ß√£o: Pronto > Preparando > Novo > Entregue
+  5. Auto-refresh a cada 15s
+- **Consequ√™ncias**: [+] Zero mudan√ßas no backend, [+] Padr√£o consistente com PDV, [-] Dados de imagem podem ficar defasados se produtos forem alterados entre refreshes
+- **Status**: Proposto (SDD-001 em draft)
+
+## SDD-002: Recuperar Registros e Imagens no Sistema
+
+- **Data**: 2026-07-30
+- **Contexto**: Auditoria completa revelou que 8 produtos existem com emoji mas sem `foto_url`. 52 imagens em `uploads/` sem associa√ß√£o. 4 endpoints e 5 p√°ginas frontend sem exibi√ß√£o de imagens. Scripts apontam para DB errado.
+- **Decis√£o**: Abordagem em 4 fases ‚Äî (1) corrigir backend + scripts, (2) corrigir types TS, (3) adicionar thumbnails nas p√°ginas, (4) criar UI Admin para vincular imagens. Componente `ProductThumbnail` compartilhado com fallback de 3 n√≠veis.
+- **Consequ√™ncias**: [+] Consist√™ncia visual entre todos os m√≥dulos, [+] Imagens reais nos produtos, [+] Scripts funcionam de qualquer diret√≥rio, [-] Requer execu√ß√£o manual do `assign_images.py`
+- **Status**: Proposto (SDD-002 em draft)

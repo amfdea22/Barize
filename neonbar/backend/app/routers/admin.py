@@ -48,10 +48,19 @@ def health_check_db(db: Session = Depends(get_db)):
 
 
 @router.get("/images")
-def list_images(current_user: Usuario = Depends(get_current_user)):
-    """Lista imagens disponíveis no diretório de uploads (admin)."""
+def list_images(
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Lista imagens com info de atribuição a produtos (admin/gerente)."""
     verificar_role(current_user, ["admin", "gerente"])
+    from ..models.produto import Produto
     uploads_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
+    assigned = db.query(Produto).filter(Produto.foto_url.isnot(None)).all()
+    assigned_map = {}
+    for p in assigned:
+        fname = p.foto_url.split("/")[-1]
+        assigned_map[fname] = {"id": p.id, "nome": p.nome}
     images = []
     for f in sorted(os.listdir(uploads_dir)):
         if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
@@ -62,6 +71,7 @@ def list_images(current_user: Usuario = Depends(get_current_user)):
                 "url": f"/uploads/{f}",
                 "size_bytes": size,
                 "size_kb": round(size / 1024, 1),
+                "assigned_to": assigned_map.get(f),
             })
     return {"images": images}
 

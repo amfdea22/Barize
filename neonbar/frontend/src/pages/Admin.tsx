@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTelemetry } from '../hooks/useTelemetry';
+import ProductThumbnail from '../components/ProductThumbnail';
 import { produtoLotesService, fichasTecnicasService, pdvService, adminService } from '../services/api';
 import type { ProdutoLote, ProdutoLoteCreate, Produto } from '../types';
 
@@ -39,6 +40,9 @@ const Admin: React.FC = () => {
   // Imagens state
   const [images, setImages] = useState<any[]>([]);
   const [imagesLoading, setImagesLoading] = useState(false);
+  const [assigningFilename, setAssigningFilename] = useState<string | null>(null);
+  const [imageFilter, setImageFilter] = useState<'all' | 'assigned' | 'unassigned'>('all');
+  const [selectedProdutos, setSelectedProdutos] = useState<Record<string, number>>({});
   const [fichaForm, setFichaForm] = useState({
     dificuldade: '',
     teor_alcoolico: '',
@@ -375,9 +379,9 @@ const Admin: React.FC = () => {
                           </td>
                           <td>{data.duracao_media_ms}ms</td>
                           <td>{data.duracao_total_s}s</td>
-                        </tr>
+                      </tr>
                       ))}
-                    </tbody>
+                  </tbody>
                   </table>
                 </div>
               </div>
@@ -445,6 +449,7 @@ const Admin: React.FC = () => {
                       <table className="table table-hover mb-0">
                         <thead className="table-light">
                           <tr>
+                            <th></th>
                             <th>Produto</th>
                             <th>Categoria</th>
                             <th>Preço</th>
@@ -453,9 +458,10 @@ const Admin: React.FC = () => {
                         <tbody>
                           {produtos.map(p => (
                             <tr key={p.id}>
-                              <td>{p.nome}</td>
-                              <td>{p.categoria || '-'}</td>
-                              <td>R$ {p.preco_venda.toFixed(2)}</td>
+                              <td className="align-middle"><ProductThumbnail foto_url={p.foto_url} imagem={p.imagem} size="md" alt={p.nome} /></td>
+                              <td className="align-middle">{p.nome}</td>
+                              <td className="align-middle">{p.categoria || '-'}</td>
+                              <td className="align-middle">R$ {p.preco_venda.toFixed(2)}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -483,21 +489,25 @@ const Admin: React.FC = () => {
               <div className="text-center py-4"><div className="spinner-border text-primary"></div></div>
             ) : (
               <div className="table-responsive">
-                <table className="table table-hover mb-0">
-                  <thead className="table-light">
-                    <tr>
-                      <th>Produto</th>
-                      <th>Código do Lote</th>
-                      <th>Fabricação</th>
-                      <th>Validade</th>
-                      <th>Quantidade</th>
-                      <th className="text-end">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lotes.map(lote => (
-                      <tr key={lote.id}>
-                        <td>{lote.produto?.nome || 'N/A'}</td>
+                  <table className="table table-hover mb-0">
+                    <thead className="table-light">
+                      <tr>
+                        <th></th>
+                        <th>Produto</th>
+                        <th>Código do Lote</th>
+                        <th>Fabricação</th>
+                        <th>Validade</th>
+                        <th>Quantidade</th>
+                        <th className="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {lotes.map(lote => {
+                        const prod = produtos.find(p => p.id === lote.produto_id);
+                        return (
+                        <tr key={lote.id}>
+                          <td className="align-middle"><ProductThumbnail foto_url={prod?.foto_url} imagem={prod?.imagem} size="md" alt={lote.produto?.nome} /></td>
+                          <td>{lote.produto?.nome || 'N/A'}</td>
                         <td><code>{lote.codigo_lote}</code></td>
                         <td>{formatDate(lote.data_fabricacao)}</td>
                         <td>{formatDate(lote.data_validade)}</td>
@@ -519,7 +529,8 @@ const Admin: React.FC = () => {
                           </button>
                         </td>
                       </tr>
-                    ))}
+                      );
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -539,22 +550,24 @@ const Admin: React.FC = () => {
               <div className="text-center py-4"><div className="spinner-border text-primary"></div></div>
             ) : (
               <div className="table-responsive">
-                <table className="table table-hover mb-0">
-                  <thead className="table-light">
-                    <tr>
-                      <th>Produto</th>
-                      <th>Categoria</th>
-                      <th>Dificuldade</th>
-                      <th>Teor Alcoólico</th>
-                      <th>Tempo (min)</th>
-                      <th>Copo</th>
-                      <th className="text-end">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {fichas.map(ficha => (
-                      <tr key={ficha.id}>
-                        <td><strong>{ficha.nome}</strong></td>
+                  <table className="table table-hover mb-0">
+                    <thead className="table-light">
+                      <tr>
+                        <th></th>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Dificuldade</th>
+                        <th>Teor Alcoólico</th>
+                        <th>Tempo (min)</th>
+                        <th>Copo</th>
+                        <th className="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {fichas.map(ficha => (
+                        <tr key={ficha.id}>
+                          <td className="align-middle"><ProductThumbnail foto_url={ficha.foto_url} imagem={ficha.imagem} size="md" alt={ficha.nome} /></td>
+                          <td><strong>{ficha.nome}</strong></td>
                         <td>{ficha.categoria || '-'}</td>
                         <td>
                           {ficha.dificuldade && (
@@ -671,10 +684,17 @@ const Admin: React.FC = () => {
           <div className="col-12 mb-4">
             <div className="card">
               <div className="card-header d-flex justify-content-between align-items-center">
-                <h5 className="mb-0"><i className="bi bi-images me-2"></i> Imagens Disponíveis ({images.length})</h5>
-                <button className="btn btn-sm btn-outline-primary" onClick={loadImages} disabled={imagesLoading}>
-                  <i className="bi bi-arrow-clockwise me-1"></i> Atualizar
-                </button>
+                <h5 className="mb-0"><i className="bi bi-images me-2"></i> Imagens ({images.length})</h5>
+                <div className="d-flex gap-2">
+                  <div className="btn-group btn-group-sm">
+                    <button className={`btn ${imageFilter === 'all' ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => setImageFilter('all')}>Todas</button>
+                    <button className={`btn ${imageFilter === 'unassigned' ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => setImageFilter('unassigned')}>Não vinculadas</button>
+                    <button className={`btn ${imageFilter === 'assigned' ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => setImageFilter('assigned')}>Vinculadas</button>
+                  </div>
+                  <button className="btn btn-sm btn-outline-primary" onClick={loadImages} disabled={imagesLoading}>
+                    <i className="bi bi-arrow-clockwise me-1"></i> Atualizar
+                  </button>
+                </div>
               </div>
               <div className="card-body">
                 {imagesLoading ? (
@@ -686,9 +706,24 @@ const Admin: React.FC = () => {
                   </div>
                 ) : (
                   <div className="row g-3">
-                    {images.map((img: any) => (
+                    {images
+                      .filter((img: any) => {
+                        if (imageFilter === 'assigned') return img.assigned_to;
+                        if (imageFilter === 'unassigned') return !img.assigned_to;
+                        return true;
+                      })
+                      .map((img: any) => (
                       <div key={img.filename} className="col-6 col-md-4 col-lg-3 col-xl-2">
                         <div className="card h-100">
+                          <div className="position-absolute top-0 end-0 m-1 z-1" style={{ zIndex: 2 }}>
+                            {img.assigned_to ? (
+                              <span className="badge bg-success d-flex align-items-center gap-1">
+                                <i className="bi bi-check-circle-fill"></i> {img.assigned_to.nome}
+                              </span>
+                            ) : (
+                              <span className="badge bg-warning text-dark"><i className="bi bi-dot"></i> Sem produto</span>
+                            )}
+                          </div>
                           <div className="card-img-top bg-dark d-flex align-items-center justify-content-center" style={{ height: 140 }}>
                             <img
                               src={img.url}
@@ -702,6 +737,21 @@ const Admin: React.FC = () => {
                             <small className="text-muted d-block text-truncate">{img.filename}</small>
                             <small className="text-muted">{img.size_kb} KB</small>
                           </div>
+                          {!img.assigned_to && (
+                            <div className="card-footer p-2 bg-transparent border-top-0">
+                              <div className="d-flex gap-1">
+                                <select className="form-select form-select-sm" value={selectedProdutos[img.filename] || ''} onChange={e => setSelectedProdutos(prev => ({ ...prev, [img.filename]: parseInt(e.target.value) || 0 }))}>
+                                  <option value="">Vincular a...</option>
+                                  {produtos.map(p => (
+                                    <option key={p.id} value={p.id}>{p.nome}</option>
+                                  ))}
+                                </select>
+                                <button className="btn btn-sm btn-primary flex-shrink-0" onClick={async () => { const pid = selectedProdutos[img.filename]; if (!pid) return; setAssigningFilename(img.filename); try { await adminService.assignProductImage(pid, img.filename); await loadImages(); setSelectedProdutos(prev => { const next = { ...prev }; delete next[img.filename]; return next; }); } catch (err: any) { setError('Erro ao vincular: ' + (err.response?.data?.detail || err.message)); } finally { setAssigningFilename(null); } }} disabled={!selectedProdutos[img.filename] || assigningFilename === img.filename}>
+                                  {assigningFilename === img.filename ? <span className="spinner-border spinner-border-sm"></span> : <i className="bi bi-link-45deg"></i>}
+                                </button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}

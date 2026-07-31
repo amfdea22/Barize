@@ -13,6 +13,7 @@ import StatsCard from '../components/StatsCard';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import Badge from '../components/Badge';
+import ProductThumbnail from '../components/ProductThumbnail';
 import { precificacaoService } from '../services/api';
 import type { PrecificacaoItem, PrecificacaoDetalhe } from '../types';
 
@@ -212,6 +213,7 @@ export default function Precificacao() {
             <thead>
               <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(255,255,255,0.06)]">
                 <th className="pb-2 pr-4">Produto</th>
+                <th className="pb-2 pr-4 w-8"></th>
                 <th className="pb-2 pr-4">Categoria</th>
                 <th className="pb-2 pr-4 text-right">Preço Atual</th>
                 <th className="pb-2 pr-4 text-right">Custo/Dose</th>
@@ -233,7 +235,10 @@ export default function Precificacao() {
                     onClick={() => handleVerDetalhe(p.produto_id)}
                   >
                     <td className="py-2 pr-4">
-                      <span className="text-sm font-medium text-[var(--color-on-surface)]">{p.nome}</span>
+                      <div className="flex items-center gap-3">
+                        <ProductThumbnail foto_url={p.foto_url} imagem={p.imagem} size="lg" alt={p.nome} />
+                        <span className="text-sm font-medium text-[var(--color-on-surface)]">{p.nome}</span>
+                      </div>
                     </td>
                     <td className="py-2 pr-4">
                       <span className="text-xs text-[var(--color-outline)]">{p.categoria || '-'}</span>

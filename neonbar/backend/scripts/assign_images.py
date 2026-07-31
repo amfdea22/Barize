@@ -1,8 +1,29 @@
 """Suggest image-to-product assignments based on aspect ratio and size."""
-import sqlite3, os, json
+import sqlite3, os, json, sys
 from PIL import Image
 
-db = sqlite3.connect("barize_dev.db")
+def _get_db_path() -> str:
+    """Read DATABASE_URL from .env or use --db argument."""
+    for i, arg in enumerate(sys.argv):
+        if arg == "--db" and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+    if os.path.exists(env_path):
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("DATABASE_URL="):
+                    val = line.split("=", 1)[1].strip().strip("'\"")
+                    if val.startswith("sqlite:///"):
+                        return os.path.join(
+                            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                            val[len("sqlite:///"):]
+                        )
+    return "barize_dev.db"
+
+db_path = _get_db_path()
+print(f"Using database: {db_path}", file=sys.stderr)
+db = sqlite3.connect(db_path)
 db.row_factory = sqlite3.Row
 
 prods = {p["id"]: p["nome"] for p in db.execute("SELECT id, nome FROM produtos").fetchall()}

@@ -621,6 +621,8 @@ def listar_fichas_tecnicas(
             "id": p.id,
             "nome": p.nome,
             "categoria": p.categoria,
+            "foto_url": p.foto_url,
+            "imagem": p.imagem,
             "preco_venda": p.preco_venda,
             "custo_total": custo_total,
             "preco_sugerido": round(custo_total * markup, 2) if custo_total else None,
@@ -661,6 +663,8 @@ def obter_ficha_tecnica(
             "categoria": produto.categoria,
             "preco_venda": produto.preco_venda,
             "codigo_barras": produto.codigo_barras,
+            "foto_url": produto.foto_url,
+            "imagem": produto.imagem,
         },
         "ficha_tecnica": {
             "modo_preparo": produto.modo_preparo,
