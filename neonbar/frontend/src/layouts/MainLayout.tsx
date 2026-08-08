@@ -32,14 +32,14 @@ export default function MainLayout() {
       <Sidebar usuario={usuario} onLogout={logout} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((v) => !v)} />
 
       {/* TopAppBar */}
-      <header className={`fixed top-0 right-0 ${sidebarCollapsed ? 'w-[calc(100%-4rem)]' : 'w-[calc(100%-16rem)]'} h-16 z-40 bg-[var(--color-background)]/80 backdrop-blur-xl border-b border-[rgba(59,73,76,0.1)]`}>
+      <header className={`fixed top-0 right-0 ${sidebarCollapsed ? 'w-[calc(100%-4rem)]' : 'w-[calc(100%-16rem)]'} h-16 z-40 bg-[var(--color-background)]/80 backdrop-blur-xl border-b border-[rgba(var(--neutral-rgb),0.1)]`}>
         <div className="flex justify-between items-center px-lg h-full">
           {/* Left: Search + Status */}
           <div className="flex items-center gap-lg">
             <div className="relative">
               <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-on-surface-variant)]" />
               <input
-                className="bg-[var(--color-surface-container-lowest)] border border-[rgba(59,73,76,0.2)] rounded-full pl-10 pr-md py-1.5 text-body-md w-64 focus:outline-none focus:border-[var(--color-primary)]/50 transition-colors text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
+                className="bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--neutral-rgb),0.2)] rounded-full pl-10 pr-md py-1.5 text-body-md w-64 focus:outline-none focus:border-[var(--color-primary)]/50 transition-colors text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
                 placeholder="Buscar pedidos ou itens..."
                 type="text"
               />

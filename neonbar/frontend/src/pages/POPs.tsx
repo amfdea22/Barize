@@ -331,7 +331,7 @@ export default function POPs() {
           <p className="text-label-md text-[var(--color-outline)] mt-1 uppercase">Procedimentos Operacionais Padrão</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-1 bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.08)] rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.08)] rounded-lg p-1">
             <Gauge size={14} className="text-[var(--color-outline)] mx-1" />
             {(Object.keys(FLUXO_LABEL) as FluxoEstabelecimento[]).map((f) => (
               <button
@@ -341,7 +341,7 @@ export default function POPs() {
                 className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
                   fluxo === f
                     ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)] shadow-[0_0_8px_rgba(0,218,243,0.15)]'
-                    : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(255,255,255,0.04)]'
+                    : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)]'
                 }`}
               >
                 {FLUXO_LABEL[f].replace(' Movimento', '')}
@@ -387,7 +387,7 @@ export default function POPs() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                   tab === p
                     ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)] shadow-[0_0_8px_rgba(0,218,243,0.15)]'
-                    : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(255,255,255,0.04)]'
+                    : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)]'
                 }`}
               >
                 <Icon size={14} />
@@ -400,7 +400,7 @@ export default function POPs() {
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               tab === 'gerenciar'
                 ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)] shadow-[0_0_8px_rgba(0,218,243,0.15)]'
-                : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(255,255,255,0.04)]'
+                : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)]'
             }`}
           >
             <ClipboardList size={14} />
@@ -456,7 +456,7 @@ export default function POPs() {
               <select
                 value={form.frequencia}
                 onChange={(e) => setForm({ ...form, frequencia: e.target.value as PeriodoChecklist, momento: e.target.value === 'diario' ? form.momento : '' })}
-                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
               >
                 <option value="diario">Diário</option>
                 <option value="semanal">Semanal</option>
@@ -469,7 +469,7 @@ export default function POPs() {
                 <select
                   value={form.momento}
                   onChange={(e) => setForm({ ...form, momento: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                  className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
                 >
                   <option value="">Selecionar...</option>
                   <option value="abertura">Abertura</option>
@@ -485,7 +485,7 @@ export default function POPs() {
               <select
                 value={form.setor}
                 onChange={(e) => setForm({ ...form, setor: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
               >
                 <option value="">Selecionar...</option>
                 {SETORES.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -497,7 +497,7 @@ export default function POPs() {
                 type="number"
                 value={form.ordem}
                 onChange={(e) => setForm({ ...form, ordem: Number(e.target.value) || 0 })}
-                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
               />
             </div>
           </div>
@@ -510,7 +510,7 @@ export default function POPs() {
                   <select
                     value={form.exigencia_fluxo[f]}
                     onChange={(e) => setForm({ ...form, exigencia_fluxo: { ...form.exigencia_fluxo, [f]: e.target.value } })}
-                    className="w-full px-2 py-1.5 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-xs text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                    className="w-full px-2 py-1.5 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-xs text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50"
                   >
                     <option value="sempre">Sempre</option>
                     <option value="opcional">Opcional</option>
@@ -541,7 +541,7 @@ export default function POPs() {
                 value={execForm.observacao}
                 onChange={(e) => setExecForm({ ...execForm, observacao: e.target.value })}
                 rows={3}
-                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50 resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] focus:outline-none focus:border-[var(--color-primary)]/50 resize-none"
               />
             </div>
             <div className="flex gap-3 pt-2">

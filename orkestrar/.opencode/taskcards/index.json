@@ -1,5 +1,5 @@
 {
-  "nextId": 25,
+  "nextId": 47,
   "cards": {
     "TC-002": {
       "id": "TC-002",
@@ -163,11 +163,32 @@
     "TC-009": {
       "id": "TC-009",
       "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
-      "status": "backlog",
-      "statusHistory": [],
+      "status": "ready",
+      "statusHistory": [
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:12:37.883Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:13:46.697Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação"
+        }
+      ],
       "createdAt": "2026-07-26T04:53:07.565Z",
-      "updatedAt": "2026-07-26T04:53:07.565Z",
-      "path": ".opencode/taskcards/TC-009.json",
+      "updatedAt": "2026-08-06T21:13:46.697Z",
+      "path": ".opencode/taskcards/active/TC-009.json",
       "taskType": "card",
       "createdBy": "user",
       "agent": "build",
@@ -354,7 +375,7 @@
     "TC-024": {
       "id": "TC-024",
       "title": "Implementar cadastro de funcionários no Admin",
-      "status": "backlog",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-30T23:00:00.000Z",
       "createdBy": "user",
@@ -378,7 +399,1945 @@
         "neonbar/frontend/src/services/api.ts",
         "neonbar/frontend/src/pages/Admin.tsx"
       ],
-      "notes": "Seguir design recomendado pelo arquiteto (modelo separado, FK opcional para Usuario)."
+      "notes": "Seguir design recomendado pelo arquiteto (modelo separado, FK opcional para Usuario).",
+      "statusHistory": [
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:16:07.911Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:16:07.918Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação"
+        },
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:18:46.426Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:26:10.314Z",
+          "actor": "qa-engineer",
+          "reason": "Smoke test backend 11/11 OK, build + lint frontend OK"
+        },
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:26:10.322Z",
+          "actor": "gate",
+          "reason": "Build + lint + smoke test backend OK"
+        },
+        {
+          "taskId": "TC-024",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:19:22.141Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "updatedAt": "2026-08-07T00:19:22.141Z",
+      "path": ".opencode/taskcards/TC-024.json",
+      "completedAt": "2026-08-07T00:19:22.141Z"
+    },
+    "TC-025": {
+      "id": "TC-025",
+      "title": "no menu administração criar áreas de acessos no sistema para administrador, gerente e bartender",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-06T21:01:55.144Z",
+      "updatedAt": "2026-08-06T21:01:55.144Z",
+      "path": ".opencode/taskcards/active/TC-025.json",
+      "taskType": "card"
+    },
+    "TC-026": {
+      "id": "TC-026",
+      "title": "Criar no menu comanda uma area para editar e inserir dados dos insumos para a etiqueta e fazer o designer da etiqueta igual ao da pasta ui/comanda",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:12:37.876Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:13:46.688Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação"
+        },
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:07:53.138Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário via /card-iniciar"
+        },
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:11:40.066Z",
+          "actor": "qa-engineer",
+          "reason": "Build + lint OK, testes executados via build"
+        },
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:11:40.073Z",
+          "actor": "gate",
+          "reason": "Build + lint OK (0 erros), teste visual pendente usuario"
+        },
+        {
+          "taskId": "TC-026",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:12:36.682Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-06T21:03:57.606Z",
+      "updatedAt": "2026-08-06T23:12:36.682Z",
+      "path": ".opencode/taskcards/TC-026.json",
+      "taskType": "card",
+      "completedAt": "2026-08-06T23:12:36.682Z"
+    },
+    "TC-027": {
+      "id": "TC-027",
+      "title": "PDV profissional - Fase 1: mesa, forma de pagamento + troco, desconto, cupom 80mm e baixa de estoque via /pdv/finalizar-comanda",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:51:50.636Z",
+          "actor": "build",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T21:51:50.640Z",
+          "actor": "build",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-06T21:51:50.643Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:05:46.589Z",
+          "actor": "qa-engineer",
+          "reason": "Testes executados via build + smoke test"
+        },
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:05:46.594Z",
+          "actor": "gate",
+          "reason": "Build + lint + smoke test backend OK"
+        },
+        {
+          "taskId": "TC-027",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:05:46.598Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-06T21:46:41.157Z",
+      "updatedAt": "2026-08-06T23:05:46.598Z",
+      "path": ".opencode/taskcards/TC-027.json",
+      "taskType": "card",
+      "completedAt": "2026-08-06T23:05:46.598Z"
+    },
+    "TC-028": {
+      "id": "TC-028",
+      "title": "Mesas dinâmicas — tabela mesas + CRUD /admin/mesas + fetch dinâmico no PDV (substituir MESAS hardcoded)",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:33:52.786Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:33:52.793Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação"
+        },
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:34:07.218Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:45:54.453Z",
+          "actor": "qa-engineer",
+          "reason": "Build + lint OK, smoke test backend 12/12 PASS"
+        },
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:45:54.461Z",
+          "actor": "gate",
+          "reason": "Build+lint OK (0 erros), smoke 12/12, seed 13 mesas, CRUD + PDV dinamico + aba Admin"
+        },
+        {
+          "taskId": "TC-028",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-06T23:50:14.229Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-06T23:33:33.217Z",
+      "updatedAt": "2026-08-06T23:50:14.229Z",
+      "path": ".opencode/taskcards/TC-028.json",
+      "taskType": "card",
+      "objective": "Substituir a constante hardcoded MESAS (M1-M10, B1-B3) por tabela persistida `mesas` com CRUD /admin/mesas e fetch dinâmico no PDV.",
+      "acceptanceCriteria": [
+        "Modelo Mesa criado (nome unique, local/tipo, ativo soft-delete) e seed das 13 mesas atuais em init_db()",
+        "Router /admin/mesas: GET autenticado, POST/PUT admin/gerente, DELETE admin (soft delete)",
+        "Nome duplicado retorna 409",
+        "mesasService + hook useMesas no frontend",
+        "SeletorMesa/MesaBadge recebem lista dinâmica (presentacionais); constante MESAS removida de types.ts",
+        "PDV.tsx usa useMesas e lista mesas via API",
+        "Aba 'Mesas' na página Admin com CRUD em modal (padrão aba funcionários)",
+        "Pedido.mesa continua string livre — retro-compatibilidade total (pedidos antigos com M1 seguem válidos)"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/models/mesa.py",
+        "neonbar/backend/app/models/__init__.py",
+        "neonbar/backend/app/schemas/mesa.py",
+        "neonbar/backend/app/routers/mesas.py",
+        "neonbar/backend/app/main.py",
+        "neonbar/backend/app/database.py",
+        "neonbar/frontend/src/services/api.ts",
+        "neonbar/frontend/src/components/pdv/types.ts",
+        "neonbar/frontend/src/components/pdv/SeletorMesa.tsx",
+        "neonbar/frontend/src/components/pdv/MesaBadge.tsx",
+        "neonbar/frontend/src/pages/PDV.tsx",
+        "neonbar/frontend/src/pages/Admin.tsx",
+        "neonbar/frontend/src/types/index.ts"
+      ],
+      "tests": [
+        "Seed cria 13 mesas no boot (M1-M10, B1-B3)",
+        "POST /admin/mesas cria mesa -> 201",
+        "POST com nome duplicado -> 409",
+        "PUT /admin/mesas/{id} atualiza nome",
+        "DELETE /admin/mesas/{id} soft delete (ativo=0)",
+        "GET /admin/mesas lista apenas ativas",
+        "PDV lista mesas via API (não mais constante)",
+        "Frontend: aba Mesas no Admin carrega e CRUD funciona",
+        "Build + lint frontend OK",
+        "Smoke test backend CRUD mesas"
+      ],
+      "notes": "Recomendado por @architect (ADR: Mesas dinâmicas). Fase 1: modelo+seed, router, mesasService/useMesas, PDV dinâmico, aba Admin. Fase 2: mesa ocupada, ordenacao, Comandas/Dashboard.",
+      "completedAt": "2026-08-06T23:50:14.229Z"
+    },
+    "TC-029": {
+      "id": "TC-029",
+      "title": "Implementar área de CMV, margem de lucro e insumos com relatórios precisos",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:58:37.863Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-06T23:58:37.869Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação"
+        },
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:00:09.833Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:13:51.078Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa + smoke 40/40 + build/lint OK. Iniciando fase de testes."
+        },
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:13:51.087Z",
+          "actor": "gate",
+          "reason": "Validação automatizada concluída: smoke test backend 40/40 (produto composto 3 insumos, receita 24.00, custo 6.00, CMV 25%, margem 75%, período vazio = 0, CSV text/csv, 401 sem token); build frontend OK; lint frontend 0 erros."
+        },
+        {
+          "taskId": "TC-029",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:19:22.132Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-06T23:52:15.145Z",
+      "updatedAt": "2026-08-07T00:19:22.132Z",
+      "path": ".opencode/taskcards/TC-029.json",
+      "taskType": "card",
+      "objective": "Corrigir os cálculos que distorcem CMV/receita (bug de filtro de período + confusão quantidade de insumo × quantidade_produto) e entregar relatórios PRECISOS de CMV, margem de lucro e insumos: por produto, por categoria, período customizado e exportação CSV.",
+      "acceptanceCriteria": [
+        "CORREÇÃO 1 — calcular_cmv (estoque_service): receita filtrada por data_inicio/data_fim usando quantidade_produto e preço de venda da época (snapshot via pagamentos ou custo_no_momento); CMV% correto para qualquer período",
+        "CORREÇÃO 2 — vendas-por-categoria (financeiro_plus.py:37), receita_dia (cmv.py:92) e dashboard-executivo (relatorios.py:418) passam a usar quantidade_produto (não ABS(quantidade) do insumo) — produtos compostos (2+ insumos) não inflam receita",
+        "CORREÇÃO 3 — tipo CMVResult no frontend alinhado ao payload real (periodo.data_inicio/data_fim) — elimina 'Invalid Date' em CMV.tsx e Financeiro.tsx",
+        "RELATÓRIO 4 — endpoint CMV por produto e por categoria (período customizado): receita, custo, CMV% por produto e agregado por categoria",
+        "RELATÓRIO 5 — endpoint margem por item realizada no período: por produto (receita, custo, margem bruta R$ e %, quantidade vendida), ordenável",
+        "RELATÓRIO 6 — endpoint consumo/custo de insumos no período: por insumo (quantidade consumida, custo consumido) + visão por produto (quais produtos consomem o insumo X)",
+        "RELATÓRIO 7 — exportação CSV dos relatórios 4/5/6 via StreamingResponse (backend)",
+        "FRONTEND 8 — área de relatórios com seletor de período customizado (data_inicio → data_fim) cobrindo CMV, margem e insumos + botões de exportação CSV",
+        "FRONTEND 9 — menu lateral passa a incluir acesso à página CMV (Sidebar.tsx) e rotas existentes confirmadas em App.tsx",
+        "VALIDAÇÃO 10 — build + lint frontend OK; smoke test backend com produto composto (2+ insumos) verifica CMV, receita e margem corretos; perdas/ajustes não entram na receita"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/services/estoque_service.py",
+        "neonbar/backend/app/routers/cmv.py",
+        "neonbar/backend/app/routers/financeiro_plus.py",
+        "neonbar/backend/app/routers/relatorios.py",
+        "neonbar/backend/app/schemas/cmv.py",
+        "neonbar/backend/app/schemas/insumo.py",
+        "neonbar/backend/app/main.py",
+        "neonbar/frontend/src/services/api.ts",
+        "neonbar/frontend/src/types/index.ts",
+        "neonbar/frontend/src/pages/CMV.tsx",
+        "neonbar/frontend/src/pages/Financeiro.tsx",
+        "neonbar/frontend/src/pages/DRE.tsx",
+        "neonbar/frontend/src/components/Sidebar.tsx",
+        "neonbar/frontend/src/App.tsx"
+      ],
+      "tests": [
+        "calcular_cmv com período 7/30/90d retorna receita filtrada (não all-time)",
+        "Venda de produto composto (3 insumos) → receita = 1× preço (não 3×)",
+        "vendas-por-categoria usa quantidade_produto; total consistente com DRE",
+        "Dashboard executivo e receita_dia consistentes entre módulos",
+        "CMV por produto: soma dos custos dos produtos = CMV total do período",
+        "Margem por item: margem_bruta = receita − custo, margem% = margem/receita",
+        "Consumo de insumo por produto: quantidade e custo somados corretamente",
+        "Exportação CSV retorna text/csv com cabeçalhos e linhas corretas",
+        "Frontend: seletor período customizado reflete nos 3 relatórios",
+        "Frontend: botão exportar CSV baixa arquivo",
+        "Build + lint frontend OK (0 erros)",
+        "Smoke test backend com produto composto (2+ insumos)"
+      ],
+      "notes": "Diagnóstico @explore: 5 bugs de precisão (receita sem filtro de período em estoque_service.calcular_cmv; ABS(quantidade de insumo)×preço em financeiro_plus/vendas-por-categoria, cmv/dashboard e relatorios/dashboard-executivo; tipo CMVResult desalinhado) + lacunas (CMV por produto/categoria inexistente, margem realizada inexistente, consumo de insumo por produto inexistente, sem exportação, CMV.tsx fora do menu). Custo teórico duplicado em 3 lugares (precificacao.py:16, fichas_tecnicas.py:18, pdv.py:549) — fora de escopo neste card. Campos corretos: movimentacoes.custo_no_momento e movimentacoes.quantidade_produto.",
+      "completedAt": "2026-08-07T00:19:22.132Z"
+    },
+    "TC-030": {
+      "id": "TC-030",
+      "title": "Mover funcionalidades de etiqueta da área da comanda para o menu Etiquetas",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:40:43.894Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:42:13.027Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:43:06.964Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:46:48.871Z",
+          "actor": "qa-engineer",
+          "reason": "Build e lint OK, aguardando validação funcional"
+        },
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:47:04.081Z",
+          "actor": "gate",
+          "reason": "Build + lint 0 erros, funcionalidade realocada sem perda"
+        },
+        {
+          "taskId": "TC-030",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:48:30.133Z",
+          "actor": "user",
+          "reason": "Usuário aprovou conclusão"
+        }
+      ],
+      "createdAt": "2026-08-07T00:22:16.240Z",
+      "updatedAt": "2026-08-07T00:48:30.133Z",
+      "path": ".opencode/taskcards/TC-030.json",
+      "taskType": "card",
+      "objective": "Remover as funcionalidades de etiqueta da área da Comanda (botões 'Nova Etiqueta de Insumo' no header e 'Etiqueta' em cada pedido + modal InsumoEtiquetaModal) e concentrar TODAS as funções de etiqueta no menu Etiquetas (página /etiquetas): criar etiqueta manual de insumo com preview 80mm BARIZE, imprimir, listar/visualizar etiquetas existentes.",
+      "acceptanceCriteria": [
+        "COMANDAS 1 — Remover botão 'Nova Etiqueta de Insumo' do header de Comandas.tsx",
+        "COMANDAS 2 — Remover botão 'Etiqueta' do rodapé de cada pedido (ação com Tag) em Comandas.tsx",
+        "COMANDAS 3 — Remover <InsumoEtiquetaModal> do Comandas.tsx + estados etiquetaOpen/etiquetaInitial + import não utilizado",
+        "ETIQUETAS 4 — Menu Etiquetas (Etiquetas.tsx) ganha botão 'Nova Etiqueta de Insumo' que abre InsumoEtiquetaModal (form + preview 80mm BARIZE + Imprimir)",
+        "ETIQUETAS 5 — Menu Etiquetas mantém listagem/visualização/impressão das etiquetas existentes (funcionalidade atual preservada)",
+        "ETIQUETAS 6 — Etiquetar item da lista pré-preenche o modal (nome/quantidade do item selecionado)",
+        "VALIDAÇÃO 7 — build + lint frontend OK (0 erros); nenhuma funcionalidade de etiqueta removida do sistema, apenas realocada"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Comandas.tsx",
+        "neonbar/frontend/src/pages/Etiquetas.tsx",
+        "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+        "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+        "neonbar/frontend/src/services/api.ts",
+        "neonbar/frontend/src/types/index.ts",
+        "neonbar/frontend/src/App.tsx"
+      ],
+      "tests": [
+        "Comandas.tsx não importa mais InsumoEtiquetaModal nem renderiza modal de etiqueta",
+        "Comandas.tsx sem botões 'Nova Etiqueta de Insumo' e 'Etiqueta'",
+        "Etiquetas.tsx tem botão 'Nova Etiqueta de Insumo' que abre o modal",
+        "Modal abre com preview 80mm BARIZE e imprime via Ctrl+P/window.print",
+        "Etiquetar item da lista pré-preenche nome/quantidade no modal",
+        "Listagem/visualização/impressão das etiquetas existentes permanece funcional",
+        "Build + lint frontend OK (0 erros)"
+      ],
+      "notes": "Referência: Comandas.tsx hoje tem etiqueta em 2 lugares — botão no header (setEtiquetaOpen(true) com initial undefined) e botão 'Etiqueta' por pedido (pré-preenche com primeiroItem). Ambos abrem InsumoEtiquetaModal (form nome/qtd/unidade/lote/fab/val/categoria + preview Label80mm 80mm). Menu Etiquetas (/etiquetas) hoje só lista etiquetas de validade de insumos/produtos com seleção múltipla + preview impressão (template NEONBAR antigo). Objetivo: centralizar a criação de etiqueta manual no menu Etiquetas e tirar da Comanda.",
+      "completedAt": "2026-08-07T00:48:30.133Z"
+    },
+    "TC-031": {
+      "id": "TC-031",
+      "title": "Resgatar as informações do menu Configurações",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:52:40.377Z",
+          "actor": "build",
+          "reason": "Análise iniciada"
+        },
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T00:57:07.516Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-07T00:57:43.715Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:02:34.466Z",
+          "actor": "qa-engineer",
+          "reason": "Admin.tsx reescrito no design system, build OK, aguardando validação"
+        },
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:02:34.472Z",
+          "actor": "gate",
+          "reason": "Build + lint 0 erros, zero classes Bootstrap restantes"
+        },
+        {
+          "taskId": "TC-031",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-07T01:23:25.527Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-07T00:50:52.602Z",
+      "updatedAt": "2026-08-07T01:23:25.527Z",
+      "path": ".opencode/taskcards/TC-031.json",
+      "taskType": "card",
+      "objective": "Recuperar/redesenhar o menu Configurações (rota /admin). Hoje o Admin.tsx usa exclusivamente classes Bootstrap (row/card/table/modal/nav-tabs/form-control/bi-*/spinner-border) que NÃO existem no projeto (CSS = Tailwind + CSS vars --color-*), então a página renderiza 100% sem estilo e as informações não aparecem. Reescrever Admin.tsx no design system do projeto, preservando TODA a funcionalidade das 6 abas: Monitoramento (health + métricas por endpoint + lotes vencendo + produtos ativos), Gestão de Lotes (CRUD), Fichas Técnicas (edição), Imagens (listar/filtrar/vincular), Funcionários (CRUD + vínculo usuário), Mesas (CRUD + ativar/desativar).",
+      "acceptanceCriteria": [
+        "ADMIN 1 — Admin.tsx reescrito com Tailwind/CSS vars do projeto (sem classes Bootstrap: row/card/table/modal/nav-tabs/form-control/bi-*/spinner-border)",
+        "ADMIN 2 — Ícones Bootstrap (bi bi-*) substituídos por lucide-react (Activity, Box, FileText, Images, Users, Grid3x3, Plus, Pencil, Trash, Link, CheckCircle, XCircle, ArrowClockwise, Search)",
+        "ADMIN 3 — Aba Monitoramento renderiza health (Sistema/Banco), requests, telemetria, tabela métricas por endpoint, lotes vencendo 30 dias, produtos ativos",
+        "ADMIN 4 — Aba Gestão de Lotes mantém CRUD completo (listar, criar, editar, excluir) via modal",
+        "ADMIN 5 — Aba Fichas Técnicas mantém tabela + modal de edição (dificuldade/teor/copo/tempo/guarnição/modo)",
+        "ADMIN 6 — Aba Imagens mantém listagem + filtros (todas/não vinculadas/vinculadas) + vincular a produto",
+        "ADMIN 7 — Aba Funcionários mantém CRUD + filtros (cargo/status/busca) + modal 4 tabs (Dados/Contrato/Escala/Vínculo) + vincular/desvincular usuário",
+        "ADMIN 8 — Aba Mesas mantém CRUD + ativar/desativar",
+        "ADMIN 9 — Build frontend OK (tsc -b && vite build) + lint 0 erros",
+        "ADMIN 10 — Nenhuma funcionalidade perdida em relação ao Admin.tsx atual"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Admin.tsx",
+        "neonbar/frontend/src/components/Modal.tsx",
+        "neonbar/frontend/src/components/Button.tsx",
+        "neonbar/frontend/src/components/Input.tsx",
+        "neonbar/frontend/src/components/Badge.tsx",
+        "neonbar/frontend/src/components/ProductThumbnail.tsx"
+      ],
+      "tests": [
+        "Admin.tsx sem nenhuma classe Bootstrap/bi-* (grep)",
+        "Aba Monitoramento: health cards + métricas + lotes vencendo + produtos ativos",
+        "Aba Lotes: CRUD via modal funciona (criar/editar/excluir)",
+        "Aba Fichas: tabela + edição via modal",
+        "Aba Imagens: listagem + filtros + vincular produto",
+        "Aba Funcionários: CRUD + filtros + modal 4 tabs + vincular/desvincular",
+        "Aba Mesas: CRUD + ativar/desativar",
+        "Build (tsc -b && vite build) OK + lint 0 erros"
+      ],
+      "notes": "Causa raiz: Admin.tsx nunca foi migrado do Bootstrap para o design system Tailwind do projeto (restante das páginas usa --color-*, text-label-md, Button/Modal/Input components). O Bootstrap não está instalado nem via CDN. Backend (healthEnhanced, metrics, produto-lotes, fichas, admin images, funcionarios, mesas) já funciona — smoke tests anteriores confirmaram. Estratégia: reescrever o Admin.tsx mantendo TODA a lógica de estado/handlers existente, apenas trocando o markup Bootstrap por componentes Tailwind do projeto (Modal, Button, Input, Badge, ProductThumbnail) + lucide-react. Guard rail frontend-no-external-resources: NÃO adicionar CDN Bootstrap — usar só o que o projeto já tem.",
+      "completedAt": "2026-08-07T01:23:25.527Z"
+    },
+    "TC-032": {
+      "id": "TC-032",
+      "title": "O menu Administração deve ter o mesmo designer das outras páginas",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:10:26.392Z",
+          "actor": "build",
+          "reason": "Análise concluída pelos subagentes"
+        },
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:10:26.399Z",
+          "actor": "build",
+          "reason": "Aguardando aprovação"
+        },
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-07T01:10:26.402Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:18:36.262Z",
+          "actor": "qa-engineer",
+          "reason": "Ajustes de design aprovados (A1-A3/M1-M4/B4-B7/D10) aplicados, aguardando validação"
+        },
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-07T01:18:36.269Z",
+          "actor": "gate",
+          "reason": "Build + lint 0 erros, apenas 3 warnings pre-existentes (Comandas/Etiquetas/FichaTecnica)"
+        },
+        {
+          "taskId": "TC-032",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-07T01:23:25.535Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-07T01:05:47.716Z",
+      "updatedAt": "2026-08-07T01:23:25.535Z",
+      "path": ".opencode/taskcards/TC-032.json",
+      "taskType": "card",
+      "objective": "Alinhar o Admin.tsx (menu Configurações /admin) ao design system das demais páginas BARIZE, eliminando as divergências apontadas por @architect e @ui-designer (veredito ~85-90% conforme): (A1) trocar 4 window.confirm por Modal de confirmação com variant danger; (A2) padronizar selects de página para h-12 + surface-container-low + border 0.08; (A3) botão custom 'Editar' (Fichas) vira <Button size=sm variant=ghost>; (M1) tabs h-[36px] + active text-[var(--color-on-primary-container)]; (M2) search input border 0.1 + pl-xl pr-md py-xs + text-body-md + ícone 18; (M3) empty/loading do Monitoramento com ícone + gap-2; health cards usam StatsCard (text-data-display); ações em linha padrão boxed do Estoque; remover wrapper ghost-border duplicado do DataTable.",
+      "acceptanceCriteria": [
+        "A1 — 4 confirmações destrutivas (excluir lote, desligar/reativar funcionário, desvincular usuário, desativar mesa) usam Modal de confirmação estilizado (Button danger), sem window.confirm",
+        "A2 — Selects de página padronizados em h-12 + bg-surface-container-low + border rgba(255,255,255,0.08) (filtros funcionários e vincular imagem)",
+        "A3 — Botão 'Editar' da aba Fichas usa <Button size='sm' variant='ghost'>",
+        "M1 — Tabs principais e filtros com h-[36px] e active text-[var(--color-on-primary-container)]",
+        "M2 — Search input (Funcionários) com border 0.1, pl-xl pr-md py-xs, text-body-md, ícone 18 left-sm",
+        "M3 — Empty/loading do Monitoramento com ícone (lucide) + layout flex col center h-32 gap-2",
+        "H — Health cards do Monitoramento usam StatsCard (text-data-display + ícone em caixa)",
+        "Ações em linha (lotes/funcionários/mesas) usam icon boxed bg-[var(--color-surface-container-highest)] text-[var(--color-on-surface)] + title",
+        "Removido wrapper ghost-border duplicado ao redor de DataTable (mantém apenas borda do componente)",
+        "Build frontend OK (tsc -b && vite build) + lint 0 erros"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Admin.tsx",
+        "neonbar/frontend/src/components/Card.tsx",
+        "neonbar/frontend/src/components/StatsCard.tsx",
+        "neonbar/frontend/src/components/Modal.tsx",
+        "neonbar/frontend/src/components/Button.tsx"
+      ],
+      "tests": [
+        "grep window.confirm no Admin.tsx = vazio",
+        "grep h-[38px]/h-[34px] em selects do Admin = vazio (só h-12)",
+        "Admin usa Button size=sm variant=ghost no Editar Fichas",
+        "Tabs/ativos com text-on-primary-container (sem on-primary)",
+        "Search com border 0.1 + pl-xl + py-xs + text-body-md",
+        "Health cards via StatsCard",
+        "Ações em linha com bg-surface-container-highest",
+        "Build + lint OK"
+      ],
+      "notes": "Diagnóstico de dois agentes (arquivado): architect apontou D1-D12, ui-designer apontou A1-A3/M1-M4/B4-B7. Consenso: Admin ~85-90% conforme; apenas Admin.tsx precisa mudar, nenhum componente. Referências: Etiquetas.tsx:82-100 (search/tabs), Estoque.tsx:409-447 (ações boxed), Estoque.tsx:645-658 (confirm modal), StatsCard.tsx (health). text-label-sm não é token no index.css (no-op global, fora de escopo).",
+      "completedAt": "2026-08-07T01:23:25.535Z"
+    },
+    "TC-033": {
+      "id": "TC-033",
+      "title": "Multi-impressora por setor — modelo de dados com setor (Caixa/Cozinha/Bar) + IP/porta por impressora e preenchimento de impressora_destino na fila_impressao",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:25:20.757Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:27:15.352Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T13:31:22.598Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:40:22.232Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:40:22.250Z",
+          "actor": "gate",
+          "reason": "Smoke test 23/23 PASS + migração incremental PASS, ruff apenas pré-existentes"
+        },
+        {
+          "taskId": "TC-033",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T13:43:58.038Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.021Z",
+      "updatedAt": "2026-08-08T13:43:58.038Z",
+      "path": ".opencode/taskcards/TC-033.json",
+      "taskType": "card",
+      "objective": "Permitir múltiplas impressoras por setor (CAIXA, COZINHA, BAR), cada uma com IP/porta próprios, e preencher `impressora_destino` da `fila_impressao` com o setor correto no momento do enfileiramento (comanda de produção → cozinha/bar; fechamento → caixa). Hoje `printer_config` é UMA linha global (1 impressora) e `impressora_destino` nunca é preenchida em pdv.py.",
+      "acceptanceCriteria": [
+        "MODELO 1 — Coluna `setor` (String, default 'CAIXA') adicionada a `printer_config` + migração incremental (PRAGMA table_info + ALTER TABLE) em init_db()",
+        "MODELO 2 — Seed: criar 3 impressoras default (CAIXA, COZINHA, BAR) com host vazio e porta 9100 na primeira inicialização",
+        "SCHEMA 3 — PrinterConfigBase/Update/Response ganham campo `setor`; novo PrinterConfigCreate permite criar impressora por setor",
+        "ROUTER 4 — GET /printer-config aceita ?setor= e retorna a config ativa daquele setor (fallback cria default); PUT /printer-config atualiza por setor (não mais global)",
+        "ROUTER 5 — Novo endpoint POST /printer-config cria/atualiza impressora de um setor específico",
+        "ROUTER 6 — GET /printer-configs (admin) lista todas as impressoras por setor",
+        "PDV 7 — Enfileiramento de COMANDA de produção preenche `impressora_destino` com setor de produção (COZINHA/BAR)",
+        "PDV 8 — Enfileiramento de FECHAMENTO (finalizar-comanda) preenche `impressora_destino` com setor CAIXA",
+        "COMPAT 9 — Backend existente de teste de impressora (/printer-test) continua funcionando",
+        "VALIDAÇÃO 10 — smoke test backend: seed 3 impressoras, GET/PUT por setor, POST create, fila com impressora_destino preenchida, 401 sem token"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/models/printer_config.py",
+        "neonbar/backend/app/schemas/printer.py",
+        "neonbar/backend/app/routers/admin.py",
+        "neonbar/backend/app/database.py",
+        "neonbar/backend/app/routers/pdv.py",
+        "neonbar/backend/alembic/versions/0016_add_setor_printer_config.py"
+      ],
+      "tests": [
+        "init_db cria seed de 3 impressoras (CAIXA, COZINHA, BAR) em banco vazio",
+        "init_db adiciona coluna setor via ALTER TABLE em banco que já tem printer_config (sem coluna)",
+        "GET /printer-config?setor=COZINHA retorna config daquele setor",
+        "GET sem setor retorna o setor CAIXA (default)",
+        "PUT /printer-config atualiza host/porta do setor informado sem afetar os demais",
+        "POST /printer-config cria/atualiza impressora de setor específico (duplicado por setor = upsert)",
+        "GET /printer-configs lista 3 impressoras",
+        "vender() enfileira COMANDA com impressora_destino = setor de produção",
+        "finalizar-comanda() enfileira FECHAMENTO com impressora_destino = CAIXA",
+        "Comandos sem token retornam 401 (autenticação preservada)",
+        "Smoke test backend completo (import app, seed, CRUD por setor, fila)"
+      ],
+      "notes": "Diagnóstico @architect: (1) printer_config é tabela única global — _get_printer_config retorna a 1ª ativa e nunca lê setor; (2) fila_impressao.impressora_destino existe (fila_impressao.py:23) mas NUNCA é preenchida (pdv.py:385-391 e pdv.py:499-504 criam FilaImpressao sem o campo); (3) worker cai em Usb() sem host (escopo TC-034). Decisão: evoluir printer_config (não criar tabela nova) com coluna setor + unique(single) por setor via upsert. Roteamento: worker resolverá o IP pela config ativa do setor informado em impressora_destino (implementado no TC-034). Backward-compat: GET sem setor = CAIXA. Alembic nova migration 0016 apenas se aplicada manualmente; runtime usa init_db (padrão do projeto, create_all + ALTER TABLE incremental). Frontend (aba Impressoras) fica no TC-042.",
+      "completedAt": "2026-08-08T13:43:58.038Z"
+    },
+    "TC-034": {
+      "id": "TC-034",
+      "title": "Worker ESC/POS usa config do banco + layout por tipo — ImpressaoWorker lê printer_config do banco (sem fallback USB), roteia por setor e separa layout COMANDA (sem preços) vs FECHAMENTO",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:45:16.101Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:46:22.581Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T13:46:58.803Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:49:50.339Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T13:49:50.352Z",
+          "actor": "gate",
+          "reason": "Smoke test 29/29 PASS (worker) + migração incremental PASS, ruff apenas pré-existentes"
+        },
+        {
+          "taskId": "TC-034",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T13:55:35.472Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.034Z",
+      "updatedAt": "2026-08-08T13:55:35.472Z",
+      "path": ".opencode/taskcards/TC-034.json",
+      "taskType": "card",
+      "objective": "Fazer o ImpressaoWorker ler a configuração da impressora do BANCO (printer_config por setor, criado no TC-033) em vez de cair em fallback USB, rotear cada trabalho da fila_impressao para a impressora do setor indicado em impressora_destino (CAIXA/COZINHA/BAR) e separar os layouts ESC/POS por tipo de documento: COMANDA (produção cozinha/bar, sem preços, título destacado, quantidades em negrito) vs FECHAMENTO (pré-conta/total, valores justificados, total em destaque). Hoje: __init__ recebe host opcional, entrypoint chama ImpressaoWorker() sem host → conectar_impressora cai em Usb() (impressao_worker.py:58-65); formatação única formatar_comanda_escpos imprime preço_unitario (linhas 142-143) e nunca lê printer_config nem impressora_destino.",
+      "acceptanceCriteria": [
+        "WORKER 1 — ImpressaoWorker busca no banco a printer_config ATIVA do setor (trabalho.impressora_destino) e conecta via Network(host, porta); NÃO usa Usb() quando não há host",
+        "WORKER 2 — Se impressora_destino vazio → fallback para setor CAIXA; se setor não existe/desativado → erro claro no erro_msg (sem exceção silenciosa)",
+        "WORKER 3 — processar_fila() roteia cada trabalho pela sua impressora_destino (trabalhos de setores diferentes usam impressoras diferentes no mesmo loop)",
+        "LAYOUT 4 — Novo formatar_comanda_escpos (tipo COMANDA): título FONT_LARGE com nome do bar, itens 'quantidade x nome' em negrito, SEM preço_unitario/preco_total, observação em destaque se houver",
+        "LAYOUT 5 — Novo formatar_fechamento_escpos (tipo FECHAMENTO): cabeçalho centralizado (mesa/cartão + cliente), itens com qtd+nome à esquerda e valor à direita (alinhamento justificado dinâmico com espaços até 48 col), total em FONT_LARGE + negrito",
+        "LAYOUT 6 — FilaImpressao.tipo decide o formatador: COMANDA → comanda, FECHAMENTO → fechamento; tipos desconhecidos usam comanda",
+        "ENTRYPOINT 7 — __main__ continua python -m app.worker.impressao_worker sem args (lê config do banco); host/porta por parâmetro viram override opcional",
+        "VALIDAÇÃO 8 — smoke test worker: enfileira COMANDA (setor BAR) e FECHAMENTO (CAIXA) com simulação, verifica formatação sem preços na COMANDA e com total justificado no FECHAMENTO; sem ESCPOS_AVAILABLE retorna texto de simulação"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py",
+        "neonbar/backend/app/models/printer_config.py",
+        "neonbar/backend/app/models/fila_impressao.py"
+      ],
+      "tests": [
+        "Worker com ESCPOS desativado processa COMANDA de setor BAR e FECHAMENTO de CAIXA em simulação",
+        "formatar_comanda_escpos não contém 'R$' nem preco_unitario quando tipo COMANDA",
+        "formatar_comanda_escpos tem título em FONT_LARGE (\\x1d\\x21\\x11) e quantidade negrito",
+        "formatar_fechamento_escpos contém valor_total em FONT_LARGE + negrito e alinhamento justificado",
+        "Sem impressora_destino → usa setor CAIXA",
+        "Setor inexistente → erro_msg preenchido e status PENDENTE (tentativa), nunca exceção não tratada",
+        "Conectar impressora usa host/porta da config do setor (Network), não Usb(), quando host existe",
+        "Import app + instanciar worker sem args não lança erro"
+      ],
+      "notes": "Base: TC-033 criou coluna setor + seed CAIXA/COZINHA/BAR + pdv.py preenche impressora_destino (COMANDA→setor categoria, FECHAMENTO→CAIXA). Worker atual: __init__(printer_host=None, printer_port=9100) sem leitura de banco; conectar_impressora cai em Usb() quando host None (linhas 62-65); verificar_impressora_online envia DLE EOT mas não lê resposta (escopo TC-035); formatação única com preços (linhas 139-149). Docker: infra/docker-compose.yml worker-impressao usa Dockerfile.worker CMD python -m app.worker.impressao_worker (sem args). Simulação: quando ESCPOS_AVAILABLE=False, retorna texto formatado — smoke test usa isso. Estrutura: extrair resolve_config_setor(db, setor) que retorna PrinterConfig; conectar_impressora(config) com Network quando host presente. Manter compat: entrada principal continua `worker = ImpressaoWorker(); worker.iniciar()`.",
+      "completedAt": "2026-08-08T13:55:35.472Z"
+    },
+    "TC-035": {
+      "id": "TC-035",
+      "title": "Status de impressora real via DLE EOT 2 e 4 + erros — offline, tampa aberta, papel esgotado, guilhotina travada e aviso preventivo de pouco papel",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:02:38.078Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:04:16.662Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T14:07:23.303Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:12:09.995Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:12:10.006Z",
+          "actor": "gate",
+          "reason": "Smoke test TC-035 20/20 PASS (DLE EOT interpretação, simulação, endpoint printer-status, processar_fila)"
+        },
+        {
+          "taskId": "TC-035",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T14:16:41.244Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.039Z",
+      "updatedAt": "2026-08-08T14:16:41.244Z",
+      "path": ".opencode/taskcards/TC-035.json",
+      "taskType": "card",
+      "objective": "Implementar monitoramento real da impressora térmica no worker e expor status para a UI: consultar DLE EOT 2 (offline status) e DLE EOT 4 (sensor de papel) com LEITURA da resposta de 1 byte (hoje o worker só envia b\"\\x10\\x04\\x01\" e ignora a resposta — impressao_worker.py:127), interceptar e reportar tampa aberta, papel esgotado, guilhotina travada/erro mecânico, aviso preventivo de pouco papel (sem bloquear impressão) e registrar erro específico na fila_impressao. Expor GET /admin/printer-status?setor= para a UI (painel do caixa) consultar e exibir aviso discreto.",
+      "acceptanceCriteria": [
+        "WORKER 1 — Novo metodo `verificar_impressora_detalhada()` envia DLE EOT 2 (b'\\x10\\x04\\x02') e DLE EOT 4 (b'\\x10\\x04\\x04') e LÊ a resposta (1 byte via socket) interpretando os flags",
+        "WORKER 2 — Mapeamento de flags: DLE EOT 2 bit1 tampa aberta, bit2 erro mecânico/guilhotina travada; DLE EOT 4 bit0 papel acabando (pouco papel), bit1 papel esgotado; socket sem resposta em timeout => offline",
+        "WORKER 3 — `verificar_impressora_online()` passa a usar DLE EOT 2 + leitura de resposta (não apenas enviar e assumir True)",
+        "WORKER 4 — processar_fila: antes da impressão volumosa chama verificação; se papel esgotado/tampa aberta/guilhotina travada => erro específico no erro_msg (não apenas 'offline') e status PENDENTE (retry) ou ERRO após 3 tentativas",
+        "WORKER 5 — Pouco papel (near-end) NÃO bloqueia: loga warning + registra campo no erro_msg/aviso, impressão continua",
+        "API 6 — Novo endpoint GET /admin/printer-status?setor= (admin/gerente): conecta na impressora do setor, roda verificação detalhada e retorna {online, tampa_aberta, papel_esgotado, papel_baixo, erro_mecanico, offline_razao} com mensagem legível",
+        "SIM 7 — Modo simulação (sem python-escpos) retorna online=True sem erro, para não travar o fluxo de dev",
+        "VALIDAÇÃO 8 — smoke test: verificar_impressora_online em modo simulação True; verificar_impressora_detalhada retorna dict com flags falsos em simulação; endpoint printer-status 200 com token e 401 sem token; processar_fila continua processando em simulação"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py",
+        "neonbar/backend/app/routers/admin.py",
+        "neonbar/backend/app/schemas/printer.py"
+      ],
+      "tests": [
+        "verificar_impressora_online() em modo simulação retorna True",
+        "verificar_impressora_detalhada() em simulação retorna dict com chaves online/tampa_aberta/papel_esgotado/papel_baixo/erro_mecanico/offline_razao e online True",
+        "DLE EOT 2/4 mapeamento de bits correto (função de interpretação isolada testada com bytes simulados)",
+        "processar_fila processa COMANDA/FECHAMENTO em simulação sem erro (trabalhos CONCLUIDO)",
+        "GET /admin/printer-status?setor=CAIXA -> 200 com token e estrutura esperada",
+        "GET /admin/printer-status sem token -> 401",
+        "Import app + instanciar worker sem args não lança erro"
+      ],
+      "notes": "Protocolo DLE EOT (ESC/POS): resposta de 1 byte. DLE EOT 2 (offline status): bit0 printer offline, bit1 cover open (tampa), bit2 feed button, bit4 mechanical error (guilhotina travada), bit6 recovery. DLE EOT 4 (paper roll sensor): bit0 near-end (papel baixo), bit1 roll end (papel esgotado), bit4 near-end enable, bit5 end enable. python-escpos 3.1: Network expõe socket via .device; usar send/recv com timeout para ler resposta (escpos não instala no ambiente local -> modo simulação). Leitura via socket: self.printer.device.send(cmd) e device.recv(1) com settimeout curto; se timeout/socket.error => offline. Interpretação isolada em função pura `interpretar_dle_eot(offline_byte, papel_byte)` para permitir teste unitário com bytes simulados. Endpoint exposto em admin.py (router já prefixado /admin). Frontend (notificação no painel do caixa) fica para TC-042/TC-044; este card entrega a API de status.",
+      "completedAt": "2026-08-08T14:16:41.244Z"
+    },
+    "TC-036": {
+      "id": "TC-036",
+      "title": "Comanda de produção sem preços — remover valores da comanda de cozinha/bar (backend impressao_worker.py e frontend Comandas.tsx), título FONT_LARGE, itens negrito com quantidade e obs em destaque",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.596Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.273Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.834Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.073Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.081Z",
+          "actor": "gate",
+          "reason": "Comanda sem preços (ESC/POS + Comandas.tsx) — tsc/build/lint OK"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.045Z",
+      "updatedAt": "2026-08-08T16:38:01.081Z",
+      "path": ".opencode/taskcards/TC-036.json",
+      "taskType": "card",
+      "objective": "Remover valores (preços, totais) da comanda de produção de cozinha/bar, tanto no backend (impressao_worker.py, fluxo COMANDA) quanto no frontend (modal de comanda em Comandas.tsx). Título da comanda em FONT_LARGE, itens em negrito com quantidade e observações em destaque.",
+      "acceptanceCriteria": [
+        "WORKER 1 — Fluxo COMANDA no impressao_worker.py não imprime preços/subtotal/total dos itens",
+        "FRONT 2 — Modal de comanda em Comandas.tsx renderiza itens SEM valores monetários",
+        "FRONT 3 — Título da comanda em tamanho grande (classe comanda-print, FONT_LARGE no lado ESC/POS)",
+        "FRONT 4 — Itens em negrito com quantidade e observação (\"Obs:\") em destaque",
+        "VALIDAÇÃO 5 — smoke/inspeção: buffer ESC/POS da comanda não contém valores; UI não exibe moeda"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py",
+        "neonbar/frontend/src/pages/Comandas.tsx"
+      ],
+      "tests": [
+        "Geração de buffer ESC/POS de COMANDA não contém sequência de preço/total",
+        "Modal de comanda renderiza itens sem moeda/preços",
+        "tsc -b + npm run build passam"
+      ],
+      "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print."
+    },
+    "TC-037": {
+      "id": "TC-037",
+      "title": "Corte parcial da guilhotina — trocar \\x1d\\x56\\x00 (total) por \\x1d\\x56\\x01 (parcial) e garantir 3 feeds \\n\\n\\n antes do corte",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.606Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.290Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.841Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.088Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.094Z",
+          "actor": "gate",
+          "reason": "Corte parcial \\x1d\\x56\\x01 + 3 feeds verificados (smoke_tc037_039 18/18)"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.050Z",
+      "updatedAt": "2026-08-08T16:38:01.094Z",
+      "path": ".opencode/taskcards/TC-037.json",
+      "taskType": "card",
+      "objective": "Trocar o corte total da guilhotina (\\x1d\\x56\\x00) por corte parcial (\\x1d\\x56\\x01) na comanda e no fechamento, garantindo 3 feeds (\\n\\n\\n) antes do corte para não cortar a última linha impressa.",
+      "acceptanceCriteria": [
+        "WORKER 1 — Fluxo COMANDA e FECHAMENTO usam \\x1d\\x56\\x01 (corte parcial) em vez de \\x1d\\x56\\x00",
+        "WORKER 2 — Existem exatamente 3 feeds \\n\\n\\n antes do comando de corte",
+        "VALIDAÇÃO 3 — Inspeção do buffer ESC/POS confirma bytes 0x1d 0x56 0x01 e \\n\\n\\n antecedendo"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py"
+      ],
+      "tests": [
+        "Buffer de comanda contém b'\\x1d\\x56\\x01' e 3 feeds antes",
+        "Buffer de fechamento contém b'\\x1d\\x56\\x01' e 3 feeds antes",
+        "smoke_tc037_039 18/18 PASS"
+      ],
+      "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão."
+    },
+    "TC-038": {
+      "id": "TC-038",
+      "title": "Abertura de gaveta via pulso RJ11 — comando \\x1b\\x70\\x00\\x19\\xfa como primeiro byte do buffer de fechamento",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.615Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.301Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.846Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.102Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.108Z",
+          "actor": "gate",
+          "reason": "ABRIR_GAVETA como primeiro byte do fechamento (smoke_tc037_039 18/18)"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.057Z",
+      "updatedAt": "2026-08-08T16:38:01.108Z",
+      "path": ".opencode/taskcards/TC-038.json",
+      "taskType": "card",
+      "objective": "Adicionar abertura de gaveta de dinheiro via pulso RJ11 (comando ESC/POS \\x1b\\x70\\x00\\x19\\xfa) como PRIMEIRO byte do buffer de fechamento ESC/POS, para a gaveta abrir no momento do fechamento/cupom.",
+      "acceptanceCriteria": [
+        "WORKER 1 — Constante ABRIR_GAVETA = b\"\\x1b\\x70\\x00\\x19\\xfa\" definida no worker",
+        "WORKER 2 — Buffer ESC/POS do FECHAMENTO inicia com ABRIR_GAVETA (primeiro comando enviado)",
+        "VALIDAÇÃO 3 — Inspeção do buffer confirma prefixo de gaveta antes de qualquer conteúdo"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py"
+      ],
+      "tests": [
+        "Buffer de fechamento começa com b'\\x1b\\x70\\x00\\x19\\xfa'",
+        "smoke_tc037_039 18/18 PASS"
+      ],
+      "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado."
+    },
+    "TC-039": {
+      "id": "TC-039",
+      "title": "QR PIX no cupom ESC/POS e na UI — QR nativo GS ( k no backend e placeholder/QR no CupomPDV/PainelPagamento reutilizando lib qrcode",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.624Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.314Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.852Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.113Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.120Z",
+          "actor": "gate",
+          "reason": "Payload PIX + CRC-16/CCITT + GS ( k + QRCodePix.tsx (smoke_tc037_039 18/18)"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.062Z",
+      "updatedAt": "2026-08-08T16:38:01.120Z",
+      "path": ".opencode/taskcards/TC-039.json",
+      "taskType": "card",
+      "objective": "Gerar QR Code PIX no cupom ESC/POS (backend) e na UI (frontend): criar gerador de payload PIX (BR Code EMV com CRC-16/CCITT) + comando nativo GS ( k para impressora, e componente QRCodePix.tsx reutilizando a lib qrcode já presente, exibido no CupomPDV quando forma de pagamento é pix.",
+      "acceptanceCriteria": [
+        "WORKER 1 — gerar_payload_pix() no worker: TLV EMV com chave PIX_CHAVE, txid, valor, CRC-16/CCITT (payload termina com \"6304\"+CRC hex)",
+        "WORKER 2 — formatar_qr_escpos() emite GS ( k modelo 2, módulo, size, store data, print para o QR no buffer ESC/POS",
+        "WORKER 3 — Fechamento insere QR PIX quando forma_pagamento==\"pix\" e PIX_CHAVE configurada; lado texto renderiza \"[ QR CODE PIX ]\" + payload",
+        "FRONT 4 — QRCodePix.tsx gera payload PIX no JS (mesmo algoritmo/CRC) e exibe QR placeholder/real no CupomPDV quando PIX",
+        "VALIDAÇÃO 5 — smoke_tc037_039 18/18 PASS cobrindo payload, CRC e bytes GS ( k"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/impressao_worker.py",
+        "neonbar/backend/app/config.py",
+        "neonbar/frontend/src/components/pdv/QRCodePix.tsx",
+        "neonbar/frontend/src/components/pdv/CupomPDV.tsx"
+      ],
+      "tests": [
+        "gerar_payload_pix() retorna payload com \"6304\" + 4 dígitos CRC (regex ^000201...6304[0-9A-F]{4}$)",
+        "CRC-16/CCITT conferido contra caso conhecido (payload \"000201...\" exemplo PIX oficial)",
+        "Buffer de fechamento PIX contém bytes GS ( k (1d 28 6b)",
+        "QRCodePix.tsx gera payload consistente com backend",
+        "smoke_tc037_039 18/18 PASS"
+      ],
+      "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py."
+    },
+    "TC-040": {
+      "id": "TC-040",
+      "title": "Fila de contingência + Reenviar Pedido — endpoint de reprocessamento da fila_impressao + UI listando trabalhos PENDENTE/ERRO com botão Reenviar Pedido",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.631Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.328Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.857Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.126Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.134Z",
+          "actor": "gate",
+          "reason": "printer-fila GET/POST reenviar + UI aba Impressoras (smoke_tc040 12/12)"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.067Z",
+      "updatedAt": "2026-08-08T16:38:01.134Z",
+      "path": ".opencode/taskcards/TC-040.json",
+      "taskType": "card",
+      "objective": "Fila de contingência de impressão: expor GET /admin/printer-fila?status= (PENDENTE/ERRO/CONCLUIDO/TODOS) listando trabalhos da fila_impressao e POST /admin/printer-fila/{id}/reenviar para reprocessar trabalho com erro. UI na aba Impressoras do Admin lista PENDENTE/ERRO com botão Reenviar Pedido.",
+      "acceptanceCriteria": [
+        "API 1 — GET /admin/printer-fila?status= retorna lista com id, tipo (COMANDA/FECHAMENTO), status, tentativas, erro_msg, criado_em; valida status informado",
+        "API 2 — POST /admin/printer-fila/{id}/reenviar zera tentativas, limpa erro_msg e volta status PENDENTE; 404 se trabalho não existe",
+        "FRONT 3 — Aba Impressoras no Admin lista fila com filtro de status e botão Reenviar Pedido chamando adminService.reenviarFila",
+        "VALIDAÇÃO 4 — smoke_tc040 12/12 PASS: listagem, filtro, reenvio, 404, 401 sem token"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/admin.py",
+        "neonbar/backend/app/schemas/printer.py",
+        "neonbar/frontend/src/pages/Admin.tsx",
+        "neonbar/frontend/src/services/api.ts",
+        "neonbar/frontend/src/types/index.ts"
+      ],
+      "tests": [
+        "GET /admin/printer-fila retorna 200 com token e schema FilaImpressaoItem",
+        "Filtro status inválido retorna 400",
+        "POST reenviar zera tentativas e limpa erro (status PENDENTE)",
+        "POST reenviar para id inexistente retorna 404",
+        "Sem token retorna 401",
+        "smoke_tc040 12/12 PASS"
+      ],
+      "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py."
+    },
+    "TC-041": {
+      "id": "TC-041",
+      "title": "Corrigir sistema de impressão CSS — consolidar blocos @media print do index.css (A4 sobrescreve 80mm) e adicionar classe de print ao modal de comanda (Comandas.tsx:320)",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.641Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.339Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.862Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.141Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.148Z",
+          "actor": "gate",
+          "reason": "index.css consolidado, @page 80mm + ficha-a4 named page, build OK"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.072Z",
+      "updatedAt": "2026-08-08T16:38:01.148Z",
+      "path": ".opencode/taskcards/TC-041.json",
+      "taskType": "card",
+      "objective": "Corrigir o sistema de impressão CSS: consolidar os 3 blocos @media print duplicados do index.css em 1 único, definir @page { size: 80mm auto } global, usar named page ficha-a4 para a ficha A4 (para o A4 NÃO sobrescrever o 80mm), e adicionar classe de print ao modal de comanda (Comandas.tsx).",
+      "acceptanceCriteria": [
+        "CSS 1 — Apenas 1 bloco @media print no index.css (80mm) abrangendo .etiqueta-print, .print-80mm, .comanda-print e .cupom-80mm",
+        "CSS 2 — @page { size: 80mm auto } global e @page ficha-a4 com page: ficha-a4 aplicado a .ficha-print (A4 não sobrescreve 80mm)",
+        "FRONT 3 — Modal de comanda (Comandas.tsx) usa classe comanda-print para impressão 80mm",
+        "VALIDAÇÃO 4 — npm run build + lint passam"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/index.css",
+        "neonbar/frontend/src/pages/Comandas.tsx"
+      ],
+      "tests": [
+        "Somente 1 bloco @media print no index.css",
+        "@page ficha-a4 presente e .ficha-print referenciando page: ficha-a4",
+        "npm run build OK",
+        "npm run lint 0 erros"
+      ],
+      "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante."
+    },
+    "TC-042": {
+      "id": "TC-042",
+      "title": "Aba Impressoras no Admin — UI de configuração (tipo network/usb/serial, host, porta, baud, timeout, ativo) + botão Testar Impressora via adminService getPrinterConfig/updatePrinterConfig/testPrinter",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.648Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.351Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.868Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.155Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.161Z",
+          "actor": "gate",
+          "reason": "Aba Impressoras no Admin (form/status/testar/salvar) — build/lint OK"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.078Z",
+      "updatedAt": "2026-08-08T16:38:01.161Z",
+      "path": ".opencode/taskcards/TC-042.json",
+      "taskType": "card",
+      "objective": "Aba Impressoras no Admin: UI de configuração das impressoras (tipo network/usb/serial, host, porta, baud, timeout, ativo), chips dos setores configurados (CAIXA/COZINHA/BAR), botão Checar Status (DLE EOT via GET /admin/printer-status), Testar Impressora e Salvar via adminService ampliado (getPrinterConfigs, getPrinterStatus, createPrinterConfig).",
+      "acceptanceCriteria": [
+        "FRONT 1 — Aba \"impressoras\" no Admin com formulário (tipo, host, porta, baud, timeout, ativo) e chip/select de setor CAIXA/COZINHA/BAR",
+        "FRONT 2 — Botão Checar Status chama GET /admin/printer-status?setor= e exibe online/tampa/papel/erro",
+        "FRONT 3 — Botão Testar Impressora e Salvar persistem config via adminService (createPrinterConfig)",
+        "API 4 — adminService.getPrinterConfigs/getPrinterStatus/reenviarFila/createPrinterConfig atualizados com tipos",
+        "VALIDAÇÃO 5 — npm run build + lint passam; tsc -b OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Admin.tsx",
+        "neonbar/frontend/src/services/api.ts",
+        "neonbar/frontend/src/types/index.ts"
+      ],
+      "tests": [
+        "Aba impressoras renderiza com formulário e select de setor",
+        "Checar Status dispara adminService.getPrinterStatus",
+        "npm run build OK + npm run lint 0 erros + tsc -b OK"
+      ],
+      "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem)."
+    },
+    "TC-043": {
+      "id": "TC-043",
+      "title": "Emulador CLI ASCII — emulador ESC/POS de 48 colunas + regex de limpeza de comandos binários/hex para visualização",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.656Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.362Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.873Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.169Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.174Z",
+          "actor": "gate",
+          "reason": "Emulador CLI ASCII 48 col + limpar_comandos_escpos — execução sem erro"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.083Z",
+      "updatedAt": "2026-08-08T16:38:01.174Z",
+      "path": ".opencode/taskcards/TC-043.json",
+      "taskType": "card",
+      "objective": "Emulador CLI ASCII de ESC/POS 48 colunas (neonbar/backend/app/worker/emulador_escpos.py): argumentos --comanda/--qtd/--obs/--fechamento/--raw/--colunas, função limpar_comandos_escpos() que remove comandos binários/hex e os substitui por rótulos legíveis (ex \"CORTE PARCIAL\"), e renderizar_ascii() com centralização para preview visual sem impressora.",
+      "acceptanceCriteria": [
+        "CLI 1 — CLI com flags --comanda, --qtd, --obs, --fechamento, --raw, --colunas (default 48)",
+        "CLI 2 — limpar_comandos_escpos() remove sequências binárias \\x1b[^\\n]{1,6} e \\x1d[^\\n]{1,20} e mapeia comandos conhecidos para rótulos (ex CORTE PARCIAL)",
+        "CLI 3 — renderizar_ascii() produz texto 48 colunas com centralização de títulos",
+        "VALIDAÇÃO 4 — Rodar emulador para comanda e fechamento sem erro, saída legível com serrilhado ~"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/worker/emulador_escpos.py"
+      ],
+      "tests": [
+        "node equivalente: script roda com --comanda e --fechamento sem exceção",
+        "limpar_comandos_escpos remove bytes binários do buffer",
+        "Saída renderizada tem largura <= colunas e centraliza título"
+      ],
+      "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas."
+    },
+    "TC-044": {
+      "id": "TC-044",
+      "title": "Visualizador web/híbrido de impressão 80mm — container com serrilhado de rasgo, tipografia monoespaçada e placeholder QR PIX (reutilizar/evoluir CupomPDV e Label80mm)",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:41:49.664Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T14:42:33.374Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:37:53.878Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.180Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:38:01.188Z",
+          "actor": "gate",
+          "reason": "Visualizador80mm com serrilha + modal Preview Cupom 80mm — build/lint OK"
+        }
+      ],
+      "createdAt": "2026-08-07T01:33:33.088Z",
+      "updatedAt": "2026-08-08T16:38:01.188Z",
+      "path": ".opencode/taskcards/TC-044.json",
+      "taskType": "card",
+      "objective": "Visualizador web/híbrido de impressão 80mm: componente Visualizador80mm.tsx com container serrilhado de rasgo (borda lateral e inferior), tipografia monoespaçada, envolvendo o CupomPDV (com placeholder QR PIX), exibido no PDV no modal \"Preview Cupom 80mm\".",
+      "acceptanceCriteria": [
+        "FRONT 1 — Visualizador80mm.tsx com container .print-serrilha (lateral) e .print-serrilha-bottom (inferior) envolvendo CupomPDV",
+        "FRONT 2 — Estilos .print-serrilha/.print-serrilha-bottom adicionados no index.css",
+        "FRONT 3 — Usado no PDV.tsx no modal \"Preview Cupom 80mm\" (reutilizando/evoluindo CupomPDV)",
+        "VALIDAÇÃO 4 — npm run build + lint passam"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/components/pdv/Visualizador80mm.tsx",
+        "neonbar/frontend/src/components/pdv/CupomPDV.tsx",
+        "neonbar/frontend/src/index.css",
+        "neonbar/frontend/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Visualizador80mm renderiza serrilha + conteúdo do cupom",
+        "PDV abre modal Preview Cupom 80mm",
+        "npm run build OK + npm run lint 0 erros"
+      ],
+      "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local)."
+    },
+    "TC-045": {
+      "id": "TC-045",
+      "title": "Criar opção no painel de cancelar pedido",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:40:22.182Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:43:37.749Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:44:18.218Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:47:36.755Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:47:36.764Z",
+          "actor": "gate",
+          "reason": "Smoke backend 6/6 PASS (Cancelado 200, inválido 400, fora de ativos, filtro, 401) + tsc/build/lint OK"
+        }
+      ],
+      "createdAt": "2026-08-08T16:39:48.642Z",
+      "updatedAt": "2026-08-08T16:47:36.764Z",
+      "path": ".opencode/taskcards/TC-045.json",
+      "taskType": "card",
+      "objective": "Adicionar opção de CANCELAR pedido no Painel de Pedidos em tempo real (Dashboard): cada OrderCard dos pedidos ativos (Novo/Preparando/Pronto) ganha botão Cancelar com modal de confirmação (motivo opcional), e o backend passa a aceitar o status 'Cancelado' no endpoint PATCH /pedidos/{id}/status para que o pedido saia da lista de ativos (listarAtivos filtra Novo/Preparando).",
+      "acceptanceCriteria": [
+        "BACK 1 — Endpoint PATCH /pedidos/{pedido_id}/status aceita 'Cancelado' em valid_status (pedidos.py)",
+        "FRONT 2 — OrderCard.tsx: botão Cancelar visível nos pedidos com status Novo/Preparando/Pronto (ícone X/error, distinto do botão principal de avanço)",
+        "FRONT 3 — Dashboard.tsx: modal de confirmação com campo de motivo (opcional) ao cancelar; chama pedidosService.atualizarStatus(id,'Cancelado') e recarrega a lista",
+        "FRONT 4 — Status 'Cancelado' tratado nos mapas de status (OrderCard STATUS_CONFIG e Comandas.tsx statusConfig) e no tipo PedidoStatus do frontend",
+        "VALIDAÇÃO 5 — tsc -b + npm run build + npm run lint passam; smoke backend: PATCH status Cancelado retorna 200 e pedido sai de /pedidos/ativos"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/pedidos.py",
+        "neonbar/frontend/src/components/OrderCard.tsx",
+        "neonbar/frontend/src/pages/Dashboard.tsx",
+        "neonbar/frontend/src/types/index.ts",
+        "neonbar/frontend/src/pages/Comandas.tsx"
+      ],
+      "tests": [
+        "PATCH /pedidos/{id}/status com 'Cancelado' retorna 200 (pedidos.py valid_status ampliado)",
+        "PATCH status inválido (ex 'Foo') retorna 400",
+        "Pedido cancelado não aparece em GET /pedidos/ativos",
+        "OrderCard renderiza botão Cancelar para Novo/Preparando/Pronto e não para Entregue",
+        "Dashboard abre modal de confirmação e chama atualizarStatus com 'Cancelado'",
+        "tsc -b + npm run build + npm run lint sem erros"
+      ],
+      "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel."
+    },
+    "TC-046": {
+      "id": "TC-046",
+      "title": "Opção de tema claro e escuro do sistema sem mudar a interface do sistema",
+      "status": "verified",
+      "statusHistory": [
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:49:48.865Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T16:59:56.641Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T16:59:56.981Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:05:48.162Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:05:48.170Z",
+          "actor": "gate",
+          "reason": "Tema claro/escuro: useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC + tokens overlay/glass/neutral + override paleta light — smoke browser CDP 12/12 PASS + tsc/build/lint OK"
+        }
+      ],
+      "createdAt": "2026-08-08T16:49:00.741Z",
+      "updatedAt": "2026-08-08T17:05:48.170Z",
+      "path": ".opencode/taskcards/TC-046.json",
+      "taskType": "card",
+      "objective": "Adicionar tema claro e escuro ao sistema (BARIZE) sem alterar a interface/layout. O usuário alterna entre os dois temas por um toggle na Sidebar e na tela de Login; a escolha persiste em localStorage ('barize-theme'). O tema é implementado via design tokens CSS: sobreposição (overlay), vidro (glass) e neutro (neutral) passam a usar variáveis --overlay-rgb/--glass-rgb/--neutral-rgb trocadas em [data-theme], além de override da paleta clara. A estrutura visual, tamanhos, fontes e componentes permanecem idênticos — apenas as cores mudam.",
+      "acceptanceCriteria": [
+        "THEME 1 — hook useTheme.ts: getInitialTheme lê localStorage 'barize-theme' (default 'dark'); applyTheme seta data-theme no <html>; toggleTheme alterna dark/light",
+        "THEME 2 — ThemeToggle.tsx: botão com ícone Sol (dark) / Lua (light), prop collapsed (ícone-only), texto 'Tema Claro/Tema Escuro' quando expandido",
+        "THEME 3 — Wiring: ThemeToggle no rodapé da Sidebar (antes do perfil do usuário, respeita collapsed) e no header do Login (ícone-only)",
+        "CSS 4 — index.html: script anti-FOUC inline seta data-theme antes do CSS renderizar",
+        "CSS 5 — index.css: tokens :root (dark default) + :root[data-theme='light'] com override da paleta clara; usos hardcoded rgba(255,255,255,...)/rgba(28,27,27,...)/rgba(59,73,76,...) nos tsx/ts substituídos por rgba(var(--overlay-rgb)/--glass-rgb/--neutral-rgb,...)",
+        "VALIDAÇÃO 6 — tsc -b + npm run build + npm run lint passam (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/index.html",
+        "neonbar/frontend/src/index.css",
+        "neonbar/frontend/src/hooks/useTheme.ts",
+        "neonbar/frontend/src/components/ThemeToggle.tsx",
+        "neonbar/frontend/src/layouts/Sidebar.tsx",
+        "neonbar/frontend/src/pages/Login.tsx"
+      ],
+      "tests": [
+        "getInitialTheme retorna 'dark' sem localStorage e o valor salvo quando 'light'/'dark'",
+        "toggleTheme alterna o valor e persiste em localStorage",
+        "data-theme é aplicado no documentElement ao montar e ao alternar",
+        "ThemeToggle renderiza ícone Sol em dark e Lua em light; collapsed oculta o texto",
+        "Nenhum rgba(255,255,255|28,27,27|59,73,76) hardcoded permanece nos tsx/ts (exceto os 3 intencionais: overlay de imagem, sombra inset, preview etiqueta em papel branco)",
+        "tsc -b + npm run build + npm run lint sem erros"
+      ],
+      "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar."
     }
   }
 }

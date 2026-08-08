@@ -1,0 +1,79 @@
+{
+  "id": "TC-041",
+  "title": "Corrigir sistema de impressão CSS — consolidar blocos @media print do index.css (A4 sobrescreve 80mm) e adicionar classe de print ao modal de comanda (Comandas.tsx:320)",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.641Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.339Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.862Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.141Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.148Z",
+      "actor": "gate",
+      "reason": "index.css consolidado, @page 80mm + ficha-a4 named page, build OK"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.072Z",
+  "updatedAt": "2026-08-08T16:38:01.148Z",
+  "path": ".opencode/taskcards/TC-041.json",
+  "taskType": "card",
+  "objective": "Corrigir o sistema de impressão CSS: consolidar os 3 blocos @media print duplicados do index.css em 1 único, definir @page { size: 80mm auto } global, usar named page ficha-a4 para a ficha A4 (para o A4 NÃO sobrescrever o 80mm), e adicionar classe de print ao modal de comanda (Comandas.tsx).",
+  "acceptanceCriteria": [
+    "CSS 1 — Apenas 1 bloco @media print no index.css (80mm) abrangendo .etiqueta-print, .print-80mm, .comanda-print e .cupom-80mm",
+    "CSS 2 — @page { size: 80mm auto } global e @page ficha-a4 com page: ficha-a4 aplicado a .ficha-print (A4 não sobrescreve 80mm)",
+    "FRONT 3 — Modal de comanda (Comandas.tsx) usa classe comanda-print para impressão 80mm",
+    "VALIDAÇÃO 4 — npm run build + lint passam"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/index.css",
+    "neonbar/frontend/src/pages/Comandas.tsx"
+  ],
+  "tests": [
+    "Somente 1 bloco @media print no index.css",
+    "@page ficha-a4 presente e .ficha-print referenciando page: ficha-a4",
+    "npm run build OK",
+    "npm run lint 0 erros"
+  ],
+  "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante."
+}

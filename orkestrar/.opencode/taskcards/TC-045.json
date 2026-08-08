@@ -1,0 +1,85 @@
+{
+  "id": "TC-045",
+  "title": "Criar opção no painel de cancelar pedido",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:40:22.182Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:43:37.749Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:44:18.218Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:47:36.755Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:47:36.764Z",
+      "actor": "gate",
+      "reason": "Smoke backend 6/6 PASS (Cancelado 200, inválido 400, fora de ativos, filtro, 401) + tsc/build/lint OK"
+    }
+  ],
+  "createdAt": "2026-08-08T16:39:48.642Z",
+  "updatedAt": "2026-08-08T16:47:36.764Z",
+  "path": ".opencode/taskcards/TC-045.json",
+  "taskType": "card",
+  "objective": "Adicionar opção de CANCELAR pedido no Painel de Pedidos em tempo real (Dashboard): cada OrderCard dos pedidos ativos (Novo/Preparando/Pronto) ganha botão Cancelar com modal de confirmação (motivo opcional), e o backend passa a aceitar o status 'Cancelado' no endpoint PATCH /pedidos/{id}/status para que o pedido saia da lista de ativos (listarAtivos filtra Novo/Preparando).",
+  "acceptanceCriteria": [
+    "BACK 1 — Endpoint PATCH /pedidos/{pedido_id}/status aceita 'Cancelado' em valid_status (pedidos.py)",
+    "FRONT 2 — OrderCard.tsx: botão Cancelar visível nos pedidos com status Novo/Preparando/Pronto (ícone X/error, distinto do botão principal de avanço)",
+    "FRONT 3 — Dashboard.tsx: modal de confirmação com campo de motivo (opcional) ao cancelar; chama pedidosService.atualizarStatus(id,'Cancelado') e recarrega a lista",
+    "FRONT 4 — Status 'Cancelado' tratado nos mapas de status (OrderCard STATUS_CONFIG e Comandas.tsx statusConfig) e no tipo PedidoStatus do frontend",
+    "VALIDAÇÃO 5 — tsc -b + npm run build + npm run lint passam; smoke backend: PATCH status Cancelado retorna 200 e pedido sai de /pedidos/ativos"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/routers/pedidos.py",
+    "neonbar/frontend/src/components/OrderCard.tsx",
+    "neonbar/frontend/src/pages/Dashboard.tsx",
+    "neonbar/frontend/src/types/index.ts",
+    "neonbar/frontend/src/pages/Comandas.tsx"
+  ],
+  "tests": [
+    "PATCH /pedidos/{id}/status com 'Cancelado' retorna 200 (pedidos.py valid_status ampliado)",
+    "PATCH status inválido (ex 'Foo') retorna 400",
+    "Pedido cancelado não aparece em GET /pedidos/ativos",
+    "OrderCard renderiza botão Cancelar para Novo/Preparando/Pronto e não para Entregue",
+    "Dashboard abre modal de confirmação e chama atualizarStatus com 'Cancelado'",
+    "tsc -b + npm run build + npm run lint sem erros"
+  ],
+  "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel."
+}

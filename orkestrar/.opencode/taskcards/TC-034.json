@@ -1,0 +1,98 @@
+{
+  "id": "TC-034",
+  "title": "Worker ESC/POS usa config do banco + layout por tipo — ImpressaoWorker lê printer_config do banco (sem fallback USB), roteia por setor e separa layout COMANDA (sem preços) vs FECHAMENTO",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:45:16.101Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:46:22.581Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T13:46:58.803Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:49:50.339Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:49:50.352Z",
+      "actor": "gate",
+      "reason": "Smoke test 29/29 PASS (worker) + migração incremental PASS, ruff apenas pré-existentes"
+    },
+    {
+      "taskId": "TC-034",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T13:55:35.472Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.034Z",
+  "updatedAt": "2026-08-08T13:55:35.472Z",
+  "path": ".opencode/taskcards/TC-034.json",
+  "taskType": "card",
+  "objective": "Fazer o ImpressaoWorker ler a configuração da impressora do BANCO (printer_config por setor, criado no TC-033) em vez de cair em fallback USB, rotear cada trabalho da fila_impressao para a impressora do setor indicado em impressora_destino (CAIXA/COZINHA/BAR) e separar os layouts ESC/POS por tipo de documento: COMANDA (produção cozinha/bar, sem preços, título destacado, quantidades em negrito) vs FECHAMENTO (pré-conta/total, valores justificados, total em destaque). Hoje: __init__ recebe host opcional, entrypoint chama ImpressaoWorker() sem host → conectar_impressora cai em Usb() (impressao_worker.py:58-65); formatação única formatar_comanda_escpos imprime preço_unitario (linhas 142-143) e nunca lê printer_config nem impressora_destino.",
+  "acceptanceCriteria": [
+    "WORKER 1 — ImpressaoWorker busca no banco a printer_config ATIVA do setor (trabalho.impressora_destino) e conecta via Network(host, porta); NÃO usa Usb() quando não há host",
+    "WORKER 2 — Se impressora_destino vazio → fallback para setor CAIXA; se setor não existe/desativado → erro claro no erro_msg (sem exceção silenciosa)",
+    "WORKER 3 — processar_fila() roteia cada trabalho pela sua impressora_destino (trabalhos de setores diferentes usam impressoras diferentes no mesmo loop)",
+    "LAYOUT 4 — Novo formatar_comanda_escpos (tipo COMANDA): título FONT_LARGE com nome do bar, itens 'quantidade x nome' em negrito, SEM preço_unitario/preco_total, observação em destaque se houver",
+    "LAYOUT 5 — Novo formatar_fechamento_escpos (tipo FECHAMENTO): cabeçalho centralizado (mesa/cartão + cliente), itens com qtd+nome à esquerda e valor à direita (alinhamento justificado dinâmico com espaços até 48 col), total em FONT_LARGE + negrito",
+    "LAYOUT 6 — FilaImpressao.tipo decide o formatador: COMANDA → comanda, FECHAMENTO → fechamento; tipos desconhecidos usam comanda",
+    "ENTRYPOINT 7 — __main__ continua python -m app.worker.impressao_worker sem args (lê config do banco); host/porta por parâmetro viram override opcional",
+    "VALIDAÇÃO 8 — smoke test worker: enfileira COMANDA (setor BAR) e FECHAMENTO (CAIXA) com simulação, verifica formatação sem preços na COMANDA e com total justificado no FECHAMENTO; sem ESCPOS_AVAILABLE retorna texto de simulação"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py",
+    "neonbar/backend/app/models/printer_config.py",
+    "neonbar/backend/app/models/fila_impressao.py"
+  ],
+  "tests": [
+    "Worker com ESCPOS desativado processa COMANDA de setor BAR e FECHAMENTO de CAIXA em simulação",
+    "formatar_comanda_escpos não contém 'R$' nem preco_unitario quando tipo COMANDA",
+    "formatar_comanda_escpos tem título em FONT_LARGE (\\x1d\\x21\\x11) e quantidade negrito",
+    "formatar_fechamento_escpos contém valor_total em FONT_LARGE + negrito e alinhamento justificado",
+    "Sem impressora_destino → usa setor CAIXA",
+    "Setor inexistente → erro_msg preenchido e status PENDENTE (tentativa), nunca exceção não tratada",
+    "Conectar impressora usa host/porta da config do setor (Network), não Usb(), quando host existe",
+    "Import app + instanciar worker sem args não lança erro"
+  ],
+  "notes": "Base: TC-033 criou coluna setor + seed CAIXA/COZINHA/BAR + pdv.py preenche impressora_destino (COMANDA→setor categoria, FECHAMENTO→CAIXA). Worker atual: __init__(printer_host=None, printer_port=9100) sem leitura de banco; conectar_impressora cai em Usb() quando host None (linhas 62-65); verificar_impressora_online envia DLE EOT mas não lê resposta (escopo TC-035); formatação única com preços (linhas 139-149). Docker: infra/docker-compose.yml worker-impressao usa Dockerfile.worker CMD python -m app.worker.impressao_worker (sem args). Simulação: quando ESCPOS_AVAILABLE=False, retorna texto formatado — smoke test usa isso. Estrutura: extrair resolve_config_setor(db, setor) que retorna PrinterConfig; conectar_impressora(config) com Network quando host presente. Manter compat: entrada principal continua `worker = ImpressaoWorker(); worker.iniciar()`.",
+  "completedAt": "2026-08-08T13:55:35.472Z"
+}

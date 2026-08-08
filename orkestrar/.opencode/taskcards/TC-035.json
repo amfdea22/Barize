@@ -1,0 +1,97 @@
+{
+  "id": "TC-035",
+  "title": "Status de impressora real via DLE EOT 2 e 4 + erros — offline, tampa aberta, papel esgotado, guilhotina travada e aviso preventivo de pouco papel",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:02:38.078Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:04:16.662Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T14:07:23.303Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:12:09.995Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:12:10.006Z",
+      "actor": "gate",
+      "reason": "Smoke test TC-035 20/20 PASS (DLE EOT interpretação, simulação, endpoint printer-status, processar_fila)"
+    },
+    {
+      "taskId": "TC-035",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T14:16:41.244Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.039Z",
+  "updatedAt": "2026-08-08T14:16:41.244Z",
+  "path": ".opencode/taskcards/TC-035.json",
+  "taskType": "card",
+  "objective": "Implementar monitoramento real da impressora térmica no worker e expor status para a UI: consultar DLE EOT 2 (offline status) e DLE EOT 4 (sensor de papel) com LEITURA da resposta de 1 byte (hoje o worker só envia b\"\\x10\\x04\\x01\" e ignora a resposta — impressao_worker.py:127), interceptar e reportar tampa aberta, papel esgotado, guilhotina travada/erro mecânico, aviso preventivo de pouco papel (sem bloquear impressão) e registrar erro específico na fila_impressao. Expor GET /admin/printer-status?setor= para a UI (painel do caixa) consultar e exibir aviso discreto.",
+  "acceptanceCriteria": [
+    "WORKER 1 — Novo metodo `verificar_impressora_detalhada()` envia DLE EOT 2 (b'\\x10\\x04\\x02') e DLE EOT 4 (b'\\x10\\x04\\x04') e LÊ a resposta (1 byte via socket) interpretando os flags",
+    "WORKER 2 — Mapeamento de flags: DLE EOT 2 bit1 tampa aberta, bit2 erro mecânico/guilhotina travada; DLE EOT 4 bit0 papel acabando (pouco papel), bit1 papel esgotado; socket sem resposta em timeout => offline",
+    "WORKER 3 — `verificar_impressora_online()` passa a usar DLE EOT 2 + leitura de resposta (não apenas enviar e assumir True)",
+    "WORKER 4 — processar_fila: antes da impressão volumosa chama verificação; se papel esgotado/tampa aberta/guilhotina travada => erro específico no erro_msg (não apenas 'offline') e status PENDENTE (retry) ou ERRO após 3 tentativas",
+    "WORKER 5 — Pouco papel (near-end) NÃO bloqueia: loga warning + registra campo no erro_msg/aviso, impressão continua",
+    "API 6 — Novo endpoint GET /admin/printer-status?setor= (admin/gerente): conecta na impressora do setor, roda verificação detalhada e retorna {online, tampa_aberta, papel_esgotado, papel_baixo, erro_mecanico, offline_razao} com mensagem legível",
+    "SIM 7 — Modo simulação (sem python-escpos) retorna online=True sem erro, para não travar o fluxo de dev",
+    "VALIDAÇÃO 8 — smoke test: verificar_impressora_online em modo simulação True; verificar_impressora_detalhada retorna dict com flags falsos em simulação; endpoint printer-status 200 com token e 401 sem token; processar_fila continua processando em simulação"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py",
+    "neonbar/backend/app/routers/admin.py",
+    "neonbar/backend/app/schemas/printer.py"
+  ],
+  "tests": [
+    "verificar_impressora_online() em modo simulação retorna True",
+    "verificar_impressora_detalhada() em simulação retorna dict com chaves online/tampa_aberta/papel_esgotado/papel_baixo/erro_mecanico/offline_razao e online True",
+    "DLE EOT 2/4 mapeamento de bits correto (função de interpretação isolada testada com bytes simulados)",
+    "processar_fila processa COMANDA/FECHAMENTO em simulação sem erro (trabalhos CONCLUIDO)",
+    "GET /admin/printer-status?setor=CAIXA -> 200 com token e estrutura esperada",
+    "GET /admin/printer-status sem token -> 401",
+    "Import app + instanciar worker sem args não lança erro"
+  ],
+  "notes": "Protocolo DLE EOT (ESC/POS): resposta de 1 byte. DLE EOT 2 (offline status): bit0 printer offline, bit1 cover open (tampa), bit2 feed button, bit4 mechanical error (guilhotina travada), bit6 recovery. DLE EOT 4 (paper roll sensor): bit0 near-end (papel baixo), bit1 roll end (papel esgotado), bit4 near-end enable, bit5 end enable. python-escpos 3.1: Network expõe socket via .device; usar send/recv com timeout para ler resposta (escpos não instala no ambiente local -> modo simulação). Leitura via socket: self.printer.device.send(cmd) e device.recv(1) com settimeout curto; se timeout/socket.error => offline. Interpretação isolada em função pura `interpretar_dle_eot(offline_byte, papel_byte)` para permitir teste unitário com bytes simulados. Endpoint exposto em admin.py (router já prefixado /admin). Frontend (notificação no painel do caixa) fica para TC-042/TC-044; este card entrega a API de status.",
+  "completedAt": "2026-08-08T14:16:41.244Z"
+}

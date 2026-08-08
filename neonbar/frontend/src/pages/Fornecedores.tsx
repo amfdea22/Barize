@@ -148,7 +148,7 @@ export default function Fornecedores() {
             placeholder="Buscar por nome..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.08)] text-sm text-[var(--color-on-surface)] placeholder:text-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
+            className="flex-1 px-3 py-2 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] placeholder:text-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
           />
         </div>
 

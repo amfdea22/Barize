@@ -38,7 +38,7 @@ export default function DataTable<T extends Record<string, any>>({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-[rgba(255,255,255,0.06)]" role="rowgroup">
+        <tbody className="divide-y divide-[rgba(var(--overlay-rgb),0.06)]" role="rowgroup">
           {data.length === 0 ? (
             <tr role="row">
               <td

@@ -31,6 +31,11 @@ export default function Dashboard() {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [showReimprimir, setShowReimprimir] = useState(false);
 
+  // ─── Cancelar Pedido ───
+  const [cancelarPedido, setCancelarPedido] = useState<Pedido | null>(null);
+  const [motivoCancelamento, setMotivoCancelamento] = useState('');
+  const [cancelando, setCancelando] = useState(false);
+
   // ─── Pedidos (KDS) ───
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [_pedidosLoading] = useState(false);
@@ -103,6 +108,23 @@ export default function Dashboard() {
       loadPedidos();
     } catch {
       showFeedback('❌ Erro ao atualizar status');
+    }
+  };
+
+  // ─── Cancelar Pedido ───
+  const handleCancelarPedido = async () => {
+    if (!cancelarPedido) return;
+    setCancelando(true);
+    try {
+      await pedidosService.atualizarStatus(cancelarPedido.id, 'Cancelado');
+      showFeedback('🗑️ Pedido #' + cancelarPedido.id + ' cancelado' + (motivoCancelamento.trim() ? ' — ' + motivoCancelamento.trim() : ''));
+      setCancelarPedido(null);
+      setMotivoCancelamento('');
+      loadPedidos();
+    } catch {
+      showFeedback('❌ Erro ao cancelar pedido');
+    } finally {
+      setCancelando(false);
     }
   };
 
@@ -215,7 +237,7 @@ export default function Dashboard() {
           <button
             onClick={() => load(true)}
             disabled={refreshing}
-            className="px-md py-sm border border-[rgba(59,73,76,0.3)] rounded-lg text-label-md flex items-center gap-sm bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-colors cursor-pointer disabled:opacity-50"
+            className="px-md py-sm border border-[rgba(var(--neutral-rgb),0.3)] rounded-lg text-label-md flex items-center gap-sm bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-colors cursor-pointer disabled:opacity-50"
           >
             <RefreshCw size={18} className={refreshing ? 'animate-spin' : ''} /> Atualizar
           </button>
@@ -227,7 +249,7 @@ export default function Dashboard() {
         {/* Left: Quick Actions + Alerts */}
         <section className="col-span-12 lg:col-span-3 space-y-lg">
           {/* Quick Actions */}
-          <div className="bg-[var(--color-surface-container-high)] rounded-xl p-md border border-[rgba(59,73,76,0.1)] shadow-lg">
+          <div className="bg-[var(--color-surface-container-high)] rounded-xl p-md border border-[rgba(var(--neutral-rgb),0.1)] shadow-lg">
             <h3 className="text-label-md text-[var(--color-primary)] tracking-widest uppercase mb-md opacity-80">
               Ações Rápidas
             </h3>
@@ -237,7 +259,7 @@ export default function Dashboard() {
                 className={`flex flex-col items-center justify-center p-md rounded-lg border transition-all group cursor-pointer ${
                   rushMode
                     ? 'bg-[var(--color-primary)]/15 border-[var(--color-primary)]/60 shadow-[0_0_12px_rgba(0,218,243,0.25)]'
-                    : 'bg-[var(--color-surface-container-lowest)] border-[rgba(255,255,255,0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5'
+                    : 'bg-[var(--color-surface-container-lowest)] border-[rgba(var(--overlay-rgb),0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5'
                 }`}
               >
                 <Flame size={24} className={`transition-all mb-xs ${rushMode ? 'text-[var(--color-primary)] scale-110 animate-pulse' : 'text-[var(--color-primary)] group-hover:scale-110'}`} />
@@ -250,7 +272,7 @@ export default function Dashboard() {
               </button>
               <button
                 onClick={() => { setShowReimprimir(true); showFeedback('📄 Reimpressão disponível'); }}
-                className="flex flex-col items-center justify-center p-md bg-[var(--color-surface-container-lowest)] rounded-lg border border-[rgba(255,255,255,0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 active:bg-[var(--color-primary)]/10 active:border-[var(--color-primary)]/30 transition-all group cursor-pointer"
+                className="flex flex-col items-center justify-center p-md bg-[var(--color-surface-container-lowest)] rounded-lg border border-[rgba(var(--overlay-rgb),0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 active:bg-[var(--color-primary)]/10 active:border-[var(--color-primary)]/30 transition-all group cursor-pointer"
               >
                 <Printer size={24} className="text-[var(--color-primary)] group-hover:scale-110 transition-transform mb-xs" />
                 <span className="text-label-md text-[10px] uppercase">REIMPRIMIR</span>
@@ -260,7 +282,7 @@ export default function Dashboard() {
               </button>
               <button
                 onClick={() => { load(true); showFeedback('🔄 Painel atualizado'); }}
-                className="flex flex-col items-center justify-center p-md bg-[var(--color-surface-container-lowest)] rounded-lg border border-[rgba(255,255,255,0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 active:bg-[var(--color-primary)]/10 active:border-[var(--color-primary)]/30 transition-all group cursor-pointer"
+                className="flex flex-col items-center justify-center p-md bg-[var(--color-surface-container-lowest)] rounded-lg border border-[rgba(var(--overlay-rgb),0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 active:bg-[var(--color-primary)]/10 active:border-[var(--color-primary)]/30 transition-all group cursor-pointer"
               >
                 <SprayCan size={24} className="text-[var(--color-primary)] group-hover:scale-110 transition-transform mb-xs" />
                 <span className="text-label-md text-[10px] uppercase">LIMPAR TELA</span>
@@ -273,7 +295,7 @@ export default function Dashboard() {
                 className={`flex flex-col items-center justify-center p-md rounded-lg border transition-all group cursor-pointer ${
                   staffCalled
                     ? 'bg-[var(--color-primary)]/15 border-[var(--color-primary)]/50'
-                    : 'bg-[var(--color-surface-container-lowest)] border-[rgba(255,255,255,0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5'
+                    : 'bg-[var(--color-surface-container-lowest)] border-[rgba(var(--overlay-rgb),0.05)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5'
                 }`}
               >
                 <Users size={24} className={`transition-all mb-xs ${staffCalled ? 'text-[var(--color-primary)] scale-110' : 'text-[var(--color-primary)] group-hover:scale-110'}`} />
@@ -288,7 +310,7 @@ export default function Dashboard() {
           </div>
 
           {/* Alertas de Estoque */}
-          <div className="bg-[var(--color-surface-container-high)] rounded-xl p-md border border-[rgba(59,73,76,0.1)]">
+          <div className="bg-[var(--color-surface-container-high)] rounded-xl p-md border border-[rgba(var(--neutral-rgb),0.1)]">
             <div className="flex justify-between items-center mb-md">
               <h3 className="text-label-md text-[var(--color-on-surface-variant)] uppercase tracking-widest">
                 Alertas de Estoque
@@ -363,13 +385,14 @@ export default function Dashboard() {
                 key={pedido.id}
                 pedido={pedido}
                 onStatusChange={handleStatusChange}
+                onCancel={setCancelarPedido}
               />
             ))}
 
             {/* Add New Order Tile */}
             <div
               onClick={() => { setShowEntradaManual(true); setNovoPedido({ mesa: '', cliente: '', observacao: '', itens: [{ nome: '', quantidade: 1, preco: 0, observacao: '' }] }); }}
-              className="border-2 border-dashed border-[rgba(59,73,76,0.2)] rounded-xl flex items-center justify-center min-h-[250px] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 transition-all group cursor-pointer"
+              className="border-2 border-dashed border-[rgba(var(--neutral-rgb),0.2)] rounded-xl flex items-center justify-center min-h-[250px] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/5 transition-all group cursor-pointer"
             >
               <div className="text-center">
                 <div className="w-12 h-12 rounded-full bg-[var(--color-surface-container-high)] flex items-center justify-center mx-auto mb-md group-hover:bg-[var(--color-primary)]/20 group-hover:text-[var(--color-primary)] transition-colors">
@@ -385,7 +408,7 @@ export default function Dashboard() {
       </div>
 
       {/* Footer Stats Bar */}
-      <footer className="mt-xl border-t border-[rgba(59,73,76,0.1)] pt-lg pb-xl flex flex-wrap gap-xl items-center justify-between text-[var(--color-on-surface-variant)]">
+      <footer className="mt-xl border-t border-[rgba(var(--neutral-rgb),0.1)] pt-lg pb-xl flex flex-wrap gap-xl items-center justify-between text-[var(--color-on-surface-variant)]">
         <div className="flex gap-xl">
           <div className="flex flex-col">
             <span className="text-label-md text-[10px] uppercase tracking-widest opacity-60">
@@ -434,7 +457,7 @@ export default function Dashboard() {
                   className={`w-4 h-1.5 rounded-full ${
                     i < Math.min(pedidos.length + 1, 5)
                       ? 'bg-[var(--color-primary)]'
-                      : 'bg-[rgba(59,73,76,0.3)]'
+                      : 'bg-[rgba(var(--neutral-rgb),0.3)]'
                   }`}
                 />
               ))}
@@ -459,14 +482,14 @@ export default function Dashboard() {
           </p>
 
           {/* Comanda Preview */}
-          <div className="bg-black/80 rounded-xl p-4 font-mono text-[10px] leading-relaxed text-center select-all border border-[rgba(255,255,255,0.1)] shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] max-h-[340px] overflow-y-auto">
+          <div className="bg-black/80 rounded-xl p-4 font-mono text-[10px] leading-relaxed text-center select-all border border-[rgba(var(--overlay-rgb),0.1)] shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] max-h-[340px] overflow-y-auto">
             <div className="text-[var(--color-primary)] font-bold text-xs tracking-[0.2em] mb-0.5">
               ★ NEONBAR ★
             </div>
             <div className="text-[var(--color-on-surface)] text-[9px] uppercase tracking-wider mb-1">
               Comanda de Bar
             </div>
-            <div className="border-t border-dashed border-[rgba(255,255,255,0.15)] mb-1" />
+            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] mb-1" />
 
             <div className="flex justify-between text-[var(--color-on-surface-variant)] text-[9px] mb-1">
               <span>#{Math.floor(800 + Math.random() * 200)}</span>
@@ -491,7 +514,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[rgba(255,255,255,0.15)] mb-1" />
+            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] mb-1" />
 
             <div className="flex justify-between text-[var(--color-primary)] font-bold text-xs mb-0.5">
               <span>TOTAL</span>
@@ -501,7 +524,7 @@ export default function Dashboard() {
               Taxa 8%: R$ 8,72
             </div>
 
-            <div className="border-t border-dashed border-[rgba(255,255,255,0.15)] my-1" />
+            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] my-1" />
 
             <div className="text-[var(--color-on-surface-variant)] text-[8px] space-y-0.5">
               <div>Atendente: Admin</div>
@@ -560,7 +583,7 @@ export default function Dashboard() {
 
             <div className="space-y-2">
               {novoPedido.itens.map((item, idx) => (
-                <div key={idx} className="bg-[var(--color-surface-container-lowest)] rounded-lg p-3 border border-[rgba(255,255,255,0.06)]">
+                <div key={idx} className="bg-[var(--color-surface-container-lowest)] rounded-lg p-3 border border-[rgba(var(--overlay-rgb),0.06)]">
                   <div className="flex items-start gap-2">
                     <div className="flex-1 space-y-2">
                       <div className="grid grid-cols-3 gap-2">
@@ -570,7 +593,7 @@ export default function Dashboard() {
                             placeholder="Nome do item"
                             value={item.nome}
                             onChange={e => updateItem(idx, 'nome', e.target.value)}
-                            className="w-full bg-transparent border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                            className="w-full bg-transparent border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
                           />
                         </div>
                         <div className="flex items-center gap-1">
@@ -580,7 +603,7 @@ export default function Dashboard() {
                             placeholder="R$"
                             value={item.preco || ''}
                             onChange={e => updateItem(idx, 'preco', Number(e.target.value))}
-                            className="w-full bg-transparent border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                            className="w-full bg-transparent border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
                           />
                         </div>
                       </div>
@@ -605,7 +628,7 @@ export default function Dashboard() {
                           placeholder="Obs (opcional)"
                           value={item.observacao || ''}
                           onChange={e => updateItem(idx, 'observacao', e.target.value)}
-                          className="flex-1 bg-transparent border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1 text-xs text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
+                          className="flex-1 bg-transparent border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-3 py-1 text-xs text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50"
                         />
                       </div>
                     </div>
@@ -633,12 +656,12 @@ export default function Dashboard() {
               value={novoPedido.observacao}
               onChange={e => setNovoPedido(prev => ({ ...prev, observacao: e.target.value }))}
               rows={2}
-              className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50 resize-none"
+              className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-3 py-2 text-sm text-[var(--color-on-surface)] placeholder-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary)]/50 resize-none"
             />
           </div>
 
           {/* Total */}
-          <div className="flex justify-between items-center pt-2 border-t border-[rgba(255,255,255,0.06)]">
+          <div className="flex justify-between items-center pt-2 border-t border-[rgba(var(--overlay-rgb),0.06)]">
             <span className="text-sm text-[var(--color-on-surface-variant)]">
               {novoPedido.itens.filter(i => i.nome.trim()).length} item(ns)
             </span>
@@ -654,6 +677,47 @@ export default function Dashboard() {
             </Button>
             <Button className="flex-1" onClick={handleCriarPedido}>
               <PlusCircle size={16} /> Criar Pedido
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* ════════════════════════════════════════ */}
+      {/* MODAL: Cancelar Pedido                    */}
+      {/* ════════════════════════════════════════ */}
+      <Modal open={!!cancelarPedido} onClose={() => { setCancelarPedido(null); setMotivoCancelamento(''); }} title={`Cancelar Pedido #${cancelarPedido?.id || ''}`} size="md">
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 px-md py-sm rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30 text-body-md text-[var(--color-error)]">
+            <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+            <span>
+              Tem certeza que deseja cancelar o pedido #{cancelarPedido?.id}?
+              {cancelarPedido?.mesa && <> (Mesa {cancelarPedido.mesa})</>}
+              {cancelarPedido?.cliente && <> — {cancelarPedido.cliente}</>}
+              {cancelarPedido?.itens?.length ? <> — {cancelarPedido.itens.reduce((s, i) => s + i.quantidade, 0)} item(ns)</> : null}
+            </span>
+          </div>
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1.5">
+              Motivo (opcional)
+            </label>
+            <textarea
+              value={motivoCancelamento}
+              onChange={e => setMotivoCancelamento(e.target.value)}
+              placeholder="Motivo do cancelamento..."
+              rows={2}
+              className="w-full bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40"
+            />
+          </div>
+          <div className="flex gap-3 pt-2">
+            <Button variant="ghost" className="flex-1" onClick={() => { setCancelarPedido(null); setMotivoCancelamento(''); }}>
+              Voltar
+            </Button>
+            <Button
+              className="flex-1 bg-[var(--color-error)] hover:bg-[var(--color-error)]/80"
+              loading={cancelando}
+              onClick={handleCancelarPedido}
+            >
+              <X size={16} /> Confirmar Cancelamento
             </Button>
           </div>
         </div>

@@ -1,0 +1,116 @@
+{
+  "id": "TC-029",
+  "title": "Implementar área de CMV, margem de lucro e insumos com relatórios precisos",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:58:37.863Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:58:37.869Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação"
+    },
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-07T00:00:09.833Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:13:51.078Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa + smoke 40/40 + build/lint OK. Iniciando fase de testes."
+    },
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:13:51.087Z",
+      "actor": "gate",
+      "reason": "Validação automatizada concluída: smoke test backend 40/40 (produto composto 3 insumos, receita 24.00, custo 6.00, CMV 25%, margem 75%, período vazio = 0, CSV text/csv, 401 sem token); build frontend OK; lint frontend 0 erros."
+    },
+    {
+      "taskId": "TC-029",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-07T00:19:22.132Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-06T23:52:15.145Z",
+  "updatedAt": "2026-08-07T00:19:22.132Z",
+  "path": ".opencode/taskcards/TC-029.json",
+  "taskType": "card",
+  "objective": "Corrigir os cálculos que distorcem CMV/receita (bug de filtro de período + confusão quantidade de insumo × quantidade_produto) e entregar relatórios PRECISOS de CMV, margem de lucro e insumos: por produto, por categoria, período customizado e exportação CSV.",
+  "acceptanceCriteria": [
+    "CORREÇÃO 1 — calcular_cmv (estoque_service): receita filtrada por data_inicio/data_fim usando quantidade_produto e preço de venda da época (snapshot via pagamentos ou custo_no_momento); CMV% correto para qualquer período",
+    "CORREÇÃO 2 — vendas-por-categoria (financeiro_plus.py:37), receita_dia (cmv.py:92) e dashboard-executivo (relatorios.py:418) passam a usar quantidade_produto (não ABS(quantidade) do insumo) — produtos compostos (2+ insumos) não inflam receita",
+    "CORREÇÃO 3 — tipo CMVResult no frontend alinhado ao payload real (periodo.data_inicio/data_fim) — elimina 'Invalid Date' em CMV.tsx e Financeiro.tsx",
+    "RELATÓRIO 4 — endpoint CMV por produto e por categoria (período customizado): receita, custo, CMV% por produto e agregado por categoria",
+    "RELATÓRIO 5 — endpoint margem por item realizada no período: por produto (receita, custo, margem bruta R$ e %, quantidade vendida), ordenável",
+    "RELATÓRIO 6 — endpoint consumo/custo de insumos no período: por insumo (quantidade consumida, custo consumido) + visão por produto (quais produtos consomem o insumo X)",
+    "RELATÓRIO 7 — exportação CSV dos relatórios 4/5/6 via StreamingResponse (backend)",
+    "FRONTEND 8 — área de relatórios com seletor de período customizado (data_inicio → data_fim) cobrindo CMV, margem e insumos + botões de exportação CSV",
+    "FRONTEND 9 — menu lateral passa a incluir acesso à página CMV (Sidebar.tsx) e rotas existentes confirmadas em App.tsx",
+    "VALIDAÇÃO 10 — build + lint frontend OK; smoke test backend com produto composto (2+ insumos) verifica CMV, receita e margem corretos; perdas/ajustes não entram na receita"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/services/estoque_service.py",
+    "neonbar/backend/app/routers/cmv.py",
+    "neonbar/backend/app/routers/financeiro_plus.py",
+    "neonbar/backend/app/routers/relatorios.py",
+    "neonbar/backend/app/schemas/cmv.py",
+    "neonbar/backend/app/schemas/insumo.py",
+    "neonbar/backend/app/main.py",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/types/index.ts",
+    "neonbar/frontend/src/pages/CMV.tsx",
+    "neonbar/frontend/src/pages/Financeiro.tsx",
+    "neonbar/frontend/src/pages/DRE.tsx",
+    "neonbar/frontend/src/components/Sidebar.tsx",
+    "neonbar/frontend/src/App.tsx"
+  ],
+  "tests": [
+    "calcular_cmv com período 7/30/90d retorna receita filtrada (não all-time)",
+    "Venda de produto composto (3 insumos) → receita = 1× preço (não 3×)",
+    "vendas-por-categoria usa quantidade_produto; total consistente com DRE",
+    "Dashboard executivo e receita_dia consistentes entre módulos",
+    "CMV por produto: soma dos custos dos produtos = CMV total do período",
+    "Margem por item: margem_bruta = receita − custo, margem% = margem/receita",
+    "Consumo de insumo por produto: quantidade e custo somados corretamente",
+    "Exportação CSV retorna text/csv com cabeçalhos e linhas corretas",
+    "Frontend: seletor período customizado reflete nos 3 relatórios",
+    "Frontend: botão exportar CSV baixa arquivo",
+    "Build + lint frontend OK (0 erros)",
+    "Smoke test backend com produto composto (2+ insumos)"
+  ],
+  "notes": "Diagnóstico @explore: 5 bugs de precisão (receita sem filtro de período em estoque_service.calcular_cmv; ABS(quantidade de insumo)×preço em financeiro_plus/vendas-por-categoria, cmv/dashboard e relatorios/dashboard-executivo; tipo CMVResult desalinhado) + lacunas (CMV por produto/categoria inexistente, margem realizada inexistente, consumo de insumo por produto inexistente, sem exportação, CMV.tsx fora do menu). Custo teórico duplicado em 3 lugares (precificacao.py:16, fichas_tecnicas.py:18, pdv.py:549) — fora de escopo neste card. Campos corretos: movimentacoes.custo_no_momento e movimentacoes.quantidade_produto.",
+  "completedAt": "2026-08-07T00:19:22.132Z"
+}

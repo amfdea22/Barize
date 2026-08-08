@@ -86,7 +86,7 @@ def atualizar_status_pedido(
     db: Session = Depends(get_db),
 ):
     """Atualiza o status de um pedido (ex: Novo → Preparando → Pronto)."""
-    valid_status = ["Novo", "Preparando", "Pronto", "Entregue"]
+    valid_status = ["Novo", "Preparando", "Pronto", "Entregue", "Cancelado"]
     if data.status not in valid_status:
         raise HTTPException(
             status_code=400,

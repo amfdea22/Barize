@@ -1,0 +1,84 @@
+{
+  "id": "TC-040",
+  "title": "Fila de contingência + Reenviar Pedido — endpoint de reprocessamento da fila_impressao + UI listando trabalhos PENDENTE/ERRO com botão Reenviar Pedido",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.631Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.328Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.857Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.126Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.134Z",
+      "actor": "gate",
+      "reason": "printer-fila GET/POST reenviar + UI aba Impressoras (smoke_tc040 12/12)"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.067Z",
+  "updatedAt": "2026-08-08T16:38:01.134Z",
+  "path": ".opencode/taskcards/TC-040.json",
+  "taskType": "card",
+  "objective": "Fila de contingência de impressão: expor GET /admin/printer-fila?status= (PENDENTE/ERRO/CONCLUIDO/TODOS) listando trabalhos da fila_impressao e POST /admin/printer-fila/{id}/reenviar para reprocessar trabalho com erro. UI na aba Impressoras do Admin lista PENDENTE/ERRO com botão Reenviar Pedido.",
+  "acceptanceCriteria": [
+    "API 1 — GET /admin/printer-fila?status= retorna lista com id, tipo (COMANDA/FECHAMENTO), status, tentativas, erro_msg, criado_em; valida status informado",
+    "API 2 — POST /admin/printer-fila/{id}/reenviar zera tentativas, limpa erro_msg e volta status PENDENTE; 404 se trabalho não existe",
+    "FRONT 3 — Aba Impressoras no Admin lista fila com filtro de status e botão Reenviar Pedido chamando adminService.reenviarFila",
+    "VALIDAÇÃO 4 — smoke_tc040 12/12 PASS: listagem, filtro, reenvio, 404, 401 sem token"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/routers/admin.py",
+    "neonbar/backend/app/schemas/printer.py",
+    "neonbar/frontend/src/pages/Admin.tsx",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/types/index.ts"
+  ],
+  "tests": [
+    "GET /admin/printer-fila retorna 200 com token e schema FilaImpressaoItem",
+    "Filtro status inválido retorna 400",
+    "POST reenviar zera tentativas e limpa erro (status PENDENTE)",
+    "POST reenviar para id inexistente retorna 404",
+    "Sem token retorna 401",
+    "smoke_tc040 12/12 PASS"
+  ],
+  "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py."
+}

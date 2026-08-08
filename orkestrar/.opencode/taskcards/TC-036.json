@@ -1,0 +1,79 @@
+{
+  "id": "TC-036",
+  "title": "Comanda de produção sem preços — remover valores da comanda de cozinha/bar (backend impressao_worker.py e frontend Comandas.tsx), título FONT_LARGE, itens negrito com quantidade e obs em destaque",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.596Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.273Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.834Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.073Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.081Z",
+      "actor": "gate",
+      "reason": "Comanda sem preços (ESC/POS + Comandas.tsx) — tsc/build/lint OK"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.045Z",
+  "updatedAt": "2026-08-08T16:38:01.081Z",
+  "path": ".opencode/taskcards/TC-036.json",
+  "taskType": "card",
+  "objective": "Remover valores (preços, totais) da comanda de produção de cozinha/bar, tanto no backend (impressao_worker.py, fluxo COMANDA) quanto no frontend (modal de comanda em Comandas.tsx). Título da comanda em FONT_LARGE, itens em negrito com quantidade e observações em destaque.",
+  "acceptanceCriteria": [
+    "WORKER 1 — Fluxo COMANDA no impressao_worker.py não imprime preços/subtotal/total dos itens",
+    "FRONT 2 — Modal de comanda em Comandas.tsx renderiza itens SEM valores monetários",
+    "FRONT 3 — Título da comanda em tamanho grande (classe comanda-print, FONT_LARGE no lado ESC/POS)",
+    "FRONT 4 — Itens em negrito com quantidade e observação (\"Obs:\") em destaque",
+    "VALIDAÇÃO 5 — smoke/inspeção: buffer ESC/POS da comanda não contém valores; UI não exibe moeda"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py",
+    "neonbar/frontend/src/pages/Comandas.tsx"
+  ],
+  "tests": [
+    "Geração de buffer ESC/POS de COMANDA não contém sequência de preço/total",
+    "Modal de comanda renderiza itens sem moeda/preços",
+    "tsc -b + npm run build passam"
+  ],
+  "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print."
+}

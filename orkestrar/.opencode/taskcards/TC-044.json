@@ -1,0 +1,80 @@
+{
+  "id": "TC-044",
+  "title": "Visualizador web/híbrido de impressão 80mm — container com serrilhado de rasgo, tipografia monoespaçada e placeholder QR PIX (reutilizar/evoluir CupomPDV e Label80mm)",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.664Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.374Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.878Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.180Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.188Z",
+      "actor": "gate",
+      "reason": "Visualizador80mm com serrilha + modal Preview Cupom 80mm — build/lint OK"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.088Z",
+  "updatedAt": "2026-08-08T16:38:01.188Z",
+  "path": ".opencode/taskcards/TC-044.json",
+  "taskType": "card",
+  "objective": "Visualizador web/híbrido de impressão 80mm: componente Visualizador80mm.tsx com container serrilhado de rasgo (borda lateral e inferior), tipografia monoespaçada, envolvendo o CupomPDV (com placeholder QR PIX), exibido no PDV no modal \"Preview Cupom 80mm\".",
+  "acceptanceCriteria": [
+    "FRONT 1 — Visualizador80mm.tsx com container .print-serrilha (lateral) e .print-serrilha-bottom (inferior) envolvendo CupomPDV",
+    "FRONT 2 — Estilos .print-serrilha/.print-serrilha-bottom adicionados no index.css",
+    "FRONT 3 — Usado no PDV.tsx no modal \"Preview Cupom 80mm\" (reutilizando/evoluindo CupomPDV)",
+    "VALIDAÇÃO 4 — npm run build + lint passam"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/components/pdv/Visualizador80mm.tsx",
+    "neonbar/frontend/src/components/pdv/CupomPDV.tsx",
+    "neonbar/frontend/src/index.css",
+    "neonbar/frontend/src/pages/PDV.tsx"
+  ],
+  "tests": [
+    "Visualizador80mm renderiza serrilha + conteúdo do cupom",
+    "PDV abre modal Preview Cupom 80mm",
+    "npm run build OK + npm run lint 0 erros"
+  ],
+  "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local)."
+}

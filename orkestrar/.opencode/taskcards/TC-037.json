@@ -1,0 +1,76 @@
+{
+  "id": "TC-037",
+  "title": "Corte parcial da guilhotina — trocar \\x1d\\x56\\x00 (total) por \\x1d\\x56\\x01 (parcial) e garantir 3 feeds \\n\\n\\n antes do corte",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.606Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.290Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.841Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.088Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.094Z",
+      "actor": "gate",
+      "reason": "Corte parcial \\x1d\\x56\\x01 + 3 feeds verificados (smoke_tc037_039 18/18)"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.050Z",
+  "updatedAt": "2026-08-08T16:38:01.094Z",
+  "path": ".opencode/taskcards/TC-037.json",
+  "taskType": "card",
+  "objective": "Trocar o corte total da guilhotina (\\x1d\\x56\\x00) por corte parcial (\\x1d\\x56\\x01) na comanda e no fechamento, garantindo 3 feeds (\\n\\n\\n) antes do corte para não cortar a última linha impressa.",
+  "acceptanceCriteria": [
+    "WORKER 1 — Fluxo COMANDA e FECHAMENTO usam \\x1d\\x56\\x01 (corte parcial) em vez de \\x1d\\x56\\x00",
+    "WORKER 2 — Existem exatamente 3 feeds \\n\\n\\n antes do comando de corte",
+    "VALIDAÇÃO 3 — Inspeção do buffer ESC/POS confirma bytes 0x1d 0x56 0x01 e \\n\\n\\n antecedendo"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py"
+  ],
+  "tests": [
+    "Buffer de comanda contém b'\\x1d\\x56\\x01' e 3 feeds antes",
+    "Buffer de fechamento contém b'\\x1d\\x56\\x01' e 3 feeds antes",
+    "smoke_tc037_039 18/18 PASS"
+  ],
+  "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão."
+}

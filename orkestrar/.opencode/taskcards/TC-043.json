@@ -1,0 +1,77 @@
+{
+  "id": "TC-043",
+  "title": "Emulador CLI ASCII — emulador ESC/POS de 48 colunas + regex de limpeza de comandos binários/hex para visualização",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.656Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.362Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.873Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.169Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.174Z",
+      "actor": "gate",
+      "reason": "Emulador CLI ASCII 48 col + limpar_comandos_escpos — execução sem erro"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.083Z",
+  "updatedAt": "2026-08-08T16:38:01.174Z",
+  "path": ".opencode/taskcards/TC-043.json",
+  "taskType": "card",
+  "objective": "Emulador CLI ASCII de ESC/POS 48 colunas (neonbar/backend/app/worker/emulador_escpos.py): argumentos --comanda/--qtd/--obs/--fechamento/--raw/--colunas, função limpar_comandos_escpos() que remove comandos binários/hex e os substitui por rótulos legíveis (ex \"CORTE PARCIAL\"), e renderizar_ascii() com centralização para preview visual sem impressora.",
+  "acceptanceCriteria": [
+    "CLI 1 — CLI com flags --comanda, --qtd, --obs, --fechamento, --raw, --colunas (default 48)",
+    "CLI 2 — limpar_comandos_escpos() remove sequências binárias \\x1b[^\\n]{1,6} e \\x1d[^\\n]{1,20} e mapeia comandos conhecidos para rótulos (ex CORTE PARCIAL)",
+    "CLI 3 — renderizar_ascii() produz texto 48 colunas com centralização de títulos",
+    "VALIDAÇÃO 4 — Rodar emulador para comanda e fechamento sem erro, saída legível com serrilhado ~"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/emulador_escpos.py"
+  ],
+  "tests": [
+    "node equivalente: script roda com --comanda e --fechamento sem exceção",
+    "limpar_comandos_escpos remove bytes binários do buffer",
+    "Saída renderizada tem largura <= colunas e centraliza título"
+  ],
+  "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas."
+}

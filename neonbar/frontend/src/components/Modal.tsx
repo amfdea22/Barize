@@ -56,7 +56,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
           `}
         >
           {title && (
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(255,255,255,0.08)] shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(var(--overlay-rgb),0.08)] shrink-0">
               <h2 id={titleId} className="text-lg font-semibold text-[var(--color-on-surface)]">{title}</h2>
               <button
         onClick={onClose}

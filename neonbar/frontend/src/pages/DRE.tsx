@@ -75,7 +75,7 @@ export default function DRE() {
   ];
 
   const DreLine = ({ label, value, pct, color, isTotal }: { label: string; value: string; pct?: string; color: string; isTotal?: boolean }) => (
-    <div className={`flex items-center justify-between py-2 ${isTotal ? 'border-t-2 border-[var(--color-primary)]/30 mt-2 pt-3' : 'border-b border-[rgba(255,255,255,0.04)]'}`}>
+    <div className={`flex items-center justify-between py-2 ${isTotal ? 'border-t-2 border-[var(--color-primary)]/30 mt-2 pt-3' : 'border-b border-[rgba(var(--overlay-rgb),0.04)]'}`}>
       <span className={`text-sm ${isTotal ? 'font-bold text-[var(--color-on-surface)]' : 'text-[var(--color-on-surface-variant)]'}`}>
         {label}
       </span>
@@ -114,7 +114,7 @@ export default function DRE() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                 tab === t.id
                   ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)] shadow-[0_0_8px_rgba(0,218,243,0.15)]'
-                  : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(255,255,255,0.04)]'
+                  : 'text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)]'
               }`}
             >
               {t.icon}
@@ -168,7 +168,7 @@ export default function DRE() {
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(255,255,255,0.06)]">
+                  <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(var(--overlay-rgb),0.06)]">
                     <th className="pb-2 pr-4">Categoria</th>
                     <th className="pb-2 pr-4 text-right">Vendas</th>
                     <th className="pb-2 pr-4 text-right">Quantidade</th>
@@ -179,7 +179,7 @@ export default function DRE() {
                 </thead>
                 <tbody>
                   {vendas.categorias.map((cat) => (
-                    <tr key={cat.categoria} className="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)]">
+                    <tr key={cat.categoria} className="border-b border-[rgba(var(--overlay-rgb),0.03)] hover:bg-[rgba(var(--overlay-rgb),0.02)]">
                       <td className="py-2 pr-4 text-sm text-[var(--color-on-surface)]">{cat.categoria}</td>
                       <td className="py-2 pr-4 text-right font-mono text-sm">{cat.total_vendas}</td>
                       <td className="py-2 pr-4 text-right font-mono text-sm">{cat.quantidade_total.toFixed(0)}</td>

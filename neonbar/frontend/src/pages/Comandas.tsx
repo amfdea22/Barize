@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Search,
   ShoppingCart,
@@ -13,6 +13,11 @@ import {
   X,
   Edit,
   Save,
+  Eye,
+  MapPin,
+  User,
+  Timer,
+  RefreshCw,
 } from 'lucide-react';
 import { pedidosService, pdvService } from '../services/api';
 import Modal from '../components/Modal';
@@ -26,6 +31,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: any }> 
   Preparando: { label: 'Preparando', color: 'var(--color-secondary-container)', icon: CookingPot },
   Pronto: { label: 'Pronto', color: 'var(--color-tertiary)', icon: CheckCircle2 },
   Entregue: { label: 'Entregue', color: 'var(--color-outline)', icon: CheckCircle2 },
+  Cancelado: { label: 'Cancelado', color: 'var(--color-error)', icon: X },
 };
 
 export default function Comandas() {
@@ -39,7 +45,7 @@ export default function Comandas() {
   const [editForm, setEditForm] = useState({ mesa: '', cliente: '', observacao: '', tempo_preparo_estimado: 0, itens: [] as { nome: string; quantidade: number; preco: number; observacao?: string }[] });
   const [savingEdit, setSavingEdit] = useState(false);
   const [editError, setEditError] = useState('');
-  const [produtos, setProdutos] = useState<{ id: number; nome: string; preco_venda: number; foto_url?: string; imagem?: string }[]>([]);
+  const [produtos, setProdutos] = useState<{ id: number; nome: string; categoria?: string; preco_venda: number; foto_url?: string; imagem?: string }[]>([]);
   const [addItemMode, setAddItemMode] = useState(false);
   const [selectedProduto, setSelectedProduto] = useState<number | ''>('');
 
@@ -83,7 +89,7 @@ export default function Comandas() {
 
   useEffect(() => {
     pdvService.listarProdutos().then(res => {
-      setProdutos(Array.isArray(res.data) ? res.data.map((p: any) => ({ id: p.id, nome: p.nome, preco_venda: p.preco_venda, foto_url: p.foto_url, imagem: p.imagem })) : []);
+      setProdutos(Array.isArray(res.data) ? res.data.map((p: any) => ({ id: p.id, nome: p.nome, categoria: p.categoria, preco_venda: p.preco_venda, foto_url: p.foto_url, imagem: p.imagem })) : []);
     }).catch(() => {});
   }, []);
 
@@ -107,12 +113,14 @@ export default function Comandas() {
             {pedidos.length} pedido(s) registrado(s)
           </p>
         </div>
-        <button
-          onClick={loadPedidos}
-          className="px-lg h-[44px] rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] border border-[rgba(255,255,255,0.1)] hover:bg-[var(--color-surface-container-highest)] transition-colors text-label-md cursor-pointer"
-        >
-          Atualizar
-        </button>
+        <div className="flex items-center gap-sm flex-wrap">
+          <button
+            onClick={loadPedidos}
+            className="px-lg h-[44px] rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] border border-[rgba(var(--overlay-rgb),0.1)] hover:bg-[var(--color-surface-container-highest)] transition-colors text-label-md cursor-pointer"
+          >
+            <RefreshCw size={16} className="inline mr-1.5 -mt-0.5" /> Atualizar
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -124,11 +132,11 @@ export default function Comandas() {
             placeholder="Buscar por ID, mesa ou cliente..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors"
+            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors"
           />
         </div>
-        <div className="flex gap-1">
-          {['', 'Novo', 'Preparando', 'Pronto', 'Entregue'].map((s) => (
+        <div className="flex gap-1 flex-wrap">
+          {['', 'Novo', 'Preparando', 'Pronto', 'Entregue', 'Cancelado'].map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
@@ -159,45 +167,37 @@ export default function Comandas() {
           {filtered.map((pedido) => {
             const StatusIcon = statusConfig[pedido.status]?.icon || Clock;
             const isExpanded = expandedId === pedido.id;
+            const primeiroItem = pedido.itens?.[0];
+            const primeiroProduto = primeiroItem
+              ? produtos.find((p) => p.nome.toLowerCase() === (primeiroItem.nome || '').toLowerCase())
+              : undefined;
             return (
               <div
                 key={pedido.id}
-                className="rounded-xl overflow-hidden transition-all duration-300"
-                style={{
-                  background: pedido.status === 'Preparando'
-                    ? 'rgba(255,200,0,0.06)'
-                    : pedido.status === 'Pronto'
-                    ? 'rgba(0,200,100,0.06)'
-                    : 'var(--color-surface-container)',
-                  backdropFilter: pedido.status === 'Preparando' || pedido.status === 'Pronto' ? 'blur(12px)' : undefined,
-                  WebkitBackdropFilter: pedido.status === 'Preparando' || pedido.status === 'Pronto' ? 'blur(12px)' : undefined,
-                  border: `1px solid ${
-                    pedido.status === 'Preparando'
-                      ? 'rgba(255,200,0,0.25)'
-                      : pedido.status === 'Pronto'
-                      ? 'rgba(0,200,100,0.25)'
-                      : 'rgba(255,255,255,0.06)'
-                  }`,
-                  boxShadow: pedido.status === 'Preparando' || pedido.status === 'Pronto'
-                    ? `0 4px 24px ${
-                        pedido.status === 'Preparando'
-                          ? 'rgba(255,200,0,0.08)'
-                          : 'rgba(0,200,100,0.08)'
-                      }`
-                    : undefined,
-                }}
+                className="rounded-xl overflow-hidden ghost-border bg-[var(--color-surface-container)] transition-all duration-300 hover:bg-[var(--color-surface-container-high)]"
               >
-                {/* Summary row */}
+                {/* Faixa de status */}
+                <div
+                  className="h-1 w-full"
+                  style={{ background: statusConfig[pedido.status]?.color || 'var(--color-outline)' }}
+                  aria-hidden="true"
+                />
+
+                {/* Corpo */}
                 <div
                   onClick={() => setExpandedId(isExpanded ? null : pedido.id)}
-                  className="flex items-center gap-md px-lg py-md cursor-pointer hover:bg-[var(--color-surface-container-high)]/50 transition-colors"
+                  className="p-md flex items-center gap-md flex-wrap sm:flex-nowrap cursor-pointer hover:bg-[var(--color-surface-container-high)]/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[var(--color-surface-container-high)] flex items-center justify-center shrink-0">
-                    <ShoppingCart size={18} className="text-[var(--color-primary)]" />
-                  </div>
+                  <ProductThumbnail
+                    foto_url={primeiroProduto?.foto_url}
+                    imagem={primeiroProduto?.imagem}
+                    size="lg"
+                    alt={primeiroItem?.nome}
+                  />
+
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-label-md font-semibold text-[var(--color-on-surface)]">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-headline-md text-[var(--color-on-surface)] font-semibold">
                         Comanda #{pedido.id}
                       </span>
                       <span
@@ -211,22 +211,39 @@ export default function Comandas() {
                         {pedido.status}
                       </span>
                     </div>
-                    <div className="flex items-center gap-md mt-0.5 text-label-sm text-[var(--color-on-surface-variant)]">
-                      {pedido.mesa && <span>Mesa {pedido.mesa}</span>}
-                      {pedido.cliente && <span>• {pedido.cliente}</span>}
-                      <span>• {pedido.itens?.length || 0} item(ns)</span>
+                    <div className="flex items-center gap-md mt-0.5 text-label-md text-[var(--color-on-surface-variant)] flex-wrap">
+                      {pedido.mesa && (
+                        <span className="flex items-center gap-1">
+                          <MapPin size={12} /> Mesa {pedido.mesa}
+                        </span>
+                      )}
+                      {pedido.cliente && (
+                        <span className="flex items-center gap-1">
+                          <User size={12} /> {pedido.cliente}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <ShoppingCart size={12} /> {pedido.itens?.length || 0} item(ns)
+                      </span>
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
+
+                  {/* Dados mono à direita */}
+                  <div className="text-right shrink-0 ml-auto">
                     <div className="text-data-display text-[var(--color-primary)] font-bold">
                       R$ {pedido.total?.toFixed(2) || '0.00'}
                     </div>
                     <div className="text-[10px] text-[var(--color-outline)] font-mono">
-                      {pedido.created_at ? new Date(pedido.created_at).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '�'}
+                      {pedido.created_at
+                        ? new Date(pedido.created_at).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+                        : '—'}
                     </div>
                     {(pedido.status === 'Novo' || pedido.status === 'Preparando') && (
-                      <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--color-secondary-container)' }}>
-                        ⏱ {formatElapsed(pedido.created_at)}
+                      <div
+                        className="text-[10px] font-mono mt-0.5 flex items-center justify-end gap-1"
+                        style={{ color: 'var(--color-secondary-container)' }}
+                      >
+                        <Timer size={12} /> {formatElapsed(pedido.created_at)}
                         {pedido.tempo_preparo_estimado && <> • ~{pedido.tempo_preparo_estimado} min</>}
                       </div>
                     )}
@@ -236,20 +253,7 @@ export default function Comandas() {
                       </div>
                     )}
                   </div>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setEditPedido(pedido); setEditForm({ mesa: pedido.mesa || '', cliente: pedido.cliente || '', observacao: pedido.observacao || '', tempo_preparo_estimado: pedido.tempo_preparo_estimado || 5, itens: (pedido.itens || []).map(i => ({ ...i })) }); setAddItemMode(false); setSelectedProduto(''); }}
-                    className="p-2 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-secondary-container)] transition-all cursor-pointer shrink-0"
-                    title="Editar comanda"
-                  >
-                    <Edit size={16} />
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setSelectedPedido(pedido); }}
-                    className="p-2 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-primary)] transition-all cursor-pointer shrink-0"
-                    title="Visualizar comanda"
-                  >
-                    <FileText size={16} />
-                  </button>
+
                   <div className="text-[var(--color-on-surface-variant)] transition-transform duration-200" style={{ transform: isExpanded ? 'rotate(180deg)' : '' }}>
                     <ChevronDown size={16} />
                   </div>
@@ -257,7 +261,7 @@ export default function Comandas() {
 
                 {/* Expanded items */}
                 {isExpanded && (
-                  <div className="px-lg pb-md border-t border-[rgba(255,255,255,0.06)]">
+                  <div className="px-md pb-md border-t border-[rgba(var(--overlay-rgb),0.06)]">
                     <div className="pt-md space-y-1">
                       {pedido.itens?.map((item: any, idx: number) => {
                         const prod = produtos.find(p => p.nome.toLowerCase() === (item.nome || item.produto_nome || '').toLowerCase());
@@ -286,6 +290,24 @@ export default function Comandas() {
                     )}
                   </div>
                 )}
+
+                {/* Ações no rodapé */}
+                <div className="flex border-t border-[rgba(var(--overlay-rgb),0.08)]">
+                  <button
+                    onClick={() => { setEditPedido(pedido); setEditForm({ mesa: pedido.mesa || '', cliente: pedido.cliente || '', observacao: pedido.observacao || '', tempo_preparo_estimado: pedido.tempo_preparo_estimado || 5, itens: (pedido.itens || []).map(i => ({ ...i })) }); setAddItemMode(false); setSelectedProduto(''); }}
+                    className="flex-1 flex items-center justify-center gap-1.5 h-[44px] text-label-md text-[var(--color-on-surface-variant)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container-high)] transition-colors cursor-pointer"
+                    aria-label={`Editar comanda ${pedido.id}`}
+                  >
+                    <Edit size={14} /> Editar
+                  </button>
+                  <button
+                    onClick={() => setSelectedPedido(pedido)}
+                    className="flex-1 flex items-center justify-center gap-1.5 h-[44px] text-label-md text-[var(--color-on-surface-variant)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container-high)] transition-colors cursor-pointer"
+                    aria-label={`Ver comanda ${pedido.id}`}
+                  >
+                    <Eye size={14} /> Ver
+                  </button>
+                </div>
               </div>
             );
           })}
@@ -296,9 +318,9 @@ export default function Comandas() {
       <Modal open={!!selectedPedido} onClose={() => setSelectedPedido(null)} title={`Comanda #${selectedPedido?.id || ''}`} size="lg">
         {selectedPedido && (
           <div className="space-y-4">
-            <div className="bg-white text-black rounded-sm p-4 text-xs leading-relaxed max-h-[420px] overflow-y-auto font-mono select-all">
-              <div className="text-center font-bold text-sm tracking-widest mb-0.5">NEONBAR</div>
-              <div className="text-center uppercase text-[10px] mb-2">Comanda de Bar</div>
+            <div className="comanda-print bg-white text-black rounded-sm p-4 text-xs leading-relaxed max-h-[420px] overflow-y-auto font-mono select-all w-[80mm] min-w-[80mm] shrink-0 mx-auto">
+              <div className="text-center font-bold text-sm tracking-widest mb-0.5">BARIZE</div>
+              <div className="text-center uppercase text-[10px] mb-2">Comanda de Produção</div>
               <div className="border-t border-dashed border-black/20 mb-1" />
 
               <div className="flex justify-between text-[10px] mb-1">
@@ -314,9 +336,8 @@ export default function Comandas() {
               <div className="space-y-0.5 mb-1">
                 {selectedPedido.itens?.map((item: any, idx: number) => (
                   <div key={idx}>
-                    <div className="flex justify-between text-[10px]">
+                    <div className="flex justify-between text-[10px] font-bold">
                       <span>{item.quantidade}x {item.nome || item.produto_nome || 'Item'}</span>
-                      <span>R$ {(item.preco * item.quantidade || 0).toFixed(2)}</span>
                     </div>
                     {item.nota && (
                       <div className="text-[9px] text-black/50 pl-4">Obs: {item.nota}</div>
@@ -325,12 +346,9 @@ export default function Comandas() {
                 ))}
               </div>
 
-              <div className="border-t border-dashed border-black/20 mb-1" />
-
-              <div className="flex justify-between font-bold text-sm">
-                <span>TOTAL</span>
-                <span>R$ {selectedPedido.total?.toFixed(2) || '0.00'}</span>
-              </div>
+              {selectedPedido.observacao && (
+                <div className="border-t border-dashed border-black/20 my-1" />
+              )}
 
               <div className="border-t border-dashed border-black/20 my-1" />
 
@@ -362,7 +380,7 @@ export default function Comandas() {
             <Input label="Tempo de Preparo (min)" type="number" min="0" value={editForm.tempo_preparo_estimado} onChange={(e) => setEditForm({ ...editForm, tempo_preparo_estimado: Number(e.target.value) })} />
             <div>
               <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Observação</label>
-              <textarea value={editForm.observacao} onChange={(e) => setEditForm({ ...editForm, observacao: e.target.value })} placeholder="Observação do pedido..." rows={3} className="w-full bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40" />
+              <textarea value={editForm.observacao} onChange={(e) => setEditForm({ ...editForm, observacao: e.target.value })} placeholder="Observação do pedido..." rows={3} className="w-full bg-[var(--color-surface-low)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40" />
             </div>
 
             <div>
@@ -371,7 +389,7 @@ export default function Comandas() {
                 {editForm.itens.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2 bg-[var(--color-surface-low)] rounded-lg px-3 py-2">
                     <span className="flex-1 text-sm text-[var(--color-on-surface)] truncate">{item.nome}</span>
-                    <input type="number" min={1} value={item.quantidade} onChange={(e) => { const newItens = [...editForm.itens]; newItens[idx] = { ...newItens[idx], quantidade: Number(e.target.value) }; setEditForm({ ...editForm, itens: newItens }); }} className="w-16 bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.1)] rounded text-sm text-center text-[var(--color-on-surface)] outline-none px-1 py-1" />
+                    <input type="number" min={1} value={item.quantidade} onChange={(e) => { const newItens = [...editForm.itens]; newItens[idx] = { ...newItens[idx], quantidade: Number(e.target.value) }; setEditForm({ ...editForm, itens: newItens }); }} className="w-16 bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.1)] rounded text-sm text-center text-[var(--color-on-surface)] outline-none px-1 py-1" />
                     <span className="text-xs text-[var(--color-on-surface-variant)] font-mono w-20 text-right">R$ {(item.preco * item.quantidade).toFixed(2)}</span>
                     <button onClick={() => setEditForm({ ...editForm, itens: editForm.itens.filter((_, i) => i !== idx) })} className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-error)] transition-colors cursor-pointer"><X size={14} /></button>
                   </div>
@@ -379,7 +397,7 @@ export default function Comandas() {
               </div>
               {addItemMode ? (
                 <div className="flex items-center gap-2">
-                  <select value={selectedProduto} onChange={(e) => setSelectedProduto(Number(e.target.value) || '')} className="flex-1 bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none">
+                  <select value={selectedProduto} onChange={(e) => setSelectedProduto(Number(e.target.value) || '')} className="flex-1 bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none">
                     <option value="">Selecione um produto...</option>
                     {produtos.map(p => <option key={p.id} value={p.id}>{p.nome} — R$ {p.preco_venda.toFixed(2)}</option>)}
                   </select>

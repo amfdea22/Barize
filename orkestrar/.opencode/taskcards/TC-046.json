@@ -1,0 +1,87 @@
+{
+  "id": "TC-046",
+  "title": "Opção de tema claro e escuro do sistema sem mudar a interface do sistema",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:49:48.865Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:59:56.641Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:59:56.981Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:05:48.162Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:05:48.170Z",
+      "actor": "gate",
+      "reason": "Tema claro/escuro: useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC + tokens overlay/glass/neutral + override paleta light — smoke browser CDP 12/12 PASS + tsc/build/lint OK"
+    }
+  ],
+  "createdAt": "2026-08-08T16:49:00.741Z",
+  "updatedAt": "2026-08-08T17:05:48.170Z",
+  "path": ".opencode/taskcards/TC-046.json",
+  "taskType": "card",
+  "objective": "Adicionar tema claro e escuro ao sistema (BARIZE) sem alterar a interface/layout. O usuário alterna entre os dois temas por um toggle na Sidebar e na tela de Login; a escolha persiste em localStorage ('barize-theme'). O tema é implementado via design tokens CSS: sobreposição (overlay), vidro (glass) e neutro (neutral) passam a usar variáveis --overlay-rgb/--glass-rgb/--neutral-rgb trocadas em [data-theme], além de override da paleta clara. A estrutura visual, tamanhos, fontes e componentes permanecem idênticos — apenas as cores mudam.",
+  "acceptanceCriteria": [
+    "THEME 1 — hook useTheme.ts: getInitialTheme lê localStorage 'barize-theme' (default 'dark'); applyTheme seta data-theme no <html>; toggleTheme alterna dark/light",
+    "THEME 2 — ThemeToggle.tsx: botão com ícone Sol (dark) / Lua (light), prop collapsed (ícone-only), texto 'Tema Claro/Tema Escuro' quando expandido",
+    "THEME 3 — Wiring: ThemeToggle no rodapé da Sidebar (antes do perfil do usuário, respeita collapsed) e no header do Login (ícone-only)",
+    "CSS 4 — index.html: script anti-FOUC inline seta data-theme antes do CSS renderizar",
+    "CSS 5 — index.css: tokens :root (dark default) + :root[data-theme='light'] com override da paleta clara; usos hardcoded rgba(255,255,255,...)/rgba(28,27,27,...)/rgba(59,73,76,...) nos tsx/ts substituídos por rgba(var(--overlay-rgb)/--glass-rgb/--neutral-rgb,...)",
+    "VALIDAÇÃO 6 — tsc -b + npm run build + npm run lint passam (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/index.html",
+    "neonbar/frontend/src/index.css",
+    "neonbar/frontend/src/hooks/useTheme.ts",
+    "neonbar/frontend/src/components/ThemeToggle.tsx",
+    "neonbar/frontend/src/layouts/Sidebar.tsx",
+    "neonbar/frontend/src/pages/Login.tsx"
+  ],
+  "tests": [
+    "getInitialTheme retorna 'dark' sem localStorage e o valor salvo quando 'light'/'dark'",
+    "toggleTheme alterna o valor e persiste em localStorage",
+    "data-theme é aplicado no documentElement ao montar e ao alternar",
+    "ThemeToggle renderiza ícone Sol em dark e Lua em light; collapsed oculta o texto",
+    "Nenhum rgba(255,255,255|28,27,27|59,73,76) hardcoded permanece nos tsx/ts (exceto os 3 intencionais: overlay de imagem, sombra inset, preview etiqueta em papel branco)",
+    "tsc -b + npm run build + npm run lint sem erros"
+  ],
+  "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar."
+}

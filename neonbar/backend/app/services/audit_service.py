@@ -31,6 +31,7 @@ class AuditService:
         estado_novo: Optional[Any] = None,
         motivo: Optional[str] = None,
         ip_origem: Optional[str] = None,
+        commit: bool = True,
     ) -> AuditLog:
         """
         Registra uma ação no log de auditoria.
@@ -61,8 +62,11 @@ class AuditService:
             ip_origem=ip_origem,
         )
         db.add(log)
-        db.commit()
-        db.refresh(log)
+        if commit:
+            db.commit()
+            db.refresh(log)
+        else:
+            db.flush()
 
         logger.info(
             f"[AUDIT] {acao} | Usuário: {usuario_nome} ({usuario_id}) | "

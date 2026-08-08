@@ -257,10 +257,10 @@ export default function Financeiro() {
                 </p>
               </div>
             </div>
-            {cmvDetalhado && (
-              <div className="w-full mt-2 pt-3 border-t border-[rgba(255,255,255,0.06)]">
+            {cmvDetalhado && cmvDetalhado.periodo && (
+              <div className="w-full mt-2 pt-3 border-t border-[rgba(var(--overlay-rgb),0.06)]">
                 <p className="text-[10px] text-[var(--color-outline)] font-mono tracking-wider mb-1">
-                  Período: {new Date(cmvDetalhado.periodo_inicio).toLocaleDateString('pt-BR')} — {new Date(cmvDetalhado.periodo_fim).toLocaleDateString('pt-BR')}
+                  Período: {new Date(cmvDetalhado.periodo.data_inicio + 'T00:00:00').toLocaleDateString('pt-BR')} — {new Date(cmvDetalhado.periodo.data_fim + 'T00:00:00').toLocaleDateString('pt-BR')}
                 </p>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-[var(--color-outline)]">Benchmark:</span>
@@ -286,7 +286,7 @@ export default function Financeiro() {
           <div className="space-y-4">
             {/* Comparação dia vs ontem / semana */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.06)]">
+              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.06)]">
                 <p className="text-xs text-[var(--color-outline)] mb-1">Vs. Ontem</p>
                 <div className="flex items-center gap-2">
                   <span className="text-headline-sm font-bold text-[var(--color-on-surface)]">
@@ -300,7 +300,7 @@ export default function Financeiro() {
                   )}
                 </div>
               </div>
-              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.06)]">
+              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.06)]">
                 <p className="text-xs text-[var(--color-outline)] mb-1">Vs. Semana Passada</p>
                 <div className="flex items-center gap-2">
                   <span className="text-headline-sm font-bold text-[var(--color-on-surface)]">
@@ -318,7 +318,7 @@ export default function Financeiro() {
 
             {/* Projeção do mês */}
             {data?.projecaoMes && (
-              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.06)]">
+              <div className="p-3 rounded-lg bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.06)]">
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-xs text-[var(--color-outline)]">Progresso do Mês</p>
                   <span className="text-xs font-bold text-[var(--color-primary)]">
@@ -356,7 +356,7 @@ export default function Financeiro() {
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(255,255,255,0.06)]">
+                <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(var(--overlay-rgb),0.06)]">
                   {movColumns.map((col) => (
                     <th key={col.key} className={`pb-2 pr-4 ${col.className || ''}`}>{col.header}</th>
                   ))}
@@ -367,7 +367,7 @@ export default function Financeiro() {
                   <tr><td colSpan={4} className="pt-4 text-sm text-[var(--color-outline)] text-center">Nenhuma movimentação encontrada</td></tr>
                 ) : (
                   (data?.ultimasMovimentacoes ?? []).slice(0, 10).map((m) => (
-                    <tr key={m.id} className="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)]">
+                    <tr key={m.id} className="border-b border-[rgba(var(--overlay-rgb),0.03)] hover:bg-[rgba(var(--overlay-rgb),0.02)]">
                       {movColumns.map((col) => (
                         <td key={col.key} className={`py-2 pr-4 text-sm ${col.className || ''}`}>
                           {col.render ? col.render(m) : (m as any)[col.key]}

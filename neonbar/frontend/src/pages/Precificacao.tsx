@@ -211,7 +211,7 @@ export default function Precificacao() {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(255,255,255,0.06)]">
+              <tr className="text-[11px] font-mono tracking-wider text-[var(--color-outline)] uppercase border-b border-[rgba(var(--overlay-rgb),0.06)]">
                 <th className="pb-2 pr-4">Produto</th>
                 <th className="pb-2 pr-4 w-8"></th>
                 <th className="pb-2 pr-4">Categoria</th>
@@ -231,7 +231,7 @@ export default function Precificacao() {
                 produtos.map((p) => (
                   <tr
                     key={p.produto_id}
-                    className="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] cursor-pointer"
+                    className="border-b border-[rgba(var(--overlay-rgb),0.03)] hover:bg-[rgba(var(--overlay-rgb),0.02)] cursor-pointer"
                     onClick={() => handleVerDetalhe(p.produto_id)}
                   >
                     <td className="py-2 pr-4">
@@ -338,7 +338,7 @@ export default function Precificacao() {
                     key={c.margem_desejada}
                     className="p-3 rounded-lg border transition-all duration-200 cursor-pointer hover:scale-[1.02]"
                     style={{
-                      borderColor: c.margem_desejada === 30 ? 'rgba(0,218,243,0.4)' : 'rgba(255,255,255,0.06)',
+                      borderColor: c.margem_desejada === 30 ? 'rgba(0,218,243,0.4)' : 'rgba(var(--overlay-rgb),0.06)',
                       backgroundColor: c.margem_desejada === 30 ? 'rgba(0,218,243,0.05)' : 'var(--color-surface-container-lowest)',
                     }}
                     onClick={() => handleAplicar(c.margem_desejada)}

@@ -1,0 +1,75 @@
+{
+  "id": "TC-038",
+  "title": "Abertura de gaveta via pulso RJ11 — comando \\x1b\\x70\\x00\\x19\\xfa como primeiro byte do buffer de fechamento",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.615Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.301Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.846Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.102Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.108Z",
+      "actor": "gate",
+      "reason": "ABRIR_GAVETA como primeiro byte do fechamento (smoke_tc037_039 18/18)"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.057Z",
+  "updatedAt": "2026-08-08T16:38:01.108Z",
+  "path": ".opencode/taskcards/TC-038.json",
+  "taskType": "card",
+  "objective": "Adicionar abertura de gaveta de dinheiro via pulso RJ11 (comando ESC/POS \\x1b\\x70\\x00\\x19\\xfa) como PRIMEIRO byte do buffer de fechamento ESC/POS, para a gaveta abrir no momento do fechamento/cupom.",
+  "acceptanceCriteria": [
+    "WORKER 1 — Constante ABRIR_GAVETA = b\"\\x1b\\x70\\x00\\x19\\xfa\" definida no worker",
+    "WORKER 2 — Buffer ESC/POS do FECHAMENTO inicia com ABRIR_GAVETA (primeiro comando enviado)",
+    "VALIDAÇÃO 3 — Inspeção do buffer confirma prefixo de gaveta antes de qualquer conteúdo"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py"
+  ],
+  "tests": [
+    "Buffer de fechamento começa com b'\\x1b\\x70\\x00\\x19\\xfa'",
+    "smoke_tc037_039 18/18 PASS"
+  ],
+  "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado."
+}

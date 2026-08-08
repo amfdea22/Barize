@@ -5,6 +5,7 @@ Usa bcrypt diretamente (compatível com Python 3.14 e bcrypt>=5.0)
 """
 
 from sqlalchemy import Column, Integer, String, DateTime, func
+from sqlalchemy.orm import relationship
 from ..database import Base
 import bcrypt as _bcrypt
 
@@ -45,3 +46,5 @@ class Usuario(Base):
 
     def __repr__(self):
         return f"<Usuario(id={self.id}, username='{self.username}', role='{self.role}')>"
+
+    funcionario = relationship("Funcionario", back_populates="usuario", uselist=False)

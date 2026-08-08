@@ -3,11 +3,11 @@ BARIZE - Rotas do PDV (Ponto de Venda)
 Pilar 6: Operacional - Vendas e Comandas
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from loguru import logger
 
 from ..database import get_db
@@ -21,6 +21,21 @@ from ..services.estoque_service import EstoqueService
 from ..services.audit_service import AuditService
 
 router = APIRouter(prefix="/pdv", tags=["PDV - Vendas"])
+
+
+# Categorias que pertencem ao setor BAR (bebidas/coquetéis). Demais vão para COZINHA.
+CATEGORIAS_BAR = ("bebida", "bebidas", "drink", "drinks", "coquetel", "coqueteis", "cerveja", "cervejas",
+                  "destilado", "destilados", "whisky", "vinho", "vinhos", "refrigerante", "refrigerantes",
+                  "suco", "sucos", "água", "agua", "energético", "energetico", "long neck", "longneck")
+
+
+def _setor_producao(categoria: Optional[str]) -> str:
+    """Retorna o setor de impressão da comanda de produção com base na categoria do produto."""
+    if categoria:
+        cat = categoria.strip().lower()
+        if any(keyword in cat for keyword in CATEGORIAS_BAR):
+            return "BAR"
+    return "COZINHA"
 
 
 @router.get("/produtos", response_model=List[ProdutoResponse])
@@ -330,7 +345,7 @@ def remover_receita(
 @router.post("/vender")
 def vender(
     produto_id: int,
-    quantidade: float = 1.0,
+    quantidade: float = Query(default=1.0, gt=0),
     motivo: Optional[str] = None,
     imprimir_comanda: bool = True,
     request: Request = None,
@@ -386,10 +401,11 @@ def vender(
             tipo="COMANDA",
             status="PENDENTE",
             dados_json=comanda,
+            impressora_destino=_setor_producao(produto.categoria),
         )
         db.add(fila)
         db.commit()
-        logger.info(f"[PDV] Comanda enfileirada: {quantidade}x '{produto.nome}'")
+        logger.info(f"[PDV] Comanda enfileirada: {quantidade}x '{produto.nome}' (setor {_setor_producao(produto.categoria)})")
 
     return {
         "sucesso": True,
@@ -403,19 +419,20 @@ def vender(
 # ─── Schemas ────────────────────────────────────────────
 class ItemComanda(BaseModel):
     produto_id: int
-    quantidade: float = 1.0
+    quantidade: float = Field(default=1.0, gt=0)
     nota: Optional[str] = None
 
 
 class FinalizarComandaRequest(BaseModel):
     itens: list[ItemComanda] = []
     imprimir_comanda: bool = True
-    desconto_percentual: Optional[float] = 0.0
-    taxa_servico_percentual: Optional[float] = 8.0
+    desconto_percentual: Optional[float] = Field(default=0.0, ge=0, le=100)
+    taxa_servico_percentual: Optional[float] = Field(default=8.0, ge=0)
     forma_pagamento: Optional[str] = "dinheiro"
     observacao: Optional[str] = None
     mesa: Optional[str] = None
     cliente: Optional[str] = None
+    vendedor: Optional[str] = None
 
 
 # ─── Rotas ──────────────────────────────────────────────
@@ -429,102 +446,141 @@ def finalizar_comanda(
     current_user: Usuario = Depends(get_current_user),
 ):
     """
-    Finaliza uma comanda completa (múltiplos itens) em transação única.
-    Aceita desconto, taxa de serviço e forma de pagamento.
+    Finaliza uma comanda completa (múltiplos itens) em transação ÚNICA e atômica:
+    baixa de estoque + pagamento + auditoria + impressão + pedido.
+    Tudo ou nada: qualquer falha faz rollback completo.
     """
     from ..models.pagamento import Pagamento
+    from ..models.produto import Produto as ProdutoModel
 
     itens_dict = [{"produto_id": i.produto_id, "quantidade": i.quantidade} for i in body.itens]
-    sucesso, msg, resultado = EstoqueService.finalizar_comanda(
-        db=db,
-        itens=itens_dict,
-        usuario_id=current_user.id,
-    )
 
-    if not sucesso:
-        raise HTTPException(status_code=400, detail=msg)
+    try:
+        sucesso, msg, resultado = EstoqueService.finalizar_comanda(
+            db=db,
+            itens=itens_dict,
+            usuario_id=current_user.id,
+            commit=False,
+        )
 
-    # Calcula desconto e taxa de serviço
-    valor_bruto = resultado["valor_total"]
-    desconto = round(valor_bruto * (body.desconto_percentual / 100), 2)
-    taxa = round(valor_bruto * (body.taxa_servico_percentual / 100), 2)
-    valor_final = round(valor_bruto - desconto + taxa, 2)
+        if not sucesso:
+            db.rollback()
+            raise HTTPException(status_code=400, detail=msg)
 
-    # Cria registro de pagamento vinculado à última movimentação
-    venda_id = resultado.get("movimentacoes_ids", [None])[0] if resultado.get("movimentacoes_ids") else None
-    pagamento = Pagamento(
-        venda_id=venda_id,
-        forma_pagamento=body.forma_pagamento,
-        valor=valor_final,
-    )
-    db.add(pagamento)
-    db.flush()
+        # Calcula desconto e taxa de serviço
+        valor_bruto = resultado["valor_total"]
+        desconto = round(valor_bruto * (body.desconto_percentual / 100), 2)
+        taxa = round(valor_bruto * (body.taxa_servico_percentual / 100), 2)
+        valor_final = round(valor_bruto - desconto + taxa, 2)
 
-    # Registra auditoria
-    ip_origem = request.client.host if request else None
-    AuditService.registrar(
-        db=db,
-        acao="COMANDA_FINALIZADA",
-        usuario_id=current_user.id,
-        usuario_nome=current_user.nome,
-        entidade_tipo="Comanda",
-        descricao=(
-            f"Comanda finalizada: {resultado['total_itens']} itens, "
-            f"R${valor_bruto:.2f} - {body.desconto_percentual}% desc + "
-            f"{body.taxa_servico_percentual}% taxa = R${valor_final:.2f} "
-            f"({body.forma_pagamento})"
-        ),
-        ip_origem=ip_origem,
-    )
+        # Cria registro de pagamento vinculado à última movimentação
+        venda_id = resultado.get("movimentacoes_ids", [None])[0] if resultado.get("movimentacoes_ids") else None
+        pagamento = Pagamento(
+            venda_id=venda_id,
+            forma_pagamento=body.forma_pagamento,
+            valor=valor_final,
+        )
+        db.add(pagamento)
+        db.flush()
 
-    # Enfileira impressão de cada item
-    if body.imprimir_comanda:
-        for item in resultado["itens"]:
-            comanda = {
-                "produto": item["produto"],
-                "quantidade": item["quantidade"],
-                "preco_unitario": item["preco_unitario"],
-                "preco_total": item["subtotal"],
-                "atendente": current_user.nome,
-            }
-            fila = FilaImpressao(
-                tipo="COMANDA",
+        # Registra auditoria (sem commit — transação única)
+        ip_origem = request.client.host if request else None
+        AuditService.registrar(
+            db=db,
+            acao="COMANDA_FINALIZADA",
+            usuario_id=current_user.id,
+            usuario_nome=current_user.nome,
+            entidade_tipo="Comanda",
+            descricao=(
+                f"Comanda finalizada: {resultado['total_itens']} itens, "
+                f"R${valor_bruto:.2f} - {body.desconto_percentual}% desc + "
+                f"{body.taxa_servico_percentual}% taxa = R${valor_final:.2f} "
+                f"({body.forma_pagamento})"
+            ),
+            ip_origem=ip_origem,
+            commit=False,
+        )
+
+        # Enfileira impressão de cada item (comanda de produção — setor por categoria)
+        if body.imprimir_comanda:
+            atendente = body.vendedor or current_user.nome
+            setores_por_item = []
+            for item_req in body.itens:
+                prod = db.query(Produto).filter(Produto.id == item_req.produto_id).first()
+                setores_por_item.append(_setor_producao(prod.categoria) if prod else "COZINHA")
+            for i, item in enumerate(resultado["itens"]):
+                setor = setores_por_item[i] if i < len(setores_por_item) else "COZINHA"
+                comanda = {
+                    "produto": item["produto"],
+                    "quantidade": item["quantidade"],
+                    "preco_unitario": item["preco_unitario"],
+                    "preco_total": item["subtotal"],
+                    "atendente": atendente,
+                }
+                fila = FilaImpressao(
+                    tipo="COMANDA",
+                    status="PENDENTE",
+                    dados_json=comanda,
+                    impressora_destino=setor,
+                )
+                db.add(fila)
+            # Fechamento da comanda (pré-conta/total) → impressora do CAIXA
+            fila_fechamento = FilaImpressao(
+                tipo="FECHAMENTO",
                 status="PENDENTE",
-                dados_json=comanda,
+                dados_json={
+                    "mesa": body.mesa,
+                    "cliente": body.cliente or "",
+                    "itens": resultado["itens"],
+                    "valor_bruto": valor_bruto,
+                    "desconto": desconto,
+                    "taxa": taxa,
+                    "valor_final": valor_final,
+                    "forma_pagamento": body.forma_pagamento,
+                    "atendente": atendente,
+                },
+                impressora_destino="CAIXA",
             )
-            db.add(fila)
+            db.add(fila_fechamento)
+
+        # Calcula tempo de preparo estimado (maior tempo entre os itens)
+        tempo_max = 0
+        for item in body.itens:
+            prod = db.query(ProdutoModel).filter(ProdutoModel.id == item.produto_id).first()
+            if prod and prod.tempo_preparo:
+                tempo_max = max(tempo_max, prod.tempo_preparo)
+        tempo_preparo = tempo_max if tempo_max > 0 else 5  # default 5 min
+
+        # Cria Pedido para aparecer na tela de Comandas
+        itens_pedido = []
+        for i, item in enumerate(resultado["itens"]):
+            obs = body.itens[i].nota if i < len(body.itens) else None
+            itens_pedido.append({
+                "nome": item["produto"],
+                "quantidade": item["quantidade"],
+                "preco": item["preco_unitario"],
+                "observacao": obs,
+            })
+        pedido = Pedido(
+            mesa=body.mesa,
+            cliente=body.cliente,
+            status="Novo",
+            itens=itens_pedido,
+            total=round(valor_final, 2),
+            observacao=body.observacao,
+            tempo_preparo_estimado=tempo_preparo,
+        )
+        db.add(pedido)
+
+        # ─── COMMIT ÚNICO: tudo ou nada ───
         db.commit()
-
-    # Calcula tempo de preparo estimado (maior tempo entre os itens)
-    from ..models.produto import Produto as ProdutoModel
-    tempo_max = 0
-    for item in body.itens:
-        prod = db.query(ProdutoModel).filter(ProdutoModel.id == item.produto_id).first()
-        if prod and prod.tempo_preparo:
-            tempo_max = max(tempo_max, prod.tempo_preparo)
-    tempo_preparo = tempo_max if tempo_max > 0 else 5  # default 5 min
-
-    # Cria Pedido para aparecer na tela de Comandas
-    itens_pedido = []
-    for i, item in enumerate(resultado["itens"]):
-        obs = body.itens[i].nota if i < len(body.itens) else None
-        itens_pedido.append({
-            "nome": item["produto"],
-            "quantidade": item["quantidade"],
-            "preco": item["preco_unitario"],
-            "observacao": obs,
-        })
-    pedido = Pedido(
-        mesa=body.mesa,
-        cliente=body.cliente,
-        status="Novo",
-        itens=itens_pedido,
-        total=round(valor_final, 2),
-        observacao=body.observacao,
-        tempo_preparo_estimado=tempo_preparo,
-    )
-    db.add(pedido)
-    db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except Exception as exc:
+        db.rollback()
+        logger.exception("[PDV] Falha ao finalizar comanda")
+        raise HTTPException(status_code=500, detail=f"Erro ao finalizar comanda: {exc}") from exc
 
     return {
         "sucesso": True,

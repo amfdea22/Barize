@@ -1,0 +1,72 @@
+{
+  "id": "TC-026",
+  "title": "Criar no menu comanda uma area para editar e inserir dados dos insumos para a etiqueta e fazer o designer da etiqueta igual ao da pasta ui/comanda",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:12:37.876Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:13:46.688Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação"
+    },
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:07:53.138Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário via /card-iniciar"
+    },
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:11:40.066Z",
+      "actor": "qa-engineer",
+      "reason": "Build + lint OK, testes executados via build"
+    },
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:11:40.073Z",
+      "actor": "gate",
+      "reason": "Build + lint OK (0 erros), teste visual pendente usuario"
+    },
+    {
+      "taskId": "TC-026",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:12:36.682Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-06T21:03:57.606Z",
+  "updatedAt": "2026-08-06T23:12:36.682Z",
+  "path": ".opencode/taskcards/TC-026.json",
+  "taskType": "card",
+  "completedAt": "2026-08-06T23:12:36.682Z"
+}

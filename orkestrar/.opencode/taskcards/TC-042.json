@@ -1,0 +1,80 @@
+{
+  "id": "TC-042",
+  "title": "Aba Impressoras no Admin — UI de configuração (tipo network/usb/serial, host, porta, baud, timeout, ativo) + botão Testar Impressora via adminService getPrinterConfig/updatePrinterConfig/testPrinter",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.648Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.351Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.868Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.155Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.161Z",
+      "actor": "gate",
+      "reason": "Aba Impressoras no Admin (form/status/testar/salvar) — build/lint OK"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.078Z",
+  "updatedAt": "2026-08-08T16:38:01.161Z",
+  "path": ".opencode/taskcards/TC-042.json",
+  "taskType": "card",
+  "objective": "Aba Impressoras no Admin: UI de configuração das impressoras (tipo network/usb/serial, host, porta, baud, timeout, ativo), chips dos setores configurados (CAIXA/COZINHA/BAR), botão Checar Status (DLE EOT via GET /admin/printer-status), Testar Impressora e Salvar via adminService ampliado (getPrinterConfigs, getPrinterStatus, createPrinterConfig).",
+  "acceptanceCriteria": [
+    "FRONT 1 — Aba \"impressoras\" no Admin com formulário (tipo, host, porta, baud, timeout, ativo) e chip/select de setor CAIXA/COZINHA/BAR",
+    "FRONT 2 — Botão Checar Status chama GET /admin/printer-status?setor= e exibe online/tampa/papel/erro",
+    "FRONT 3 — Botão Testar Impressora e Salvar persistem config via adminService (createPrinterConfig)",
+    "API 4 — adminService.getPrinterConfigs/getPrinterStatus/reenviarFila/createPrinterConfig atualizados com tipos",
+    "VALIDAÇÃO 5 — npm run build + lint passam; tsc -b OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Admin.tsx",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/types/index.ts"
+  ],
+  "tests": [
+    "Aba impressoras renderiza com formulário e select de setor",
+    "Checar Status dispara adminService.getPrinterStatus",
+    "npm run build OK + npm run lint 0 erros + tsc -b OK"
+  ],
+  "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem)."
+}

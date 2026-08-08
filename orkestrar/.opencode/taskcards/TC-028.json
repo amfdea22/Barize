@@ -1,0 +1,111 @@
+{
+  "id": "TC-028",
+  "title": "Mesas dinâmicas — tabela mesas + CRUD /admin/mesas + fetch dinâmico no PDV (substituir MESAS hardcoded)",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:33:52.786Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:33:52.793Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação"
+    },
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:34:07.218Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:45:54.453Z",
+      "actor": "qa-engineer",
+      "reason": "Build + lint OK, smoke test backend 12/12 PASS"
+    },
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:45:54.461Z",
+      "actor": "gate",
+      "reason": "Build+lint OK (0 erros), smoke 12/12, seed 13 mesas, CRUD + PDV dinamico + aba Admin"
+    },
+    {
+      "taskId": "TC-028",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:50:14.229Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-06T23:33:33.217Z",
+  "updatedAt": "2026-08-06T23:50:14.229Z",
+  "path": ".opencode/taskcards/TC-028.json",
+  "taskType": "card",
+  "objective": "Substituir a constante hardcoded MESAS (M1-M10, B1-B3) por tabela persistida `mesas` com CRUD /admin/mesas e fetch dinâmico no PDV.",
+  "acceptanceCriteria": [
+    "Modelo Mesa criado (nome unique, local/tipo, ativo soft-delete) e seed das 13 mesas atuais em init_db()",
+    "Router /admin/mesas: GET autenticado, POST/PUT admin/gerente, DELETE admin (soft delete)",
+    "Nome duplicado retorna 409",
+    "mesasService + hook useMesas no frontend",
+    "SeletorMesa/MesaBadge recebem lista dinâmica (presentacionais); constante MESAS removida de types.ts",
+    "PDV.tsx usa useMesas e lista mesas via API",
+    "Aba 'Mesas' na página Admin com CRUD em modal (padrão aba funcionários)",
+    "Pedido.mesa continua string livre — retro-compatibilidade total (pedidos antigos com M1 seguem válidos)"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/models/mesa.py",
+    "neonbar/backend/app/models/__init__.py",
+    "neonbar/backend/app/schemas/mesa.py",
+    "neonbar/backend/app/routers/mesas.py",
+    "neonbar/backend/app/main.py",
+    "neonbar/backend/app/database.py",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/components/pdv/types.ts",
+    "neonbar/frontend/src/components/pdv/SeletorMesa.tsx",
+    "neonbar/frontend/src/components/pdv/MesaBadge.tsx",
+    "neonbar/frontend/src/pages/PDV.tsx",
+    "neonbar/frontend/src/pages/Admin.tsx",
+    "neonbar/frontend/src/types/index.ts"
+  ],
+  "tests": [
+    "Seed cria 13 mesas no boot (M1-M10, B1-B3)",
+    "POST /admin/mesas cria mesa -> 201",
+    "POST com nome duplicado -> 409",
+    "PUT /admin/mesas/{id} atualiza nome",
+    "DELETE /admin/mesas/{id} soft delete (ativo=0)",
+    "GET /admin/mesas lista apenas ativas",
+    "PDV lista mesas via API (não mais constante)",
+    "Frontend: aba Mesas no Admin carrega e CRUD funciona",
+    "Build + lint frontend OK",
+    "Smoke test backend CRUD mesas"
+  ],
+  "notes": "Recomendado por @architect (ADR: Mesas dinâmicas). Fase 1: modelo+seed, router, mesasService/useMesas, PDV dinâmico, aba Admin. Fase 2: mesa ocupada, ordenacao, Comandas/Dashboard.",
+  "completedAt": "2026-08-06T23:50:14.229Z"
+}

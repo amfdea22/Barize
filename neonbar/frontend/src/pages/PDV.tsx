@@ -1,21 +1,64 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Trash2, Plus, Minus, ShoppingCart, AlertCircle, CheckCircle2, Upload, X, Pencil } from 'lucide-react';
-import { pdvService, pedidosService, uploadService } from '../services/api';
+import { Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle, Upload, Printer } from 'lucide-react';
+import { pdvService, uploadService } from '../services/api';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import type { Produto, ProdutoCreate, PedidoCreate } from '../types';
+import SegmentedControl from '../components/SegmentedControl';
+import ProdutoCardPDV from '../components/pdv/ProdutoCardPDV';
+import CarrinhoPDV from '../components/pdv/CarrinhoPDV';
+import SeletorMesa, { MesaBadge } from '../components/pdv/SeletorMesa';
+import SeletorVendedor from '../components/pdv/SeletorVendedor';
+import PainelPagamento from '../components/pdv/PainelPagamento';
+import { CupomPrintActions } from '../components/pdv/CupomPDV';
+import Visualizador80mm from '../components/pdv/Visualizador80mm';
+import type { CartItem, FormaPagamento } from '../components/pdv/types';
+import { useAuth } from '../hooks/useAuth';
+import { useMesas } from '../hooks/useMesas';
+import type { Produto, ProdutoCreate } from '../types';
 
 export default function PDV() {
+  const { usuario } = useAuth();
+  const { mesas } = useMesas();
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // Busca e filtro
   const [search, setSearch] = useState('');
   const [categoriaFilter, setCategoriaFilter] = useState<string>('all');
-  const [cart, setCart] = useState<{ produto: Produto; quantidade: number }[]>([]);
-  const [saleOk, setSaleOk] = useState(false);
 
-  // Create product modal
+  // Carrinho
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  // Parâmetros da venda
+  const [mesa, setMesa] = useState('');
+  const [cliente, setCliente] = useState('');
+  const [vendedor, setVendedor] = useState('');
+  const [descontoPercentual, setDescontoPercentual] = useState(0);
+  const [taxaServicoPercentual, setTaxaServicoPercentual] = useState(0);
+  const [observacao, setObservacao] = useState('');
+
+  // Fluxo de pagamento
+  const [showPagamento, setShowPagamento] = useState(false);
+  const [finalizando, setFinalizando] = useState(false);
+
+  // Resultado / cupom
+  const [ultimoPagamento, setUltimoPagamento] = useState<{
+    itens: CartItem[];
+    subtotal: number;
+    desconto: number;
+    taxa: number;
+    total: number;
+    forma_pagamento: FormaPagamento;
+    troco: number;
+    mesa: string;
+    cliente: string;
+    vendedor: string;
+    observacao: string;
+  } | null>(null);
+
+  // Modal produto (criar/editar)
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState('');
@@ -26,11 +69,21 @@ export default function PDV() {
     nome: '', descricao: '', categoria: '', preco_venda: 0,
     codigo_barras: '', imagem: '', foto_url: '', tempo_preparo: undefined,
   });
-
-  // Edit product
   const [editingProduct, setEditingProduct] = useState<Produto | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  // Atalho de busca: tecla "/"
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === '/' && !(e.target as HTMLElement)?.closest?.('input, textarea, select')) {
+        e.preventDefault();
+        document.getElementById('pdv-busca')?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   useEffect(() => {
     if (editingProduct) {
@@ -49,9 +102,11 @@ export default function PDV() {
     }
   }, [editingProduct]);
 
+  const carregarProdutos = () => pdvService.listarProdutos().then(res => setProdutos(res.data));
+
   useEffect(() => {
-    pdvService.listarProdutos()
-      .then(res => { setProdutos(res.data); setLoading(false); })
+    carregarProdutos()
+      .then(() => setLoading(false))
       .catch(() => { setError('Erro ao carregar produtos'); setLoading(false); });
   }, []);
 
@@ -79,9 +134,7 @@ export default function PDV() {
     });
   };
 
-  const removeFromCart = (produtoId: number) => {
-    setCart(prev => prev.filter(item => item.produto.id !== produtoId));
-  };
+  const removeFromCart = (produtoId: number) => setCart(prev => prev.filter(item => item.produto.id !== produtoId));
 
   const changeQty = (produtoId: number, delta: number) => {
     setCart(prev => prev.map(item => {
@@ -91,28 +144,81 @@ export default function PDV() {
     }).filter(Boolean) as typeof cart);
   };
 
-  const total = cart.reduce((sum, item) => sum + item.produto.preco_venda * item.quantidade, 0);
+  const qtyMap = useMemo(() => {
+    const m: Record<number, number> = {};
+    cart.forEach(item => { m[item.produto.id] = item.quantidade; });
+    return m;
+  }, [cart]);
 
-  const finalizeSale = async () => {
+  // ─── Cálculos ───
+  const subtotal = cart.reduce((sum, item) => sum + item.produto.preco_venda * item.quantidade, 0);
+  const desconto = subtotal * (descontoPercentual / 100);
+  const taxa = subtotal * (taxaServicoPercentual / 100);
+  const total = subtotal - desconto + taxa;
+
+  const handleConfirmarPagamento = (payload: {
+    forma_pagamento: FormaPagamento;
+    valor_recebido: number;
+    troco: number;
+    parcelas: number;
+  }) => {
+    finalizeSale(payload);
+  };
+
+  const finalizeSale = async (payload: {
+    forma_pagamento: FormaPagamento;
+    valor_recebido: number;
+    troco: number;
+    parcelas: number;
+  }) => {
+    if (cart.length === 0) return;
+    setFinalizando(true);
+    setError('');
     try {
-      setError('');
-      const pedido: PedidoCreate = {
-        itens: cart.map(item => ({
-          nome: item.produto.nome,
-          quantidade: item.quantidade,
-          preco: item.produto.preco_venda
-        })),
-        observacao: 'Venda PDV'
-      };
-      await pedidosService.criar(pedido);
+      const res = await pdvService.finalizarComanda(
+        cart.map(item => ({ produto_id: item.produto.id, quantidade: item.quantidade })),
+        {
+          imprimir_comanda: true,
+          observacao: observacao || undefined,
+          mesa: mesa || undefined,
+          cliente: cliente || undefined,
+          desconto_percentual: descontoPercentual,
+          taxa_servico_percentual: taxaServicoPercentual,
+          forma_pagamento: payload.forma_pagamento,
+          vendedor: vendedor || usuario?.nome || undefined,
+        },
+      );
+
+      const resultado = res.data?.resultado || res.data;
+      setUltimoPagamento({
+        itens: cart,
+        subtotal,
+        desconto,
+        taxa,
+        total: resultado?.valor_final ?? total,
+        forma_pagamento: payload.forma_pagamento,
+        troco: payload.troco,
+        mesa,
+        cliente,
+        vendedor: vendedor || usuario?.nome || '',
+        observacao,
+      });
       setCart([]);
-      setSaleOk(true);
-      setTimeout(() => setSaleOk(false), 3000);
+      setMesa('');
+      setCliente('');
+      setDescontoPercentual(0);
+      setTaxaServicoPercentual(0);
+      setObservacao('');
+      setShowPagamento(false);
     } catch (err: any) {
+      setShowPagamento(false);
       setError(err?.response?.data?.detail || 'Erro ao finalizar venda');
+    } finally {
+      setFinalizando(false);
     }
   };
 
+  // ─── Modal Produto (criar/editar) ───
   const resetForm = () => {
     setForm({ nome: '', descricao: '', categoria: '', preco_venda: 0, codigo_barras: '', imagem: '', foto_url: '', tempo_preparo: undefined });
     setIsNewCategory(false);
@@ -134,8 +240,7 @@ export default function PDV() {
     try {
       await pdvService.excluirProduto(editingProduct.id);
       handleCloseModal();
-      const res = await pdvService.listarProdutos();
-      setProdutos(res.data);
+      await carregarProdutos();
     } catch (err: any) {
       if (err?.response?.status === 404) {
         setCreateError('Produto foi removido por outro usuário. Atualize a lista.');
@@ -181,8 +286,7 @@ export default function PDV() {
       }
       setShowCreateModal(false);
       resetForm();
-      const res = await pdvService.listarProdutos();
-      setProdutos(res.data);
+      await carregarProdutos();
     } catch (err: any) {
       if (err?.response?.status === 409) {
         setCreateError(err?.response?.data?.detail || 'Já existe um produto com este nome ou código de barras');
@@ -211,17 +315,24 @@ export default function PDV() {
 
   return (
     <div className="flex h-full gap-lg p-lg">
+      {/* ─── Painel de Produtos ─── */}
       <div className="flex-1 flex flex-col min-w-0">
         <div className="flex items-center gap-md mb-lg flex-wrap">
           <div className="relative flex-1 max-w-sm">
             <Search size={18} className="absolute left-sm top-1/2 -translate-y-1/2 text-[var(--color-outline)]" />
-            <input type="text" placeholder="Buscar produto..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors" />
+            <input
+              id="pdv-busca"
+              type="text"
+              placeholder="Buscar produto... ( / )"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors"
+            />
           </div>
           <div className="flex gap-1 flex-wrap">
             {categorias.map(cat => (
               <button key={cat} onClick={() => setCategoriaFilter(cat)}
-                className={`px-md h-[36px] rounded-lg text-label-sm transition-all cursor-pointer ${
+                className={`px-md h-[44px] rounded-lg text-label-sm transition-all cursor-pointer ${
                   categoriaFilter === cat
                     ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]'
                     : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)]'
@@ -245,35 +356,7 @@ export default function PDV() {
         <div className="flex-1 overflow-y-auto min-h-0">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-md">
             {filtered.map(p => (
-              <div key={p.id} onClick={() => addToCart(p)}
-                className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] hover:border-[var(--color-primary)]/40 transition-all cursor-pointer active:scale-[0.97] overflow-hidden">
-                <button onClick={(e) => { e.stopPropagation(); setEditingProduct(p); }}
-                  className="absolute top-2 right-2 w-7 h-7 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white/80 hover:bg-[var(--color-primary)]/80 hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer">
-                  <Pencil size={13} />
-                </button>
-                <div className="aspect-[4/3] bg-[var(--color-surface-container-high)] overflow-hidden">
-                  {p.foto_url ? (
-                    <img src={p.foto_url} alt={p.nome} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  ) : p.imagem ? (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-4xl group-hover:scale-110 transition-transform duration-500">{p.imagem}</span>
-                    </div>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <ShoppingCart size={32} className="text-[var(--color-on-surface-variant)]/30" />
-                    </div>
-                  )}
-                </div>
-                <div className="p-3 space-y-1">
-                  <h3 className="text-body-md font-semibold text-[var(--color-on-surface)] truncate">{p.nome}</h3>
-                  <p className="text-data-display text-[var(--color-primary)] font-bold">R$ {p.preco_venda.toFixed(2)}</p>
-                  {p.categoria && (
-                    <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-                      {p.categoria}
-                    </span>
-                  )}
-                </div>
-              </div>
+              <ProdutoCardPDV key={p.id} produto={p} quantidade={qtyMap[p.id] || 0} onAdd={addToCart} onEdit={setEditingProduct} />
             ))}
           </div>
 
@@ -286,79 +369,183 @@ export default function PDV() {
         </div>
       </div>
 
-      <div className="w-80 shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] flex flex-col">
-        <div className="p-lg border-b border-[rgba(255,255,255,0.06)]">
+      {/* ─── Painel de Venda ─── */}
+      <div className="w-[360px] xl:w-[400px] shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] flex flex-col">
+        <div className="p-lg border-b border-[rgba(var(--overlay-rgb),0.06)] space-y-md">
           <h2 className="text-headline-md font-bold text-[var(--color-on-surface)] flex items-center gap-2">
-            <ShoppingCart size={20} /> Carrinho
+            <ShoppingCart size={20} /> Venda
           </h2>
+          <div className="flex items-center gap-2 flex-wrap">
+            <SeletorMesa mesas={mesas.map(m => m.nome)} value={mesa} onChange={setMesa} />
+            <MesaBadge value={mesa} />
+          </div>
+          <SeletorVendedor value={vendedor} onChange={setVendedor} defaultName={usuario?.nome || ''} />
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1.5">Cliente</label>
+            <input
+              type="text"
+              value={cliente}
+              onChange={e => setCliente(e.target.value)}
+              placeholder="Nome do cliente (opcional)"
+              className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
+            />
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto p-lg space-y-3 min-h-0">
-          {cart.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-32 text-[var(--color-outline)] text-sm gap-2">
-              <ShoppingCart size={28} className="opacity-30" />
-              <span>Carrinho vazio</span>
-            </div>
-          ) : cart.map(item => (
-            <div key={item.produto.id} className="flex items-center gap-3 p-3 bg-[var(--color-surface-container-high)] rounded-lg">
-              <div className="flex-1 min-w-0">
-                <p className="text-body-md font-medium text-[var(--color-on-surface)] truncate">{item.produto.nome}</p>
-                <p className="text-label-sm text-[var(--color-on-surface-variant)]">
-                  R$ {item.produto.preco_venda.toFixed(2)} x {item.quantidade}
-                </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <button onClick={() => changeQty(item.produto.id, -1)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">
-                  <Minus size={14} />
-                </button>
-                <span className="w-8 text-center text-body-md font-mono text-[var(--color-on-surface)]">
-                  {item.quantidade}
-                </span>
-                <button onClick={() => changeQty(item.produto.id, 1)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">
-                  <Plus size={14} />
-                </button>
-              </div>
-              <button onClick={() => removeFromCart(item.produto.id)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-colors cursor-pointer">
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
+          <CarrinhoPDV itens={cart} onIncrement={(id) => changeQty(id, 1)} onDecrement={(id) => changeQty(id, -1)} onRemove={removeFromCart} />
         </div>
 
-        <div className="p-lg border-t border-[rgba(255,255,255,0.06)] space-y-3">
-          {saleOk && (
-            <div className="flex items-center gap-2 px-md py-sm rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
-              <CheckCircle2 size={16} />
-              <span>Venda finalizada com sucesso!</span>
+        <div className="p-lg border-t border-[rgba(var(--overlay-rgb),0.06)] space-y-3">
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Desconto %</label>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={descontoPercentual || ''}
+                onChange={e => setDescontoPercentual(Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)))}
+                placeholder="0"
+                className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
+              />
             </div>
-          )}
-          <div className="flex items-center justify-between">
-            <span className="text-body-md text-[var(--color-on-surface-variant)]">Total</span>
-            <span className="text-headline-md font-bold text-[var(--color-on-surface)]">R$ {total.toFixed(2)}</span>
+            <div>
+              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Taxa Serv. %</label>
+              <input
+                type="number"
+                min={0}
+                max={30}
+                value={taxaServicoPercentual || ''}
+                onChange={e => setTaxaServicoPercentual(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
+                placeholder="0"
+                className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
+              />
+            </div>
           </div>
-          <Button className="w-full" onClick={finalizeSale} disabled={cart.length === 0}>
+
+          <SegmentedControl
+            options={[
+              { value: '0', label: 'Sem taxa' },
+              { value: '8', label: '8%' },
+              { value: '10', label: '10%' },
+            ]}
+            value={String(taxaServicoPercentual)}
+            onChange={v => setTaxaServicoPercentual(Number(v))}
+          />
+
+          <div className="space-y-1 pt-1">
+            <div className="flex items-center justify-between text-body-md text-[var(--color-on-surface-variant)]">
+              <span>Subtotal</span>
+              <span className="font-mono">R$ {subtotal.toFixed(2)}</span>
+            </div>
+            {desconto > 0 && (
+              <div className="flex items-center justify-between text-body-md text-green-400">
+                <span>Desconto</span>
+                <span className="font-mono">- R$ {desconto.toFixed(2)}</span>
+              </div>
+            )}
+            {taxa > 0 && (
+              <div className="flex items-center justify-between text-body-md text-[var(--color-on-surface-variant)]">
+                <span>Taxa de serviço</span>
+                <span className="font-mono">+ R$ {taxa.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="flex items-center justify-between pt-1">
+              <span className="text-headline-md font-bold text-[var(--color-on-surface)]">Total</span>
+              <span className="text-data-display font-bold text-[var(--color-primary)]">R$ {total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <Button className="w-full h-12" onClick={() => setShowPagamento(true)} disabled={cart.length === 0}>
             Finalizar Venda
           </Button>
         </div>
       </div>
 
-      {/* Modal: Novo Produto / Editar Produto */}
+      {/* ─── Modal: Pagamento ─── */}
+      <Modal open={showPagamento} onClose={() => setShowPagamento(false)} title="Pagamento" size="lg">
+        <PainelPagamento
+          total={subtotal}
+          desconto={desconto}
+          taxa={taxa}
+          valorFinal={total}
+          onConfirm={handleConfirmarPagamento}
+          onCancel={() => setShowPagamento(false)}
+        />
+        {finalizando && (
+          <div className="mt-3 flex items-center justify-center gap-2 text-label-md text-[var(--color-on-surface-variant)]">
+            <div className="w-4 h-4 border-2 border-[var(--color-primary-container)] border-t-transparent rounded-full animate-spin" />
+            Finalizando venda...
+          </div>
+        )}
+      </Modal>
+
+      {/* ─── Modal: Cupom (sucesso) ─── */}
+      <Modal open={!!ultimoPagamento} onClose={() => setUltimoPagamento(null)} title="Venda Finalizada" size="lg">
+        {ultimoPagamento && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+            <div className="space-y-md">
+              <div className="flex items-center gap-2 px-md py-sm rounded-lg bg-green-500/10 border border-green-500/30 text-body-md text-green-400">
+                <CheckCircle2 size={16} />
+                <span>Venda finalizada com sucesso!</span>
+              </div>
+              <div className="space-y-1 bg-[var(--color-surface-container-lowest)] rounded-xl p-4">
+                <div className="flex justify-between text-body-md text-[var(--color-on-surface-variant)]">
+                  <span>Subtotal</span>
+                  <span className="font-mono">R$ {ultimoPagamento.subtotal.toFixed(2)}</span>
+                </div>
+                {ultimoPagamento.desconto > 0 && (
+                  <div className="flex justify-between text-body-md text-green-400">
+                    <span>Desconto</span>
+                    <span className="font-mono">- R$ {ultimoPagamento.desconto.toFixed(2)}</span>
+                  </div>
+                )}
+                {ultimoPagamento.taxa > 0 && (
+                  <div className="flex justify-between text-body-md text-[var(--color-on-surface-variant)]">
+                    <span>Taxa</span>
+                    <span className="font-mono">+ R$ {ultimoPagamento.taxa.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center pt-2 border-t border-[rgba(var(--overlay-rgb),0.08)]">
+                  <span className="text-headline-md font-bold text-[var(--color-on-surface)]">Total</span>
+                  <span className="text-data-display font-bold text-[var(--color-primary)]">R$ {ultimoPagamento.total.toFixed(2)}</span>
+                </div>
+              </div>
+              <CupomPrintActions
+                onPrint={() => window.print()}
+                onClose={() => setUltimoPagamento(null)}
+              />
+              <p className="text-[10px] font-mono text-[var(--color-outline)] text-center">Dica: Ctrl+P imprime o cupom 80mm</p>
+            </div>
+
+            <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-md">
+              <div className="flex items-center justify-between mb-sm">
+                <span className="text-label-md text-[var(--color-on-surface-variant)] uppercase">Preview Cupom 80mm</span>
+                <Printer size={16} className="text-[var(--color-outline)]" />
+              </div>
+              <div className="overflow-x-auto flex justify-center">
+                <Visualizador80mm {...ultimoPagamento} data={new Date().toISOString()} />
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* ─── Modal: Novo Produto / Editar Produto ─── */}
       <Modal open={showCreateModal || !!editingProduct} onClose={handleCloseModal} title={editingProduct ? 'Editar Produto' : 'Novo Produto'} size="lg">
         <div className="space-y-4">
           <Input label="Nome" value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} placeholder="Ex: Mojito" required />
 
           <div>
             <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Descrição</label>
-            <textarea value={form.descricao || ''} onChange={e => setForm(f => ({ ...f, descricao: e.target.value }))} placeholder="Breve descrição do produto..." rows={2} className="w-full bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40" />
+            <textarea value={form.descricao || ''} onChange={e => setForm(f => ({ ...f, descricao: e.target.value }))} placeholder="Breve descrição do produto..." rows={2} className="w-full bg-[var(--color-surface-low)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none resize-none placeholder:text-[var(--color-on-surface-variant)]/40" />
           </div>
 
           <div>
             <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Categoria</label>
             <select value={isNewCategory ? '__new__' : form.categoria || ''} onChange={e => { if (e.target.value === '__new__') { setIsNewCategory(true); setForm(f => ({ ...f, categoria: '' })); } else { setIsNewCategory(false); setForm(f => ({ ...f, categoria: e.target.value })); } }}
-              className="w-full bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none">
+              className="w-full bg-[var(--color-surface-low)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg text-sm text-[var(--color-on-surface)] px-3 py-2 outline-none">
               <option value="">Selecione...</option>
               {categorias.filter(c => c !== 'all').map(cat => (<option key={cat} value={cat}>{cat}</option>))}
               <option value="__new__">+ Nova Categoria</option>
@@ -388,7 +575,7 @@ export default function PDV() {
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-[rgba(255,255,255,0.1)] rounded-lg cursor-pointer hover:border-[var(--color-primary)]/50 transition-colors">
+              <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-[rgba(var(--overlay-rgb),0.1)] rounded-lg cursor-pointer hover:border-[var(--color-primary)]/50 transition-colors">
                 <Upload size={24} className="text-[var(--color-outline)]" />
                 <span className="text-sm text-[var(--color-outline)]">
                   {uploading ? 'Enviando...' : 'Clique para fazer upload da imagem'}
@@ -405,7 +592,7 @@ export default function PDV() {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-[rgba(255,255,255,0.08)]">
+          <div className="flex items-center justify-between pt-4 border-t border-[rgba(var(--overlay-rgb),0.08)]">
             <div>
               {editingProduct && !confirmDelete && (
                 <Button variant="ghost" onClick={() => setConfirmDelete(true)} className="text-[var(--color-error)] hover:bg-[var(--color-error)]/10">

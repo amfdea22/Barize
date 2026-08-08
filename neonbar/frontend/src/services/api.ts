@@ -68,8 +68,30 @@ export const pdvService = {
     api.delete(`/pdv/produtos/${produto_id}`),
   vender: (produto_id: number, quantidade: number, imprimir_comanda = false) =>
     api.post(`/pdv/vender?produto_id=${produto_id}&quantidade=${quantidade}&imprimir_comanda=${imprimir_comanda}`),
-  finalizarComanda: (itens: { produto_id: number; quantidade: number; nota?: string }[], imprimir_comanda = true, observacao?: string, mesa?: string, cliente?: string) =>
-    api.post('/pdv/finalizar-comanda', { itens, imprimir_comanda, observacao, mesa, cliente }),
+  finalizarComanda: (
+    itens: { produto_id: number; quantidade: number; nota?: string }[],
+    data?: {
+      imprimir_comanda?: boolean;
+      observacao?: string;
+      mesa?: string;
+      cliente?: string;
+      desconto_percentual?: number;
+      taxa_servico_percentual?: number;
+      forma_pagamento?: string;
+      vendedor?: string;
+    },
+  ) =>
+    api.post('/pdv/finalizar-comanda', {
+      itens,
+      imprimir_comanda: data?.imprimir_comanda ?? true,
+      observacao: data?.observacao,
+      mesa: data?.mesa,
+      cliente: data?.cliente,
+      desconto_percentual: data?.desconto_percentual ?? 0,
+      taxa_servico_percentual: data?.taxa_servico_percentual ?? 0,
+      forma_pagamento: data?.forma_pagamento ?? 'dinheiro',
+      vendedor: data?.vendedor,
+    }),
   cancelarVenda: (movimentacao_id: number, motivo: string) =>
     api.post(`/pdv/cancelar-venda?movimentacao_id=${movimentacao_id}&motivo=${encodeURIComponent(motivo)}`),
   /* ── Receitas ── */
@@ -120,6 +142,51 @@ export const cmvService = {
   dashboard: () => api.get('/cmv/dashboard'),
 };
 
+/* ─── CMV Relatórios precisos ─── */
+export const cmvRelatoriosService = {
+  produtos: (params?: { data_inicio?: string; data_fim?: string; dias?: number; order_by?: string }) => {
+    const query = new URLSearchParams();
+    if (params?.data_inicio) query.set('data_inicio', params.data_inicio);
+    if (params?.data_fim) query.set('data_fim', params.data_fim);
+    if (params?.dias) query.set('dias', String(params.dias));
+    if (params?.order_by) query.set('order_by', params.order_by);
+    const qs = query.toString();
+    return api.get(`/cmv/relatorios/produtos${qs ? `?${qs}` : ''}`);
+  },
+  categorias: (params?: { data_inicio?: string; data_fim?: string; dias?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.data_inicio) query.set('data_inicio', params.data_inicio);
+    if (params?.data_fim) query.set('data_fim', params.data_fim);
+    if (params?.dias) query.set('dias', String(params.dias));
+    const qs = query.toString();
+    return api.get(`/cmv/relatorios/categorias${qs ? `?${qs}` : ''}`);
+  },
+  insumos: (params?: { data_inicio?: string; data_fim?: string; dias?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.data_inicio) query.set('data_inicio', params.data_inicio);
+    if (params?.data_fim) query.set('data_fim', params.data_fim);
+    if (params?.dias) query.set('dias', String(params.dias));
+    const qs = query.toString();
+    return api.get(`/cmv/relatorios/insumos${qs ? `?${qs}` : ''}`);
+  },
+  produtosPorInsumo: (insumo_id: number, params?: { data_inicio?: string; data_fim?: string; dias?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.data_inicio) query.set('data_inicio', params.data_inicio);
+    if (params?.data_fim) query.set('data_fim', params.data_fim);
+    if (params?.dias) query.set('dias', String(params.dias));
+    const qs = query.toString();
+    return api.get(`/cmv/relatorios/insumos/${insumo_id}/produtos${qs ? `?${qs}` : ''}`);
+  },
+  csvUrl: (tipo: 'produtos' | 'categorias' | 'insumos', params?: { data_inicio?: string; data_fim?: string; dias?: number }) => {
+    const query = new URLSearchParams();
+    if (params?.data_inicio) query.set('data_inicio', params.data_inicio);
+    if (params?.data_fim) query.set('data_fim', params.data_fim);
+    if (params?.dias) query.set('dias', String(params.dias));
+    const qs = query.toString();
+    return `/api/v1/cmv/relatorios/${tipo}.csv${qs ? `?${qs}` : ''}`;
+  },
+};
+
 /* ─── Caixa ─── */
 export const caixaService = {
   abrir: (data: any) => api.post('/caixa/abrir', data),
@@ -150,6 +217,18 @@ export const relatoriosService = {
     api.put(`/relatorios/alertas/config/${config_id}`, data),
   historicoAlertas: (limit = 50) =>
     api.get(`/relatorios/alertas/historico?limit=${limit}`),
+};
+
+/* ─── Relatórios & Analytics ─── */
+export const relatoriosAnalyticsService = {
+  resumo: (periodo: 'dia' | 'semana' | 'mes') =>
+    api.get('/relatorios/analytics/resumo', { params: { periodo } }),
+  receitaPorHora: (periodo: 'dia' | 'semana' | 'mes') =>
+    api.get('/relatorios/analytics/receita-por-hora', { params: { periodo } }),
+  topProdutos: (periodo: 'dia' | 'semana' | 'mes', limite = 5) =>
+    api.get('/relatorios/analytics/top-produtos', { params: { periodo, limite } }),
+  desempenhoEquipe: (periodo: 'dia' | 'semana' | 'mes') =>
+    api.get('/relatorios/analytics/desempenho-equipe', { params: { periodo } }),
 };
 
 /* ─── Financeiro ─── */
@@ -269,8 +348,11 @@ export const adminService = {
   listImages: () => api.get('/admin/images'),
   assignProductImage: (produtoId: number, filename: string) =>
     api.post(`/admin/produtos/${produtoId}/imagem?filename=${encodeURIComponent(filename)}`),
-  getPrinterConfig: () => api.get('/admin/printer-config'),
+  getPrinterConfig: (setor = 'CAIXA') => api.get(`/admin/printer-config?setor=${encodeURIComponent(setor)}`),
+  getPrinterConfigs: () => api.get('/admin/printer-configs'),
   updatePrinterConfig: (data: import('../types').PrinterConfigUpdate) => api.put('/admin/printer-config', data),
+  createPrinterConfig: (data: import('../types').PrinterConfig) => api.post('/admin/printer-config', data),
+  getPrinterStatus: (setor = 'CAIXA') => api.get(`/admin/printer-status?setor=${encodeURIComponent(setor)}`),
   testPrinter: (data: import('../types').PrinterConfig) =>
     api.post('/admin/printer-test', {
       tipo: data.tipo,
@@ -279,6 +361,8 @@ export const adminService = {
       baud_rate: data.baud_rate,
       timeout: data.timeout,
     }),
+  getPrinterFila: (status = 'PENDENTE') => api.get(`/admin/printer-fila?status=${encodeURIComponent(status)}`),
+  reenviarPrinterFila: (id: number) => api.post(`/admin/printer-fila/${id}/reenviar`),
 };
 
 /* ─── Pedidos (KDS) ─── */
@@ -427,6 +511,31 @@ export const fornecedoresService = {
   criar: (data: any) => api.post('/fornecedores/', data),
   atualizar: (id: number, data: any) => api.put(`/fornecedores/${id}`, data),
   excluir: (id: number) => api.delete(`/fornecedores/${id}`),
+};
+
+/* ─── Funcionários ─── */
+export const funcionariosService = {
+  listar: (params?: { cargo?: string; ativo?: number; busca?: string }) =>
+    api.get('/admin/funcionarios/', { params }),
+  listarAtivos: (params?: { cargo?: string }) =>
+    api.get('/admin/funcionarios/ativos', { params }),
+  obter: (id: number) => api.get(`/admin/funcionarios/${id}`),
+  criar: (data: any) => api.post('/admin/funcionarios/', data),
+  atualizar: (id: number, data: any) => api.put(`/admin/funcionarios/${id}`, data),
+  desligar: (id: number, data?: { data_demissao?: string; motivo?: string }) =>
+    api.delete(`/admin/funcionarios/${id}`, { params: data }),
+  vincularUsuario: (id: number, data: { usuario_id: number }) =>
+    api.post(`/admin/funcionarios/${id}/vincular-usuario`, data),
+  desvincularUsuario: (id: number) => api.delete(`/admin/funcionarios/${id}/desvincular-usuario`),
+};
+
+/* ─── Mesas ─── */
+export const mesasService = {
+  listar: (params?: { ativo?: number }) => api.get('/admin/mesas/', { params }),
+  criar: (data: { nome: string; local?: string }) => api.post('/admin/mesas/', data),
+  atualizar: (id: number, data: { nome?: string; local?: string; ativo?: number }) =>
+    api.put(`/admin/mesas/${id}`, data),
+  desativar: (id: number) => api.delete(`/admin/mesas/${id}`),
 };
 
 /* ─── Financeiro Plus ─── */

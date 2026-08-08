@@ -124,8 +124,11 @@ def init_db():
     from .models import Cliente, Pedido, PrinterConfig  # noqa: F401
     from .models import Fornecedor, CustoFixo  # noqa: F401
     from .models import POP, ExecucaoPOP  # noqa: F401
+    from .models import Mesa  # noqa: F401
 
     Base.metadata.create_all(bind=get_engine())
+
+    _seed_mesas(get_engine())
 
     # Migrações manuais para colunas adicionadas depois da criação inicial
     engine = get_engine()
@@ -148,7 +151,58 @@ def init_db():
                 conn.execute(text("ALTER TABLE pops ADD COLUMN ordem INTEGER"))
                 conn.commit()
                 logger.info("[BARIZE] Colunas de checklist adicionadas à tabela pops")
+
+            # Coluna 'setor' em printer_config (multi-impressora por setor)
+            printer_cols = [row[1] for row in conn.execute(text("PRAGMA table_info('printer_config')")).fetchall()]
+            if 'setor' not in printer_cols:
+                conn.execute(text("ALTER TABLE printer_config ADD COLUMN setor VARCHAR(20)"))
+                conn.commit()
+                logger.info("[BARIZE] Coluna setor adicionada à tabela printer_config")
+
+            # Backfill: registros antigos (sem setor) viram CAIXA
+            conn.execute(text("UPDATE printer_config SET setor = 'CAIXA' WHERE setor IS NULL OR setor = ''"))
+            conn.commit()
     except Exception:
         pass  # Tabela pode não existir ainda
 
+    _seed_impressoras(get_engine())
+
     logger.info("[BARIZE] Tabelas criadas/verificadas com sucesso")
+
+
+def _seed_impressoras(engine):
+    """Seed das 3 impressoras padrão por setor (CAIXA, COZINHA, BAR) na primeira inicialização."""
+    try:
+        with engine.begin() as conn:
+            for setor in ["CAIXA", "COZINHA", "BAR"]:
+                count = conn.execute(
+                    text("SELECT COUNT(*) FROM printer_config WHERE setor = :setor"), {"setor": setor}
+                ).scalar()
+                if count == 0:
+                    conn.execute(
+                        text(
+                            "INSERT INTO printer_config (setor, tipo, host, porta, baud_rate, timeout, ativo, created_at, updated_at) "
+                            "VALUES (:setor, 'network', '', 9100, 9600, 5.0, 1, datetime('now'), datetime('now'))"
+                        ),
+                        {"setor": setor},
+                    )
+            logger.info("[BARIZE] Seed: impressoras padrão por setor verificadas (CAIXA/COZINHA/BAR)")
+    except Exception:
+        pass  # Tabela pode não existir ainda
+
+
+def _seed_mesas(engine):
+    """Seed das mesas padrão do salão (M1-M10, B1-B3) na primeira inicialização."""
+    try:
+        with engine.begin() as conn:
+            count = conn.execute(text("SELECT COUNT(*) FROM mesas")).scalar()
+            if count == 0:
+                for nome in [f"M{i}" for i in range(1, 11)] + [f"B{i}" for i in range(1, 4)]:
+                    conn.execute(
+                        text("INSERT INTO mesas (nome, local, ativo, created_at, updated_at) "
+                             "VALUES (:nome, 'Mesa', 1, datetime('now'), datetime('now'))"),
+                        {"nome": nome},
+                    )
+                logger.info("[BARIZE] Seed: 13 mesas padrão criadas (M1-M10, B1-B3)")
+    except Exception:
+        pass  # Tabela pode não existir ainda

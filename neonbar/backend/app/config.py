@@ -8,7 +8,6 @@ from typing import Optional
 from pydantic_settings import BaseSettings
 from pydantic import ConfigDict, model_validator
 from functools import lru_cache
-import os
 
 
 class Settings(BaseSettings):
@@ -65,6 +64,11 @@ class Settings(BaseSettings):
     PRINT_POLL_INTERVAL_SECONDS: int = 2
     PRINTER_BAUD: int = 9600
     PRINTER_TIMEOUT: float = 5.0
+
+    # ─── PIX (QR no cupom) ────────────────────────────────
+    PIX_CHAVE: str = ""  # chave PIX (CPF/CNPJ/email/telefone/aleatória) para QR no cupom
+    PIX_NOME_RECEBEDOR: str = "BARIZE BAR E COZINHA"
+    PIX_CIDADE: str = "SAO PAULO"
 
     # ─── Backup ───────────────────────────────────────────
     BACKUP_DIR: str = "/backups"

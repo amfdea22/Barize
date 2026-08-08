@@ -7,6 +7,7 @@ Pilar 6: Operacional - Relatórios
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional, List
+from datetime import datetime, date, timedelta
 from loguru import logger
 
 from ..database import get_db
@@ -19,6 +20,262 @@ from ..models.alerta import AlertaConfig, AlertaDisparado
 from ..schemas.alerta import AlertaConfigCreate, AlertaConfigResponse
 
 router = APIRouter(prefix="/relatorios", tags=["Relatórios e Auditoria"])
+
+
+# ─── Analytics ─────────────────────────────────────────────
+
+def _periodo_datas(periodo: str):
+    """Converte período (dia/semana/mes/ano) em (inicio, fim)."""
+    hoje = date.today()
+    if periodo == "dia":
+        inicio = datetime.combine(hoje, datetime.min.time())
+    elif periodo == "semana":
+        inicio = datetime.combine(hoje - timedelta(days=hoje.weekday()), datetime.min.time())
+    elif periodo == "mes":
+        inicio = datetime.combine(date(hoje.year, hoje.month, 1), datetime.min.time())
+    elif periodo == "ano":
+        inicio = datetime.combine(date(hoje.year, 1, 1), datetime.min.time())
+    else:
+        inicio = datetime.combine(hoje, datetime.min.time())
+    fim = datetime.combine(hoje, datetime.max.time())
+    return inicio, fim
+
+
+@router.get("/analytics/resumo")
+def analytics_resumo(
+    periodo: str = Query("dia", pattern="^(dia|semana|mes|ano)$"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
+    """Resumo de KPIs de vendas no período."""
+    from sqlalchemy import func, text
+    from ..models.movimentacao import Movimentacao
+    from ..models.pedido import Pedido
+
+    inicio, fim = _periodo_datas(periodo)
+
+    # Receita total do período
+    sql_receita = text("""
+        SELECT COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0)
+        FROM movimentacoes m
+        JOIN produtos p ON p.id = m.produto_id
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
+    """)
+    receita = db.execute(sql_receita, {"inicio": inicio, "fim": fim}).scalar() or 0.0
+
+    # Número de vendas (pedidos) no período — distinto por produto+data aproximada
+    sql_vendas = text("""
+        SELECT COUNT(DISTINCT m.documento_referencia)
+        FROM movimentacoes m
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.documento_referencia IS NOT NULL
+    """)
+    total_pedidos = db.execute(sql_vendas, {"inicio": inicio, "fim": fim}).scalar() or 0
+
+    # Fallback: se não há documento_referencia, conta vendas por id
+    if not total_pedidos:
+        total_pedidos = (
+            db.query(func.count(func.distinct(Movimentacao.id)))
+            .filter(
+                Movimentacao.tipo == "VENDA",
+                Movimentacao.data.between(inicio, fim),
+                Movimentacao.produto_id.isnot(None),
+            )
+            .scalar() or 0
+        )
+
+    ticket_medio = round(receita / total_pedidos, 2) if total_pedidos > 0 else 0.0
+
+    # Total de itens vendidos
+    total_itens = (
+        db.query(func.sum(Movimentacao.quantidade_produto))
+        .filter(
+            Movimentacao.tipo == "VENDA",
+            Movimentacao.quantidade_produto.isnot(None),
+            Movimentacao.data.between(inicio, fim),
+        )
+        .scalar() or 0
+    )
+
+    # Pedidos ativos (KDS) — proxy para mesas em atendimento
+    pedidos_ativos = (
+        db.query(Pedido)
+        .filter(Pedido.status.in_(["Novo", "Preparando", "Pronto"]))
+        .all()
+    )
+    mesas_ativas = len({p.mesa for p in pedidos_ativos if p.mesa})
+
+    # Período anterior (para variação %)
+    duracao = fim - inicio
+    inicio_prev = inicio - duracao - timedelta(seconds=1)
+    fim_prev = inicio - timedelta(seconds=1)
+    sql_receita_prev = text("""
+        SELECT COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0)
+        FROM movimentacoes m
+        JOIN produtos p ON p.id = m.produto_id
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
+    """)
+    receita_prev = db.execute(
+        sql_receita_prev, {"inicio": inicio_prev, "fim": fim_prev}
+    ).scalar() or 0.0
+
+    variacao = round(((receita - receita_prev) / receita_prev) * 100, 1) if receita_prev > 0 else 0.0
+
+    return {
+        "periodo": periodo,
+        "receita": round(receita, 2),
+        "total_pedidos": int(total_pedidos),
+        "total_itens": int(total_itens),
+        "ticket_medio": ticket_medio,
+        "mesas_ativas": int(mesas_ativas),
+        "pedidos_ativos": len(pedidos_ativos),
+        "variacao_percentual": variacao,
+        "periodo_anterior_receita": round(receita_prev, 2),
+    }
+
+
+@router.get("/analytics/receita-por-hora")
+def analytics_receita_por_hora(
+    periodo: str = Query("dia", pattern="^(dia|semana|mes)$"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
+    """Receita por hora (dia) ou por dia (semana/mes)."""
+    from sqlalchemy import text
+    from datetime import datetime as _dt
+
+    hoje = date.today()
+    fim = _dt.combine(hoje, _dt.max.time())
+
+    if periodo == "dia":
+        inicio = _dt.combine(hoje, _dt.min.time())
+        sql = text("""
+            SELECT CAST(strftime('%H', m.data) AS INTEGER) AS hora,
+                   COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0) AS receita
+            FROM movimentacoes m
+            JOIN produtos p ON p.id = m.produto_id
+            WHERE m.tipo = 'VENDA'
+            AND m.data BETWEEN :inicio AND :fim
+            AND m.produto_id IS NOT NULL
+            AND m.quantidade_produto IS NOT NULL
+            GROUP BY hora
+            ORDER BY hora
+        """)
+        rows = db.execute(sql, {"inicio": inicio, "fim": fim}).fetchall()
+        resultado = []
+        for r in rows:
+            resultado.append({"rotulo": f"{int(r.hora):02d}:00", "receita": round(float(r.receita), 2)})
+        return resultado
+
+    if periodo == "semana":
+        inicio = _dt.combine(hoje - timedelta(days=hoje.weekday()), _dt.min.time())
+    else:
+        inicio = _dt.combine(date(hoje.year, hoje.month, 1), _dt.min.time())
+
+    sql = text("""
+        SELECT DATE(m.data) AS dia,
+               COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0) AS receita
+        FROM movimentacoes m
+        JOIN produtos p ON p.id = m.produto_id
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
+        GROUP BY dia
+        ORDER BY dia
+    """)
+    rows = db.execute(sql, {"inicio": inicio, "fim": fim}).fetchall()
+    resultado = []
+    for r in rows:
+        resultado.append({"rotulo": r.dia, "receita": round(float(r.receita), 2)})
+    return resultado
+
+
+@router.get("/analytics/top-produtos")
+def analytics_top_produtos(
+    periodo: str = Query("dia", pattern="^(dia|semana|mes)$"),
+    limite: int = Query(5, ge=1, le=20),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
+    """Produtos mais vendidos no período (por quantidade e receita)."""
+    from sqlalchemy import text
+
+    inicio, fim = _periodo_datas(periodo)
+    sql = text("""
+        SELECT p.nome,
+               SUM(m.quantidade_produto) AS quantidade,
+               COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0) AS receita
+        FROM movimentacoes m
+        JOIN produtos p ON p.id = m.produto_id
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
+        GROUP BY p.id, p.nome
+        ORDER BY quantidade DESC
+        LIMIT :limite
+    """)
+    rows = db.execute(sql, {"inicio": inicio, "fim": fim, "limite": limite}).fetchall()
+    resultado = []
+    for r in rows:
+        resultado.append({
+            "nome": r.nome,
+            "quantidade": int(r.quantidade),
+            "receita": round(float(r.receita), 2),
+        })
+    return resultado
+
+
+@router.get("/analytics/desempenho-equipe")
+def analytics_desempenho_equipe(
+    periodo: str = Query("dia", pattern="^(dia|semana|mes)$"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
+    """Desempenho por usuário (vendas registradas no período)."""
+    from sqlalchemy import text
+
+    inicio, fim = _periodo_datas(periodo)
+    sql = text("""
+        SELECT u.id AS usuario_id,
+               u.nome AS nome,
+               u.role AS role,
+               COUNT(DISTINCT m.id) AS vendas,
+               COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0) AS volume,
+               COALESCE(SUM(m.quantidade_produto), 0) AS itens
+        FROM movimentacoes m
+        JOIN usuarios u ON u.id = m.usuario_id
+        JOIN produtos p ON p.id = m.produto_id
+        WHERE m.tipo = 'VENDA'
+        AND m.data BETWEEN :inicio AND :fim
+        AND m.usuario_id IS NOT NULL
+        AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
+        GROUP BY u.id, u.nome, u.role
+        ORDER BY volume DESC
+    """)
+    rows = db.execute(sql, {"inicio": inicio, "fim": fim}).fetchall()
+    resultado = []
+    for r in rows:
+        ticket = round(float(r.volume) / int(r.vendas), 2) if r.vendas > 0 else 0.0
+        resultado.append({
+            "usuario_id": int(r.usuario_id),
+            "nome": r.nome,
+            "role": r.role,
+            "vendas": int(r.vendas),
+            "itens": int(r.itens),
+            "volume": round(float(r.volume), 2),
+            "ticket_medio": ticket,
+        })
+    return resultado
 
 
 # ─── Auditoria ──────────────────────────────────────────────
@@ -158,12 +415,13 @@ def dashboard_executivo(
 
         # Receita do mês
         sql_receita_mes = text("""
-            SELECT COALESCE(SUM(p.preco_venda * ABS(m.quantidade)), 0)
+            SELECT COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0)
             FROM movimentacoes m
             JOIN produtos p ON p.id = m.produto_id
             WHERE m.tipo = 'VENDA'
             AND DATE(m.data) >= :inicio_mes
             AND m.produto_id IS NOT NULL
+            AND m.quantidade_produto IS NOT NULL
         """)
         receita_mes = db.execute(
             sql_receita_mes, {"inicio_mes": inicio_mes}

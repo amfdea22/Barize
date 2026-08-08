@@ -1,19 +1,40 @@
 {
   "id": "TC-009",
   "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
-  "status": "backlog",
-  "statusHistory": [],
+  "status": "ready",
+  "statusHistory": [
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:12:37.883Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:13:46.697Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação"
+    }
+  ],
   "createdAt": "2026-07-26T04:53:07.565Z",
-  "updatedAt": "2026-07-26T04:53:07.565Z",
-  "path": ".opencode/taskcards/TC-009.json",
+  "updatedAt": "2026-08-06T21:13:46.697Z",
+  "path": ".opencode/taskcards/active/TC-009.json",
   "taskType": "card",
   "createdBy": "user",
   "agent": "build",
-  "objective": "Ajustar o tamanho das imagens dos produtos para que os nomes fiquem completamente visíveis na interface",
+  "objective": "Ajustar o tamanho das imagens dos produtos para que os nomes fiquem completamente visÃ­veis na interface",
   "acceptanceCriteria": [
-    "Imagens dos produtos não cortam ou sobrepõem os nomes",
-    "Nomes dos produtos são legíveis em todos os viewports",
-    "Layout responsivo mantém proporções corretas entre imagem e texto",
+    "Imagens dos produtos nÃ£o cortam ou sobrepÃµem os nomes",
+    "Nomes dos produtos sÃ£o legÃ­veis em todos os viewports",
+    "Layout responsivo mantÃ©m proporÃ§Ãµes corretas entre imagem e texto",
     "Nenhuma quebra de layout em mobile ou desktop"
   ],
   "filesInvolved": [],

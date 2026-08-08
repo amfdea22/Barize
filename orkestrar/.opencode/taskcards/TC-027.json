@@ -1,0 +1,72 @@
+{
+  "id": "TC-027",
+  "title": "PDV profissional - Fase 1: mesa, forma de pagamento + troco, desconto, cupom 80mm e baixa de estoque via /pdv/finalizar-comanda",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:51:50.636Z",
+      "actor": "build",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T21:51:50.640Z",
+      "actor": "build",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-06T21:51:50.643Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:05:46.589Z",
+      "actor": "qa-engineer",
+      "reason": "Testes executados via build + smoke test"
+    },
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:05:46.594Z",
+      "actor": "gate",
+      "reason": "Build + lint + smoke test backend OK"
+    },
+    {
+      "taskId": "TC-027",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:05:46.598Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-06T21:46:41.157Z",
+  "updatedAt": "2026-08-06T23:05:46.598Z",
+  "path": ".opencode/taskcards/TC-027.json",
+  "taskType": "card",
+  "completedAt": "2026-08-06T23:05:46.598Z"
+}

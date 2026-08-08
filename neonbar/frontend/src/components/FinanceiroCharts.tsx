@@ -54,7 +54,7 @@ export function DonutChart({ data, size = 180 }: DonutChartProps) {
   return (
     <div className="flex flex-col items-center gap-3">
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth={strokeWidth} />
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(var(--overlay-rgb),0.05)" strokeWidth={strokeWidth} />
         {data.map((d, i) => {
           const pct = d.valor / total;
           const len = pct * circ;
@@ -114,7 +114,7 @@ export function CMVGauge({ value, interpretation }: CMVGaugeProps) {
         <path
           d={`M 20 100 A ${r} ${r} 0 0 1 160 100`}
           fill="none"
-          stroke="rgba(255,255,255,0.05)"
+          stroke="rgba(var(--overlay-rgb),0.05)"
           strokeWidth="14"
           strokeLinecap="round"
         />

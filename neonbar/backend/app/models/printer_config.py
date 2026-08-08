@@ -11,6 +11,7 @@ class PrinterConfig(Base):
     __tablename__ = "printer_config"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    setor = Column(String(20), default="CAIXA", nullable=False, index=True)  # CAIXA | COZINHA | BAR
     tipo = Column(String(20), default="network", nullable=False)  # network | usb | serial
     host = Column(String(255), nullable=True)
     porta = Column(Integer, default=9100, nullable=True)

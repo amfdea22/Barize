@@ -13,6 +13,7 @@ import { etiquetasService } from '../services/api';
 import type { EtiquetaItem } from '../types';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
+import InsumoEtiquetaModal, { type EtiquetaForm } from '../components/etiqueta/InsumoEtiquetaModal';
 
 export default function Etiquetas() {
   const [etiquetas, setEtiquetas] = useState<EtiquetaItem[]>([]);
@@ -21,6 +22,8 @@ export default function Etiquetas() {
   const [tipoFilter, setTipoFilter] = useState<'all' | 'insumo' | 'produto'>('all');
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [showPreview, setShowPreview] = useState(false);
+  const [etiquetaOpen, setEtiquetaOpen] = useState(false);
+  const [etiquetaInitial, setEtiquetaInitial] = useState<Partial<EtiquetaForm>>();
 
   const loadEtiquetas = async () => {
     setLoading(true);
@@ -63,9 +66,14 @@ export default function Etiquetas() {
             Gerar e imprimir etiquetas para insumos e produtos
           </p>
         </div>
-        <Button onClick={loadEtiquetas} variant="ghost" className="h-[44px]">
-          Atualizar
-        </Button>
+        <div className="flex gap-sm">
+          <Button variant="ghost" className="h-[44px]" onClick={loadEtiquetas}>
+            Atualizar
+          </Button>
+          <Button size="lg" onClick={() => { setEtiquetaInitial(undefined); setEtiquetaOpen(true); }}>
+            <Tag size={16} /> Nova Etiqueta de Insumo
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -77,7 +85,7 @@ export default function Etiquetas() {
             placeholder="Buscar por nome ou lote..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors"
+            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-colors"
           />
         </div>
         <div className="flex gap-1">
@@ -138,7 +146,7 @@ export default function Etiquetas() {
                 className={`flex items-center gap-md px-lg py-md rounded-xl border transition-all cursor-pointer ${
                   isSelected
                     ? 'bg-[var(--color-primary)]/10 border-[var(--color-primary)]/50 shadow-[0_0_0_1px_var(--color-primary)]'
-                    : 'bg-[var(--color-surface-container)] border-[rgba(255,255,255,0.06)] hover:bg-[var(--color-surface-container-high)]'
+                    : 'bg-[var(--color-surface-container)] border-[rgba(var(--overlay-rgb),0.06)] hover:bg-[var(--color-surface-container-high)]'
                 }`}
               >
                 <input
@@ -182,6 +190,25 @@ export default function Etiquetas() {
                   <div className="text-[10px] text-[var(--color-outline)] font-mono">
                     Lote: {e.codigo_lote}
                   </div>
+                  <button
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      setEtiquetaInitial({
+                        nome: e.nome,
+                        quantidade: e.quantidade ?? 1,
+                        unidade: e.unidade_medida || '',
+                        categoria: e.categoria || '',
+                        lote: e.codigo_lote || '',
+                        fabricacao: e.data_fabricacao || '',
+                        validade: e.data_validade || '',
+                      });
+                      setEtiquetaOpen(true);
+                    }}
+                    className="mt-sm inline-flex items-center gap-1 text-label-sm text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-md px-sm py-xs transition-colors cursor-pointer"
+                    aria-label={`Gerar etiqueta de ${e.nome}`}
+                  >
+                    <Tag size={13} /> Etiqueta
+                  </button>
                 </div>
               </div>
             );
@@ -239,6 +266,13 @@ export default function Etiquetas() {
           </div>
         </div>
       </Modal>
+
+      {/* Nova Etiqueta de Insumo Modal */}
+      <InsumoEtiquetaModal
+        open={etiquetaOpen}
+        onClose={() => setEtiquetaOpen(false)}
+        initial={etiquetaInitial}
+      />
     </div>
   );
 }

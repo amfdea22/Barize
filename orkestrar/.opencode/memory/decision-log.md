@@ -5,6 +5,9 @@
 | ID | Date | Decision | Status |
 |---|---|---|---|---|
 | ADR-007 | 2026-07-28 | Forçar WindowsSelectorEventLoopPolicy em Windows com Python ≥3.12 | Proposto |
+| ADR-009 | 2026-07-31 | Frontend: proibir recursos externos (no-CDN) e constraints de largura (max-w+w-full+mx-*) | Aprovado |
+| ADR-010 | 2026-08-06 | finalizar-comanda atômico: commit único (estoque+pagamento+auditoria+pedido) com rollback + validação de range (desconto 0-100, taxa ≥0, quantidade >0) | Aprovado |
+| ADR-011 | 2026-08-08 | Tema claro/escuro via design tokens: --overlay-rgb/--glass-rgb/--neutral-rgb + override paleta em :root[data-theme='light'] + toggle persistido em localStorage (barize-theme) — interface inalterada | Aprovado |
 
 ## ADR-008: Estrat�gia de Estabilidade do Backend em Desenvolvimento
 
@@ -63,3 +66,30 @@
 - **Decisão**: Estruturar o módulo como checklist por período (Diário 47 / Semanal 20 / Mensal 12 = 79 itens), com adaptação por fluxo do estabelecimento (Baixo/Médio/Alto). Mudanças: (1) colunas novas `momento`, `exigencia_fluxo` (JSON) e `ordem` no model POP + ALTER TABLE em database.py; (2) schema Pydantic criado (schemas/pop.py — módulo era o único sem schema); (3) `GET /pops/pendentes` corrigido para calcular vencimento por frequência (diário=1, semanal=7, mensal=30 dias) e filtros `?fluxo=` e `?frequencia=`; (4) seed idempotente `scripts/seed_pops.py`; (5) UI POPs.tsx refatorada com abas por período, seções por setor/momento, seletor de fluxo (persistido em localStorage), modal de execução com "feito por"+observação e barras de progresso.
 - **Consequências**: [+] Checklist operacional completo e padronizado, [+] Pendências calculadas corretamente por vencimento, [+] Adaptação por fluxo sem duplicação de itens, [-] Colunas novas exigem ALTER TABLE em bancos existentes (feito via database.py init_db), [-] Fluxo é preferência local (localStorage), não por estabelecimento no servidor
 - **Status**: Implementado
+
+## ADR-009: Regras de Frontend — No External Resources e Layout Constraints
+
+- **Data**: 2026-07-31
+- **Contexto**: Dois tipos de bug recorrentes no frontend: (1) recursos externos (CDN/APIs de terceiros) que quebram sem internet — TC-001 (imagens do login) e TC-019 (QR code via api.qrserver.com); (2) classes de largura `max-w` combinadas com `w-full` e `mx-*` no mesmo elemento, causando overflow horizontal e conteúdo espremido/cortado em viewports pequenos — TC-001 (login) e TC-019 (modal do QR). Ambos os problemas se repetiram porque não havia regra formalizada.
+- **Decisão**:
+  1. **NUNCA** referenciar URLs externas para recursos essenciais no frontend (`<img src="https://...">`, `<script>`, `<link>`, APIs de QR, fontes). Servir localmente: imagens em `backend/app/uploads/`, QR gerado com lib `qrcode`, ícones com `lucide-react`. Regra: `orkestrar/.opencode/rules/frontend-no-external-resources.md`.
+  2. **NUNCA** combinar `max-w-*` + `w-full` + `mx-*` no mesmo elemento. Para limitar largura: usar `w-full min-w-0 max-w-*` em container **sem** margens laterais, centralizado via wrapper `flex min-h-full items-center justify-center p-4` (padrão `Modal.tsx`). Regra: `orkestrar/.opencode/rules/frontend-layout-constraints.md`.
+  3. Verificação manual no Validation Gate via grep (ver seção "Verificação" de cada regra), pois oxlint não cobre CSS classes.
+- **Consequências**: [+] Frontend funciona offline, [+] Sem conteúdo cortado/espremido em qualquer viewport, [+] Regras documentadas impedem reincidência, [-] Verificação é manual (grep), não automatizada no lint
+- **Status**: Aprovado (regras criadas e referenciadas no AGENTS.md)
+
+## ADR-010: Etiqueta de Insumo no Menu Comanda (TC-026) e Tamanho de Imagens (TC-009)
+
+- **Data**: 2026-08-06
+- **Contexto**: O usuário reportou "a comanda não mudou de designer". Diagnóstico @ui-designer: TC-026 estava especificado mas nunca implementado — `Comandas.tsx` nunca teve commit de etiqueta; o único template existia em `Etiquetas.tsx` com branding antigo NEONBAR e em outra rota. Paralelamente, TC-009: nomes de produtos eram cortados/sobrepostos pela imagem (CardapioDigital sobrepunha nome sobre gradiente da imagem).
+- **Decisão** (TC-026):
+  1. Botão **"Nova Etiqueta de Insumo"** (`Tag`) no header de Comandas ao lado de "Atualizar" (`RefreshCw`).
+  2. Card de comanda redesenhado: faixa de status lateral colorida, thumbnail do 1º item (`ProductThumbnail size="lg"`), identidade (Mesa/Cliente/itens com MapPin/User/ShoppingCart), total em mono + Timer de preparo, footer 3 ações (Editar/Ver/Etiqueta).
+  3. Modal 2 colunas **Form | Preview 80mm ao vivo** (`components/etiqueta/InsumoEtiquetaModal.tsx`) pré-preenchido pelo 1º item quando acionado pelo footer do card.
+  4. Template térmico **`Label80mm.tsx`**: largura `w-[80mm]` (sem max-w/w-full/mx juntos), header BARIZE, `3x NOME`, LOTE/FAB/VAL, bloco VALIDADE dinâmico (VENCIDO=VENCIDO/dentro de 7 dias=VENCE EM N DIAS/OK, cores #dc2626/#b45309/#16a34a), código de barras CSS puro (`repeating-linear-gradient`, zero deps), rodapé. Print via `@page size 80mm auto` + `.print-80mm` isolado (visibility hidden) no `index.css`.
+  5. **Backend: zero** — reutiliza `lotes.py` (CRUD `/lotes/`, roles admin/gerente) e `etiquetas.py`.
+- **Decisão** (TC-009):
+  1. CardapioDigital: nome/descrição/preço movidos para área própria `p-3` abaixo da imagem (`break-words`), imagem `aspect-[16/10]` (antes `aspect-[4/3]` com gradiente sobreposto).
+  2. PDV: nome `truncate` → `break-words leading-snug`.
+- **Consequências**: [+] Mudança visível imediata no menu Comanda, [+] Etiqueta imprimível em impressora térmica 80mm, [+] Nomes de produtos 100% visíveis, [+] Sem dependências externas, [-] Imagem de referência `ui/comanda/Comanda.jpg` não lida pelo modelo (sem visão) — validação visual manual pendente
+- **Status**: Implementado (build + lint OK, 0 erros; 3 warnings pré-existentes missing-deps)

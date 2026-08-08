@@ -16,8 +16,12 @@ export interface Usuario {
   id: number;
   username: string;
   nome: string;
+  email?: string;
   role: UserRole;
   ativo: boolean;
+  pin?: string;
+  created_at?: string;
+  updated_at?: string;
   ultimo_login?: string;
 }
 
@@ -162,12 +166,78 @@ export interface Pagamento {
 
 // ─── CMV ───
 export interface CMVResult {
-  periodo_inicio: string;
-  periodo_fim: string;
   custo_total: number;
   receita_total: number;
   cmv_percentual: number;
+  periodo: {
+    data_inicio: string;
+    data_fim: string;
+    dias?: number;
+  };
   interpretacao?: string;
+}
+
+export interface CMVProdutoItem {
+  produto_id: number;
+  nome: string;
+  categoria: string | null;
+  preco_venda: number;
+  quantidade_vendida: number;
+  receita: number;
+  custo: number;
+  margem_bruta: number;
+  margem_pct: number;
+  cmv_pct: number;
+}
+
+export interface CMVProdutosResult {
+  data_inicio: string | null;
+  data_fim: string;
+  total_receita: number;
+  total_custo: number;
+  total_margem: number;
+  produtos: CMVProdutoItem[];
+}
+
+export interface CMVCategoriaItem {
+  categoria: string;
+  receita: number;
+  custo: number;
+  quantidade_vendida: number;
+  margem_bruta: number;
+  cmv_pct: number;
+}
+
+export interface CMVCategoriasResult {
+  data_inicio: string | null;
+  data_fim: string;
+  categorias: CMVCategoriaItem[];
+}
+
+export interface InsumoConsumoItem {
+  insumo_id: number;
+  nome: string;
+  categoria: string | null;
+  unidade_medida: string;
+  quantidade_consumida: number;
+  custo_consumido: number;
+}
+
+export interface InsumoConsumoResult {
+  data_inicio: string | null;
+  data_fim: string;
+  total_custo: number;
+  insumos: InsumoConsumoItem[];
+}
+
+export interface InsumoProdutoItem {
+  produto_id: number;
+  nome: string;
+  categoria: string | null;
+  quantidade_insumo: number;
+  custo_insumo: number;
+  quantidade_produto: number;
+  receita: number;
 }
 
 // ─── Caixa ───
@@ -255,6 +325,42 @@ export interface FinanceiroData {
   };
 }
 
+// ─── Relatórios & Analytics ───
+export type PeriodoAnalytics = 'dia' | 'semana' | 'mes';
+
+export interface AnalyticsResumo {
+  periodo: PeriodoAnalytics;
+  receita: number;
+  total_pedidos: number;
+  total_itens: number;
+  ticket_medio: number;
+  mesas_ativas: number;
+  pedidos_ativos: number;
+  variacao_percentual: number;
+  periodo_anterior_receita: number;
+}
+
+export interface PontoReceita {
+  rotulo: string;
+  receita: number;
+}
+
+export interface TopProduto {
+  nome: string;
+  quantidade: number;
+  receita: number;
+}
+
+export interface DesempenhoEquipe {
+  usuario_id: number;
+  nome: string;
+  role: string;
+  vendas: number;
+  itens: number;
+  volume: number;
+  ticket_medio: number;
+}
+
 // ─── Health ───
 export interface HealthCheck {
   status: string;
@@ -273,6 +379,7 @@ export type PrinterType = 'network' | 'usb' | 'serial';
 
 export interface PrinterConfig {
   id: number;
+  setor: string;
   tipo: PrinterType;
   host: string | null;
   porta: number | null;
@@ -282,6 +389,7 @@ export interface PrinterConfig {
 }
 
 export interface PrinterConfigUpdate {
+  setor?: string;
   tipo?: PrinterType;
   host?: string;
   porta?: number;
@@ -295,8 +403,30 @@ export interface PrinterTestResult {
   mensagem: string;
 }
 
+export interface PrinterStatus {
+  setor: string;
+  online: boolean;
+  tampa_aberta: boolean;
+  papel_esgotado: boolean;
+  papel_baixo: boolean;
+  erro_mecanico: boolean;
+  recovery: boolean;
+  offline_razao: string | null;
+  mensagem: string;
+}
+
+export interface FilaImpressaoItem {
+  id: number;
+  tipo: string;
+  status: string;
+  impressora_destino: string | null;
+  tentativas: number;
+  erro_msg: string | null;
+  created_at: string | null;
+}
+
 // ─── Pedido (KDS) ───
-export type PedidoStatus = 'Novo' | 'Preparando' | 'Pronto' | 'Entregue';
+export type PedidoStatus = 'Novo' | 'Preparando' | 'Pronto' | 'Entregue' | 'Cancelado';
 
 export interface PedidoItem {
   nome: string;
@@ -651,6 +781,98 @@ export interface POPPendente extends POP {
 
 export type FluxoEstabelecimento = 'baixo' | 'medio' | 'alto';
 export type PeriodoChecklist = 'diario' | 'semanal' | 'mensal';
+
+// ─── Funcionários ───
+export interface Funcionario {
+  id: number;
+  nome: string;
+  cpf: string;
+  rg?: string;
+  data_nascimento?: string;
+  telefone?: string;
+  email?: string;
+  endereco?: string;
+  cargo: string;
+  data_admissao: string;
+  data_demissao?: string;
+  motivo_demissao?: string;
+  salario_hora?: number;
+  tipo_contrato: string;
+  turno?: string;
+  dias_semana?: number[];
+  carga_horaria_semanal?: number;
+  ativo: number;
+  observacoes?: string;
+  usuario_id?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface FuncionarioCreate {
+  nome: string;
+  cpf: string;
+  rg?: string;
+  data_nascimento?: string;
+  telefone?: string;
+  email?: string;
+  endereco?: string;
+  cargo: string;
+  data_admissao: string;
+  data_demissao?: string;
+  motivo_demissao?: string;
+  salario_hora?: number;
+  tipo_contrato: string;
+  turno?: string;
+  dias_semana?: number[];
+  carga_horaria_semanal?: number;
+  observacoes?: string;
+  usuario_id?: number;
+}
+
+export interface FuncionarioUpdate {
+  nome?: string;
+  cpf?: string;
+  rg?: string;
+  data_nascimento?: string;
+  telefone?: string;
+  email?: string;
+  endereco?: string;
+  cargo?: string;
+  data_admissao?: string;
+  data_demissao?: string;
+  motivo_demissao?: string;
+  salario_hora?: number;
+  tipo_contrato?: string;
+  turno?: string;
+  dias_semana?: number[];
+  carga_horaria_semanal?: number;
+  ativo?: number;
+  observacoes?: string;
+}
+
+export interface FuncionarioVincularUsuario {
+  usuario_id: number;
+}
+
+export interface Mesa {
+  id: number;
+  nome: string;
+  local?: string;
+  ativo: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface MesaCreate {
+  nome: string;
+  local?: string;
+}
+
+export interface MesaUpdate {
+  nome?: string;
+  local?: string;
+  ativo?: number;
+}
 
 // ─── Precificação ───
 export interface PrecificacaoItem {

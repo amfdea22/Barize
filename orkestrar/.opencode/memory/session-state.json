@@ -1,19 +1,94 @@
 {
-  "version": "1.0",
-  "updatedAt": "2026-07-28T19:33:00-03:00",
-  "currentSession": {
-    "agent": "build",
-    "subagentes": ["architect"],
-    "task": "Corrigir servidor ASGI não bindar no Windows",
-    "workflowStep": "VERIFICAÇÃO",
-    "status": "active",
-    "startedAt": "2026-07-28T19:31:00-03:00"
-  },
-  "checkpoints": [
-    {
-      "timestamp": "2026-07-28T19:33:00-03:00",
-      "description": "Server fix aplicado e verificado. Health check retorna 200.",
-      "files": ["neonbar/backend/app/main.py"]
-    }
-  ]
+    "version":  "1.0",
+    "updatedAt":  "2026-08-08T16:20:00-03:00",
+    "currentSession":  {
+                           "agent":  "build",
+                           "subagentes":  [
+                                               "qa-engineer",
+                                               "gate",
+                                               "user"
+                                           ],
+                           "task":  "TC-046 VERIFIED (aguardando usuário finalizar): Tema claro/escuro sem mudar interface. TC-036..044 e TC-045 também verified. Próximo: usuário rodar tc036-044-complete.mjs + tc045-complete.mjs + tc046-complete.mjs.",
+                           "workflowStep":  "VERIFIED",
+                           "status":  "awaiting-user",
+                           "startedAt":  "2026-08-08T16:20:00-03:00"
+                       },
+    "checkpoints":  [
+                        {
+                            "timestamp":  "2026-08-08T16:20:00-03:00",
+                            "description":  "TC-046 em verified: tema claro/escuro completo — anti-FOUC em index.html, tokens --overlay-rgb/--glass-rgb/--neutral-rgb + override paleta light em index.css, hooks/useTheme.ts + components/ThemeToggle.tsx novos, wiring Sidebar (rodapé) e Login (header), batch ~164 rgba hardcoded → vars. tsc OK, lint 0 erros, build OK, smoke browser CDP 12/12 PASS. Aguarda completeTask do usuário.",
+                            "files":  [
+                                          "neonbar/frontend/index.html",
+                                          "neonbar/frontend/src/index.css",
+                                          "neonbar/frontend/src/hooks/useTheme.ts",
+                                          "neonbar/frontend/src/components/ThemeToggle.tsx",
+                                          "neonbar/frontend/src/layouts/Sidebar.tsx",
+                                          "neonbar/frontend/src/pages/Login.tsx"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-07-28T19:33:00-03:00",
+                            "description":  "Server fix aplicado e verificado. Health check retorna 200.",
+                            "files":  [
+                                          "neonbar/backend/app/main.py"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-07-31T00:00:00-03:00",
+                            "description":  "TC-024: modais de funcionário/vincular adicionados ao Admin.tsx; build + lint OK; smoke test end-to-end OK.",
+                            "files":  [
+                                          "neonbar/frontend/src/pages/Admin.tsx"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-06T00:00:00-03:00",
+                            "description":  "TC-026 e TC-009 concluídos: etiqueta 80mm BARIZE + modal Form|Preview + card comanda redesenhado + imagens produtos ajustadas (CardapioDigital/PDV). Build + lint OK.",
+                            "files":  [
+                                          "neonbar/frontend/src/pages/Comandas.tsx",
+                                          "neonbar/frontend/src/pages/CardapioDigital.tsx",
+                                          "neonbar/frontend/src/pages/PDV.tsx",
+                                          "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+                                          "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+                                          "neonbar/frontend/src/index.css"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-06T21:20:00-03:00",
+                            "description":  "TC-029 em verified: correção dos 5 bugs de precisão de CMV/receita (filtro período em estoque_service.calcular_cmv; quantidade_produto em financeiro_plus/cmv/relatorios; CMVResult alinhado) + novo router /cmv/relatorios com produtos/categorias/insumos e CSV + CMV.tsx reescrito (período customizado, abas, exportação) + item CMV no Sidebar. Smoke 40/40, build+lint OK.",
+                            "files":  [
+                                          "neonbar/backend/app/routers/relatorios_cmv.py",
+                                          "neonbar/backend/app/services/estoque_service.py",
+                                          "neonbar/backend/app/routers/cmv.py",
+                                          "neonbar/backend/app/routers/financeiro_plus.py",
+                                          "neonbar/backend/app/routers/relatorios.py",
+                                          "neonbar/backend/app/main.py",
+                                          "neonbar/frontend/src/pages/CMV.tsx",
+                                          "neonbar/frontend/src/types/index.ts",
+                                          "neonbar/frontend/src/services/api.ts",
+                                          "neonbar/frontend/src/layouts/Sidebar.tsx",
+                                          "neonbar/frontend/src/pages/Financeiro.tsx"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-06T21:00:00-03:00",
+                            "description":  "TC-028 concluído (Mesas dinâmicas): backend models/schemas/routers mesas + seed 13 + mesasService/useMesas + SeletorMesa presentacional + aba Admin. Build+lint OK, smoke 12/12.",
+                            "files":  [
+                                          "neonbar/backend/app/models/mesa.py",
+                                          "neonbar/backend/app/schemas/mesa.py",
+                                          "neonbar/backend/app/routers/mesas.py",
+                                          "neonbar/backend/app/database.py",
+                                          "neonbar/frontend/src/pages/Admin.tsx",
+                                          "neonbar/frontend/src/pages/PDV.tsx",
+                                          "neonbar/frontend/src/components/pdv/SeletorMesa.tsx"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-06T22:10:00-03:00",
+                            "description":  "TC-030 em verified (Centralizar etiquetas no menu Etiquetas): Comandas.tsx sem botões/modal de etiqueta; Etiquetas.tsx com 'Nova Etiqueta de Insumo' no header e 'Etiqueta' por item (pré-preenche o modal 80mm BARIZE). Build+lint OK.",
+                            "files":  [
+                                          "neonbar/frontend/src/pages/Comandas.tsx",
+                                          "neonbar/frontend/src/pages/Etiquetas.tsx"
+                                      ]
+                        }
+                    ]
 }

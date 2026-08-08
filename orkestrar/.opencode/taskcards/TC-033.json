@@ -1,0 +1,106 @@
+{
+  "id": "TC-033",
+  "title": "Multi-impressora por setor — modelo de dados com setor (Caixa/Cozinha/Bar) + IP/porta por impressora e preenchimento de impressora_destino na fila_impressao",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:25:20.757Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:27:15.352Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T13:31:22.598Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:40:22.232Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T13:40:22.250Z",
+      "actor": "gate",
+      "reason": "Smoke test 23/23 PASS + migração incremental PASS, ruff apenas pré-existentes"
+    },
+    {
+      "taskId": "TC-033",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T13:43:58.038Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.021Z",
+  "updatedAt": "2026-08-08T13:43:58.038Z",
+  "path": ".opencode/taskcards/TC-033.json",
+  "taskType": "card",
+  "objective": "Permitir múltiplas impressoras por setor (CAIXA, COZINHA, BAR), cada uma com IP/porta próprios, e preencher `impressora_destino` da `fila_impressao` com o setor correto no momento do enfileiramento (comanda de produção → cozinha/bar; fechamento → caixa). Hoje `printer_config` é UMA linha global (1 impressora) e `impressora_destino` nunca é preenchida em pdv.py.",
+  "acceptanceCriteria": [
+    "MODELO 1 — Coluna `setor` (String, default 'CAIXA') adicionada a `printer_config` + migração incremental (PRAGMA table_info + ALTER TABLE) em init_db()",
+    "MODELO 2 — Seed: criar 3 impressoras default (CAIXA, COZINHA, BAR) com host vazio e porta 9100 na primeira inicialização",
+    "SCHEMA 3 — PrinterConfigBase/Update/Response ganham campo `setor`; novo PrinterConfigCreate permite criar impressora por setor",
+    "ROUTER 4 — GET /printer-config aceita ?setor= e retorna a config ativa daquele setor (fallback cria default); PUT /printer-config atualiza por setor (não mais global)",
+    "ROUTER 5 — Novo endpoint POST /printer-config cria/atualiza impressora de um setor específico",
+    "ROUTER 6 — GET /printer-configs (admin) lista todas as impressoras por setor",
+    "PDV 7 — Enfileiramento de COMANDA de produção preenche `impressora_destino` com setor de produção (COZINHA/BAR)",
+    "PDV 8 — Enfileiramento de FECHAMENTO (finalizar-comanda) preenche `impressora_destino` com setor CAIXA",
+    "COMPAT 9 — Backend existente de teste de impressora (/printer-test) continua funcionando",
+    "VALIDAÇÃO 10 — smoke test backend: seed 3 impressoras, GET/PUT por setor, POST create, fila com impressora_destino preenchida, 401 sem token"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/models/printer_config.py",
+    "neonbar/backend/app/schemas/printer.py",
+    "neonbar/backend/app/routers/admin.py",
+    "neonbar/backend/app/database.py",
+    "neonbar/backend/app/routers/pdv.py",
+    "neonbar/backend/alembic/versions/0016_add_setor_printer_config.py"
+  ],
+  "tests": [
+    "init_db cria seed de 3 impressoras (CAIXA, COZINHA, BAR) em banco vazio",
+    "init_db adiciona coluna setor via ALTER TABLE em banco que já tem printer_config (sem coluna)",
+    "GET /printer-config?setor=COZINHA retorna config daquele setor",
+    "GET sem setor retorna o setor CAIXA (default)",
+    "PUT /printer-config atualiza host/porta do setor informado sem afetar os demais",
+    "POST /printer-config cria/atualiza impressora de setor específico (duplicado por setor = upsert)",
+    "GET /printer-configs lista 3 impressoras",
+    "vender() enfileira COMANDA com impressora_destino = setor de produção",
+    "finalizar-comanda() enfileira FECHAMENTO com impressora_destino = CAIXA",
+    "Comandos sem token retornam 401 (autenticação preservada)",
+    "Smoke test backend completo (import app, seed, CRUD por setor, fila)"
+  ],
+  "notes": "Diagnóstico @architect: (1) printer_config é tabela única global — _get_printer_config retorna a 1ª ativa e nunca lê setor; (2) fila_impressao.impressora_destino existe (fila_impressao.py:23) mas NUNCA é preenchida (pdv.py:385-391 e pdv.py:499-504 criam FilaImpressao sem o campo); (3) worker cai em Usb() sem host (escopo TC-034). Decisão: evoluir printer_config (não criar tabela nova) com coluna setor + unique(single) por setor via upsert. Roteamento: worker resolverá o IP pela config ativa do setor informado em impressora_destino (implementado no TC-034). Backward-compat: GET sem setor = CAIXA. Alembic nova migration 0016 apenas se aplicada manualmente; runtime usa init_db (padrão do projeto, create_all + ALTER TABLE incremental). Frontend (aba Impressoras) fica no TC-042.",
+  "completedAt": "2026-08-08T13:43:58.038Z"
+}

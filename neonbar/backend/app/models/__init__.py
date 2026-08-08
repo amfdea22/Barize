@@ -22,6 +22,8 @@ from .producao import Producao, ItemProducao
 from .fornecedor import Fornecedor
 from .custo_fixo import CustoFixo
 from .pop import POP, ExecucaoPOP
+from .funcionario import Funcionario
+from .mesa import Mesa
 
 __all__ = [
     "Insumo", "Produto", "Receita", "Movimentacao",
@@ -36,10 +38,13 @@ __all__ = [
     "Material",
     "CopoQuebrado",
     "Lote",
+    "ProdutoLote",
     "Recebimento", "ItemRecebimento",
     "Contagem", "ItemContagem",
     "Producao", "ItemProducao",
     "Fornecedor",
     "CustoFixo",
     "POP", "ExecucaoPOP",
+    "Funcionario",
+    "Mesa",
 ]

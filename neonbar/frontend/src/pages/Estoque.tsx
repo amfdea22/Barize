@@ -278,7 +278,7 @@ export default function Estoque() {
       )}
 
       {/* Filter Tabs */}
-      <div className="flex gap-md mb-lg border-b border-[rgba(59,73,76,0.1)]">
+      <div className="flex gap-md mb-lg border-b border-[rgba(var(--neutral-rgb),0.1)]">
         {categoryFilters.map((f) => (
           <button
             key={f}
@@ -312,10 +312,10 @@ export default function Estoque() {
         </div>
       ) : (
         <>
-          <div className="bg-[rgba(32,31,31,0.6)] backdrop-blur-[12px] rounded-xl overflow-hidden border border-[rgba(59,73,76,0.1)] mb-xl">
+          <div className="bg-[rgba(32,31,31,0.6)] backdrop-blur-[12px] rounded-xl overflow-hidden border border-[rgba(var(--neutral-rgb),0.1)] mb-xl">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[var(--color-surface-container-high)]/50 border-b border-[rgba(59,73,76,0.1)]">
+                <tr className="bg-[var(--color-surface-container-high)]/50 border-b border-[rgba(var(--neutral-rgb),0.1)]">
                   <th className="px-lg py-md text-label-md text-[var(--color-on-surface-variant)] uppercase tracking-widest">
                     Nome do Item
                   </th>
@@ -333,7 +333,7 @@ export default function Estoque() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[rgba(59,73,76,0.1)]">
+              <tbody className="divide-y divide-[rgba(var(--neutral-rgb),0.1)]">
                 {filtered.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="px-lg py-md text-center text-[var(--color-outline)] text-sm">
@@ -348,7 +348,7 @@ export default function Estoque() {
                     const Icon = getIcon(insumo);
                     const iconeBorder = isCritical
                       ? 'border border-[var(--color-secondary-container)]/30 shadow-[0_0_12px_rgba(254,170,0,0.3)]'
-                      : 'border border-[rgba(59,73,76,0.1)]';
+                      : 'border border-[rgba(var(--neutral-rgb),0.1)]';
                     const iconeColor = isCritical ? 'text-[var(--color-secondary-container)]' : 'text-[var(--color-primary)]';
                     const statusLabel = isCritical
                       ? 'Nível Crítico'
@@ -456,7 +456,7 @@ export default function Estoque() {
           </div>
 
           {/* Footer / Batch Actions */}
-          <div className="flex justify-between items-center bg-[var(--color-surface-container-high)]/40 p-md rounded-xl border border-[rgba(59,73,76,0.1)] backdrop-blur-[12px]">
+          <div className="flex justify-between items-center bg-[var(--color-surface-container-high)]/40 p-md rounded-xl border border-[rgba(var(--neutral-rgb),0.1)] backdrop-blur-[12px]">
             <div className="flex items-center gap-lg">
               <div className="flex items-center gap-sm">
                 <span className="w-3 h-3 rounded-full bg-[var(--color-secondary-container)]" />
@@ -492,7 +492,7 @@ export default function Estoque() {
       )}
 
       {/* ─── Side Panel: Auto-Reposição ─── */}
-      <aside className="fixed right-6 bottom-6 w-80 bg-[rgba(32,31,31,0.6)] backdrop-blur-[12px] rounded-2xl p-lg border border-[rgba(255,255,255,0.1)] shadow-2xl z-40 hidden xl:block">
+      <aside className="fixed right-6 bottom-6 w-80 bg-[rgba(32,31,31,0.6)] backdrop-blur-[12px] rounded-2xl p-lg border border-[rgba(var(--overlay-rgb),0.1)] shadow-2xl z-40 hidden xl:block">
         <div className="flex justify-between items-start mb-md">
           <div>
             <h3 className="text-headline-md text-[18px] text-[var(--color-on-surface)]">Auto-Reposição</h3>
@@ -510,7 +510,7 @@ export default function Estoque() {
           {baixoEstoque.length > 0 ? (
             <div className="space-y-sm max-h-[200px] overflow-y-auto custom-scrollbar">
               {baixoEstoque.slice(0, 5).map((item) => (
-                <div key={item.id} className="p-sm rounded-xl bg-[var(--color-surface-container-highest)]/50 border border-[rgba(59,73,76,0.1)]">
+                <div key={item.id} className="p-sm rounded-xl bg-[var(--color-surface-container-highest)]/50 border border-[rgba(var(--neutral-rgb),0.1)]">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-label-md text-[var(--color-on-surface)] truncate pr-2 flex-1">
                       {item.nome}
@@ -534,14 +534,14 @@ export default function Estoque() {
               )}
             </div>
           ) : (
-            <div className="p-md rounded-xl bg-[var(--color-surface-container-highest)]/50 border border-[rgba(59,73,76,0.1)] flex items-center justify-center gap-2 text-[var(--color-outline)]">
+            <div className="p-md rounded-xl bg-[var(--color-surface-container-highest)]/50 border border-[rgba(var(--neutral-rgb),0.1)] flex items-center justify-center gap-2 text-[var(--color-outline)]">
               <Package size={18} />
               <span className="text-label-md">Nenhum item crítico</span>
             </div>
           )}
           <button
             onClick={() => setShowReposicao(true)}
-            className="w-full bg-[rgba(59,73,76,0.2)] text-[var(--color-on-surface)] text-label-md py-sm rounded-lg hover:bg-[rgba(59,73,76,0.4)] transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full bg-[rgba(var(--neutral-rgb),0.2)] text-[var(--color-on-surface)] text-label-md py-sm rounded-lg hover:bg-[rgba(var(--neutral-rgb),0.4)] transition-colors cursor-pointer flex items-center justify-center gap-2"
             disabled={baixoEstoque.length === 0}
           >
             <ClipboardList size={16} />
@@ -561,7 +561,7 @@ export default function Estoque() {
               <select
                 value={newInsumo.unidade_medida}
                 onChange={(e) => setNewInsumo({ ...newInsumo, unidade_medida: e.target.value })}
-                className="w-full rounded-lg bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] text-sm text-[var(--color-on-surface)] p-2.5 outline-none"
+                className="w-full rounded-lg bg-[var(--color-surface-low)] border border-[rgba(var(--overlay-rgb),0.1)] text-sm text-[var(--color-on-surface)] p-2.5 outline-none"
               >
                 <option value="un">un</option>
                 <option value="ml">ml</option>
@@ -619,7 +619,7 @@ export default function Estoque() {
               <select
                 value={editInsumo.unidade_medida}
                 onChange={(e) => setEditInsumo({ ...editInsumo, unidade_medida: e.target.value })}
-                className="w-full rounded-lg bg-[var(--color-surface-low)] border border-[rgba(255,255,255,0.1)] text-sm text-[var(--color-on-surface)] p-2.5 outline-none"
+                className="w-full rounded-lg bg-[var(--color-surface-low)] border border-[rgba(var(--overlay-rgb),0.1)] text-sm text-[var(--color-on-surface)] p-2.5 outline-none"
               >
                 <option value="un">un</option>
                 <option value="ml">ml</option>
@@ -697,7 +697,7 @@ export default function Estoque() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-surface-container-high)]/50 border border-[rgba(59,73,76,0.1)]"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-surface-container-high)]/50 border border-[rgba(var(--neutral-rgb),0.1)]"
                     >
                       <div className="w-9 h-9 rounded-lg bg-[var(--color-secondary-container)]/15 flex items-center justify-center shrink-0">
                         <Package size={18} className="text-[var(--color-secondary-container)]" />

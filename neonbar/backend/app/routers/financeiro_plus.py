@@ -34,12 +34,13 @@ def vendas_por_categoria(
         SELECT
             p.categoria,
             COUNT(DISTINCT m.id) as total_vendas,
-            SUM(ABS(m.quantidade) * p.preco_venda) as receita,
-            SUM(ABS(m.quantidade)) as quantidade_total
+            SUM(p.preco_venda * m.quantidade_produto) as receita,
+            SUM(m.quantidade_produto) as quantidade_total
         FROM movimentacoes m
         JOIN produtos p ON p.id = m.produto_id
         WHERE m.tipo = 'VENDA'
             AND m.produto_id IS NOT NULL
+            AND m.quantidade_produto IS NOT NULL
             AND m.data >= :di
             AND m.data <= :df
         GROUP BY p.categoria

@@ -164,10 +164,11 @@ app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
 
 # ─── Registro de Rotas ──────────────────────────────────────
-from .routers import auth, pdv, estoque, cmv, caixa, relatorios, admin, pedidos, pagamentos, clientes
+from .routers import auth, pdv, estoque, cmv, caixa, relatorios, admin, pedidos, pagamentos, clientes, funcionarios
 from .routers import copos, materiais, copos_quebrados
 from .routers import lotes, recebimentos, contagens, producao
-from .routers import upload, cardapio, produto_lotes, etiquetas, fichas_tecnicas, precificacao, analise_estoque, fornecedores, financeiro_plus, pops
+from .routers import upload, cardapio, produto_lotes, etiquetas, fichas_tecnicas, precificacao, analise_estoque, fornecedores, financeiro_plus, pops, mesas
+from .routers import relatorios_cmv
 
 app.include_router(auth.router, prefix=settings.API_PREFIX)
 app.include_router(pdv.router, prefix=settings.API_PREFIX)
@@ -176,6 +177,7 @@ app.include_router(cmv.router, prefix=settings.API_PREFIX)
 app.include_router(caixa.router, prefix=settings.API_PREFIX)
 app.include_router(relatorios.router, prefix=settings.API_PREFIX)
 app.include_router(admin.router, prefix=settings.API_PREFIX)
+app.include_router(funcionarios.router, prefix=settings.API_PREFIX)
 app.include_router(pedidos.router, prefix=settings.API_PREFIX)
 app.include_router(pagamentos.router, prefix=settings.API_PREFIX)
 app.include_router(clientes.router, prefix=settings.API_PREFIX)
@@ -196,6 +198,8 @@ app.include_router(analise_estoque.router, prefix=settings.API_PREFIX)
 app.include_router(fornecedores.router, prefix=settings.API_PREFIX)
 app.include_router(financeiro_plus.router, prefix=settings.API_PREFIX)
 app.include_router(pops.router, prefix=settings.API_PREFIX)
+app.include_router(mesas.router, prefix=settings.API_PREFIX)
+app.include_router(relatorios_cmv.router, prefix=settings.API_PREFIX)
 
 
 # ─── Health Check ───────────────────────────────────────────

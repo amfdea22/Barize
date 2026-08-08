@@ -1,0 +1,101 @@
+{
+  "id": "TC-030",
+  "title": "Mover funcionalidades de etiqueta da área da comanda para o menu Etiquetas",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:40:43.894Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:42:13.027Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-07T00:43:06.964Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:46:48.871Z",
+      "actor": "qa-engineer",
+      "reason": "Build e lint OK, aguardando validação funcional"
+    },
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T00:47:04.081Z",
+      "actor": "gate",
+      "reason": "Build + lint 0 erros, funcionalidade realocada sem perda"
+    },
+    {
+      "taskId": "TC-030",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-07T00:48:30.133Z",
+      "actor": "user",
+      "reason": "Usuário aprovou conclusão"
+    }
+  ],
+  "createdAt": "2026-08-07T00:22:16.240Z",
+  "updatedAt": "2026-08-07T00:48:30.133Z",
+  "path": ".opencode/taskcards/TC-030.json",
+  "taskType": "card",
+  "objective": "Remover as funcionalidades de etiqueta da área da Comanda (botões 'Nova Etiqueta de Insumo' no header e 'Etiqueta' em cada pedido + modal InsumoEtiquetaModal) e concentrar TODAS as funções de etiqueta no menu Etiquetas (página /etiquetas): criar etiqueta manual de insumo com preview 80mm BARIZE, imprimir, listar/visualizar etiquetas existentes.",
+  "acceptanceCriteria": [
+    "COMANDAS 1 — Remover botão 'Nova Etiqueta de Insumo' do header de Comandas.tsx",
+    "COMANDAS 2 — Remover botão 'Etiqueta' do rodapé de cada pedido (ação com Tag) em Comandas.tsx",
+    "COMANDAS 3 — Remover <InsumoEtiquetaModal> do Comandas.tsx + estados etiquetaOpen/etiquetaInitial + import não utilizado",
+    "ETIQUETAS 4 — Menu Etiquetas (Etiquetas.tsx) ganha botão 'Nova Etiqueta de Insumo' que abre InsumoEtiquetaModal (form + preview 80mm BARIZE + Imprimir)",
+    "ETIQUETAS 5 — Menu Etiquetas mantém listagem/visualização/impressão das etiquetas existentes (funcionalidade atual preservada)",
+    "ETIQUETAS 6 — Etiquetar item da lista pré-preenche o modal (nome/quantidade do item selecionado)",
+    "VALIDAÇÃO 7 — build + lint frontend OK (0 erros); nenhuma funcionalidade de etiqueta removida do sistema, apenas realocada"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Comandas.tsx",
+    "neonbar/frontend/src/pages/Etiquetas.tsx",
+    "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+    "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+    "neonbar/frontend/src/services/api.ts",
+    "neonbar/frontend/src/types/index.ts",
+    "neonbar/frontend/src/App.tsx"
+  ],
+  "tests": [
+    "Comandas.tsx não importa mais InsumoEtiquetaModal nem renderiza modal de etiqueta",
+    "Comandas.tsx sem botões 'Nova Etiqueta de Insumo' e 'Etiqueta'",
+    "Etiquetas.tsx tem botão 'Nova Etiqueta de Insumo' que abre o modal",
+    "Modal abre com preview 80mm BARIZE e imprime via Ctrl+P/window.print",
+    "Etiquetar item da lista pré-preenche nome/quantidade no modal",
+    "Listagem/visualização/impressão das etiquetas existentes permanece funcional",
+    "Build + lint frontend OK (0 erros)"
+  ],
+  "notes": "Referência: Comandas.tsx hoje tem etiqueta em 2 lugares — botão no header (setEtiquetaOpen(true) com initial undefined) e botão 'Etiqueta' por pedido (pré-preenche com primeiroItem). Ambos abrem InsumoEtiquetaModal (form nome/qtd/unidade/lote/fab/val/categoria + preview Label80mm 80mm). Menu Etiquetas (/etiquetas) hoje só lista etiquetas de validade de insumos/produtos com seleção múltipla + preview impressão (template NEONBAR antigo). Objetivo: centralizar a criação de etiqueta manual no menu Etiquetas e tirar da Comanda.",
+  "completedAt": "2026-08-07T00:48:30.133Z"
+}

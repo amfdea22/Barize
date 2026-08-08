@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Clock, MessageSquare } from 'lucide-react';
+import { Clock, MessageSquare, X } from 'lucide-react';
 import type { Pedido, PedidoStatus } from '../types';
 
 const STATUS_CONFIG: Record<PedidoStatus, { label: string; badgeClass: string; btnLabel: string; nextStatus: PedidoStatus | null }> = {
@@ -7,14 +7,16 @@ const STATUS_CONFIG: Record<PedidoStatus, { label: string; badgeClass: string; b
   Preparando: { label: 'Preparando', badgeClass: 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)]', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
   Pronto: { label: 'Pronto', badgeClass: 'bg-[var(--color-primary)]/20 text-[var(--color-primary)]', btnLabel: 'Entregar', nextStatus: 'Entregue' },
   Entregue: { label: 'Entregue', badgeClass: 'bg-[var(--color-surface-container-high)] text-[var(--color-outline)]', btnLabel: 'Concluído', nextStatus: null },
+  Cancelado: { label: 'Cancelado', badgeClass: 'bg-[var(--color-error)]/20 text-[var(--color-error)]', btnLabel: 'Cancelado', nextStatus: null },
 };
 
 interface OrderCardProps {
   pedido: Pedido;
   onStatusChange: (id: number, status: PedidoStatus) => void;
+  onCancel?: (pedido: Pedido) => void;
 }
 
-export default function OrderCard({ pedido, onStatusChange }: OrderCardProps) {
+export default function OrderCard({ pedido, onStatusChange, onCancel }: OrderCardProps) {
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 30000);
@@ -24,10 +26,10 @@ export default function OrderCard({ pedido, onStatusChange }: OrderCardProps) {
   const isNew = pedido.status === 'Novo';
   const borderColor = isNew
     ? 'border-[var(--color-primary)]/40'
-    : 'border-[rgba(255,255,255,0.1)]';
+    : 'border-[rgba(var(--overlay-rgb),0.1)]';
   const glowClass = isNew ? 'shadow-[0_0_8px_rgba(0,218,243,0.3)]' : '';
   const bgHeader = isNew ? 'bg-[var(--color-primary)]/10' : 'bg-[var(--color-surface-container-highest)]';
-  const borderHeader = isNew ? 'border-b border-[var(--color-primary)]/20' : 'border-b border-[rgba(255,255,255,0.1)]';
+  const borderHeader = isNew ? 'border-b border-[var(--color-primary)]/20' : 'border-b border-[rgba(var(--overlay-rgb),0.1)]';
   const timeColor = isNew ? 'text-[var(--color-on-surface-variant)]' : 'text-[var(--color-secondary)]';
 
   const parseDate = (s?: string | null): number => {
@@ -51,7 +53,7 @@ export default function OrderCard({ pedido, onStatusChange }: OrderCardProps) {
 
   return (
     <div
-      className={`bg-[rgba(28,27,27,0.6)] backdrop-blur-[12px] border ${borderColor} rounded-xl overflow-hidden flex flex-col ${glowClass} transition-transform hover:scale-[1.02]`}
+      className={`bg-[rgba(var(--glass-rgb),0.6)] backdrop-blur-[12px] border ${borderColor} rounded-xl overflow-hidden flex flex-col ${glowClass} transition-transform hover:scale-[1.02]`}
     >
       <div className={`p-md ${bgHeader} flex justify-between items-center ${borderHeader}`}>
         <span className="text-data-display text-[var(--color-primary)]">
@@ -97,7 +99,7 @@ export default function OrderCard({ pedido, onStatusChange }: OrderCardProps) {
         )}
       </div>
 
-      <div className="p-md bg-[var(--color-surface-container-high)] border-t border-[rgba(255,255,255,0.1)] mt-auto">
+      <div className="p-md bg-[var(--color-surface-container-high)] border-t border-[rgba(var(--overlay-rgb),0.1)] mt-auto space-y-sm">
         {cfg.nextStatus ? (
           <button
             onClick={() => onStatusChange(pedido.id, cfg.nextStatus!)}
@@ -107,8 +109,16 @@ export default function OrderCard({ pedido, onStatusChange }: OrderCardProps) {
           </button>
         ) : (
           <div className="w-full text-center text-[10px] text-[var(--color-outline)] uppercase tracking-wider py-sm">
-            Pedido entregue
+            {pedido.status === 'Cancelado' ? 'Pedido cancelado' : 'Pedido entregue'}
           </div>
+        )}
+        {(pedido.status === 'Novo' || pedido.status === 'Preparando' || pedido.status === 'Pronto') && onCancel && (
+          <button
+            onClick={() => onCancel(pedido)}
+            className="w-full bg-[var(--color-error)]/10 text-[var(--color-error)] border border-[var(--color-error)]/30 py-sm rounded-lg font-bold text-label-md uppercase tracking-widest text-[11px] hover:bg-[var(--color-error)]/20 transition-all cursor-pointer"
+          >
+            <X size={12} className="inline mr-1 -mt-0.5" /> Cancelar Pedido
+          </button>
         )}
       </div>
     </div>

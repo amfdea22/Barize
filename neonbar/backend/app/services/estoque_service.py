@@ -81,6 +81,9 @@ class EstoqueService:
         Dá baixa no estoque ao vender um produto.
         Reduz o estoque de cada insumo da receita.
         """
+        if quantidade_vendida <= 0:
+            return False, "Quantidade deve ser maior que zero"
+
         produto = db.query(Produto).filter(Produto.id == produto_id).first()
         if not produto:
             return False, "Produto não encontrado"
@@ -134,6 +137,7 @@ class EstoqueService:
         db: Session,
         itens: list[dict],
         usuario_id: Optional[int] = None,
+        commit: bool = True,
     ) -> Tuple[bool, str, Optional[dict]]:
         """
         Finaliza uma comanda completa (múltiplos itens) em transação única.
@@ -141,6 +145,8 @@ class EstoqueService:
         
         Args:
             itens: Lista de dicts [{"produto_id": int, "quantidade": float}, ...]
+            commit: Se False, apenas faz flush (o caller controla o commit final,
+                    permitindo transação atômica com pagamento/pedido).
         """
         if not itens:
             return False, "Comanda vazia", None
@@ -153,6 +159,8 @@ class EstoqueService:
         for item in itens:
             produto_id = item.get("produto_id")
             quantidade = item.get("quantidade", 1.0)
+            if quantidade <= 0:
+                return False, "Quantidade deve ser maior que zero", None
 
             produto = db.query(Produto).filter(Produto.id == produto_id, Produto.ativo == 1).first()
             if not produto:
@@ -206,7 +214,10 @@ class EstoqueService:
                 if qtd_produto is not None:
                     movimentacoes_ids.append(mov.id)
 
-        db.commit()
+        if commit:
+            db.commit()
+        else:
+            db.flush()
 
         logger.info(
             f"[ESTOQUE] Comanda finalizada: {len(itens)} itens, "
@@ -329,8 +340,12 @@ class EstoqueService:
             WHERE m.tipo = 'VENDA'
             AND m.produto_id IS NOT NULL
             AND m.quantidade_produto IS NOT NULL
+            AND (:di IS NULL OR m.data >= :di)
+            AND (:df IS NULL OR m.data <= :df)
         """)
-        total_vendas = db.execute(sql).scalar() or 0.0
+        total_vendas = db.execute(
+            sql, {"di": data_inicio, "df": data_fim}
+        ).scalar() or 0.0
 
         return {
             "custo_total": round(abs(total_custo), 2),

@@ -89,12 +89,13 @@ def dashboard_financeiro(
     from sqlalchemy import text
     # Usa data UTC e filtra no Python para evitar timezone mismatch
     sql_vendas_dia = text("""
-        SELECT COALESCE(SUM(p.preco_venda * ABS(m.quantidade)), 0)
+        SELECT COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0)
         FROM movimentacoes m
         JOIN produtos p ON p.id = m.produto_id
         WHERE m.tipo = 'VENDA'
         AND m.data >= :di AND m.data <= :df
         AND m.produto_id IS NOT NULL
+        AND m.quantidade_produto IS NOT NULL
     """)
     receita_dia = db.execute(
         sql_vendas_dia,

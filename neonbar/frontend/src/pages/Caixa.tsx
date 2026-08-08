@@ -211,7 +211,7 @@ export default function CaixaPage() {
           {/* Totais por forma */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
             {FORMAS_PAGAMENTO.map(({ key, label, icon: Icon }) => (
-              <div key={key} className="p-3 rounded-lg bg-[var(--color-surface-container-high)]/50 border border-[rgba(255,255,255,0.06)]">
+              <div key={key} className="p-3 rounded-lg bg-[var(--color-surface-container-high)]/50 border border-[rgba(var(--overlay-rgb),0.06)]">
                 <div className="flex items-center gap-2 text-xs text-[var(--color-outline)] mb-1">
                   <Icon size={14} />
                   <span>{label}</span>
@@ -234,7 +234,7 @@ export default function CaixaPage() {
                 const forma = FORMAS_PAGAMENTO.find((f) => f.key === p.forma_pagamento);
                 const Icon = forma?.icon || DollarSign;
                 return (
-                  <div key={p.id} className="flex items-center gap-3 p-3 rounded-lg bg-[var(--color-surface-container-high)]/30 border border-[rgba(255,255,255,0.04)]">
+                  <div key={p.id} className="flex items-center gap-3 p-3 rounded-lg bg-[var(--color-surface-container-high)]/30 border border-[rgba(var(--overlay-rgb),0.04)]">
                     <Icon size={16} className="text-[var(--color-primary)]/60" />
                     <span className="flex-1 text-sm text-[var(--color-on-surface)]">
                       {forma?.label || p.forma_pagamento}
@@ -279,7 +279,7 @@ export default function CaixaPage() {
                   className={`flex items-center gap-2 p-3 rounded-lg border text-sm transition-all cursor-pointer ${
                     novoPagamento.forma_pagamento === key
                       ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-[var(--color-primary)]'
-                      : 'border-[rgba(255,255,255,0.1)] bg-[var(--color-surface-low)] text-[var(--color-on-surface)] hover:border-[var(--color-primary)]/50'
+                      : 'border-[rgba(var(--overlay-rgb),0.1)] bg-[var(--color-surface-low)] text-[var(--color-on-surface)] hover:border-[var(--color-primary)]/50'
                   }`}
                 >
                   <Icon size={18} />

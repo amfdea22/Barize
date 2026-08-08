@@ -5,6 +5,7 @@ import {
   User, Eye, EyeOff, HelpCircle, LogIn, Check, AlertCircle, Loader2,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -47,9 +48,14 @@ export default function Login() {
         <span className="text-headline-lg-mobile tracking-tight text-primary-fixed-dim">
           BARIZE Pro
         </span>
-        <button type="button" className="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 cursor-pointer" aria-label="Ajuda">
-          <HelpCircle size={20} />
-        </button>
+        <div className="flex items-center gap-sm">
+          <div className="w-8">
+            <ThemeToggle collapsed />
+          </div>
+          <button type="button" className="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 cursor-pointer" aria-label="Ajuda">
+            <HelpCircle size={20} />
+          </button>
+        </div>
       </header>
 
       <main className="flex-grow flex flex-col md:flex-row pt-12">

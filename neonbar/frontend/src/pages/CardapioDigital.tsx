@@ -127,7 +127,7 @@ export default function CardapioDigital() {
 
   return (
     <div className="h-screen flex flex-col bg-[var(--color-background)] text-[var(--color-on-surface)]">
-      <header className="sticky top-0 z-50 bg-[var(--color-surface)]/80 backdrop-blur-xl border-b border-[rgba(255,255,255,0.06)]">
+      <header className="sticky top-0 z-50 bg-[var(--color-surface)]/80 backdrop-blur-xl border-b border-[rgba(var(--overlay-rgb),0.06)]">
         <div className="px-lg pt-md pb-sm">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
@@ -155,7 +155,7 @@ export default function CardapioDigital() {
               placeholder="Buscar no cardápio..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.06)] rounded-lg pl-9 pr-3 py-2 text-body-md outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-all duration-200 focus:border-[var(--color-primary-container)] focus:shadow-[0_0_0_1px_var(--color-primary-container)]"
+              className="w-full bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.06)] rounded-lg pl-9 pr-3 py-2 text-body-md outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-all duration-200 focus:border-[var(--color-primary-container)] focus:shadow-[0_0_0_1px_var(--color-primary-container)]"
             />
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function CardapioDigital() {
                       'transition-all duration-300 ease-out select-none border',
                       isActive
                         ? 'text-[var(--color-on-primary-container)] border-transparent shadow-[0_0_16px_rgba(0,229,255,0.2)]'
-                        : 'text-[var(--color-on-surface-variant)] border-[rgba(255,255,255,0.08)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container)] hover:border-[rgba(255,255,255,0.15)]',
+                        : 'text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container)] hover:border-[rgba(var(--overlay-rgb),0.15)]',
                     ].join(' ')}
                     style={{
                       backgroundColor: isActive ? accent : 'var(--color-surface-container-high)',
@@ -249,13 +249,13 @@ export default function CardapioDigital() {
                   {items.map((produto, idx) => (
                     <div
                       key={produto.id}
-                      className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] hover:border-[var(--color-primary-container)]/30 transition-all duration-500 ease-out"
+                      className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] hover:border-[var(--color-primary-container)]/30 transition-all duration-500 ease-out overflow-hidden"
                       style={{
                         animation: 'fadeIn 0.35s ease-out both',
                         animationDelay: `${(idx % 4) * 60}ms`,
                       }}
                     >
-                      <div className="aspect-[4/3] w-full overflow-hidden relative bg-[var(--color-surface-container-high)] rounded-t-xl">
+                      <div className="aspect-[16/10] w-full overflow-hidden relative bg-[var(--color-surface-container-high)]">
                         {produto.foto_url ? (
                           <img
                             src={produto.foto_url}
@@ -274,8 +274,6 @@ export default function CardapioDigital() {
                           </div>
                         )}
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.85)] via-[rgba(0,0,0,0.25)] via-30% to-transparent pointer-events-none" />
-
                         <span
                           className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border pointer-events-none"
                           style={{
@@ -287,32 +285,32 @@ export default function CardapioDigital() {
                           {getCatName(produto.categoria)}
                         </span>
 
-                        <div className="absolute bottom-0 left-0 right-0 p-3 pointer-events-none">
-                          <h3 className="text-[13px] font-semibold leading-snug text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-0.5">
-                            {produto.nome}
-                          </h3>
-                          {produto.descricao && (
-                            <p className="text-[11px] text-white/70 leading-tight line-clamp-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1">
-                              {produto.descricao}
-                            </p>
-                          )}
-                          <span
-                            className="font-mono text-[15px] font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] tracking-tight"
-                            style={{ color: getCatAccent(getCatName(produto.categoria)) }}
-                          >
-                            R$ {produto.preco_venda.toFixed(2)}
-                          </span>
-                        </div>
-
                         <div
                           className="absolute top-0 left-2 right-2 h-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           style={{ backgroundColor: getCatAccent(getCatName(produto.categoria)) }}
                         />
                       </div>
 
+                      <div className="p-3 space-y-1">
+                        <h3 className="text-[13px] font-semibold leading-snug text-[var(--color-on-surface)] break-words">
+                          {produto.nome}
+                        </h3>
+                        {produto.descricao && (
+                          <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-tight line-clamp-2">
+                            {produto.descricao}
+                          </p>
+                        )}
+                        <span
+                          className="inline-block font-mono text-[15px] font-semibold tracking-tight"
+                          style={{ color: getCatAccent(getCatName(produto.categoria)) }}
+                        >
+                          R$ {produto.preco_venda.toFixed(2)}
+                        </span>
+                      </div>
+
                       {produto.ingredientes && (
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-16px)] opacity-0 group-hover:opacity-100 translate-y-0 group-hover:-translate-y-full transition-all duration-300 ease-out pointer-events-none">
-                          <div className="bg-[var(--color-surface-container-high)] text-[11px] leading-snug text-[var(--color-on-surface-variant)] px-3 py-2 rounded-lg border border-[rgba(255,255,255,0.06)] shadow-xl backdrop-blur-sm">
+                          <div className="bg-[var(--color-surface-container-high)] text-[11px] leading-snug text-[var(--color-on-surface-variant)] px-3 py-2 rounded-lg border border-[rgba(var(--overlay-rgb),0.06)] shadow-xl backdrop-blur-sm">
                             <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--color-primary-container)] block mb-0.5">Ingredientes</span>
                             {produto.ingredientes}
                           </div>

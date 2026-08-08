@@ -1,0 +1,102 @@
+{
+  "id": "TC-032",
+  "title": "O menu Administração deve ter o mesmo designer das outras páginas",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T01:10:26.392Z",
+      "actor": "build",
+      "reason": "Análise concluída pelos subagentes"
+    },
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T01:10:26.399Z",
+      "actor": "build",
+      "reason": "Aguardando aprovação"
+    },
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-07T01:10:26.402Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T01:18:36.262Z",
+      "actor": "qa-engineer",
+      "reason": "Ajustes de design aprovados (A1-A3/M1-M4/B4-B7/D10) aplicados, aguardando validação"
+    },
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-07T01:18:36.269Z",
+      "actor": "gate",
+      "reason": "Build + lint 0 erros, apenas 3 warnings pre-existentes (Comandas/Etiquetas/FichaTecnica)"
+    },
+    {
+      "taskId": "TC-032",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-07T01:23:25.535Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-07T01:05:47.716Z",
+  "updatedAt": "2026-08-07T01:23:25.535Z",
+  "path": ".opencode/taskcards/TC-032.json",
+  "taskType": "card",
+  "objective": "Alinhar o Admin.tsx (menu Configurações /admin) ao design system das demais páginas BARIZE, eliminando as divergências apontadas por @architect e @ui-designer (veredito ~85-90% conforme): (A1) trocar 4 window.confirm por Modal de confirmação com variant danger; (A2) padronizar selects de página para h-12 + surface-container-low + border 0.08; (A3) botão custom 'Editar' (Fichas) vira <Button size=sm variant=ghost>; (M1) tabs h-[36px] + active text-[var(--color-on-primary-container)]; (M2) search input border 0.1 + pl-xl pr-md py-xs + text-body-md + ícone 18; (M3) empty/loading do Monitoramento com ícone + gap-2; health cards usam StatsCard (text-data-display); ações em linha padrão boxed do Estoque; remover wrapper ghost-border duplicado do DataTable.",
+  "acceptanceCriteria": [
+    "A1 — 4 confirmações destrutivas (excluir lote, desligar/reativar funcionário, desvincular usuário, desativar mesa) usam Modal de confirmação estilizado (Button danger), sem window.confirm",
+    "A2 — Selects de página padronizados em h-12 + bg-surface-container-low + border rgba(255,255,255,0.08) (filtros funcionários e vincular imagem)",
+    "A3 — Botão 'Editar' da aba Fichas usa <Button size='sm' variant='ghost'>",
+    "M1 — Tabs principais e filtros com h-[36px] e active text-[var(--color-on-primary-container)]",
+    "M2 — Search input (Funcionários) com border 0.1, pl-xl pr-md py-xs, text-body-md, ícone 18 left-sm",
+    "M3 — Empty/loading do Monitoramento com ícone (lucide) + layout flex col center h-32 gap-2",
+    "H — Health cards do Monitoramento usam StatsCard (text-data-display + ícone em caixa)",
+    "Ações em linha (lotes/funcionários/mesas) usam icon boxed bg-[var(--color-surface-container-highest)] text-[var(--color-on-surface)] + title",
+    "Removido wrapper ghost-border duplicado ao redor de DataTable (mantém apenas borda do componente)",
+    "Build frontend OK (tsc -b && vite build) + lint 0 erros"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Admin.tsx",
+    "neonbar/frontend/src/components/Card.tsx",
+    "neonbar/frontend/src/components/StatsCard.tsx",
+    "neonbar/frontend/src/components/Modal.tsx",
+    "neonbar/frontend/src/components/Button.tsx"
+  ],
+  "tests": [
+    "grep window.confirm no Admin.tsx = vazio",
+    "grep h-[38px]/h-[34px] em selects do Admin = vazio (só h-12)",
+    "Admin usa Button size=sm variant=ghost no Editar Fichas",
+    "Tabs/ativos com text-on-primary-container (sem on-primary)",
+    "Search com border 0.1 + pl-xl + py-xs + text-body-md",
+    "Health cards via StatsCard",
+    "Ações em linha com bg-surface-container-highest",
+    "Build + lint OK"
+  ],
+  "notes": "Diagnóstico de dois agentes (arquivado): architect apontou D1-D12, ui-designer apontou A1-A3/M1-M4/B4-B7. Consenso: Admin ~85-90% conforme; apenas Admin.tsx precisa mudar, nenhum componente. Referências: Etiquetas.tsx:82-100 (search/tabs), Estoque.tsx:409-447 (ações boxed), Estoque.tsx:645-658 (confirm modal), StatsCard.tsx (health). text-label-sm não é token no index.css (no-op global, fora de escopo).",
+  "completedAt": "2026-08-07T01:23:25.535Z"
+}

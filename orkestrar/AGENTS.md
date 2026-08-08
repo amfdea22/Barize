@@ -42,6 +42,8 @@ Before any action, EVERY agent (build, architect, code-reviewer, test-writer, et
 - [ ] Unit tests required for all business logic ({{testFramework}})
 - [ ] PRs must pass lint + tests before merge
 - [ ] UI follows DESIGN.md guidelines (if applicable)
+- [ ] Frontend NUNCA depende de recursos externos (CDNs/APIs de terceiros) — ver `frontend-no-external-resources.md`
+- [ ] Frontend NUNCA combina `max-w` + `w-full` + `mx-*` no mesmo elemento (causa overflow) — ver `frontend-layout-constraints.md`
 
 ## Architecture
 

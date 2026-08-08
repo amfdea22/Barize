@@ -12,6 +12,1466 @@
       "signature": "8e09c2d8014fd0623d9cf22a42598d29a2378847b32fe7f10346128e384eeffe",
       "agent": "user",
       "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-025-1786050115150",
+      "timestamp": "2026-08-06T21:01:55.151Z",
+      "contentHash": "4e9c8ce6f5d146b57e9e06f14e95c8e2fded0474ce6bcee31fc4880e5f4cf95c",
+      "previousHash": "1258678a6dde1664e688ca2fc42d6d6005b1b6b0e143fca7666014dcdcbf4a06",
+      "chainHash": "c942e7b8244661f4a6bcb74e8a88b4110a839b699975f42e24333213f47747a7",
+      "signature": "8e2b4301c52fbfd71ae930ed1bc736e488452f9ca461d6ab90ba4678f9d01874",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-026-1786050237612",
+      "timestamp": "2026-08-06T21:03:57.613Z",
+      "contentHash": "74ba4c55a33c8eb492ff53e87bf602d78042c70c2c626d539462ae15977fab79",
+      "previousHash": "c942e7b8244661f4a6bcb74e8a88b4110a839b699975f42e24333213f47747a7",
+      "chainHash": "240c000313424e816be229f45c7acddc10fa535f75cf06004bfc0c9c15292d63",
+      "signature": "c2524b89b3b4f782ddd30812d6b50907d3299417a5586c056055b6cba15546d1",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-026-1786050757879",
+      "timestamp": "2026-08-06T21:12:37.880Z",
+      "contentHash": "198703fc39922e1af027c4a40b74cb1c99e72b8de19782b5e9d7897d42e162cd",
+      "previousHash": "240c000313424e816be229f45c7acddc10fa535f75cf06004bfc0c9c15292d63",
+      "chainHash": "60f9f3a75b7c7dc3d05235ec91c812afa535aae909196ac53b1f6a45e46e36fe",
+      "signature": "5f79ee4fb3d6a9a626cdf397347c6de40c40ddb22b46df10d50ae244ff4f2afa",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-009-1786050757887",
+      "timestamp": "2026-08-06T21:12:37.888Z",
+      "contentHash": "37c843f2bbae41b1ef9f411fb4b348e52044ba2785773983d7bb0132510bd7bb",
+      "previousHash": "60f9f3a75b7c7dc3d05235ec91c812afa535aae909196ac53b1f6a45e46e36fe",
+      "chainHash": "732dd963363b38e6eed6ff2da1d5fb6a40e126ae7229d26599530579577328e8",
+      "signature": "1a9b0f5627b924f7226990a963f4caad0054c0f0e0d0c732dbf4bfeda8e11f59",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-026-1786050826692",
+      "timestamp": "2026-08-06T21:13:46.694Z",
+      "contentHash": "13a32b92e31d3f79a6b1ca1724a3b4ba91911b14bf786b6fb9f7f7c421d19e01",
+      "previousHash": "732dd963363b38e6eed6ff2da1d5fb6a40e126ae7229d26599530579577328e8",
+      "chainHash": "4744bd704a9c209354136fa13bab10ce7e1b077a9ac2d703fbfb12dc2f0fe86c",
+      "signature": "e356596292821266e4679b6ab2a945f00b1e8700b678522f232db0a669a19d6b",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-009-1786050826699",
+      "timestamp": "2026-08-06T21:13:46.699Z",
+      "contentHash": "a9c26d3466bddda738b9b9112e93e08aba3367df038593bbdfb98cb3ec989bf3",
+      "previousHash": "4744bd704a9c209354136fa13bab10ce7e1b077a9ac2d703fbfb12dc2f0fe86c",
+      "chainHash": "f0ed2afa11b165e31eb0e0fb19ca4baca47a0fb2c14d5d62eff0d3664fc9ef5f",
+      "signature": "f811722cd7ecc64c7cfb7f5c0d15a56741910356a730ebf88ef791b5d62fec29",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-027-1786052801163",
+      "timestamp": "2026-08-06T21:46:41.164Z",
+      "contentHash": "67cdcc6c5cfd0fc4d03939471a54d6500302e55fc8f62bd2fd47ef97c09072c2",
+      "previousHash": "f0ed2afa11b165e31eb0e0fb19ca4baca47a0fb2c14d5d62eff0d3664fc9ef5f",
+      "chainHash": "d159e8fa5be46b0dbfb59a5187f7a7a33dffb7235eb09d7240d6cb9bb6d0067b",
+      "signature": "0c3dc2e9dde1b33f3f973daf28b4247e642bff8ec8f39a4d6f6b8c6cabf7de38",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-027-1786053057328",
+      "timestamp": "2026-08-06T21:50:57.329Z",
+      "contentHash": "4824911f86878c07e299597201a70fa1ff5e604a4876807d76e89c2ccd68090a",
+      "previousHash": "d159e8fa5be46b0dbfb59a5187f7a7a33dffb7235eb09d7240d6cb9bb6d0067b",
+      "chainHash": "ed5ac8023e0d0ec443e6f5a90a8fd17725f1b71bbae360d89c5e711e4416db0b",
+      "signature": "4c9bb31080317b3ded6c4b8db65a13527ec6900a1cbf82b3f66ed5c7792f8ffb",
+      "agent": "agent",
+      "message": "Transição backlog->analyzing"
+    },
+    {
+      "id": "CP-TC-027-1786053110637",
+      "timestamp": "2026-08-06T21:51:50.638Z",
+      "contentHash": "2565ee5defea50bf8768c6795db19f744a3bb46469da47fa47d99788bee09c87",
+      "previousHash": "ed5ac8023e0d0ec443e6f5a90a8fd17725f1b71bbae360d89c5e711e4416db0b",
+      "chainHash": "428c26ca31c64c55535ace65cbbf7bc6813c6f4df219a9b146eef36052ced937",
+      "signature": "a5f6f655634bf0ab678e15bde7782677fb34cd4606f1c6172d399fa866868d62",
+      "agent": "build",
+      "message": "Transição backlog->analyzing"
+    },
+    {
+      "id": "CP-TC-027-1786053110641",
+      "timestamp": "2026-08-06T21:51:50.641Z",
+      "contentHash": "9836fb47af52fccd5ab73f18c32e83cda866b51da36d5ff95b415c227436bff7",
+      "previousHash": "428c26ca31c64c55535ace65cbbf7bc6813c6f4df219a9b146eef36052ced937",
+      "chainHash": "76c4258c6a8d0da71c5c26fadd727818e52d2289e05e9b4252ac0d9889613b61",
+      "signature": "8e4c03365ba7fd87b8b32fc3cbfc4e93e4eaed95a36d85e978cee15096ebcd1f",
+      "agent": "build",
+      "message": "Transição analyzing->ready"
+    },
+    {
+      "id": "CP-TC-027-1786053110644",
+      "timestamp": "2026-08-06T21:51:50.644Z",
+      "contentHash": "3d51d8cd253e0ddcba4e6abfbd24061db9f166ec9e0b8e784eabbe9aa5520853",
+      "previousHash": "76c4258c6a8d0da71c5c26fadd727818e52d2289e05e9b4252ac0d9889613b61",
+      "chainHash": "866fe2f9d39e5c608b158ca99eeec26b14bb2711761fffb5cf6d6258c30a6fe1",
+      "signature": "1481f25815969533299d490a846303f5be8aa4c79419e93076ccb4b2e59a1f49",
+      "agent": "user",
+      "message": "Transição ready->executing"
+    },
+    {
+      "id": "CP-TC-027-1786057546591",
+      "timestamp": "2026-08-06T23:05:46.591Z",
+      "contentHash": "39a8fbeb5379b0d20fba577eda15f2e4a3e5fbee04999601e3ac5ffa2e9db50d",
+      "previousHash": "866fe2f9d39e5c608b158ca99eeec26b14bb2711761fffb5cf6d6258c30a6fe1",
+      "chainHash": "cfcdfe096fdda0169f803f84eca228ac96509b2f282f7ac6c048d3c231bdc76c",
+      "signature": "39941be082dc7f13c1335f231668130105d943e6711169f2658fc17848a1a860",
+      "agent": "qa-engineer",
+      "message": "Transição executing->testing"
+    },
+    {
+      "id": "CP-TC-027-1786057546596",
+      "timestamp": "2026-08-06T23:05:46.596Z",
+      "contentHash": "26984cc982f5cd7e3143c5310d3f176c573e2c5155baf63adfaea314b80ea2c3",
+      "previousHash": "cfcdfe096fdda0169f803f84eca228ac96509b2f282f7ac6c048d3c231bdc76c",
+      "chainHash": "2e29cd3bdc5fd9148ddc58f3103066adc45cc391fff524e8b13dec61699bf997",
+      "signature": "11ad0311a2b6dd4850daeca8bdde41b3a44c6a0aa5408b663f18f636b5a26826",
+      "agent": "gate",
+      "message": "Transição testing->verified"
+    },
+    {
+      "id": "CP-TC-027-1786057546599",
+      "timestamp": "2026-08-06T23:05:46.599Z",
+      "contentHash": "94dc3a15ecc1004bf586a0a192e934d15f03fb22004f91bd3f99566211c29ab8",
+      "previousHash": "2e29cd3bdc5fd9148ddc58f3103066adc45cc391fff524e8b13dec61699bf997",
+      "chainHash": "52b4f43e2a091f31df9e872e062a4727ffef714a5c5dc6bf4499e65b7ca7de95",
+      "signature": "d4fa1e8e6a00a608b9eb21d994a45187edf136c35a87b60e8c0390e58676290a",
+      "agent": "user",
+      "message": "Transição verified->completed"
+    },
+    {
+      "id": "CP-TC-026-1786057673139",
+      "timestamp": "2026-08-06T23:07:53.140Z",
+      "contentHash": "62660440a722039050b1be553ab9c9cd987508da4b8304ecfad0b14bab56b4df",
+      "previousHash": "52b4f43e2a091f31df9e872e062a4727ffef714a5c5dc6bf4499e65b7ca7de95",
+      "chainHash": "80225d75ce3ba8c3569636b09add556850371e9947675e12dc67303f9c50a75c",
+      "signature": "3a5267ce397d87b12adaadfd24d6413aa2b0f210cd986509e983d80781d80a7e",
+      "agent": "user",
+      "message": "ready->executing"
+    },
+    {
+      "id": "CP-TC-026-1786057900070",
+      "timestamp": "2026-08-06T23:11:40.071Z",
+      "contentHash": "2dee267a12077e99b9f24eae081cb64691b31eb289b8f25255296315893419e7",
+      "previousHash": "80225d75ce3ba8c3569636b09add556850371e9947675e12dc67303f9c50a75c",
+      "chainHash": "66047e72ad5ad31a62ba8a84698aef7f03657324b68e3a0a4cc1ccbaab9a2087",
+      "signature": "dc65098c38c65fe757a4c2eec2da8620f7dabe3cfff642612abfdbba899b0d41",
+      "agent": "qa-engineer",
+      "message": "Task movida para testes por qa-engineer"
+    },
+    {
+      "id": "CP-TC-026-1786057900076",
+      "timestamp": "2026-08-06T23:11:40.076Z",
+      "contentHash": "d83c466f0c69defe552c27b7f958a105be6926eef28da9756bd2debe9368d703",
+      "previousHash": "66047e72ad5ad31a62ba8a84698aef7f03657324b68e3a0a4cc1ccbaab9a2087",
+      "chainHash": "a3ff11cfa00ace3ce63f67142bfb13251f17a661c4ec2318ec4ccbfaefc47961",
+      "signature": "750b85c15e057df5058d891b699c4c9238c06187d3cbe70083d957767fd15c39",
+      "agent": "gate",
+      "message": "Task verificada e aprovada por gate"
+    },
+    {
+      "id": "CP-TC-026-1786057956685",
+      "timestamp": "2026-08-06T23:12:36.686Z",
+      "contentHash": "0f50a16bc687203301747fa95764d2b8cf4b3e1cd46501db0d65192573512ed3",
+      "previousHash": "a3ff11cfa00ace3ce63f67142bfb13251f17a661c4ec2318ec4ccbfaefc47961",
+      "chainHash": "1316f7df408d7bc037dbf1dc0b1715839bc6ee732441cc5841fb19947f7c6eee",
+      "signature": "7a3df79a21671868be029629f468df6b721b4926a5da157b0cd9952da6e4c2de",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-024-1786058167915",
+      "timestamp": "2026-08-06T23:16:07.916Z",
+      "contentHash": "2f9e6b8739c3b74a9d23029e2ef9417704adc918f1d5e54d72ea76e4f5d9e700",
+      "previousHash": "1316f7df408d7bc037dbf1dc0b1715839bc6ee732441cc5841fb19947f7c6eee",
+      "chainHash": "eac0123c44aa14329b66f72ecf0d80c2974fcb84d54ebc029a16b02628ef031c",
+      "signature": "97e0b6f6e08da72aef04131b8d59e85c8cd1bf9dfca8b76d576af8a6affd827e",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-024-1786058167921",
+      "timestamp": "2026-08-06T23:16:07.921Z",
+      "contentHash": "6e5e677bf240359db0ab0d44bd225a39342b700ac630cf787c359c053aa66d7c",
+      "previousHash": "eac0123c44aa14329b66f72ecf0d80c2974fcb84d54ebc029a16b02628ef031c",
+      "chainHash": "aef80140195bfbdd265641d9191b68e512ccd282e7d6f4655436fc49809dd967",
+      "signature": "98764b1900f60269c41515558e2dc75455f361ecb03749b7a512ae13d0ab4a43",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-024-1786058326428",
+      "timestamp": "2026-08-06T23:18:46.429Z",
+      "contentHash": "074af9c4d80db191c738a0432837dd693478f8c940ed2de3c199e29977aa578b",
+      "previousHash": "aef80140195bfbdd265641d9191b68e512ccd282e7d6f4655436fc49809dd967",
+      "chainHash": "b229ff13387c1480d5f7fa2842a08cb9e6fe196f2d889854816e6f80369ef08e",
+      "signature": "aad2a5095bf3092e33eea388a8d86d55627a6f94b78e663e308f62b6ae70a0c6",
+      "agent": "user",
+      "message": "Task iniciada por user"
+    },
+    {
+      "id": "CP-TC-024-1786058770318",
+      "timestamp": "2026-08-06T23:26:10.319Z",
+      "contentHash": "4d0f6c726bce1e33ffbf20d93e2312ec7c196f0a693f3db38aa5e7b37dd28b92",
+      "previousHash": "b229ff13387c1480d5f7fa2842a08cb9e6fe196f2d889854816e6f80369ef08e",
+      "chainHash": "8ca34caef91ba89957e9e89947c1c849e7418c0e7861576e5848ea511fca39ad",
+      "signature": "ef4594bb326c8796929ddf08a4b6575f6c5368f04b1207deae3b46d3c44e1d93",
+      "agent": "qa-engineer",
+      "message": "Task movida para testes por qa-engineer"
+    },
+    {
+      "id": "CP-TC-024-1786058770325",
+      "timestamp": "2026-08-06T23:26:10.325Z",
+      "contentHash": "ebdc62d2217b716181259456dc556d97f632bc8b76244071968f0762ae439db6",
+      "previousHash": "8ca34caef91ba89957e9e89947c1c849e7418c0e7861576e5848ea511fca39ad",
+      "chainHash": "ec1a16f1e0a3d14da812e632cdba4ecfa42bd39c57b32c5f19241fea73c70be3",
+      "signature": "0e8d03e35a484340459d1a4a67f80447a9aae6fbe69914422e3f2301549c51de",
+      "agent": "gate",
+      "message": "Task verificada e aprovada por gate"
+    },
+    {
+      "id": "CP-TC-028-1786059213224",
+      "timestamp": "2026-08-06T23:33:33.225Z",
+      "contentHash": "152140609c894640e5500e4b148e773a9174cb50061d98830781eb63fc5b5047",
+      "previousHash": "ec1a16f1e0a3d14da812e632cdba4ecfa42bd39c57b32c5f19241fea73c70be3",
+      "chainHash": "a9aec970e7e7511fc1c11558cb8dae208e7c5e94c1e6802595ff62a9bafc143d",
+      "signature": "8ec1f9d298d9111c820448c58664fd33fb7194b7c5263dacee6c94f7e49da51d",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-028-1786059232789",
+      "timestamp": "2026-08-06T23:33:52.790Z",
+      "contentHash": "4cf471cd5eacace9520d52b044982b4a46daadbc4a2897e3c861679cff383aef",
+      "previousHash": "a9aec970e7e7511fc1c11558cb8dae208e7c5e94c1e6802595ff62a9bafc143d",
+      "chainHash": "960434b22ddb3da7631f5020ef33bcba3dcc36b1aaa8dc9be93df8d365aaf1a9",
+      "signature": "706eeeb9bd8d48b5b4f842b46ccbb1cb275fc71557c8ba63229fc8b30fa097d0",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-028-1786059232796",
+      "timestamp": "2026-08-06T23:33:52.796Z",
+      "contentHash": "7150ca564068442c6e323b20bba4059071f9c738d0418ef7028284741d35ff47",
+      "previousHash": "960434b22ddb3da7631f5020ef33bcba3dcc36b1aaa8dc9be93df8d365aaf1a9",
+      "chainHash": "53f5997d76eaf658cf519f9f69bf66af9de954b912ab81fed13a4633c94001b1",
+      "signature": "c6addd75add3776dd0899541659313e1fd0c63999df92d5cf86674143d1036ef",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-028-1786059247222",
+      "timestamp": "2026-08-06T23:34:07.223Z",
+      "contentHash": "0ee6625f13bdc1cae1f0ef9703ba7e11860f96206d582757be48bc45cddd3adf",
+      "previousHash": "53f5997d76eaf658cf519f9f69bf66af9de954b912ab81fed13a4633c94001b1",
+      "chainHash": "4c9627d31c30e442713804b41e2f555ed368ed6a9e9aa0744640a7e61aa8bbba",
+      "signature": "e897a5896d102064a125b71695f62da2c3fae9933e899e288266443f54428a89",
+      "agent": "user",
+      "message": "Task iniciada por user"
+    },
+    {
+      "id": "CP-TC-028-1786059954456",
+      "timestamp": "2026-08-06T23:45:54.458Z",
+      "contentHash": "69d49d5e9af7d9a5cd653346bc19b599e22b27a0279b7a25017f273e86db63aa",
+      "previousHash": "4c9627d31c30e442713804b41e2f555ed368ed6a9e9aa0744640a7e61aa8bbba",
+      "chainHash": "89f6d548da60dfa8e59ef93c2269281fcae933525b510cea5426d7ab712fa07c",
+      "signature": "9980056e7c5fb4880a6cf66310838f13d430b092116499ab5d444ca5ab743caa",
+      "agent": "qa-engineer",
+      "message": "Task movida para testes por qa-engineer"
+    },
+    {
+      "id": "CP-TC-028-1786059954464",
+      "timestamp": "2026-08-06T23:45:54.464Z",
+      "contentHash": "2032fa85ca0464ec5d2e54d479b7a8eaee5e23032ed529db15d3a1782ca1bde9",
+      "previousHash": "89f6d548da60dfa8e59ef93c2269281fcae933525b510cea5426d7ab712fa07c",
+      "chainHash": "66486ffa9363fd79bbccf72a8526bd27620918c490d29b050bd03e555877f976",
+      "signature": "32a0a2314afcfb3eed978f1722866250d558237a0b5ac72164caad33daa2e7d8",
+      "agent": "gate",
+      "message": "Task verificada e aprovada por gate"
+    },
+    {
+      "id": "CP-TC-028-1786060214232",
+      "timestamp": "2026-08-06T23:50:14.233Z",
+      "contentHash": "1b19982854793a92543c87254decc38fb11eb5b976ff67e99a438ec553175f28",
+      "previousHash": "66486ffa9363fd79bbccf72a8526bd27620918c490d29b050bd03e555877f976",
+      "chainHash": "c141f2bff96cfa86a49f2f3109892550bfad6a4acdca26ac332be679a0db0ad2",
+      "signature": "03837869093ebfadd4c6d8db468175fdca0bf52ee76ec1495d277d189829a04f",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-029-1786060335150",
+      "timestamp": "2026-08-06T23:52:15.151Z",
+      "contentHash": "b37b255302b66c56154909fe254c8d2f5a6d2a08bde793825aac06264bef7052",
+      "previousHash": "c141f2bff96cfa86a49f2f3109892550bfad6a4acdca26ac332be679a0db0ad2",
+      "chainHash": "dae1f5f6d5b19af896794f27e051ec45b40251359df422c9bec9ce349be7d386",
+      "signature": "81c87e693c2a21702d2f05e8a3a71bd27d03f6f1b5a0f8e6bad0c23de62f552d",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-029-1786060717865",
+      "timestamp": "2026-08-06T23:58:37.866Z",
+      "contentHash": "f0b543ace2d4b440576ce06d8b6642d07f0214dddd15ac6fe8554ae8300d4041",
+      "previousHash": "dae1f5f6d5b19af896794f27e051ec45b40251359df422c9bec9ce349be7d386",
+      "chainHash": "0bcb4e2ddabce2bcfb9fa3d19d09fddd621e63c5314ecad47a6d6e85675a7462",
+      "signature": "0ac8038859f41248118795d1bf23783cbe7aca73becb5c0d6274404123c6a7d9",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-029-1786060717871",
+      "timestamp": "2026-08-06T23:58:37.872Z",
+      "contentHash": "042ccdd0c7daffd039b66e812abaacd1009ee530870ee1a558558c31213982ef",
+      "previousHash": "0bcb4e2ddabce2bcfb9fa3d19d09fddd621e63c5314ecad47a6d6e85675a7462",
+      "chainHash": "78a3a915b5cc62db732396fbe68722fafa2ef8e07151da19293c41266c593f53",
+      "signature": "9d071fa143e8556c117248745d28b3da64fcd9dc331c9a5e69db511e9147c364",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-029-1786060809838",
+      "timestamp": "2026-08-07T00:00:09.839Z",
+      "contentHash": "aa5abb223f22d6ba7e4b9474fa39d70f89946e16e5ce92acbf06f0b22285b234",
+      "previousHash": "78a3a915b5cc62db732396fbe68722fafa2ef8e07151da19293c41266c593f53",
+      "chainHash": "5456ff9f1b33e6cc90c4fab105dbca21076d1796635c59b45dd7fe764d7ef785",
+      "signature": "cd6bd8edc7eb50df91b49735514b5c0846e3e54ec3b56befd02ee6d23bcc80e1",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-029-1786061631082",
+      "timestamp": "2026-08-07T00:13:51.083Z",
+      "contentHash": "993952aa0bb8e203f7f55808797a47caf980a9946abe2a6f071fc67df7674e63",
+      "previousHash": "5456ff9f1b33e6cc90c4fab105dbca21076d1796635c59b45dd7fe764d7ef785",
+      "chainHash": "67a426153b0653349cccf8c50ff321d5f0f8d098bc56cabf7234e37ea3144b09",
+      "signature": "8d8aee6be124fc5c46c8bc1a94e5ae8b2675032b33c38228780fe15543147a2e",
+      "agent": "qa-engineer",
+      "message": "Task movida para testes por qa-engineer"
+    },
+    {
+      "id": "CP-TC-029-1786061631092",
+      "timestamp": "2026-08-07T00:13:51.092Z",
+      "contentHash": "3e057313eca0b6ee4d7c6f359583650b96d82a863f25636eeed603e68cb2ae84",
+      "previousHash": "67a426153b0653349cccf8c50ff321d5f0f8d098bc56cabf7234e37ea3144b09",
+      "chainHash": "2b1ae39fecd9aac2e2db23321b405cc0d8aa5aa908d95aca702978b5de1754dc",
+      "signature": "4c635706e9fbb4abaf44745ecabba31d7de0d7b5893ec5c53fe4bd986216d3da",
+      "agent": "gate",
+      "message": "Task verificada e aprovada por gate"
+    },
+    {
+      "id": "CP-TC-029-1786061962137",
+      "timestamp": "2026-08-07T00:19:22.138Z",
+      "contentHash": "158cd2ef7bf49ba8e276a7a86839158a1e26d3b9d141321fc1b54746a19db45b",
+      "previousHash": "2b1ae39fecd9aac2e2db23321b405cc0d8aa5aa908d95aca702978b5de1754dc",
+      "chainHash": "1c83f92af4ecb6c4ecc26e3f001ac1d63d7ab13bbed3dbe3d04da8749a77d7db",
+      "signature": "2544b5988e4f283ab9fbb311de764d9028887dd558ac29042378faf2c157de47",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-024-1786061962145",
+      "timestamp": "2026-08-07T00:19:22.145Z",
+      "contentHash": "2648bb87ec3950079fb569b9bd2d9dee8aead597eb67db7cf3051ea14eb8b50d",
+      "previousHash": "1c83f92af4ecb6c4ecc26e3f001ac1d63d7ab13bbed3dbe3d04da8749a77d7db",
+      "chainHash": "3bb71ebdcb1b27cc7c0cd472fd1ccba73109bee46c139c5f895462a3fa4896b5",
+      "signature": "bc155b86ccd6040857e77e3ade9e2fa8f163e43bdbf6788d435e50187ca228dd",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-030-1786062136245",
+      "timestamp": "2026-08-07T00:22:16.246Z",
+      "contentHash": "3fa19f375dcdce9ed25d87686d4d9051220d2daa855d71e946df4753a43fe23b",
+      "previousHash": "3bb71ebdcb1b27cc7c0cd472fd1ccba73109bee46c139c5f895462a3fa4896b5",
+      "chainHash": "aa7761f488b737ba051bea753222886b1e3db988a80ab94d8af3f4c9f2bafca6",
+      "signature": "4501bd811681afb542c63461181c98dbfb5fb8437d3fc282d6b9533551f10a3c",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-030-1786063243898",
+      "timestamp": "2026-08-07T00:40:43.900Z",
+      "contentHash": "cc10c55877e1fdc96ec7afd8c0601a7d66a7adb996b7aedbf37871266771c861",
+      "previousHash": "aa7761f488b737ba051bea753222886b1e3db988a80ab94d8af3f4c9f2bafca6",
+      "chainHash": "8c466bfe7f853e993cbd6fb1832c5b84b4d42830bcd0cc128078dc0e2bf8bc05",
+      "signature": "8201059c77a4761925d98e94e9586f6cb0c9b6543f4cff43938c3fa16f40dc00",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-030-1786063333030",
+      "timestamp": "2026-08-07T00:42:13.031Z",
+      "contentHash": "cceb77015ef59b99501ef20b360855cf55a1bf4188a3630344510179b3efb77a",
+      "previousHash": "8c466bfe7f853e993cbd6fb1832c5b84b4d42830bcd0cc128078dc0e2bf8bc05",
+      "chainHash": "5a70076e251a354cabb8a1e37e051efce64c8505b87077ff57734820b644825e",
+      "signature": "16597a9397524e0fdece82b9d6d56cff8ca7261d77d6d0085bda72e6eb2adc4a",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-030-1786063386968",
+      "timestamp": "2026-08-07T00:43:06.969Z",
+      "contentHash": "9a1f1d993c1cbffac0d67a4babd6c016f8089eb5cb15ee7080472aafca5dbc3e",
+      "previousHash": "5a70076e251a354cabb8a1e37e051efce64c8505b87077ff57734820b644825e",
+      "chainHash": "653e354a1d4c3fc379bd241600152da4f39ef30eaefa458ad05d158e88bb5824",
+      "signature": "e2c6f6da7fc3d5e5cd0145f0e81c5d7b9e35b37a7392abd9b5c7eba546acf7ae",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-030-1786063608874",
+      "timestamp": "2026-08-07T00:46:48.875Z",
+      "contentHash": "a326f597e5b8987b7125f2581b8ac2d4f06ca9e614ed7fe869586791a96fe52e",
+      "previousHash": "653e354a1d4c3fc379bd241600152da4f39ef30eaefa458ad05d158e88bb5824",
+      "chainHash": "974c993f098f80210d1081b10c0cbff91ad64b4972d7a1f6a1c255224e1ab62e",
+      "signature": "0b35985e17386152f67f0af04fb313419804b3c515d26364a91a21e53e6fa0cb",
+      "agent": "qa-engineer",
+      "message": "Build e lint OK, aguardando validação funcional"
+    },
+    {
+      "id": "CP-TC-030-1786063624084",
+      "timestamp": "2026-08-07T00:47:04.085Z",
+      "contentHash": "7bf5204c8389a93ae95e833bd3decf8ff8eb959b6157b7e82c53384beac51e24",
+      "previousHash": "974c993f098f80210d1081b10c0cbff91ad64b4972d7a1f6a1c255224e1ab62e",
+      "chainHash": "3e2f0d854f3b156b15807c41e8c8ff1d8a23fb861af1155731aa0b4ea280dd7c",
+      "signature": "3f061d26622859b5726c6871c0e592969c86fd8a612991639dcb268165a447f8",
+      "agent": "gate",
+      "message": "Build + lint 0 erros, funcionalidade realocada sem perda"
+    },
+    {
+      "id": "CP-TC-030-1786063710138",
+      "timestamp": "2026-08-07T00:48:30.139Z",
+      "contentHash": "e58f83e73218ec4defba05f7087281f40be03445b8c70e29bb0c360e6bad775f",
+      "previousHash": "3e2f0d854f3b156b15807c41e8c8ff1d8a23fb861af1155731aa0b4ea280dd7c",
+      "chainHash": "117289af23c0a7d367ad45a171408315d6e267d25d95d8343ed021d682e470fc",
+      "signature": "94f240fffba3edc8adfb845fd83184b8ff1c9cbc6e492549975a004c1a7af630",
+      "agent": "user",
+      "message": "Task concluída pelo usuário"
+    },
+    {
+      "id": "CP-TC-031-1786063852608",
+      "timestamp": "2026-08-07T00:50:52.610Z",
+      "contentHash": "b263f79641cc79c4df1a79fcb20f98f3f0011bf27862d11449f132a79361f41f",
+      "previousHash": "117289af23c0a7d367ad45a171408315d6e267d25d95d8343ed021d682e470fc",
+      "chainHash": "7b49345ba5826c6fb458e6e657e0b60083fd978bb965e115c5ca2e3c8d8b15c0",
+      "signature": "dec170ab37d43ff11245699c84e14b343fae5bcf3a572aac49a5d4123d238a60",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-031-1786063960380",
+      "timestamp": "2026-08-07T00:52:40.381Z",
+      "contentHash": "15b6d1d2e2b2a767f87f40e8c1bc61d9e569295762d22d11e421b46e451a7454",
+      "previousHash": "7b49345ba5826c6fb458e6e657e0b60083fd978bb965e115c5ca2e3c8d8b15c0",
+      "chainHash": "27b29407e0c2ccc220dec2f62d4e6c507702932f9429c05e73a1a181e5e8eaa1",
+      "signature": "9ad11d335e488abb073626943cdcd5ec63685e964223e54c0e744a173e842e73",
+      "agent": "build",
+      "message": "Análise iniciada"
+    },
+    {
+      "id": "CP-TC-031-1786064227518",
+      "timestamp": "2026-08-07T00:57:07.519Z",
+      "contentHash": "106b67e67d227c47845285047c702e16b2c705876989ec3c493de9ca7796c001",
+      "previousHash": "27b29407e0c2ccc220dec2f62d4e6c507702932f9429c05e73a1a181e5e8eaa1",
+      "chainHash": "2e59ea10336809ae0a1871e80d780943ac2ed5d12200025626f7eef561ef77d5",
+      "signature": "c3651dda7304184ef435ec76ca8cc0df38beeca3c9ea72ecdd6dac27b50cd266",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-031-1786064263718",
+      "timestamp": "2026-08-07T00:57:43.719Z",
+      "contentHash": "5200b5adf96399eb8fb7c5016a08dfa772153961a3d3833152e07a840bbcf44b",
+      "previousHash": "2e59ea10336809ae0a1871e80d780943ac2ed5d12200025626f7eef561ef77d5",
+      "chainHash": "fd6df9027d27b15af5d10a159fd281b2e7effdd3abecb748ecbbf4eb02fd7839",
+      "signature": "704262b86beb4b1e698e0204b63ea0d098f431fcbd6491317832229a0b7c8b7c",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-031-1786064554469",
+      "timestamp": "2026-08-07T01:02:34.470Z",
+      "contentHash": "9a9f0eda0842f70f1f179f2d1810609d078d3c263091053652852d59d588830d",
+      "previousHash": "fd6df9027d27b15af5d10a159fd281b2e7effdd3abecb748ecbbf4eb02fd7839",
+      "chainHash": "7ec4d72033ef21a405a7ce696c96fb9eb627a19f4ea7f11afbfad56c677fad87",
+      "signature": "8dad7a4d23f6c9b9607eaf88ac783fdcae7c5e42cd04f5d80ff7cdac41282410",
+      "agent": "qa-engineer",
+      "message": "Admin.tsx reescrito no design system, build OK, aguardando validação"
+    },
+    {
+      "id": "CP-TC-031-1786064554475",
+      "timestamp": "2026-08-07T01:02:34.475Z",
+      "contentHash": "59124d804fb884f0080790d40bf8b347dab04d6e4d84858d945b9da6e1aedc7c",
+      "previousHash": "7ec4d72033ef21a405a7ce696c96fb9eb627a19f4ea7f11afbfad56c677fad87",
+      "chainHash": "7d9fabeb1b23facdee4cee0f6f06bfb6100366972fad1857c5c097f1a6acc11b",
+      "signature": "f981a5ecea67fab1a242f9fea3d4ff7e58b540315c733cba46cee991a347e7d3",
+      "agent": "gate",
+      "message": "Build + lint 0 erros, zero classes Bootstrap restantes"
+    },
+    {
+      "id": "CP-TC-032-1786064747723",
+      "timestamp": "2026-08-07T01:05:47.725Z",
+      "contentHash": "00856a508751ff11f637873e0761a2f3062efeaf77668da1dca41e0db3a17fde",
+      "previousHash": "7d9fabeb1b23facdee4cee0f6f06bfb6100366972fad1857c5c097f1a6acc11b",
+      "chainHash": "44821cf19fd9e594ab556c6a787f05621f764697d9755c76989e3df32a4e6756",
+      "signature": "7eefd4666319749e80427475cce7b5f64c66ceb24d193f5ca0a860c00ae2108b",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-032-1786065026395",
+      "timestamp": "2026-08-07T01:10:26.396Z",
+      "contentHash": "23af692b3dd70e6e5d8d4d454badf1230773ea4fd41ea50fd01fbd5bd06f18aa",
+      "previousHash": "44821cf19fd9e594ab556c6a787f05621f764697d9755c76989e3df32a4e6756",
+      "chainHash": "88ba1b063523f8e3e5ad25fa57204ea3b20b68df04988738d58db55b6de9b74a",
+      "signature": "00f78219d063b553239c01d34af41a895989473d995a8d0face2f518bb46bb87",
+      "agent": "build",
+      "message": "Análise concluída pelos subagentes"
+    },
+    {
+      "id": "CP-TC-032-1786065026401",
+      "timestamp": "2026-08-07T01:10:26.401Z",
+      "contentHash": "fcfe91898bdbeb6a13e993b1cf8599c7ceebf9cff48a4b15ef39bb3ce1c4547d",
+      "previousHash": "88ba1b063523f8e3e5ad25fa57204ea3b20b68df04988738d58db55b6de9b74a",
+      "chainHash": "7988f10ae3356a6610ed9fe5444bf5db10e9584041bbf923121cd56b39f52ea8",
+      "signature": "a747b78f33172fcbd1d1a50889b2ae577d69932e18e0a3dc06805cc7cbc79e00",
+      "agent": "build",
+      "message": "Aguardando aprovação"
+    },
+    {
+      "id": "CP-TC-032-1786065026405",
+      "timestamp": "2026-08-07T01:10:26.405Z",
+      "contentHash": "f7e7959e32e9fed65e225dc5b8cd849a9930dea2a4d7c44cefb9d7e2876b75ea",
+      "previousHash": "7988f10ae3356a6610ed9fe5444bf5db10e9584041bbf923121cd56b39f52ea8",
+      "chainHash": "df2c9a9ed888922081f5f3bb70d834dbbbcce8741afb1ad209929c899ffe2309",
+      "signature": "6b0345495636e4b534febbc0e0260f9b75bd7d6bb4be54df810a027eec23a374",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-032-1786065516265",
+      "timestamp": "2026-08-07T01:18:36.266Z",
+      "contentHash": "300132b73c9a4ab2d1a54cf0c47ede1d080338d1aadf7719627ac52bf070a2c0",
+      "previousHash": "df2c9a9ed888922081f5f3bb70d834dbbbcce8741afb1ad209929c899ffe2309",
+      "chainHash": "d26b5778ab18b4fc5f863a46e93b443ce9ab60443e5be82e0837fdae4adf6a8b",
+      "signature": "b8d21535d9d1d1e26801564cba654abc4758abc4542e0f4edc82f715154a6bb5",
+      "agent": "qa-engineer",
+      "message": "Ajustes de design aprovados (A1-A3/M1-M4/B4-B7/D10) aplicados, aguardando validação"
+    },
+    {
+      "id": "CP-TC-032-1786065516272",
+      "timestamp": "2026-08-07T01:18:36.272Z",
+      "contentHash": "a1a877ddff59e0021e29e232f45d4f75340737ef9320d5d047edf33de720fd94",
+      "previousHash": "d26b5778ab18b4fc5f863a46e93b443ce9ab60443e5be82e0837fdae4adf6a8b",
+      "chainHash": "54af4dfeb17acedd705572b7c3ba720bb6497c126465ac446494a486af077b6f",
+      "signature": "a50fd5737d7a93a92a33cc6acffc0557742638efa25519b5aeb38e73f50bb0cf",
+      "agent": "gate",
+      "message": "Build + lint 0 erros, apenas 3 warnings pre-existentes (Comandas/Etiquetas/FichaTecnica)"
+    },
+    {
+      "id": "CP-TC-031-1786065805531",
+      "timestamp": "2026-08-07T01:23:25.532Z",
+      "contentHash": "f86ccc09fcde9903d68e89823d78665525d3427733deef0b632151cd4e02aa0c",
+      "previousHash": "54af4dfeb17acedd705572b7c3ba720bb6497c126465ac446494a486af077b6f",
+      "chainHash": "f848bd80997567afd3d3109d95479656180f32f3cfcf9df2cfd6c36ce3d4fc50",
+      "signature": "ac0e521132a26378d5215077dd7227a7a1e3513cf4c54518e53a3d538cce2e65",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-032-1786065805538",
+      "timestamp": "2026-08-07T01:23:25.538Z",
+      "contentHash": "ffc12e6713fb3f5806b76b5854638b9815e6bb6ab0cac77223e347b0cb6eb0e9",
+      "previousHash": "f848bd80997567afd3d3109d95479656180f32f3cfcf9df2cfd6c36ce3d4fc50",
+      "chainHash": "a7395d02af8f052ebb399b9e5e88ff078581093bcf1d2acaaeada87ce92b4296",
+      "signature": "4fcc8aa71aa24007ccf53b1bfa6661ae3a6e20f77f07897b62d1f2f0f03fb798",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-033-1786066413030",
+      "timestamp": "2026-08-07T01:33:33.032Z",
+      "contentHash": "5aa89ec0be2aede133be637f5475f9d4d117160e3f6eb8ff3c396d9d48c8147b",
+      "previousHash": "a7395d02af8f052ebb399b9e5e88ff078581093bcf1d2acaaeada87ce92b4296",
+      "chainHash": "f15d02c8d14cccd4dbbb6b6cef1c3f3f2cc8576618bead91e963009c82e5d1b3",
+      "signature": "b25b813819d65a1e4d74ad5e78f8a5231513e1a20405b74bb46e50aa5242d3a4",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-034-1786066413037",
+      "timestamp": "2026-08-07T01:33:33.037Z",
+      "contentHash": "4794c0a64a56d37316f0e67098a3d99506b51547e14ef0a82403698f62cfcebc",
+      "previousHash": "f15d02c8d14cccd4dbbb6b6cef1c3f3f2cc8576618bead91e963009c82e5d1b3",
+      "chainHash": "383f69670dd411c6a330e7f7744a4d2f3a6dc26002b49d7817a48192cf16eeff",
+      "signature": "2d84fc1988f9bd82221b23a0f123a32b96101911dcd51fa3d404ac32d38243ca",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-035-1786066413043",
+      "timestamp": "2026-08-07T01:33:33.043Z",
+      "contentHash": "e4e99923c5d19507d51b4c10c39f6f5836b7317da30a13c33919ef6e8d502a88",
+      "previousHash": "383f69670dd411c6a330e7f7744a4d2f3a6dc26002b49d7817a48192cf16eeff",
+      "chainHash": "49afa8d2055443823dae7d1c3eb2e9508685843ba11882e3ee0415e16fd47929",
+      "signature": "e1be7746a7bbd55a495f9896162cf6e05dc5c276c997f808ea5f2d0fa792a2f3",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-036-1786066413049",
+      "timestamp": "2026-08-07T01:33:33.049Z",
+      "contentHash": "7896177bb9ba217542eda758a02a96752c57244509b72cf862f0ca3040cbba78",
+      "previousHash": "49afa8d2055443823dae7d1c3eb2e9508685843ba11882e3ee0415e16fd47929",
+      "chainHash": "da6e2a79b8226b83475bb4b09530a2af432f62ca9aaa1c95238c0d7d9d8d5e98",
+      "signature": "c3c9b4d31e2fa9bfdf7867f077f04fc4a77ec4babdc37e4321257155154e52e3",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-037-1786066413054",
+      "timestamp": "2026-08-07T01:33:33.055Z",
+      "contentHash": "2fa735b2f2a28636266c4e559aed846006efdef115054a9dbeb8e3e12876271d",
+      "previousHash": "da6e2a79b8226b83475bb4b09530a2af432f62ca9aaa1c95238c0d7d9d8d5e98",
+      "chainHash": "d951021c632bbf6e84fe8d9fdf1f29ce9b1d1dc9cbbed628ac40fa9a44477d57",
+      "signature": "c2f9af9f6e2d751ced00b262554255cf742aa7384524a634671fe14c88d2635f",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-038-1786066413060",
+      "timestamp": "2026-08-07T01:33:33.061Z",
+      "contentHash": "65e6a6fe6eb6920ae59189b69a116b66f414309df9afca02794497442612466f",
+      "previousHash": "d951021c632bbf6e84fe8d9fdf1f29ce9b1d1dc9cbbed628ac40fa9a44477d57",
+      "chainHash": "381eb3bb21ff2a85da3320ce04ef0301aadf122724b4b1ef5bd8379fb0eeb8e1",
+      "signature": "0a23352d05d959eda923da7387c08bb8fb9d36b2c0879aa1c8f6446e010571a1",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-039-1786066413065",
+      "timestamp": "2026-08-07T01:33:33.065Z",
+      "contentHash": "03431ffc57277b980246e0ad19d487adcb80221476c459f21ce58a9f8671d682",
+      "previousHash": "381eb3bb21ff2a85da3320ce04ef0301aadf122724b4b1ef5bd8379fb0eeb8e1",
+      "chainHash": "4f7cf69faffa7be44323e2da526a19d1b26ed84a6b62b7aa10ad280c5a85b223",
+      "signature": "b1adc69e891f8693968a314ab505b0b79b089d42fe2e04101171804ea773bd8b",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-040-1786066413070",
+      "timestamp": "2026-08-07T01:33:33.070Z",
+      "contentHash": "7db7dfe715b37184cd6af3ed3b6b77d09f6ff4149e815c5401d2e251975414d0",
+      "previousHash": "4f7cf69faffa7be44323e2da526a19d1b26ed84a6b62b7aa10ad280c5a85b223",
+      "chainHash": "c7ae39310f39035922af5417a1f65bb86ca34bf6524288b538eee43e20edf110",
+      "signature": "c9b70edab2415959ca8a8cd023f87c430106b9aecd84e8d465b3da7fada66f72",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-041-1786066413076",
+      "timestamp": "2026-08-07T01:33:33.076Z",
+      "contentHash": "d32d4304858f67e440543a4ba07d647fad3544491117fe792c221053446a4e86",
+      "previousHash": "c7ae39310f39035922af5417a1f65bb86ca34bf6524288b538eee43e20edf110",
+      "chainHash": "b166f71607a133605f3e6b89681ab26ff8f13798ac7f87fb7ea73adf5a3b9d3b",
+      "signature": "a7adc82097c6b01d9877639e3915c69ac8a3fc64bf854cb2361d1ce6038c72d1",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-042-1786066413081",
+      "timestamp": "2026-08-07T01:33:33.081Z",
+      "contentHash": "d903d15ba4cf1e01f53a700b7483f474fdf23dce92d7c9f32e2cb3a8f60c8f22",
+      "previousHash": "b166f71607a133605f3e6b89681ab26ff8f13798ac7f87fb7ea73adf5a3b9d3b",
+      "chainHash": "a059222149fddd920848eccc1e0da20ba06b246ad6c98fe409ed43b506f545f8",
+      "signature": "b4186302b157132ed315d3cfbcf4ca779c49c8ae95692a90dbad0c7bf31da270",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-043-1786066413086",
+      "timestamp": "2026-08-07T01:33:33.086Z",
+      "contentHash": "38dbd2c0a9805415a85c5534f24b7107fc0dded0671688eadd24b51574d5236d",
+      "previousHash": "a059222149fddd920848eccc1e0da20ba06b246ad6c98fe409ed43b506f545f8",
+      "chainHash": "44d0eb1d35a9b1b80a0fde5fd41bd3e2648e516d3251b5dc68b98809bd4607fa",
+      "signature": "dc144d280fce5d339139c2c62a6e6a5eda8025647154c6f1c0f1033fc642c010",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-044-1786066413093",
+      "timestamp": "2026-08-07T01:33:33.093Z",
+      "contentHash": "165b93423a7832f2749f652c61a3ba0f35c97c07bb4291e41d7312e6660cad19",
+      "previousHash": "44d0eb1d35a9b1b80a0fde5fd41bd3e2648e516d3251b5dc68b98809bd4607fa",
+      "chainHash": "fa3041e36799f7a2bfb287b7ad4d65eb42e74d0a5fd826a5ec232895cc8977f7",
+      "signature": "1efb0ce05bcb43425bb0ae0186e3bc3c4bac2b5b903b73f6372a2e3bbd15fa75",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-033-1786195520762",
+      "timestamp": "2026-08-08T13:25:20.763Z",
+      "contentHash": "ed2e033b914df94fbc8e8f1d5512a3a4f923497bcc4a996901c8e1111d04a247",
+      "previousHash": "fa3041e36799f7a2bfb287b7ad4d65eb42e74d0a5fd826a5ec232895cc8977f7",
+      "chainHash": "dc149d4150735cd2f3530eff88e2051734afdd4a34af6cfd87f27b175b610fdd",
+      "signature": "d78c50bffc176bd8ff9de8ee81bb001e9ae7d7cc9e845aa4c9695aaa6fa3e5ff",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-033-1786195635358",
+      "timestamp": "2026-08-08T13:27:15.359Z",
+      "contentHash": "62d7f52822185cffd04a0c455f6a05dfc0fae425b8887c340bc99b9278e73a8e",
+      "previousHash": "dc149d4150735cd2f3530eff88e2051734afdd4a34af6cfd87f27b175b610fdd",
+      "chainHash": "a9cbbbc6dddee1bb5255ec1ed14d7a9f93fcba4cd52b2148337e6b5b13ee3259",
+      "signature": "282ace391d01f86502f19d039149e92b9a349be6cfe89d9cef5aa70aeda25a06",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-033-1786195882603",
+      "timestamp": "2026-08-08T13:31:22.604Z",
+      "contentHash": "a484e68a89832833f8f61685860c3b40bfb3a4f623d055744060479b3564ec17",
+      "previousHash": "a9cbbbc6dddee1bb5255ec1ed14d7a9f93fcba4cd52b2148337e6b5b13ee3259",
+      "chainHash": "0a42e62e1914c80097f7ee826d1a224f1aaabe22e92bc80457d90fe4f3e695a2",
+      "signature": "907f1e1402357e0d8e5b2abaa69402cb031ac981880c77cb95f7787f6b652724",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-033-1786196422241",
+      "timestamp": "2026-08-08T13:40:22.243Z",
+      "contentHash": "344cbeb2ecdd83a23c487564cb1e8a5cadb2288b723ab7254b1b6feaabdbaced",
+      "previousHash": "0a42e62e1914c80097f7ee826d1a224f1aaabe22e92bc80457d90fe4f3e695a2",
+      "chainHash": "ef37e841d3efb5bc5aa15594787111dfe45c0aea50cd1aa7a515fd09cf392f7d",
+      "signature": "1b70928a0a83fe6dab23f3747754c5a44f4a165676578ece4a81e913813be798",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-033-1786196422263",
+      "timestamp": "2026-08-08T13:40:22.263Z",
+      "contentHash": "0f6f60e644c513adccbe489c36d15a4793c89f5adacb62bcf2f6bd36b7529ecd",
+      "previousHash": "ef37e841d3efb5bc5aa15594787111dfe45c0aea50cd1aa7a515fd09cf392f7d",
+      "chainHash": "96bd73f04907b40feab076b34495db428835647ccb23b280976729c701defccb",
+      "signature": "c70877e814994ab2ed8e250ebbd1362ceeb5c5d92df1971acf2a3e6eddb871f5",
+      "agent": "gate",
+      "message": "Smoke test 23/23 PASS + migração incremental PASS, ruff apenas pré-existentes"
+    },
+    {
+      "id": "CP-TC-033-1786196638047",
+      "timestamp": "2026-08-08T13:43:58.049Z",
+      "contentHash": "54ac8e7116f894998a99589386ad44ae02e77c86348fd52bc56ac4f988a6feea",
+      "previousHash": "96bd73f04907b40feab076b34495db428835647ccb23b280976729c701defccb",
+      "chainHash": "726fcc7a847c32668ed15737d772b584a0a744388d26c8e910249ba5440bd9de",
+      "signature": "bb744e5a66ce1fad9057c285a2bbec4a4b53a0bdc48246722a32a927b278f0a9",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-034-1786196716105",
+      "timestamp": "2026-08-08T13:45:16.106Z",
+      "contentHash": "99ab61e69b78f76fe2076a40eae4e1bdebb6ac2c51c40db80cbba29cac16dc3f",
+      "previousHash": "726fcc7a847c32668ed15737d772b584a0a744388d26c8e910249ba5440bd9de",
+      "chainHash": "b8ccc6dd0baa0bc16f2e7593de5d31018c20dda2228a615935f5a143c68739b4",
+      "signature": "d3631fac40060f0dca071e504b77980d1cddb7cdf62df35e70703d033144b09c",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-034-1786196782587",
+      "timestamp": "2026-08-08T13:46:22.589Z",
+      "contentHash": "08b9780de73e8d8879b4c07283654e0a77e4e1da8d7421741ca85fd852f2b592",
+      "previousHash": "b8ccc6dd0baa0bc16f2e7593de5d31018c20dda2228a615935f5a143c68739b4",
+      "chainHash": "d30af2db93f438b934a8f300b3e7307b521c8e2506a3ccbf9f03ac7830dd04eb",
+      "signature": "e9ab463620677d482cbece0b54f48d24dcf57e5567fabdb3ef4ee6929aeda0dc",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-034-1786196818808",
+      "timestamp": "2026-08-08T13:46:58.809Z",
+      "contentHash": "d3031c274da6ddb7147fe9b9ba26f19b5c79d3c936c08d436d6f305725ab55e7",
+      "previousHash": "d30af2db93f438b934a8f300b3e7307b521c8e2506a3ccbf9f03ac7830dd04eb",
+      "chainHash": "2530b47b4d4c0a1677b42d26fb26916c88a99129e761099ece0892a41443f657",
+      "signature": "6d8b02c941da9209ac20815956a7ef3211b1cd24c81b9f6a37ba46e8e24a4819",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-034-1786196990346",
+      "timestamp": "2026-08-08T13:49:50.348Z",
+      "contentHash": "1e087efd68221ed770fd1443c8603fcf9c906b6e08110b26ff62748e9a531eae",
+      "previousHash": "2530b47b4d4c0a1677b42d26fb26916c88a99129e761099ece0892a41443f657",
+      "chainHash": "2b554f2f6a769b6c34225e7c70f82e4fd4c1e15b0830af86bc78cb8befd9d6d5",
+      "signature": "33b711bf1ae2650e2f88919ee8e9457da7c20208651c51c7a554a0ed1d9eb915",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-034-1786196990357",
+      "timestamp": "2026-08-08T13:49:50.357Z",
+      "contentHash": "86a6d1e8feef84e4961382283a92404f35b6a52dae0dc082954c5b504e1bb103",
+      "previousHash": "2b554f2f6a769b6c34225e7c70f82e4fd4c1e15b0830af86bc78cb8befd9d6d5",
+      "chainHash": "03990108b66d66aa87679d0edeab5a3eb343bc7c84993f0dec3027a0f005acc1",
+      "signature": "7d461fbf5ae2cd660d2c55da0ca5ca511ead0e9ad7160c3e1839bd37d23294c4",
+      "agent": "gate",
+      "message": "Smoke test 29/29 PASS (worker) + migração incremental PASS, ruff apenas pré-existentes"
+    },
+    {
+      "id": "CP-TC-034-1786197335476",
+      "timestamp": "2026-08-08T13:55:35.477Z",
+      "contentHash": "04d53a6de7021cb64d1d41b1d64e998facb5a4720267fe2273f7de71d786ef3b",
+      "previousHash": "03990108b66d66aa87679d0edeab5a3eb343bc7c84993f0dec3027a0f005acc1",
+      "chainHash": "f3db7630d3d86ebab7d42d913bbc49f17209991cfd6589f2cf658a8d02cea01a",
+      "signature": "e7a28b2ad4307512a19c85b9aae5508f365f16726f3d61c363b338cc5efd8de7",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-035-1786197758083",
+      "timestamp": "2026-08-08T14:02:38.086Z",
+      "contentHash": "e00f6824335b90d16c790b25f3a915790b34d909cb5ba96ca53e07191cd60289",
+      "previousHash": "f3db7630d3d86ebab7d42d913bbc49f17209991cfd6589f2cf658a8d02cea01a",
+      "chainHash": "ccd662f9ace1fcc92df454a28242b7b7ec1c5c9a66eec92e3a0f80d900ee3a60",
+      "signature": "7db4f4752267faca9bdd46bf0a798aa227d230c1a48bc55cd80dbaa962165012",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-035-1786197856668",
+      "timestamp": "2026-08-08T14:04:16.669Z",
+      "contentHash": "9b8732c85d40f2d8aa7cb7ee09d9ca3bb49a3ac38001a694ad2fcbe5d4f4a464",
+      "previousHash": "ccd662f9ace1fcc92df454a28242b7b7ec1c5c9a66eec92e3a0f80d900ee3a60",
+      "chainHash": "8f3a3148efe4e1137e3cfd8e34fd693c43f1c61607caeee140565f52cde81dd8",
+      "signature": "4a23930b389d4eb73d7ab51cf7931b991d18e99b4f3ce7d471a2e74320f0c63a",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-035-1786198043309",
+      "timestamp": "2026-08-08T14:07:23.310Z",
+      "contentHash": "cb7a2d975b6032a476166de3ac1cd5846fc48bbf4e53f2988c5242d134f16640",
+      "previousHash": "8f3a3148efe4e1137e3cfd8e34fd693c43f1c61607caeee140565f52cde81dd8",
+      "chainHash": "6fa6abd4e072aadcc3278a62e2c846f3c174e4fc750e88231adcf802e5e05ca9",
+      "signature": "fa3aaec4f824bf390481fb6f588dae7aeda1ff7608c1e7e05b3768192eeb6249",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-035-1786198330000",
+      "timestamp": "2026-08-08T14:12:10.002Z",
+      "contentHash": "0aa88247360347abd472993f2aca53a45132ea48d04720ad1f0172ef07ce6838",
+      "previousHash": "6fa6abd4e072aadcc3278a62e2c846f3c174e4fc750e88231adcf802e5e05ca9",
+      "chainHash": "11a7c93fa668a5c7763a1eb5637df25bf532b6c709703b66711edc5678ab9934",
+      "signature": "66b728e16a388eecfaedfad55763b7a77c3371c7d0c12b7d250e0dc592670e07",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-035-1786198330010",
+      "timestamp": "2026-08-08T14:12:10.010Z",
+      "contentHash": "95ee2141390d87cccfb3cff14fefe54d0eb9a85f1dfd21ee97d1f97d74ca5fe8",
+      "previousHash": "11a7c93fa668a5c7763a1eb5637df25bf532b6c709703b66711edc5678ab9934",
+      "chainHash": "b80a3a5daaaa3e1e6035de3f4be22e3e03ef698dcdbd6d064aa0907e240c4ed4",
+      "signature": "940e890c0f36e76a601c17a3b35a09609ca74702adebe076222f536b24b3f74f",
+      "agent": "gate",
+      "message": "Smoke test TC-035 20/20 PASS (DLE EOT interpretação, simulação, endpoint printer-status, processar_fila)"
+    },
+    {
+      "id": "CP-TC-035-1786198601252",
+      "timestamp": "2026-08-08T14:16:41.255Z",
+      "contentHash": "33ffaed8872726a2526e62e80b8fff3f2d3033e4449b347b067792f301fcc4a4",
+      "previousHash": "b80a3a5daaaa3e1e6035de3f4be22e3e03ef698dcdbd6d064aa0907e240c4ed4",
+      "chainHash": "5b5c213906b7b52d484e53f01bd67dadf28ae97dbd0bc61231bc9536fa82c916",
+      "signature": "a707045e781e7ec8f9b258e23daca4d0124105ad59d1604628d471dd70cf9310",
+      "agent": "user",
+      "message": "Task finalizada por user"
+    },
+    {
+      "id": "CP-TC-036-1786200109601",
+      "timestamp": "2026-08-08T14:41:49.603Z",
+      "contentHash": "95c43e35db03f6494f2595bb811ca3dfef29f4f38873f15bc9d138291a1d7fd4",
+      "previousHash": "5b5c213906b7b52d484e53f01bd67dadf28ae97dbd0bc61231bc9536fa82c916",
+      "chainHash": "d270a7da7dab0eea76976292c6723434c42713d1d8e854fedf24228e982a868f",
+      "signature": "916e4e0a1750c9a7a2231155526ea282cf72a2f4baeae6446349f471aa9d08a5",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-037-1786200109612",
+      "timestamp": "2026-08-08T14:41:49.612Z",
+      "contentHash": "0ee9f2ea7913f1bf4f26c5f12e7a2f3a8c3f0cf18a34b2c859bf38a84f845a05",
+      "previousHash": "d270a7da7dab0eea76976292c6723434c42713d1d8e854fedf24228e982a868f",
+      "chainHash": "b41fe1190e1607aa5a855c1b6eb4a52fdade096e9be749a8d2e95363aec5d6ee",
+      "signature": "19075a60cf604a0f441363da689a4df64edc2072d0155842a1566e23d0094e7c",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-038-1786200109621",
+      "timestamp": "2026-08-08T14:41:49.621Z",
+      "contentHash": "5ea917e58a7311a53994e1200cc2d070d8595794d85dbb963c54291135cbe10d",
+      "previousHash": "b41fe1190e1607aa5a855c1b6eb4a52fdade096e9be749a8d2e95363aec5d6ee",
+      "chainHash": "7ac34e4ac06b04ecd1a84dbf68b24fd7ff22756ed80d5c490576a5106aa52e76",
+      "signature": "c2e88d51732a0bf7e4554c596e3b617a5b1b8590bcf06a921ce23d2edca8f192",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-039-1786200109628",
+      "timestamp": "2026-08-08T14:41:49.628Z",
+      "contentHash": "031e07fd806adf6fd42b03faed38969d6e89f8d516067cd56174773c94f8d6d7",
+      "previousHash": "7ac34e4ac06b04ecd1a84dbf68b24fd7ff22756ed80d5c490576a5106aa52e76",
+      "chainHash": "efd1beebd8ec2cacfc07894c71fbf19e79e40d810aa49f75fc9e64fedbddc73b",
+      "signature": "0d8d47cbb6ba93aa4cbe9c521563b7d56c0d6b961bd2e62c2897dc06f69cd6cb",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-040-1786200109637",
+      "timestamp": "2026-08-08T14:41:49.637Z",
+      "contentHash": "e9209eac9b4d292df1d4a0d7e0f4095a9985089ce9e758e4fcc21a38cb497929",
+      "previousHash": "efd1beebd8ec2cacfc07894c71fbf19e79e40d810aa49f75fc9e64fedbddc73b",
+      "chainHash": "14840b1ad479545f32bf618aff94fe91d227ecd402009d0b5beab92b0d10f749",
+      "signature": "d85e531f10d968ef1b8365312f9f745e421b6122dcb7d03aadba356d30601fa1",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-041-1786200109645",
+      "timestamp": "2026-08-08T14:41:49.645Z",
+      "contentHash": "2806e0ae90f0c279dd421b77f967672ab20557f3b6f5fab8f2d735544eab2db0",
+      "previousHash": "14840b1ad479545f32bf618aff94fe91d227ecd402009d0b5beab92b0d10f749",
+      "chainHash": "b1bd23b5a6201a24edd23ba32119cfcb520a42e482f22c6a55da209aa318dfc8",
+      "signature": "029c18528856fc152e3d73fa269866d1b53f73ee45a693bab5730d7c1f108091",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-042-1786200109653",
+      "timestamp": "2026-08-08T14:41:49.653Z",
+      "contentHash": "29b83c0f35d331b3228cf657745f246f647dcc35c81db1d092d7a8a530e52d5c",
+      "previousHash": "b1bd23b5a6201a24edd23ba32119cfcb520a42e482f22c6a55da209aa318dfc8",
+      "chainHash": "81c2266d7dde8823372d474f20960f0b9a228e1e5208833de2d43e605ebf9f2c",
+      "signature": "947ba6d5527eac3645ee7fa2a4b0b20067581fb557c1b61858d233579867fe86",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-043-1786200109661",
+      "timestamp": "2026-08-08T14:41:49.661Z",
+      "contentHash": "d5cf475cce9978b7e558e20ac9eefb050c66235f0f4132dc156d49216cf06c36",
+      "previousHash": "81c2266d7dde8823372d474f20960f0b9a228e1e5208833de2d43e605ebf9f2c",
+      "chainHash": "691bc56b25bae643daeb2f51529f94ee5740ec84b192c5e39694b5278ab36ba3",
+      "signature": "043644ba738b12370ab2fa55ba3fe1966eba9706360ba9322eb846a1721dcce4",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-044-1786200109669",
+      "timestamp": "2026-08-08T14:41:49.669Z",
+      "contentHash": "e7a40f656eed266cec7f005efd746ec9ba8f51737725c62512dcc3347226609a",
+      "previousHash": "691bc56b25bae643daeb2f51529f94ee5740ec84b192c5e39694b5278ab36ba3",
+      "chainHash": "c18a8da36d5e9a4b85b1717ebc5c24b17e84c369c2f5fe1fa062f5bcbfafc4ce",
+      "signature": "ce77a14959ffe09586151a5e491b8194a30f61dabdce184d5c6ff98259f12949",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-036-1786200153277",
+      "timestamp": "2026-08-08T14:42:33.279Z",
+      "contentHash": "06194f9c9260ccb91360f6c78206ef6ed2a82f5efb89caa893bb4f30b63eccab",
+      "previousHash": "c18a8da36d5e9a4b85b1717ebc5c24b17e84c369c2f5fe1fa062f5bcbfafc4ce",
+      "chainHash": "96bf7e258feee893eda919f5fb813af9546a0cb24c0764343760ff5a80a183c8",
+      "signature": "9109e36be20934efd3e2e2f795d2f3927c7642469e24320ce31344df6af71638",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-037-1786200153294",
+      "timestamp": "2026-08-08T14:42:33.294Z",
+      "contentHash": "17275bed94f4728d07b3b32ad6ad85865f9b1978d00d0f7abce53dd1b6f1a619",
+      "previousHash": "96bf7e258feee893eda919f5fb813af9546a0cb24c0764343760ff5a80a183c8",
+      "chainHash": "3efab14b14865111ede747f908767951db7f65900c736cd2d9742d3796f19b17",
+      "signature": "a406357d3c1915e52c2b580ee9be80557fb568783655def25ef931a368113591",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-038-1786200153306",
+      "timestamp": "2026-08-08T14:42:33.307Z",
+      "contentHash": "82c6acf2b8e9222d44015909cc6cfd32a39fd4e8798697478567d38711a9d5b3",
+      "previousHash": "3efab14b14865111ede747f908767951db7f65900c736cd2d9742d3796f19b17",
+      "chainHash": "51550492ce4534e3ac7164eaabec7933d34d6e745487d0bc9e58a49097449355",
+      "signature": "27002462f8759218f22d10bd55104f671cf2fc471963d79db8b430c3ffef8f79",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-039-1786200153320",
+      "timestamp": "2026-08-08T14:42:33.320Z",
+      "contentHash": "d05c94127d1e153142f5fd84f0b3403cf7d4bb630f3886e9488d8b2f5f69b6c6",
+      "previousHash": "51550492ce4534e3ac7164eaabec7933d34d6e745487d0bc9e58a49097449355",
+      "chainHash": "7a31ad1486f15be83d38102a810e51f27f9f52d5c5c3c8d01e54681f349c24a4",
+      "signature": "3a1e356fdcb765bee4ec774b9552e8d00629f76b460530e94b35a593a7ebd7bd",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-040-1786200153332",
+      "timestamp": "2026-08-08T14:42:33.332Z",
+      "contentHash": "85b4d9b8ff348388c638d3198385c7115cfd50e1b5873fc87abe709499919653",
+      "previousHash": "7a31ad1486f15be83d38102a810e51f27f9f52d5c5c3c8d01e54681f349c24a4",
+      "chainHash": "ce3fbef9319dfaeb5cfe7732efbe98dad4e882a3304e321012f5ef10e5052497",
+      "signature": "92f880d95c647aa0b047dfc0b472f5ecfcd813bb3419fac7c0234aae3dad6405",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-041-1786200153345",
+      "timestamp": "2026-08-08T14:42:33.345Z",
+      "contentHash": "cb1efe4564c569006f11494a9ea4e4079335f71aeac2886583f55509d9888e12",
+      "previousHash": "ce3fbef9319dfaeb5cfe7732efbe98dad4e882a3304e321012f5ef10e5052497",
+      "chainHash": "5357692069ff064572db2be4737e91409d6b973aa28413d720055d69707a2a6b",
+      "signature": "2b6e528c4bfa3fa181a7e803fd9a23a19809a4ed8d2425646dd331e02f4d42af",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-042-1786200153356",
+      "timestamp": "2026-08-08T14:42:33.356Z",
+      "contentHash": "18646847ea641195535a69b50964ebe158a949d168bcc8a28760e0633f73f9e2",
+      "previousHash": "5357692069ff064572db2be4737e91409d6b973aa28413d720055d69707a2a6b",
+      "chainHash": "e77ce335abd3a91050f869cf1ab9c399f749a7ade95388f00f2e023f894b2ab9",
+      "signature": "e9dc2f78d89c22bd98174d91a02061cda4ce4afe764163f13f8b63c013d2da9e",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-043-1786200153366",
+      "timestamp": "2026-08-08T14:42:33.367Z",
+      "contentHash": "9708e79a874b08b81d7862e8d87255707ccebcf7658a7d285f1c4991c411980f",
+      "previousHash": "e77ce335abd3a91050f869cf1ab9c399f749a7ade95388f00f2e023f894b2ab9",
+      "chainHash": "e3268bdde83c8accde1b38d0501920a49f945f5be04a904798e5157ede607dbf",
+      "signature": "5fd978b5eeb517922e93d362d0b182ea04c0949788597209f4508441f50f4d3f",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-044-1786200153378",
+      "timestamp": "2026-08-08T14:42:33.379Z",
+      "contentHash": "b6eeb16d636dd81038fa7b63ef19a2a3a1443a2913662ee7e19f7977904a3325",
+      "previousHash": "e3268bdde83c8accde1b38d0501920a49f945f5be04a904798e5157ede607dbf",
+      "chainHash": "c5dfd50c6c8d9db905b905a447c4342bd452eb790856475dcf411057f675d4b7",
+      "signature": "9306d268102267160f9f76bc5454accdf10ec4ebee2b8413f204193157f848b4",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-036-1786207073838",
+      "timestamp": "2026-08-08T16:37:53.839Z",
+      "contentHash": "c8bcb078aec80c951f892160710f2f33afc461e2a68033d88ee29f570a0b5cc5",
+      "previousHash": "c5dfd50c6c8d9db905b905a447c4342bd452eb790856475dcf411057f675d4b7",
+      "chainHash": "1c1555b65ca9a350321146e6502504e921801d714a6bb28e0ddc3145474fac71",
+      "signature": "3b931a1be2a5a29ad1607e2dd61bad6098b07d02b381a49ba44d7d3ccf8136a0",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-037-1786207073844",
+      "timestamp": "2026-08-08T16:37:53.844Z",
+      "contentHash": "c2e42689bfc5147631904ac7d4bf1227ff0cc5b7617ad087152272840f01c3b2",
+      "previousHash": "1c1555b65ca9a350321146e6502504e921801d714a6bb28e0ddc3145474fac71",
+      "chainHash": "3d3d438c06363157293b4ed925863087154ea17e053fe28dae67fd59c0fd78d3",
+      "signature": "bf0c188aaf5f3259cd75b972b9947336ca1235581fef5edcad1dabd369367527",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-038-1786207073850",
+      "timestamp": "2026-08-08T16:37:53.850Z",
+      "contentHash": "d5c6f5753f4375cc33c740a4663e0c352f59de2dcd93539776f142ce49b7faf1",
+      "previousHash": "3d3d438c06363157293b4ed925863087154ea17e053fe28dae67fd59c0fd78d3",
+      "chainHash": "3c84a73c589e516d333528c6d47cf56f7900daec0dbbbbad7f188fab4e636cc4",
+      "signature": "8074a4a968f9481253f086358da97b23d6a17827b70358545f2ee1bd947f949f",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-039-1786207073855",
+      "timestamp": "2026-08-08T16:37:53.855Z",
+      "contentHash": "b215e3184e2cb1b08b3cf794a2744a9507e69ca9e1cc042e0e5e3d7d3a3f1d94",
+      "previousHash": "3c84a73c589e516d333528c6d47cf56f7900daec0dbbbbad7f188fab4e636cc4",
+      "chainHash": "766c91c8f750ed67fbe1abb121e93e8de59978c5488b4d4424f5b543d32427c7",
+      "signature": "1ec133ccbc149c0631b46419ecb2f082a5fd307bb03c74396810f1a3fa385648",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-040-1786207073860",
+      "timestamp": "2026-08-08T16:37:53.860Z",
+      "contentHash": "12ec09b1963a7b2463d229a600eed25a735c69f663200c93a71f6152c730dae5",
+      "previousHash": "766c91c8f750ed67fbe1abb121e93e8de59978c5488b4d4424f5b543d32427c7",
+      "chainHash": "3b6a79dd8f647d6cff62fdce9c74e7aef085990fea4c004d0eece1c670261a4a",
+      "signature": "1cfa91aca63cdea5c889c5b0a782031df04d76a6a83c0c3eade49525b47a4f6f",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-041-1786207073865",
+      "timestamp": "2026-08-08T16:37:53.866Z",
+      "contentHash": "436d256a8d5c23d442ae953b9cc611bb850d5b68eb7917cf462dc40d64ee08be",
+      "previousHash": "3b6a79dd8f647d6cff62fdce9c74e7aef085990fea4c004d0eece1c670261a4a",
+      "chainHash": "4c4cd1a0ace51aadafefd23f32262bb231474998cfeda32ec1857bb54ca4fedc",
+      "signature": "7f56b19b3322e9193b6fc2f3d19c195996b92004df8a9d687566ee42da36aa0e",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-042-1786207073871",
+      "timestamp": "2026-08-08T16:37:53.872Z",
+      "contentHash": "02ff3fe711dad1de79b399edd692954b153b3db5f93337d8bcbb8b4d618eca9e",
+      "previousHash": "4c4cd1a0ace51aadafefd23f32262bb231474998cfeda32ec1857bb54ca4fedc",
+      "chainHash": "6727af2b4506748f1ee75eb787b8238da6cb80d461ab2309248c5ce649f5920f",
+      "signature": "f179050dfa492a268138b6c09dd65cba142cdf3e6c309b780528496aa25414b7",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-043-1786207073876",
+      "timestamp": "2026-08-08T16:37:53.877Z",
+      "contentHash": "19a4e3d98ce1150caf64dfaadbd983e69b72a2eb8ea5a9ee482a3d9463833bf3",
+      "previousHash": "6727af2b4506748f1ee75eb787b8238da6cb80d461ab2309248c5ce649f5920f",
+      "chainHash": "f40ec1cf1380815a19d2ca7fbc9394328966aef9f5c54401458244361319581f",
+      "signature": "e4c6f61b6e254945bb82aba99628aa621bd6651291cf3a27736554ff62c65813",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-044-1786207073884",
+      "timestamp": "2026-08-08T16:37:53.884Z",
+      "contentHash": "943cb197368e5561636d59080a1b0a9229eac588678069dc424507084a92e774",
+      "previousHash": "f40ec1cf1380815a19d2ca7fbc9394328966aef9f5c54401458244361319581f",
+      "chainHash": "5b314352bf9224f1f123345e186aeb80bb7d1cfb0edee3197710d5069d6b6f39",
+      "signature": "257a48227cafd1f60adfb36c52c8cfad1663d22f54cff529f9adf9b238521968",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-036-1786207081077",
+      "timestamp": "2026-08-08T16:38:01.078Z",
+      "contentHash": "09b56e58c66d1e8aad9476725cc1b6dcfa7a51f56fe1e049d9a42432a710c72c",
+      "previousHash": "5b314352bf9224f1f123345e186aeb80bb7d1cfb0edee3197710d5069d6b6f39",
+      "chainHash": "8dbea64df5a842bed70e3675d6cc1afc63c4abf59b39fead34385f2152d4528f",
+      "signature": "d0cbc025bd5a10cb0a553bbbdbadfd9b340fbbb7eae5d772e988589b090c62a2",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-036-1786207081086",
+      "timestamp": "2026-08-08T16:38:01.086Z",
+      "contentHash": "0d19f91f3fee8b38332b156597085e09cc4b9221fd12e44d5ec788e56d5779ac",
+      "previousHash": "8dbea64df5a842bed70e3675d6cc1afc63c4abf59b39fead34385f2152d4528f",
+      "chainHash": "743712353f1a6c8e227e42a695c9f9b841b1743f2340de7b674ec3aed78b7263",
+      "signature": "4acbb30ea080f3283f5ad5d59444f28937c922ddb24a2e36a1762c2bb9f8228f",
+      "agent": "gate",
+      "message": "Comanda sem preços (ESC/POS + Comandas.tsx) — tsc/build/lint OK"
+    },
+    {
+      "id": "CP-TC-037-1786207081092",
+      "timestamp": "2026-08-08T16:38:01.092Z",
+      "contentHash": "ec9146590f0a7e675320109919d984c4c8504a6c3f96626a9466c67434c07ebc",
+      "previousHash": "743712353f1a6c8e227e42a695c9f9b841b1743f2340de7b674ec3aed78b7263",
+      "chainHash": "804b9ab0bba3411284fd2ff76647f3fcca4ffaf64930adbc1dcb1f7174bb57c0",
+      "signature": "6e5c3be94ffb405eab20cab3a8d4f1bab046dd9ecef6d7c7b45f2ec91a4da8d1",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-037-1786207081098",
+      "timestamp": "2026-08-08T16:38:01.098Z",
+      "contentHash": "a5bebc9b969f1e64557880dfdcdaff67afd2df2ef60f78c70cb005e04fc85532",
+      "previousHash": "804b9ab0bba3411284fd2ff76647f3fcca4ffaf64930adbc1dcb1f7174bb57c0",
+      "chainHash": "852c72e83a6562ac7feae09977867f9081a910c0b86abca1c413a486d936979b",
+      "signature": "4ad4061c97fe05a3ba6a1ae8c969e077ae2b879161f85efb1f1f04149ae3181b",
+      "agent": "gate",
+      "message": "Corte parcial \\x1d\\x56\\x01 + 3 feeds verificados (smoke_tc037_039 18/18)"
+    },
+    {
+      "id": "CP-TC-038-1786207081105",
+      "timestamp": "2026-08-08T16:38:01.106Z",
+      "contentHash": "274b8b85031cb5ad43daca6e3217560d5e181c1ade792c1000f90d952464a1ec",
+      "previousHash": "852c72e83a6562ac7feae09977867f9081a910c0b86abca1c413a486d936979b",
+      "chainHash": "a0835361223c4b8942122641fcfae5e5ff2734b257c37e9316d7cc2fd7cb4c10",
+      "signature": "f7f1e68dcfd69eddf53d356e1df5b3b665a2ef5f8a2eb64b442fa9a241a63c24",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-038-1786207081111",
+      "timestamp": "2026-08-08T16:38:01.111Z",
+      "contentHash": "d3b3403d0615869b8b375e2c1ca9bb1a52ae2678a8b10c7d95dd136604299077",
+      "previousHash": "a0835361223c4b8942122641fcfae5e5ff2734b257c37e9316d7cc2fd7cb4c10",
+      "chainHash": "3ff7920e0d363747b46a2ac187741c8128aa33e53e4f6471bf2007cbe65459b5",
+      "signature": "43f7f6516f7af41de6121dd4f4bbf4811a2e75075fd23eb62bf7e3afaae91de0",
+      "agent": "gate",
+      "message": "ABRIR_GAVETA como primeiro byte do fechamento (smoke_tc037_039 18/18)"
+    },
+    {
+      "id": "CP-TC-039-1786207081118",
+      "timestamp": "2026-08-08T16:38:01.118Z",
+      "contentHash": "6fe44b54d2e1760c9eae70ed089e0adad9d3c7d6a0e61f44910fa7d1be482e7f",
+      "previousHash": "3ff7920e0d363747b46a2ac187741c8128aa33e53e4f6471bf2007cbe65459b5",
+      "chainHash": "8de829757374e8dca6dc31d63dfac0601fec6a8869d4df84e316225a24dbe146",
+      "signature": "e79b8cc6d9999fa18c9f123d814fe7f69411afe26ab4bf1a113853f8e2dce4bb",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-039-1786207081124",
+      "timestamp": "2026-08-08T16:38:01.124Z",
+      "contentHash": "9be978f96e95636ea81eaac8951bcb1cef3e6f8ff4f6b3e15d8c4a839e3c3c7e",
+      "previousHash": "8de829757374e8dca6dc31d63dfac0601fec6a8869d4df84e316225a24dbe146",
+      "chainHash": "90bb6dec80cad585289d37a95544e1d24437729fe6811b06d6ce9f3116c12f55",
+      "signature": "cc028061d1d2af31dd308f90cc39c25d930aef6504faf40a226da8a3d0b1f7e5",
+      "agent": "gate",
+      "message": "Payload PIX + CRC-16/CCITT + GS ( k + QRCodePix.tsx (smoke_tc037_039 18/18)"
+    },
+    {
+      "id": "CP-TC-040-1786207081130",
+      "timestamp": "2026-08-08T16:38:01.130Z",
+      "contentHash": "4eee1197fa3a4c715676b98156c36323eb2522b074a08c6d232386a3f50b5e66",
+      "previousHash": "90bb6dec80cad585289d37a95544e1d24437729fe6811b06d6ce9f3116c12f55",
+      "chainHash": "0eca517a034e493d02604401e77e5c65a0f71a4db1f41097fcf09b91231a606a",
+      "signature": "e2d10900670f0dbaa993a4c44967361e828f10ba6334947bb3a85b2c7275677b",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-040-1786207081138",
+      "timestamp": "2026-08-08T16:38:01.138Z",
+      "contentHash": "a69e9764b981e11011c0079885dd045a3e639a41e99db4b444fe2b1423262dbf",
+      "previousHash": "0eca517a034e493d02604401e77e5c65a0f71a4db1f41097fcf09b91231a606a",
+      "chainHash": "2cfef50838ad02912124bcc512dc291aa7e616e55d6cc66e81c7185908fbccbe",
+      "signature": "cf8daadcde6c9000d8faa825d51b1044f025da69a3a511f2cde9b500ec20e0f4",
+      "agent": "gate",
+      "message": "printer-fila GET/POST reenviar + UI aba Impressoras (smoke_tc040 12/12)"
+    },
+    {
+      "id": "CP-TC-041-1786207081145",
+      "timestamp": "2026-08-08T16:38:01.145Z",
+      "contentHash": "280bb2603a12d84076a274ae189efe05f200058b7fa618c0cfdf9e6ce85a6c52",
+      "previousHash": "2cfef50838ad02912124bcc512dc291aa7e616e55d6cc66e81c7185908fbccbe",
+      "chainHash": "7e015bb0d0799d95a219a945f0285c7650fdcc207a0422a1eff98101cc344cdc",
+      "signature": "1cddc10d461dc92d5eee7e16429d0f96169e9d34a37a5c5a79f455a32a54e00f",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-041-1786207081153",
+      "timestamp": "2026-08-08T16:38:01.153Z",
+      "contentHash": "434c1114c37a76cfb6ffe4f59316a42e4db1678382faa881127139d331bf7640",
+      "previousHash": "7e015bb0d0799d95a219a945f0285c7650fdcc207a0422a1eff98101cc344cdc",
+      "chainHash": "7d36bc10b37422980ddfa873636ea13c251e7792675cd899a206d20b87a18ccc",
+      "signature": "34070ae8ca3808efa6d485c4a2d9eeec94ea6f7dd3a13fd677a854eb107a75a8",
+      "agent": "gate",
+      "message": "index.css consolidado, @page 80mm + ficha-a4 named page, build OK"
+    },
+    {
+      "id": "CP-TC-042-1786207081159",
+      "timestamp": "2026-08-08T16:38:01.159Z",
+      "contentHash": "f1b8057272927e1c02bed01e9ad8decc73a768de3d4c1d6cf23c5ccccabca76b",
+      "previousHash": "7d36bc10b37422980ddfa873636ea13c251e7792675cd899a206d20b87a18ccc",
+      "chainHash": "f7b9540ddfe2ae440a8db2e68a777895fcb8bf49d729cba3dc935407d981df87",
+      "signature": "89c62291b5e4d09cc25c5ded5da41f38e10011d317765a4bdf5f3dab0c1afb7a",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-042-1786207081166",
+      "timestamp": "2026-08-08T16:38:01.166Z",
+      "contentHash": "8ef1006805f4aabafebd9a85f5f344b6291f94e619d113f31f7fd82651835ff5",
+      "previousHash": "f7b9540ddfe2ae440a8db2e68a777895fcb8bf49d729cba3dc935407d981df87",
+      "chainHash": "5d1334d222774601c88ea5c55a00a0da9b0f02acb024e15fb061c4af200ed889",
+      "signature": "232a03efa91edcca82f43fd5315a14c464e5a7cafdc58ba9b4e5cb066475ea08",
+      "agent": "gate",
+      "message": "Aba Impressoras no Admin (form/status/testar/salvar) — build/lint OK"
+    },
+    {
+      "id": "CP-TC-043-1786207081172",
+      "timestamp": "2026-08-08T16:38:01.172Z",
+      "contentHash": "20fbdf0dc1e77a1207440a0de86b0e1fd7a7191875ef9996456219c05b6f935f",
+      "previousHash": "5d1334d222774601c88ea5c55a00a0da9b0f02acb024e15fb061c4af200ed889",
+      "chainHash": "dae03ac08d23ad181b3711205cc8784560a1f227b0a5c066295e1fc9c13dd43a",
+      "signature": "649ecf5b6c477ab0914f55a395f1f449363b7e99a372ab8fd037edd5e0c249d9",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-043-1786207081177",
+      "timestamp": "2026-08-08T16:38:01.178Z",
+      "contentHash": "fce8d79c6ad826d80f793e1c703cb3ca210c525342ef5b7abf5719e02f8c8f36",
+      "previousHash": "dae03ac08d23ad181b3711205cc8784560a1f227b0a5c066295e1fc9c13dd43a",
+      "chainHash": "f9e9fc43f8e7745c7b064af412f622d43d06c8806ad35c2ee57db104dba59112",
+      "signature": "a533f677fd3e3368d3895ee3f624cff54d8861289d3968682aff4a4ab106912a",
+      "agent": "gate",
+      "message": "Emulador CLI ASCII 48 col + limpar_comandos_escpos — execução sem erro"
+    },
+    {
+      "id": "CP-TC-044-1786207081185",
+      "timestamp": "2026-08-08T16:38:01.186Z",
+      "contentHash": "f414c0236281dfa2236f21a00719a39900a238a7c998d675c1217ed0a44802fd",
+      "previousHash": "f9e9fc43f8e7745c7b064af412f622d43d06c8806ad35c2ee57db104dba59112",
+      "chainHash": "6d73002df0961f728c3349b4eb10672d67619adb6d9b1c9aa0f000b7b19b3c5a",
+      "signature": "c0a4997533406a906f953bdbf93b53fcb9ae9834fca9de9b8d0b3254e856c8d4",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-044-1786207081192",
+      "timestamp": "2026-08-08T16:38:01.192Z",
+      "contentHash": "d653f38f3374f3477af42db5aaa3accecc2a442663618ca86035983d653a0149",
+      "previousHash": "6d73002df0961f728c3349b4eb10672d67619adb6d9b1c9aa0f000b7b19b3c5a",
+      "chainHash": "57854da0d024fec21b5d6d4702d0542986241c1cdb2bb36adb0ef675b36ce833",
+      "signature": "dbea09cb4188bb5e4b9a537b3dc1d9fc79324f31d291b404ea9446df672a4693",
+      "agent": "gate",
+      "message": "Visualizador80mm com serrilha + modal Preview Cupom 80mm — build/lint OK"
+    },
+    {
+      "id": "CP-TC-045-1786207188647",
+      "timestamp": "2026-08-08T16:39:48.648Z",
+      "contentHash": "04fa0cc20f952d778f6ced031b7726b779d8fcd63580626505bfaeb8d5eacbf0",
+      "previousHash": "57854da0d024fec21b5d6d4702d0542986241c1cdb2bb36adb0ef675b36ce833",
+      "chainHash": "2a028e7a34c0cf8d982638402bdd28678e0b11cb8270deb9b7ae7ad0e5553149",
+      "signature": "25dffcb2db97056b41f11bba0e471b8654a7be3d8bfe3a68a98e82997413ae8c",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-045-1786207222186",
+      "timestamp": "2026-08-08T16:40:22.186Z",
+      "contentHash": "806c0aeade032bff9c0e470deee623f789ac880ac758a55d93668e4f0dcd0aeb",
+      "previousHash": "2a028e7a34c0cf8d982638402bdd28678e0b11cb8270deb9b7ae7ad0e5553149",
+      "chainHash": "72951f8dd42e4c35af7de624837be099e6293700e8920c9191530595a97de315",
+      "signature": "5386a60042fe26aad9faa784f99044b23af854e22273b381c5fae3cfafc70794",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-045-1786207417752",
+      "timestamp": "2026-08-08T16:43:37.753Z",
+      "contentHash": "11f0e24a345cbabb3bfced7d899404fad58fedff02b1e2f7802967e4f250a1c9",
+      "previousHash": "72951f8dd42e4c35af7de624837be099e6293700e8920c9191530595a97de315",
+      "chainHash": "138ecb9e2873645d84b1dd7498b0917501f197bc06c1056c7a88c36a7bf73e97",
+      "signature": "0adca075eb6d57da585583699486780d3b79746bbd338d17c51a827e299700d6",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-045-1786207458222",
+      "timestamp": "2026-08-08T16:44:18.223Z",
+      "contentHash": "c1b140e1d1980f99412259cc425088a9b999a7fbf2fe928a8300b3aa43b5b3f4",
+      "previousHash": "138ecb9e2873645d84b1dd7498b0917501f197bc06c1056c7a88c36a7bf73e97",
+      "chainHash": "dba9421d767cb96d9d81acea9e68d3a97914bb5326974efb09e6be4b3a0e4f6a",
+      "signature": "fe5296966534db71b8c5fb6613c32b3233b4c1b97e6f5d656cbfdf345f16a1c7",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-045-1786207656760",
+      "timestamp": "2026-08-08T16:47:36.761Z",
+      "contentHash": "9a5ded93e4261aaba1b830075ced4818d9c58c15662676af7cb5447b223ad09c",
+      "previousHash": "dba9421d767cb96d9d81acea9e68d3a97914bb5326974efb09e6be4b3a0e4f6a",
+      "chainHash": "e994186b64d509208a682095f53820648af6a38e7fe0341228da0786f7887cff",
+      "signature": "9a766ac2b4a356057bc25e26851a3ac4b4513440dfda24bb13a60dbab98dc224",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-045-1786207656767",
+      "timestamp": "2026-08-08T16:47:36.767Z",
+      "contentHash": "b0489d5c4cdc548497676f2ede9f60e745d1f6d8b316c2ac385f88b5cd343327",
+      "previousHash": "e994186b64d509208a682095f53820648af6a38e7fe0341228da0786f7887cff",
+      "chainHash": "c6357388150b667eecb85e3bbfeef25ecfc41005b161fa8bf7905405de0d4328",
+      "signature": "19a517050f1d0995a7810d30e794e5528d7ea7cac72d2bba8a0baeddcf4417d7",
+      "agent": "gate",
+      "message": "Smoke backend 6/6 PASS (Cancelado 200, inválido 400, fora de ativos, filtro, 401) + tsc/build/lint OK"
+    },
+    {
+      "id": "CP-TC-046-1786207740748",
+      "timestamp": "2026-08-08T16:49:00.749Z",
+      "contentHash": "0235b21563bf649b52ce8a4241c0baf2934fbce58cf27c3eb249dbb87541a28f",
+      "previousHash": "c6357388150b667eecb85e3bbfeef25ecfc41005b161fa8bf7905405de0d4328",
+      "chainHash": "9eebfd12a520c226b7aa76be7a356913f9e10056651cfe06e9c0128ba37e00ab",
+      "signature": "b6734e001554f9a6cbb4e16450430c06bd9f9d6a36183b2c02cbdfc4e6143893",
+      "agent": "user",
+      "message": "Task criada por user (backlog)"
+    },
+    {
+      "id": "CP-TC-046-1786207788870",
+      "timestamp": "2026-08-08T16:49:48.871Z",
+      "contentHash": "8f2ccbccf41bee16b148320492428ec01d76a0b5868619c9eca701829b5867f4",
+      "previousHash": "9eebfd12a520c226b7aa76be7a356913f9e10056651cfe06e9c0128ba37e00ab",
+      "chainHash": "5cd796292bf252e68f3c4456884cc22c3094dc08f803d9f4206f122f26c71662",
+      "signature": "e51aae7b78eb764a05afba0bec860435288fa2d7576536be915a6a72cbd81d6c",
+      "agent": "build",
+      "message": "Início da análise do card"
+    },
+    {
+      "id": "CP-TC-046-1786208396645",
+      "timestamp": "2026-08-08T16:59:56.646Z",
+      "contentHash": "4314c845a829d7f4b476a4ebdad506cf625640fd8c4c30b763272b2d1f70b8a9",
+      "previousHash": "5cd796292bf252e68f3c4456884cc22c3094dc08f803d9f4206f122f26c71662",
+      "chainHash": "65750da66eda35764b3355425e308f1d3b4f9d9bd5d02435dc3e7a0a174f5279",
+      "signature": "e65eef4e4cff5406214e994bfa9e5f5939bb80679fdd12d5dd7efec8b80b63e2",
+      "agent": "build",
+      "message": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "id": "CP-TC-046-1786208396985",
+      "timestamp": "2026-08-08T16:59:56.986Z",
+      "contentHash": "741d7f29c7ab817d8a2219fa78453c6f0216103bd1bfbd300e33cfce5524d3ee",
+      "previousHash": "65750da66eda35764b3355425e308f1d3b4f9d9bd5d02435dc3e7a0a174f5279",
+      "chainHash": "72aee551e0e807afbdd4627bb7489568a171f2b7bd59e915a062708550cc69cf",
+      "signature": "9352c1d3c66c5e28ecf8757de37cbc69eeea0157de8ab97b87d341411c0de4ce",
+      "agent": "user",
+      "message": "Aprovado pelo usuário"
+    },
+    {
+      "id": "CP-TC-046-1786208748166",
+      "timestamp": "2026-08-08T17:05:48.167Z",
+      "contentHash": "faf7ce500d23ed0bec6bb20f952f65de5c2678e76f26d588d4133ad71517170f",
+      "previousHash": "72aee551e0e807afbdd4627bb7489568a171f2b7bd59e915a062708550cc69cf",
+      "chainHash": "a195340dc24212c27ac0095b2a4801433ceb0df796efb4c2e3923a2a19a2e74e",
+      "signature": "ab85c003af954cc3ba7a288cc57965f3ad958d8f030af1859a8e627e8a33e584",
+      "agent": "qa-engineer",
+      "message": "Implementação completa, aguardando validação"
+    },
+    {
+      "id": "CP-TC-046-1786208748174",
+      "timestamp": "2026-08-08T17:05:48.174Z",
+      "contentHash": "4bbdde1fab97d0e873b949d5e8d67623ae5d24e01d673493879eee4f214e26d8",
+      "previousHash": "a195340dc24212c27ac0095b2a4801433ceb0df796efb4c2e3923a2a19a2e74e",
+      "chainHash": "fb3547d9f8f8b8bccc000f839417e12e069f170c99353ce943cff0a210f7c494",
+      "signature": "dd24e1bbc83b1ace3107eca5bd17be28b4877d7db9f2abab2619e9003c682073",
+      "agent": "gate",
+      "message": "Tema claro/escuro: useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC + tokens overlay/glass/neutral + override paleta light — smoke browser CDP 12/12 PASS + tsc/build/lint OK"
     }
   ]
 }

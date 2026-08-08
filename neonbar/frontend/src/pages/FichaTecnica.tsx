@@ -218,7 +218,7 @@ export default function FichaTecnica() {
 
       {/* Filters Panel */}
       {showFilters && (
-        <div className="mb-lg p-lg bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] animate-slide-in">
+        <div className="mb-lg p-lg bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] animate-slide-in">
           <div className="flex items-center justify-between mb-md">
             <h3 className="text-title-md font-semibold text-[var(--color-on-surface)]">Filtros Avançados</h3>
             <Button variant="ghost" size="sm" onClick={clearFilters}><X size={16} /> Limpar</Button>
@@ -229,7 +229,7 @@ export default function FichaTecnica() {
               <select
                 value={filters.categoria}
                 onChange={e => handleFilterChange('categoria', e.target.value || '')}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
               >
                 <option value="">Todas</option>
                 {categorias.map(c => <option key={c} value={c}>{c}</option>)}
@@ -240,7 +240,7 @@ export default function FichaTecnica() {
               <select
                 value={filters.tag}
                 onChange={e => handleFilterChange('tag', e.target.value || '')}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
               >
                 <option value="">Todas</option>
                 {tagsDisponiveis.map(t => <option key={t} value={t}>{TAG_LABELS[t]?.label || t}</option>)}
@@ -251,7 +251,7 @@ export default function FichaTecnica() {
               <select
                 value={filters.alergeno_excluir}
                 onChange={e => handleFilterChange('alergeno_excluir', e.target.value || '')}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
               >
                 <option value="">Nenhum</option>
                 {alergenosDisponiveis.map(a => <option key={a} value={a}>{ALERGENO_LABELS[a]?.label || a}</option>)}
@@ -262,7 +262,7 @@ export default function FichaTecnica() {
               <select
                 value={filters.dificuldade}
                 onChange={e => handleFilterChange('dificuldade', e.target.value || '')}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)]"
               >
                 <option value="">Todas</option>
                 <option value="facil">Fácil</option>
@@ -279,7 +279,7 @@ export default function FichaTecnica() {
                 step="0.5"
                 value={filters.teor_alcoolico_max || ''}
                 onChange={e => handleFilterChange('teor_alcoolico_max', e.target.value ? parseFloat(e.target.value) : undefined)}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
                 placeholder="Ex: 20"
               />
             </div>
@@ -291,7 +291,7 @@ export default function FichaTecnica() {
                 step="0.01"
                 value={filters.preco_max || ''}
                 onChange={e => handleFilterChange('preco_max', e.target.value ? parseFloat(e.target.value) : undefined)}
-                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
+                className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg px-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
                 placeholder="Ex: 50.00"
               />
             </div>
@@ -308,7 +308,7 @@ export default function FichaTecnica() {
             placeholder="Buscar por nome, categoria, ingrediente..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(255,255,255,0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
+            className="w-full bg-[var(--color-surface-container-lowest)] border border-[rgba(var(--overlay-rgb),0.1)] rounded-lg pl-xl pr-md py-xs text-body-md focus:border-[var(--color-primary)]/50 outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40"
           />
         </div>
         <div className="flex items-center gap-sm">
@@ -383,7 +383,7 @@ function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () =>
   return (
     <div
       onClick={onClick}
-      className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] overflow-hidden hover:border-[var(--color-primary)]/50 hover:shadow-[0_0_16px_rgba(0,229,255,0.15)] transition-all cursor-pointer active:scale-[0.98]"
+      className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] overflow-hidden hover:border-[var(--color-primary)]/50 hover:shadow-[0_0_16px_rgba(0,229,255,0.15)] transition-all cursor-pointer active:scale-[0.98]"
     >
       {/* Image/Placeholder */}
       <div className="aspect-square relative overflow-hidden bg-[var(--color-surface-container-high)]">
@@ -441,7 +441,7 @@ function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () =>
         </div>
         
         {ficha.categoria && (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border border-[rgba(255,255,255,0.06)]">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border border-[rgba(var(--overlay-rgb),0.06)]">
             {ficha.categoria}
           </span>
         )}
@@ -495,7 +495,7 @@ function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () =>
         </div>
         
         {/* Quick actions */}
-        <div className="flex gap-1 pt-1 border-t border-[rgba(255,255,255,0.06)]">
+        <div className="flex gap-1 pt-1 border-t border-[rgba(var(--overlay-rgb),0.06)]">
           <button className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
             <Eye size={12} /> Ver
           </button>
@@ -512,7 +512,7 @@ function FichaListItem({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: (
   return (
     <div
       onClick={onClick}
-      className="group flex items-center gap-md px-lg py-md bg-[var(--color-surface-container)] rounded-xl border border-[rgba(255,255,255,0.06)] hover:border-[var(--color-primary)]/50 hover:bg-[var(--color-surface-container-high)] transition-all cursor-pointer"
+      className="group flex items-center gap-md px-lg py-md bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] hover:border-[var(--color-primary)]/50 hover:bg-[var(--color-surface-container-high)] transition-all cursor-pointer"
     >
       <div className="w-16 h-16 rounded-lg bg-[var(--color-surface-container-high)] flex items-center justify-center shrink-0 overflow-hidden">
         {ficha.foto_url ? (
@@ -577,7 +577,7 @@ function FichaDetailModal({ ficha, onClose }: { ficha: FichaTecnicaItem; onClose
   return (
     <div className="space-y-4 max-h-[70vh] overflow-y-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-md pb-md border-b border-[rgba(255,255,255,0.06)]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-md pb-md border-b border-[rgba(var(--overlay-rgb),0.06)]">
         <div>
           <div className="flex items-center gap-md mb-1">
             <h2 className="text-headline-md font-bold text-[var(--color-on-surface)]">{ficha.nome}</h2>
@@ -591,7 +591,7 @@ function FichaDetailModal({ ficha, onClose }: { ficha: FichaTecnicaItem; onClose
             )}
           </div>
           <div className="flex flex-wrap gap-sm text-label-sm text-[var(--color-on-surface-variant)]">
-            {ficha.categoria && <span className="px-2 py-0.5 rounded-full bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.06)]">{ficha.categoria}</span>}
+            {ficha.categoria && <span className="px-2 py-0.5 rounded-full bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.06)]">{ficha.categoria}</span>}
             <span className="flex items-center gap-1"><Scale size={12} /> Margem: {ficha.margem_lucro?.toFixed(1) || '—'}%</span>
             {ficha.calorias_estimadas && <span className="flex items-center gap-1"><Flame size={12} /> {ficha.calorias_estimadas} kcal</span>}
             <span className="flex items-center gap-1"><Clock size={12} /> Preço: R$ {ficha.preco_venda.toFixed(2)}</span>
@@ -629,7 +629,7 @@ function FichaDetailModal({ ficha, onClose }: { ficha: FichaTecnicaItem; onClose
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap gap-1 mb-md border-b border-[rgba(255,255,255,0.06)] pb-1">
+      <div className="flex flex-wrap gap-1 mb-md border-b border-[rgba(var(--overlay-rgb),0.06)] pb-1">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -677,7 +677,7 @@ function VisaoGeralTab({ ficha }: { ficha: FichaTecnicaItem }) {
         </dl>
         
         {ficha.descricao && (
-          <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+          <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
             <dt className="text-label-sm text-[var(--color-on-surface-variant)] mb-1">Descrição</dt>
             <dd className="text-body-md text-[var(--color-on-surface)]">{ficha.descricao}</dd>
           </div>
@@ -697,7 +697,7 @@ function VisaoGeralTab({ ficha }: { ficha: FichaTecnicaItem }) {
         </div>
         
         {ficha.alergenos.length > 0 && (
-          <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+          <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
             <h4 className="text-label-md font-medium text-red-400 flex items-center gap-2 mb-2">
               <AlertTriangle size={16} /> Alérgenos Presentes
             </h4>
@@ -711,7 +711,7 @@ function VisaoGeralTab({ ficha }: { ficha: FichaTecnicaItem }) {
           </div>
         )}
         
-        <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+        <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
           <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Informações Nutricionais (estimadas por porção)</h4>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[var(--color-surface-container-high)] rounded-lg p-3 text-center">
@@ -755,7 +755,7 @@ function IngredientesTab({ ficha }: { ficha: FichaTecnicaItem }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-[var(--color-on-surface-variant)] border-b border-[rgba(255,255,255,0.06)]">
+            <tr className="text-left text-[var(--color-on-surface-variant)] border-b border-[rgba(var(--overlay-rgb),0.06)]">
               <th className="pb-2 font-medium">Insumo</th>
               <th className="pb-2 font-medium text-center">Qtd.</th>
               <th className="pb-2 font-medium text-center">Un.</th>
@@ -764,7 +764,7 @@ function IngredientesTab({ ficha }: { ficha: FichaTecnicaItem }) {
               <th className="pb-2 font-medium text-center">% do Custo</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[rgba(255,255,255,0.03)]">
+          <tbody className="divide-y divide-[rgba(var(--overlay-rgb),0.03)]">
             {ficha.ingredientes.map((ing, idx) => {
               const subtotal = ing.quantidade * (ing.custo_unitario || 0);
               const pct = ficha.custo_total ? (subtotal / ficha.custo_total) * 100 : 0;
@@ -796,7 +796,7 @@ function IngredientesTab({ ficha }: { ficha: FichaTecnicaItem }) {
         </table>
       </div>
       
-      <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+      <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
         <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Observações sobre Ingredientes</h4>
         <ul className="space-y-1 text-sm text-[var(--color-on-surface-variant)]">
           <li>• Use sempre insumos frescos e de qualidade para melhor resultado</li>
@@ -821,7 +821,7 @@ function PreparoTab({ ficha }: { ficha: FichaTecnicaItem }) {
       
       <div className="space-y-3">
         {ficha.preparo.map((passo, idx) => (
-          <div key={idx} className="flex gap-md p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(255,255,255,0.06)]">
+          <div key={idx} className="flex gap-md p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(var(--overlay-rgb),0.06)]">
             <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)] font-bold text-lg">
               {passo.ordem}
             </div>
@@ -851,7 +851,7 @@ function PreparoTab({ ficha }: { ficha: FichaTecnicaItem }) {
         ))}
       </div>
       
-      <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+      <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
         <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Dicas do Bartender</h4>
         <ul className="space-y-1 text-sm text-[var(--color-on-surface-variant)]">
           <li>• Respeite a ordem dos ingredientes para melhor integração</li>
@@ -874,7 +874,7 @@ function ArmazenamentoTab({ ficha }: { ficha: FichaTecnicaItem }) {
       
       <div className="space-y-3">
         {ficha.armazenamento.map((item, idx) => (
-          <div key={idx} className="p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(255,255,255,0.06)]">
+          <div key={idx} className="p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(var(--overlay-rgb),0.06)]">
             <div className="flex items-center gap-md mb-2">
               <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)]">
                 <Package size={20} />
@@ -898,7 +898,7 @@ function ArmazenamentoTab({ ficha }: { ficha: FichaTecnicaItem }) {
         ))}
       </div>
       
-      <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+      <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
         <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Boas Práticas</h4>
         <ul className="space-y-1 text-sm text-[var(--color-on-surface-variant)]">
           <li>• Mantenha recipientes sempre bem fechados para evitar oxidação</li>
@@ -922,7 +922,7 @@ function HarmonizacaoTab({ ficha }: { ficha: FichaTecnicaItem }) {
       {ficha.harmonizacao.length > 0 ? (
         <div className="space-y-3">
           {ficha.harmonizacao.map((item, idx) => (
-            <div key={idx} className="p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(255,255,255,0.06)] flex items-start gap-md">
+            <div key={idx} className="p-md bg-[var(--color-surface-container-high)]/50 rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] flex items-start gap-md">
               <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)]">
                 {item.tipo === 'entrada' && <Coffee size={20} />}
                 {item.tipo === 'prato_principal' && <Flame size={20} />}
@@ -947,7 +947,7 @@ function HarmonizacaoTab({ ficha }: { ficha: FichaTecnicaItem }) {
         </div>
       )}
       
-      <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+      <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
         <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Princípios de Harmonização</h4>
         <ul className="space-y-1 text-sm text-[var(--color-on-surface-variant)]">
           <li>• <strong>Semelhança:</strong> Sabores que se complementam (cítrico + peixe, doce + sobremesa)</li>
@@ -974,7 +974,7 @@ function NutricionalTab({ ficha }: { ficha: FichaTecnicaItem }) {
         <NutrientCard label="Gorduras" value={`${ficha.gorduras_g || '—'} g`} icon={Droplet} color="text-green-400" />
       </div>
       
-      <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+      <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
         <h4 className="text-label-md font-medium text-[var(--color-on-surface-variant)] mb-2">Observações Importantes</h4>
         <ul className="space-y-1 text-sm text-[var(--color-on-surface-variant)]">
           <li>• Valores <strong>estimados</strong> baseados na composição padrão dos insumos da receita</li>
@@ -986,7 +986,7 @@ function NutricionalTab({ ficha }: { ficha: FichaTecnicaItem }) {
       </div>
       
       {ficha.alergenos.length > 0 && (
-        <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
+        <div className="pt-4 border-t border-[rgba(var(--overlay-rgb),0.06)]">
           <h4 className="text-label-md font-medium text-red-400 flex items-center gap-2 mb-2">
             <AlertTriangle size={16} /> Alérgenos Identificados
           </h4>
@@ -1005,7 +1005,7 @@ function NutricionalTab({ ficha }: { ficha: FichaTecnicaItem }) {
 
 function NutrientCard({ label, value, icon: Icon, color }: { label: string; value: string; icon: any; color: string }) {
   return (
-    <div className="bg-[var(--color-surface-container-high)]/50 rounded-xl p-md border border-[rgba(255,255,255,0.06)] text-center">
+    <div className="bg-[var(--color-surface-container-high)]/50 rounded-xl p-md border border-[rgba(var(--overlay-rgb),0.06)] text-center">
       <Icon size={24} className={`mx-auto mb-2 ${color}`} />
       <dt className="text-[10px] text-[var(--color-outline)] uppercase tracking-wider mb-1">{label}</dt>
       <dd className="text-2xl font-bold text-[var(--color-on-surface)]">{value}</dd>

@@ -1,9 +1,24 @@
 {
   "id": "TC-019",
   "title": "gerar QRcode para cardápio digital",
-  "status": "backlog",
+  "status": "completed",
   "taskType": "card",
   "createdAt": "2026-07-26T06:35:00.000Z",
   "createdBy": "user",
-  "agent": "build"
+  "agent": "build",
+  "objective": "Gerar QR code do cardápio digital localmente, sem depender de API externa (api.qrserver.com) — mesmo problema resolvido no TC-001 (recursos externos quebram offline)",
+  "acceptanceCriteria": [
+    "QR code gerado localmente no browser (lib qrcode)",
+    "Nenhuma dependência de api.qrserver.com no frontend",
+    "Botão Baixar QR Code gera o download localmente",
+    "Build e lint passam"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/layouts/Sidebar.tsx",
+    "neonbar/frontend/package.json",
+    "orkestrar/.opencode/rules/frontend-no-external-resources.md",
+    "orkestrar/.opencode/rules/frontend-layout-constraints.md"
+  ],
+  "tests": [],
+  "notes": "Resolvido: instalado qrcode@1.5.4 + @types/qrcode; Sidebar.tsx gera QR com QRCode.toDataURL localmente; criada regra frontend-no-external-resources.md para impedir reintrodução de CDN/APIs externas no frontend. Correção final: modal do QR usava max-w-sm w-full mx-lg (mesmo padrão de overflow do TC-001) → refatorado para padrão Modal.tsx (w-full min-w-0 max-w-sm + wrapper p-4); criada regra frontend-layout-constraints.md proibindo max-w+w-full+mx-* no mesmo elemento."
 }

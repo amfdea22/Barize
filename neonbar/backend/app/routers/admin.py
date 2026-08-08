@@ -15,11 +15,15 @@ from ..database import get_db, get_engine as engine
 from ..models.usuario import Usuario
 from ..middleware.metrics import metrics_store
 from ..models.printer_config import PrinterConfig
+from ..models.fila_impressao import FilaImpressao
 from ..schemas.printer import (
     PrinterConfigResponse,
+    PrinterConfigCreate,
     PrinterConfigUpdate,
     PrinterTestRequest,
     PrinterTestResponse,
+    PrinterStatusResponse,
+    FilaImpressaoItem,
 )
 from ..services.auth_service import get_current_user, verificar_role
 
@@ -195,18 +199,22 @@ def set_log_level(
 # ─── Printer Configuration ─────────────────────────────────────
 
 
-def _get_printer_config(db: Session) -> PrinterConfig:
-    """Retorna a config ativa ou cria default."""
-    config = db.query(PrinterConfig).filter(PrinterConfig.ativo == True).first()
+def _get_printer_config(db: Session, setor: str = "CAIXA") -> PrinterConfig:
+    """Retorna a config ativa de um setor ou cria default."""
+    setor = (setor or "CAIXA").upper()
+    config = db.query(PrinterConfig).filter(
+        PrinterConfig.setor == setor,
+        PrinterConfig.ativo == True,  # noqa: E712
+    ).first()
     if not config:
         config = PrinterConfig(
+            setor=setor,
             tipo="network",
             host="",
             porta=9100,
             baud_rate=9600,
             timeout=5.0,
             ativo=True,
-
         )
         db.add(config)
         db.commit()
@@ -216,12 +224,23 @@ def _get_printer_config(db: Session) -> PrinterConfig:
 
 @router.get("/printer-config", response_model=PrinterConfigResponse)
 def obter_config_impressora(
+    setor: str = "CAIXA",
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Retorna a configuração atual da impressora."""
+    """Retorna a configuração da impressora de um setor (default CAIXA)."""
     verificar_role(current_user, ["admin", "gerente"])
-    return _get_printer_config(db)
+    return _get_printer_config(db, setor)
+
+
+@router.get("/printer-configs", response_model=list[PrinterConfigResponse])
+def listar_config_impressoras(
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Lista todas as impressoras configuradas, uma por setor."""
+    verificar_role(current_user, ["admin", "gerente"])
+    return db.query(PrinterConfig).order_by(PrinterConfig.setor.asc()).all()
 
 
 @router.put("/printer-config", response_model=PrinterConfigResponse)
@@ -230,16 +249,45 @@ def atualizar_config_impressora(
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Atualiza a configuração da impressora."""
+    """Atualiza a configuração da impressora de um setor."""
     verificar_role(current_user, ["admin"])
-    config = _get_printer_config(db)
+    setor = (data.setor or "CAIXA").upper()
+    config = _get_printer_config(db, setor)
     update_data = data.model_dump(exclude_unset=True)
     for key, value in update_data.items():
         if value is not None:
             setattr(config, key, value)
     db.commit()
     db.refresh(config)
-    logger.info(f"[ADMIN] Config de impressora atualizada: {config.tipo} / {config.host}")
+    logger.info(f"[ADMIN] Config de impressora atualizada: {config.setor} / {config.tipo} / {config.host}")
+    return config
+
+
+@router.post("/printer-config", response_model=PrinterConfigResponse)
+def criar_config_impressora(
+    data: PrinterConfigCreate,
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Cria (ou faz upsert) da configuração da impressora de um setor."""
+    verificar_role(current_user, ["admin"])
+    setor = (data.setor or "CAIXA").upper()
+    config = db.query(PrinterConfig).filter(PrinterConfig.setor == setor).first()
+    if config:
+        update_data = data.model_dump(exclude_unset=True)
+        for key, value in update_data.items():
+            if value is not None:
+                setattr(config, key, value)
+        db.commit()
+        db.refresh(config)
+        logger.info(f"[ADMIN] Config de impressora upsert: {config.setor} / {config.host}")
+        return config
+    config = PrinterConfig(**data.model_dump())
+    config.setor = setor
+    db.add(config)
+    db.commit()
+    db.refresh(config)
+    logger.info(f"[ADMIN] Config de impressora criada: {config.setor} / {config.host}")
     return config
 
 
@@ -308,3 +356,118 @@ def testar_impressora(
             sucesso=False,
             mensagem=f"Falha na conexão: {str(e)}",
         )
+
+
+@router.get("/printer-status", response_model=PrinterStatusResponse)
+def status_impressora(
+    setor: str = "CAIXA",
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Retorna o status físico da impressora de um setor (DLE EOT 2/4).
+    Usado pelo painel do caixa para avisos discretos (ex: pouco papel).
+    """
+    verificar_role(current_user, ["admin", "gerente"])
+
+    from ..worker.impressao_worker import ImpressaoWorker
+
+    config = _get_printer_config(db, setor)
+    if not config:
+        return PrinterStatusResponse(
+            setor=(setor or "CAIXA").upper(),
+            online=False,
+            offline_razao="Sem configuração de impressora",
+            mensagem="Nenhuma impressora configurada para este setor",
+        )
+
+    worker = ImpressaoWorker()
+    if not worker.conectar_impressora(config):
+        return PrinterStatusResponse(
+            setor=config.setor,
+            online=False,
+            offline_razao="Falha ao conectar na impressora",
+            mensagem="Não foi possível conectar na impressora (rede/host)",
+        )
+
+    status = worker.verificar_impressora_detalhada()
+
+    mensagens = []
+    if status["online"]:
+        mensagens.append("Impressora online")
+    if status["papel_baixo"]:
+        mensagens.append("Atenção: bobina no fim (pouco papel)")
+    if status["tampa_aberta"]:
+        mensagens.append("Tampa superior aberta")
+    if status["papel_esgotado"]:
+        mensagens.append("Papel esgotado")
+    if status["erro_mecanico"]:
+        mensagens.append("Guilhotina travada / erro mecânico")
+
+    try:
+        if worker.printer:
+            worker.printer.close()
+    except Exception:
+        pass
+
+    return PrinterStatusResponse(
+        setor=config.setor,
+        online=status["online"],
+        tampa_aberta=status["tampa_aberta"],
+        papel_esgotado=status["papel_esgotado"],
+        papel_baixo=status["papel_baixo"],
+        erro_mecanico=status["erro_mecanico"],
+        recovery=status["recovery"],
+        offline_razao=status["offline_razao"],
+        mensagem="; ".join(mensagens) if mensagens else "Impressora sem avisos",
+    )
+
+
+@router.get("/printer-fila", response_model=list[FilaImpressaoItem])
+def listar_fila_impressao(
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    status: str = "PENDENTE",
+    limit: int = 50,
+):
+    """Lista trabalhos da fila de impressão por status (default PENDENTE)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
+    if status == "TODOS":
+        fila = (
+            db.query(FilaImpressao)
+            .order_by(FilaImpressao.created_at.desc())
+            .limit(limit)
+            .all()
+        )
+    else:
+        fila = (
+            db.query(FilaImpressao)
+            .filter(FilaImpressao.status == status)
+            .order_by(FilaImpressao.created_at.desc())
+            .limit(limit)
+            .all()
+        )
+    return fila
+
+
+@router.post("/printer-fila/{fila_id}/reenviar", response_model=FilaImpressaoItem)
+def reenviar_trabalho(
+    fila_id: int,
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Reenfileira um trabalho de impressão (PENDENTE/ERRO) para nova tentativa."""
+    verificar_role(current_user, ["admin", "gerente"])
+
+    trabalho = db.query(FilaImpressao).filter(FilaImpressao.id == fila_id).first()
+    if not trabalho:
+        raise HTTPException(status_code=404, detail="Trabalho de impressão não encontrado")
+
+    trabalho.status = "PENDENTE"
+    trabalho.tentativas = 0
+    trabalho.erro_msg = None
+    db.commit()
+    db.refresh(trabalho)
+    logger.info(f"[ADMIN] Reenviando trabalho de impressão #{fila_id}")
+    return trabalho

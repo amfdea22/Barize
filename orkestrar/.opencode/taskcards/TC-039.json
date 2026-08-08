@@ -1,0 +1,83 @@
+{
+  "id": "TC-039",
+  "title": "QR PIX no cupom ESC/POS e na UI — QR nativo GS ( k no backend e placeholder/QR no CupomPDV/PainelPagamento reutilizando lib qrcode",
+  "status": "verified",
+  "statusHistory": [
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:41:49.624Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T14:42:33.314Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T16:37:53.852Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.113Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T16:38:01.120Z",
+      "actor": "gate",
+      "reason": "Payload PIX + CRC-16/CCITT + GS ( k + QRCodePix.tsx (smoke_tc037_039 18/18)"
+    }
+  ],
+  "createdAt": "2026-08-07T01:33:33.062Z",
+  "updatedAt": "2026-08-08T16:38:01.120Z",
+  "path": ".opencode/taskcards/TC-039.json",
+  "taskType": "card",
+  "objective": "Gerar QR Code PIX no cupom ESC/POS (backend) e na UI (frontend): criar gerador de payload PIX (BR Code EMV com CRC-16/CCITT) + comando nativo GS ( k para impressora, e componente QRCodePix.tsx reutilizando a lib qrcode já presente, exibido no CupomPDV quando forma de pagamento é pix.",
+  "acceptanceCriteria": [
+    "WORKER 1 — gerar_payload_pix() no worker: TLV EMV com chave PIX_CHAVE, txid, valor, CRC-16/CCITT (payload termina com \"6304\"+CRC hex)",
+    "WORKER 2 — formatar_qr_escpos() emite GS ( k modelo 2, módulo, size, store data, print para o QR no buffer ESC/POS",
+    "WORKER 3 — Fechamento insere QR PIX quando forma_pagamento==\"pix\" e PIX_CHAVE configurada; lado texto renderiza \"[ QR CODE PIX ]\" + payload",
+    "FRONT 4 — QRCodePix.tsx gera payload PIX no JS (mesmo algoritmo/CRC) e exibe QR placeholder/real no CupomPDV quando PIX",
+    "VALIDAÇÃO 5 — smoke_tc037_039 18/18 PASS cobrindo payload, CRC e bytes GS ( k"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/worker/impressao_worker.py",
+    "neonbar/backend/app/config.py",
+    "neonbar/frontend/src/components/pdv/QRCodePix.tsx",
+    "neonbar/frontend/src/components/pdv/CupomPDV.tsx"
+  ],
+  "tests": [
+    "gerar_payload_pix() retorna payload com \"6304\" + 4 dígitos CRC (regex ^000201...6304[0-9A-F]{4}$)",
+    "CRC-16/CCITT conferido contra caso conhecido (payload \"000201...\" exemplo PIX oficial)",
+    "Buffer de fechamento PIX contém bytes GS ( k (1d 28 6b)",
+    "QRCodePix.tsx gera payload consistente com backend",
+    "smoke_tc037_039 18/18 PASS"
+  ],
+  "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py."
+}

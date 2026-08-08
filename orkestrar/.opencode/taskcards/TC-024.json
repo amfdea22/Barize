@@ -1,7 +1,7 @@
 {
   "id": "TC-024",
   "title": "Implementar cadastro de funcionários no Admin",
-  "status": "executing",
+  "status": "completed",
   "taskType": "card",
   "createdAt": "2026-07-30T23:00:00.000Z",
   "createdBy": "user",
@@ -25,5 +25,70 @@
     "neonbar/frontend/src/services/api.ts",
     "neonbar/frontend/src/pages/Admin.tsx"
   ],
-  "notes": "Seguir design recomendado pelo arquiteto (modelo separado, FK opcional para Usuario)."
+  "notes": "Seguir design recomendado pelo arquiteto (modelo separado, FK opcional para Usuario).",
+  "statusHistory": [
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:16:07.911Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:16:07.918Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação"
+    },
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-06T23:18:46.426Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:26:10.314Z",
+      "actor": "qa-engineer",
+      "reason": "Smoke test backend 11/11 OK, build + lint frontend OK"
+    },
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-06T23:26:10.322Z",
+      "actor": "gate",
+      "reason": "Build + lint + smoke test backend OK"
+    },
+    {
+      "taskId": "TC-024",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-07T00:19:22.141Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "updatedAt": "2026-08-07T00:19:22.141Z",
+  "path": ".opencode/taskcards/TC-024.json",
+  "completedAt": "2026-08-07T00:19:22.141Z"
 }

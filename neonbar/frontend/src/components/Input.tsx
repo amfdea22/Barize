@@ -37,7 +37,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className={`
               block w-full h-12 outline-none
               rounded-lg bg-[var(--color-surface-container-low)]
-              border border-[rgba(255,255,255,0.08)]
+              border border-[rgba(var(--overlay-rgb),0.08)]
               text-sm text-[var(--color-on-surface)] placeholder:text-[var(--color-outline)]
               transition-all duration-150
               ${icon ? 'pl-[44px]' : 'pl-4'}
