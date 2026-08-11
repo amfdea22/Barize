@@ -57,6 +57,19 @@ def listar_produtos_pdv(
     return [ProdutoResponse.model_validate(p) for p in produtos]
 
 
+@router.get("/categorias")
+def listar_categorias_pdv(
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
+    """Lista categorias únicas de produtos ativos (sem paginação)."""
+    categorias = db.query(Produto.categoria).filter(
+        Produto.ativo == True,
+        Produto.categoria.isnot(None)
+    ).distinct().all()
+    return [c[0] for c in categorias if c[0]]
+
+
 @router.post("/produtos", response_model=ProdutoResponse, status_code=201)
 def criar_produto(
     data: ProdutoCreate,

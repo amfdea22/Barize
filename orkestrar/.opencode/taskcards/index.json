@@ -1,5 +1,5 @@
 {
-  "nextId": 47,
+  "nextId": 60,
   "cards": {
     "TC-002": {
       "id": "TC-002",
@@ -73,7 +73,7 @@
     "TC-005": {
       "id": "TC-005",
       "title": "Adicionar paginaÃ§Ã£o nos endpoints de listagem (produtos, insumos, relatÃ³rios)",
-      "status": "executing",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-25T19:00:00.000Z",
       "createdBy": "user",
@@ -90,7 +90,41 @@
         "neonbar/backend/app/routers/relatorios.py"
       ],
       "tests": [],
-      "notes": "Recomendado pelo @architect â€” prepara o sistema para catÃ¡logo grande sem degradaÃ§Ã£o"
+      "notes": "Recomendado pelo @architect â€” prepara o sistema para catÃ¡logo grande sem degradaÃ§Ã£o",
+      "statusHistory": [
+        {
+          "taskId": "TC-005",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:02:04.925Z",
+          "actor": "qa-engineer",
+          "reason": "Paginação nos 7 routers restantes aplicada, aguardando validação"
+        },
+        {
+          "taskId": "TC-005",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:02:04.935Z",
+          "actor": "gate",
+          "reason": "Paginação limit/offset em 10 routers de listagem — smoke backend 14/14 PASS, py_compile OK"
+        },
+        {
+          "taskId": "TC-005",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:08:02.736Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-09T00:08:02.736Z",
+      "path": ".opencode/taskcards/TC-005.json",
+      "completedAt": "2026-08-09T00:08:02.736Z"
     },
     "TC-004": {
       "id": "TC-004",
@@ -163,7 +197,7 @@
     "TC-009": {
       "id": "TC-009",
       "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
-      "status": "ready",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-009",
@@ -184,11 +218,50 @@
           "timestamp": "2026-08-06T21:13:46.697Z",
           "actor": "build",
           "reason": "Análise completa, aguardando aprovação"
+        },
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:39:23.475Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário via /card-iniciar"
+        },
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:02:04.943Z",
+          "actor": "qa-engineer",
+          "reason": "Validação de implementação existente (nomes abaixo das imagens)"
+        },
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:02:04.953Z",
+          "actor": "gate",
+          "reason": "Imagens aspect-[16/10] no topo + nome em área própria — smoke browser 6/6 PASS (/cardapio e /pdv 16/16 cards)"
+        },
+        {
+          "taskId": "TC-009",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:08:02.745Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-07-26T04:53:07.565Z",
-      "updatedAt": "2026-08-06T21:13:46.697Z",
-      "path": ".opencode/taskcards/active/TC-009.json",
+      "updatedAt": "2026-08-09T00:08:02.745Z",
+      "path": ".opencode/taskcards/TC-009.json",
       "taskType": "card",
       "createdBy": "user",
       "agent": "build",
@@ -201,19 +274,102 @@
       ],
       "filesInvolved": [],
       "tests": [],
-      "notes": ""
+      "notes": "",
+      "completedAt": "2026-08-09T00:08:02.745Z"
     },
     "TC-011": {
       "id": "TC-011",
       "title": "Padronizar tamanho da visualizaÃ§Ã£o de todas as bebidas igual ao de bebidas/drinks",
-      "status": "backlog",
-      "statusHistory": [],
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.178Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.427Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.805Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.060Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.075Z",
+          "actor": "gate",
+          "reason": "Batch A: card único uniforme aspect-[16/10] para todas as categorias validado — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-011",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.616Z",
+          "actor": "user"
+        }
+      ],
       "createdAt": "2026-07-26T05:07:58.951Z",
-      "updatedAt": "2026-07-26T05:07:58.951Z",
+      "updatedAt": "2026-08-08T21:15:03.616Z",
       "path": ".opencode/taskcards/TC-011.json",
       "taskType": "card",
       "createdBy": "user",
-      "agent": "build"
+      "agent": "build",
+      "objective": "Padronizar o tamanho da visualização de TODAS as bebidas no cardápio digital (/cardapio) para ficar igual ao da área Drinks — mesma proporção de foto (aspect-[16/10]), mesmo tamanho de nome, descrição e preço, independentemente da categoria (Bebidas, Cervejas, Chopps, Vinhos, Destilados, Não Alcoólicos).",
+      "acceptanceCriteria": [
+        "CARDAPIO 1 — Todas as categorias usam o MESMO card (mesma classe de imagem aspect-[16/10], mesmo padding p-3, mesmo estilo de nome/descrição/preço) — sem variação por categoria no CardapioDigital.tsx",
+        "CARDAPIO 2 — Produtos de bebidas com foto real (foto_url) exibem imagem object-cover no mesmo tamanho que drinks",
+        "CARDAPIO 3 — Produtos sem foto exibem fallback (emoji/imagem text-4xl centralizado) no mesmo tamanho que drinks",
+        "CARDAPIO 4 — Nome (text-[13px] semibold break-words), descrição (text-[11px] line-clamp-2) e preço (font-mono) idênticos entre categorias",
+        "VALIDAÇÃO 5 — Verificação visual contra ui/templates/layout/menu_e_lan_amentos_pdv/screen.png (área drinks × demais categorias) em smoke browser; ajustar apenas o que divergir",
+        "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Todas as categorias renderizam o mesmo grid (grid-cols-2/3/4) e card com aspect-[16/10]",
+        "Produto de bebida com foto_url renderiza img object-cover preenchendo o card",
+        "Produto sem foto renderiza emoji centralizado (fallback) do mesmo tamanho",
+        "Nome/descrição/preço com as mesmas classes de tipografia em todas as categorias",
+        "Smoke browser: /cardapio exibe bebidas com mesmo tamanho de foto/nome/preço que drinks",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Análise: CardapioDigital.tsx já usa UM ÚNICO card para todas as categorias (linhas 248-320) — a padronização estrutural já existe. Divergência possível: produtos de bebidas sem foto_url renderizam emoji fallback enquanto drinks têm foto real, ou proporções diferentes percebidas pelo usuário. Como não consigo ler a imagem de referência screen.png (modelo sem visão), este card valida a consistência e corrige apenas o que divergir visualmente. Premissa de escopo: apenas CardapioDigital.tsx (público), sem mudanças no PDV.",
+      "completedAt": "2026-08-08T21:15:03.616Z"
     },
     "TC-012": {
       "taskType": "card",
@@ -221,11 +377,92 @@
       "id": "TC-012",
       "createdAt": "2026-07-26T05:19:28.558Z",
       "agent": "build",
-      "statusHistory": [],
-      "updatedAt": "2026-07-26T05:19:28.558Z",
-      "status": "backlog",
+      "statusHistory": [
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.186Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.439Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.817Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.087Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.097Z",
+          "actor": "gate",
+          "reason": "Batch A: foto/nome/preço idênticos a drinks validados — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-012",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.631Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.631Z",
+      "status": "completed",
       "path": ".opencode/taskcards/TC-012.json",
-      "title": "Padronizar tamanho das fotos e visualizaÃ§Ã£o dos nomes e preÃ§os do produto da Ã¡rea de todas as bebidas para ficar igual Ã  Ã¡rea drinks"
+      "title": "Padronizar tamanho das fotos e visualizaÃ§Ã£o dos nomes e preÃ§os do produto da Ã¡rea de todas as bebidas para ficar igual Ã  Ã¡rea drinks",
+      "objective": "Padronizar o tamanho das FOTOS e a visualização de NOMES e PREÇOS dos produtos da área \"todas as bebidas\" para ficar igual à área drinks — garantir que foto, nome e preço tenham o mesmo destaque e proporção em todas as categorias do cardápio digital.",
+      "acceptanceCriteria": [
+        "FOTO 1 — Fotos (foto_url) de bebidas renderizam object-cover na mesma proporção (aspect-[16/10]) que drinks",
+        "NOME 2 — Nome do produto exibido abaixo da imagem com a mesma tipografia (text-[13px] semibold break-words leading-snug) em todas as categorias",
+        "PREÇO 3 — Preço exibido com a mesma tipografia mono (font-mono text-[15px] semibold) e mesma cor de destaque por categoria",
+        "FALLBACK 4 — Sem foto: emoji/imagem centralizado no mesmo tamanho que drinks",
+        "VALIDAÇÃO 5 — Verificação visual contra a referência ui/templates/layout/menu_e_lan_amentos_pdv/screen.png",
+        "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Produtos de bebidas com foto exibem foto no mesmo tamanho que drinks",
+        "Nome/preço de bebidas com as mesmas classes de tipografia que drinks",
+        "Sem foto, fallback emoji do mesmo tamanho que drinks",
+        "Smoke browser: /cardapio comparando categoria de bebidas × drinks",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Sobrepõe-se ao TC-011 (mesma área CardapioDigital). Se ambos forem aprovados, implementar em conjunto em um único batch — TC-011 garante o card único, TC-012 garante foto/nome/preço idênticos a drinks. Referência visual: ui/templates/layout/menu_e_lan_amentos_pdv/screen.png (não lida pelo modelo — sem visão).",
+      "completedAt": "2026-08-08T21:15:03.631Z"
     },
     "TC-013": {
       "taskType": "card",
@@ -233,11 +470,93 @@
       "id": "TC-013",
       "createdAt": "2026-07-26T02:31:19.765Z",
       "agent": "build",
-      "statusHistory": [],
-      "updatedAt": "2026-07-26T02:31:19.765Z",
-      "status": "backlog",
+      "statusHistory": [
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.192Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.448Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.827Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.108Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.119Z",
+          "actor": "gate",
+          "reason": "Batch A: toggle Cardápio Básico/Completo + localStorage barize-cardapio-modo — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-013",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.643Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.643Z",
+      "status": "completed",
       "path": ".opencode/taskcards/TC-013.json",
-      "title": "Inserir opÃ§Ã£o CardÃ¡pio Digital BÃ¡sico"
+      "title": "Inserir opÃ§Ã£o CardÃ¡pio Digital BÃ¡sico",
+      "objective": "Inserir uma opção de Cardápio Digital BÁSICO — modo simplificado do cardápio (/cardapio) que exibe apenas nome, preço e (opcional) descrição curta, sem ingredientes/hover tooltip e com visual mais leve, para acesso rápido e melhor desempenho. Implementado como um toggle dentro da página CardapioDigital (premissa adotada após usuário dispensar a pergunta de esclarecimento).",
+      "acceptanceCriteria": [
+        "TOGGLE 1 — Botão/toggle na página CardapioDigital para alternar entre modos 'Completo' (atual) e 'Básico'",
+        "BASICO 2 — Modo Básico exibe foto (ou fallback), nome e preço; descrição curta opcional (1 linha)",
+        "BASICO 3 — Modo Básico oculta ingredientes e o tooltip hover de ingredientes",
+        "BASICO 4 — Modo Básico mantém busca, categorias (nav) e contagem de itens",
+        "BASICO 5 — Escolha persistida em localStorage (barize-cardapio-modo) para manter entre visitas",
+        "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Toggle alterna entre Completo e Básico",
+        "Modo Básico sem tooltip de ingredientes",
+        "Modo Básico mostra nome + preço (foto/emoji) para todos os produtos",
+        "Busca e navegação por categoria funcionam no modo Básico",
+        "Preferência persiste em localStorage entre recargas",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Premissa adotada (usuário dispensou a pergunta de esclarecimento): \"Básico\" = modo simplificado via toggle na própria página /cardapio, sem nova rota, sem backend. Se a intenção for outra (ex: nova rota separada /cardapio-basico ou versão impressa sem fotos), ajustar antes da implementação.",
+      "completedAt": "2026-08-08T21:15:03.643Z"
     },
     "TC-014": {
       "id": "TC-014",
@@ -260,20 +579,190 @@
     "TC-016": {
       "id": "TC-016",
       "title": "TC-015 scrollbar não está visível no cardápio digital",
-      "status": "backlog",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-26T05:50:00.000Z",
       "createdBy": "user",
-      "agent": "build"
+      "agent": "build",
+      "statusHistory": [
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.198Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.459Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.836Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.129Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.139Z",
+          "actor": "gate",
+          "reason": "Batch A: classe scrollbar-visible no /cardapio (WebKit+Firefox) — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-016",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.658Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.658Z",
+      "path": ".opencode/taskcards/TC-016.json",
+      "objective": "Tornar a barra de rolagem VISÍVEL no cardápio digital (/cardapio) — o main já usa overflow-y-scroll (CardapioDigital.tsx:198-202), mas o scrollbar global é fino/transparente (index.css:188-207: track rgba 0.03 + scrollbar-width:thin no Firefox), ficando praticamente invisível. Estilizar o scrollbar da área de conteúdo do cardápio com contraste visível.",
+      "acceptanceCriteria": [
+        "SCROLL 1 — Área de conteúdo do /cardapio exibe barra de rolagem visível quando houver overflow (thumb com contraste — usar var(--color-primary-container)/outline-variant no thumb e track levemente visível)",
+        "SCROLL 2 — Scrollbar VISÍVEL no Firefox (scrollbar-width/scrollbar-color ou fallback) — não apenas WebKit",
+        "SCROLL 3 — Nav de categorias (barra horizontal) continua com scrollbar oculto (scrollbarWidth:none já existente) — sem regressão",
+        "SCROLL 4 — Funcionalidade de scroll (scroll spy de categoria ativo) preservada",
+        "VALIDAÇÃO 5 — Smoke browser: scrollbar visível ao rolar /cardapio com muitos itens; build + lint frontend OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/CardapioDigital.tsx",
+        "neonbar/frontend/src/index.css"
+      ],
+      "tests": [
+        "Scrollbar do main do cardápio visível (WebKit thumb com contraste)",
+        "Scrollbar visível no Firefox",
+        "Nav horizontal de categorias sem scrollbar visível (regressão)",
+        "Scroll spy de categoria continua destacando a categoria ativa",
+        "Smoke browser + build + lint frontend OK"
+      ],
+      "notes": "Causa raiz provável: scrollbar global estilizado quase invisível (index.css:188-207) aplicado ao main overflow-y-scroll do cardápio. Escopo: estilizar scrollbar da área de conteúdo do CardapioDigital (CSS scoped ou classe própria) sem afetar as demais páginas. Relacionado ao TC-017 (mesmo padrão de scrollbar no PDV).",
+      "completedAt": "2026-08-08T21:15:03.658Z"
     },
     "TC-017": {
       "id": "TC-017",
       "title": "Inserir barra de rolagem no painel do PDV para ver todas as bebidas",
-      "status": "backlog",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-26T06:00:00.000Z",
       "createdBy": "user",
-      "agent": "build"
+      "agent": "build",
+      "statusHistory": [
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.204Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.470Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.849Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.150Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.161Z",
+          "actor": "gate",
+          "reason": "Batch B: scrollbar-visible no painel de produtos do PDV — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-017",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.669Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.669Z",
+      "path": ".opencode/taskcards/TC-017.json",
+      "objective": "Inserir barra de rolagem visível no painel de produtos do PDV (/pdv) para que todas as bebidas/produtos sejam alcançáveis — o container de produtos já tem overflow-y-auto min-h-0 (PDV.tsx:356), mas o scrollbar global fino/transparente (index.css:188-207) torna a rolagem pouco visível e o painel pode não scrollar se a cadeia de altura não estiver correta.",
+      "acceptanceCriteria": [
+        "SCROLL 1 — Painel de produtos do PDV rola verticalmente com barra de rolagem VISÍVEL quando a lista excede a altura disponível",
+        "SCROLL 2 — Todos os produtos/bebidas alcançáveis por rolagem (nenhum item inacessível)",
+        "SCROLL 3 — Cadeia de altura correta (h-full/min-h-0) para que o overflow-y-auto realmente atue no painel esquerdo",
+        "SCROLL 4 — Scrollbar visível no Firefox e WebKit (mesmo padrão do TC-016)",
+        "SCROLL 5 — Painel de venda (carrinho) continua com scroll próprio sem regressão",
+        "VALIDAÇÃO 6 — Smoke browser: /pdv com muitos produtos, rolagem visível; build + lint frontend OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/PDV.tsx",
+        "neonbar/frontend/src/index.css"
+      ],
+      "tests": [
+        "Painel de produtos do PDV exibe scrollbar visível com lista longa",
+        "Todos os produtos acessíveis via rolagem",
+        "Altura da cadeia (flex h-full, min-h-0) correta no painel de produtos",
+        "Scrollbar visível em WebKit e Firefox",
+        "Painel de venda/carrinho sem regressão",
+        "Smoke browser + build + lint frontend OK"
+      ],
+      "notes": "Causa raiz provável: scrollbar global quase invisível + possível quebra na cadeia de altura (o container raiz é flex h-full; o painel de produtos é flex-1 min-h-0 overflow-y-auto — validar no browser). Escopo: PDV.tsx + estilização de scrollbar compartilhada com TC-016 (extrair classe .scrollbar-visible em index.css).",
+      "completedAt": "2026-08-08T21:15:03.669Z"
     },
     "TC-018": {
       "id": "TC-018",
@@ -293,11 +782,94 @@
     "TC-019": {
       "id": "TC-019",
       "title": "gerar QRcode para cardápio digital",
-      "status": "backlog",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-26T06:35:00.000Z",
       "createdBy": "user",
-      "agent": "build"
+      "agent": "build",
+      "statusHistory": [
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.212Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.482Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.858Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:08:50.010Z",
+          "actor": "qa-engineer",
+          "reason": "Validação de implementação existente"
+        },
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:08:50.025Z",
+          "actor": "gate",
+          "reason": "Batch C: QR local lib qrcode validado — botão Sidebar abre modal, QR data:image png, botão Baixar PNG — smoke 16/16 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-019",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.681Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.681Z",
+      "path": ".opencode/taskcards/TC-019.json",
+      "objective": "Gerar QR code para o cardápio digital — JÁ IMPLEMENTADO. A Sidebar.tsx (linhas 67-92, 184-191, 257-304) gera o QR localmente com a lib `qrcode` (sem API externa), exibe em modal e permite download (qrcode-cardapio.png) apontando para /cardapio. Este card valida a implementação existente contra os critérios e encerra o ciclo.",
+      "acceptanceCriteria": [
+        "QR 1 — QR code gerado LOCALMENTE (lib qrcode), sem api.qrserver.com nem recurso externo (regra frontend-no-external-resources)",
+        "QR 2 — Botão 'QR Code do Cardápio' na Sidebar abre modal com o QR",
+        "QR 3 — Modal permite BAIXAR o QR como PNG (qrcode-cardapio.png)",
+        "QR 4 — QR aponta para a URL do cardápio (/cardapio)",
+        "VALIDAÇÃO 5 — Smoke browser: login → Sidebar → botão QR → modal → QR visível → download; build + lint frontend OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/layouts/Sidebar.tsx"
+      ],
+      "tests": [
+        "QR gerado com lib qrcode (sem chamada a serviço externo de QR)",
+        "Modal abre com QR ao clicar no botão",
+        "Download gera PNG com nome qrcode-cardapio.png",
+        "Conteúdo do QR = window.location.origin + /cardapio",
+        "Smoke browser + build + lint frontend OK"
+      ],
+      "notes": "JÁ IMPLEMENTADO em sessão anterior (progress-tracker item 17/18): QR local via lib `qrcode`, modal corrigido para o padrão Modal.tsx (removido max-w-sm w-full mx-lg que causava overflow). Este card NÃO exige nova implementação — seguir direto para testing→verified com base no código existente e smoke test. Nenhuma mudança de código necessária.",
+      "completedAt": "2026-08-08T21:15:03.681Z"
     },
     "TC-020": {
       "id": "TC-020",
@@ -311,7 +883,7 @@
     "TC-021": {
       "id": "TC-021",
       "title": "Edição de Comandas — backend PATCH + frontend modal",
-      "status": "backlog",
+      "status": "completed",
       "taskType": "card",
       "createdAt": "2026-07-26T06:50:00.000Z",
       "createdBy": "user",
@@ -322,7 +894,94 @@
         "frontend/src/types/index.ts",
         "frontend/src/services/api.ts",
         "frontend/src/pages/Comandas.tsx"
-      ]
+      ],
+      "statusHistory": [
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.218Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.492Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.866Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:08:50.037Z",
+          "actor": "qa-engineer",
+          "reason": "Validação de implementação existente"
+        },
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:08:50.049Z",
+          "actor": "gate",
+          "reason": "Batch C: edição de comanda validada — modal Editar com Mesa/Cliente/Tempo/Obs/Itens + PATCH Salvar — smoke 16/16 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-021",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.695Z",
+          "actor": "user"
+        }
+      ],
+      "updatedAt": "2026-08-08T21:15:03.695Z",
+      "path": ".opencode/taskcards/TC-021.json",
+      "objective": "Edição de Comandas — JÁ IMPLEMENTADO. Frontend: modal \"Editar Comanda #id\" em Comandas.tsx (linhas 375-420) permite editar mesa, cliente, observação, tempo de preparo e itens (adicionar/remover/quantidade). Backend: PATCH /pedidos/{id} em pedidos.py (linhas 114-145) persiste as alterações com role check. Este card valida a implementação existente e encerra o ciclo.",
+      "acceptanceCriteria": [
+        "FRONT 1 — Modal 'Editar Comanda' acessível pelo botão Editar em cada comanda (Comandas.tsx:296-302)",
+        "FRONT 2 — Edição de mesa, cliente, observação, tempo de preparo e itens (quantidade/remover/adicionar produto)",
+        "BACK 3 — PATCH /pedidos/{id} (PedidoUpdate) persiste mesa/cliente/observacao/itens/tempo_preparo_estimado e recalcula total (pedidos.py:114-145)",
+        "BACK 4 — Role check no PATCH: apenas admin/gerente/bartender (pedidos.py:122)",
+        "BACK 5 — Pedido inexistente → 404; sem token → 401",
+        "VALIDAÇÃO 6 — Smoke test backend PATCH (200, recalculo total, 401/404) + smoke browser edição; build + lint frontend OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/Comandas.tsx",
+        "neonbar/backend/app/routers/pedidos.py",
+        "neonbar/backend/app/schemas/pedido.py"
+      ],
+      "tests": [
+        "PATCH /pedidos/{id} com mesa/cliente/obs/itens → 200 e dados persistidos",
+        "Alteração de itens recalcula total corretamente",
+        "PATCH sem token → 401; pedido inexistente → 404",
+        "Modal Editar abre, edita campos e salva (smoke browser)",
+        "Adicionar/remover item no modal funciona",
+        "Build + lint frontend OK"
+      ],
+      "notes": "JÁ IMPLEMENTADO em sessão anterior (progress-tracker item 3): backend PATCH + frontend modal, incluindo adição/remoção de itens. Este card NÃO exige nova implementação — seguir direto para testing→verified com smoke tests do endpoint e do modal. Nenhuma mudança de código necessária (a menos que smoke revele bug).",
+      "completedAt": "2026-08-08T21:15:03.695Z"
     },
     "TC-022": {
       "id": "TC-022",
@@ -469,12 +1128,96 @@
     "TC-025": {
       "id": "TC-025",
       "title": "no menu administração criar áreas de acessos no sistema para administrador, gerente e bartender",
-      "status": "backlog",
-      "statusHistory": [],
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:30:15.225Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:41:24.503Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T20:55:00.875Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — batch de 8 cards"
+        },
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.172Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T21:04:54.183Z",
+          "actor": "gate",
+          "reason": "Batch D: menu por perfil (Sidebar podeAcessar) + rotas restritas (RequireRole) — smoke 18/18 PASS, tsc/lint/build OK"
+        },
+        {
+          "taskId": "TC-025",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T21:15:03.711Z",
+          "actor": "user"
+        }
+      ],
       "createdAt": "2026-08-06T21:01:55.144Z",
-      "updatedAt": "2026-08-06T21:01:55.144Z",
-      "path": ".opencode/taskcards/active/TC-025.json",
-      "taskType": "card"
+      "updatedAt": "2026-08-08T21:15:03.711Z",
+      "path": ".opencode/taskcards/TC-025.json",
+      "taskType": "card",
+      "objective": "Criar áreas de acesso por perfil (admin, gerente, bartender) no sistema. Premissa adotada (usuário dispensou a pergunta de esclarecimento): filtrar o MENU lateral por perfil + proteger rotas — admin vê tudo, gerente vê administração/gestão, bartender vê apenas as áreas operacionais (Painel, PDV, Comandas, Cardápio Digital, Ficha Técnica/Estoque se aplicável). Hoje o Sidebar já oculta \"Administração\" de bartenders (Sidebar.tsx:153) e o Admin.tsx redireciona não-admin/gerente (Admin.tsx:177-180); o card formaliza e amplia esse controle.",
+      "acceptanceCriteria": [
+        "MENU 1 — Sidebar filtra itens por perfil: admin (todos), gerente (todos exceto restritos), bartender (apenas operacionais — Painel, PDV, Comandas, Cardápio Digital, Ficha Técnica, Estoque, Etiquetas)",
+        "ROTA 2 — Rotas protegidas por perfil: /admin acessível apenas admin/gerente (redirect para /pdv para os demais — já existe em Admin.tsx)",
+        "ROTA 3 — Rota /relatorios, /financeiro, /cmv, /dre, /caixa, /analise-estoque restritas a admin/gerente (bartender não acessa por URL direta)",
+        "BACKEND 4 — Endpoints sensíveis já protegidos por verificar_role/requer_role (admin/gerente) — validar cobertura nos routers financeiro/relatorios/cmv/caixa",
+        "UI 5 — Item 'Configurações' do rodapé do Sidebar oculto para bartender (aponta /admin)",
+        "VALIDAÇÃO 6 — Smoke browser: login bartender não vê Administração/Relatórios/Financeiro/CMV/DRE/Caixa no menu nem acessa via URL; login admin vê tudo; build + lint frontend OK"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/layouts/Sidebar.tsx",
+        "neonbar/frontend/src/App.tsx",
+        "neonbar/frontend/src/layouts/MainLayout.tsx"
+      ],
+      "tests": [
+        "Sidebar admin exibe todos os itens",
+        "Sidebar gerente exibe itens de gestão + admin",
+        "Sidebar bartender exibe apenas operacionais (sem Administração/Relatórios/Financeiro/CMV/DRE/Caixa)",
+        "Bartender acessando /admin, /relatorios, /financeiro, /cmv, /dre, /caixa via URL é redirecionado",
+        "Admin acessa todas as rotas normalmente",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Premissa adotada (usuário dispensou a pergunta de esclarecimento): filtro de menu por perfil + proteção de rotas. Sem tela de configuração de permissões (matriz persistida) nesta versão — apenas filtro estático por role. Atenção: definir a lista exata de áreas do bartender com o usuário antes de implementar (Painel/PDV/Comandas/cardápio/etiquetas/estoque são o candidato). Backend já protege os endpoints sensíveis.",
+      "completedAt": "2026-08-08T21:15:03.711Z"
     },
     "TC-026": {
       "id": "TC-026",
@@ -1457,7 +2200,7 @@
     "TC-036": {
       "id": "TC-036",
       "title": "Comanda de produção sem preços — remover valores da comanda de cozinha/bar (backend impressao_worker.py e frontend Comandas.tsx), título FONT_LARGE, itens negrito com quantidade e obs em destaque",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-036",
@@ -1508,10 +2251,19 @@
           "timestamp": "2026-08-08T16:38:01.081Z",
           "actor": "gate",
           "reason": "Comanda sem preços (ESC/POS + Comandas.tsx) — tsc/build/lint OK"
+        },
+        {
+          "taskId": "TC-036",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.186Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.045Z",
-      "updatedAt": "2026-08-08T16:38:01.081Z",
+      "updatedAt": "2026-08-08T17:26:24.186Z",
       "path": ".opencode/taskcards/TC-036.json",
       "taskType": "card",
       "objective": "Remover valores (preços, totais) da comanda de produção de cozinha/bar, tanto no backend (impressao_worker.py, fluxo COMANDA) quanto no frontend (modal de comanda em Comandas.tsx). Título da comanda em FONT_LARGE, itens em negrito com quantidade e observações em destaque.",
@@ -1531,12 +2283,13 @@
         "Modal de comanda renderiza itens sem moeda/preços",
         "tsc -b + npm run build passam"
       ],
-      "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print."
+      "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print.",
+      "completedAt": "2026-08-08T17:26:24.186Z"
     },
     "TC-037": {
       "id": "TC-037",
       "title": "Corte parcial da guilhotina — trocar \\x1d\\x56\\x00 (total) por \\x1d\\x56\\x01 (parcial) e garantir 3 feeds \\n\\n\\n antes do corte",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-037",
@@ -1587,10 +2340,19 @@
           "timestamp": "2026-08-08T16:38:01.094Z",
           "actor": "gate",
           "reason": "Corte parcial \\x1d\\x56\\x01 + 3 feeds verificados (smoke_tc037_039 18/18)"
+        },
+        {
+          "taskId": "TC-037",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.195Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.050Z",
-      "updatedAt": "2026-08-08T16:38:01.094Z",
+      "updatedAt": "2026-08-08T17:26:24.195Z",
       "path": ".opencode/taskcards/TC-037.json",
       "taskType": "card",
       "objective": "Trocar o corte total da guilhotina (\\x1d\\x56\\x00) por corte parcial (\\x1d\\x56\\x01) na comanda e no fechamento, garantindo 3 feeds (\\n\\n\\n) antes do corte para não cortar a última linha impressa.",
@@ -1607,12 +2369,13 @@
         "Buffer de fechamento contém b'\\x1d\\x56\\x01' e 3 feeds antes",
         "smoke_tc037_039 18/18 PASS"
       ],
-      "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão."
+      "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão.",
+      "completedAt": "2026-08-08T17:26:24.195Z"
     },
     "TC-038": {
       "id": "TC-038",
       "title": "Abertura de gaveta via pulso RJ11 — comando \\x1b\\x70\\x00\\x19\\xfa como primeiro byte do buffer de fechamento",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-038",
@@ -1663,10 +2426,19 @@
           "timestamp": "2026-08-08T16:38:01.108Z",
           "actor": "gate",
           "reason": "ABRIR_GAVETA como primeiro byte do fechamento (smoke_tc037_039 18/18)"
+        },
+        {
+          "taskId": "TC-038",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.201Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.057Z",
-      "updatedAt": "2026-08-08T16:38:01.108Z",
+      "updatedAt": "2026-08-08T17:26:24.201Z",
       "path": ".opencode/taskcards/TC-038.json",
       "taskType": "card",
       "objective": "Adicionar abertura de gaveta de dinheiro via pulso RJ11 (comando ESC/POS \\x1b\\x70\\x00\\x19\\xfa) como PRIMEIRO byte do buffer de fechamento ESC/POS, para a gaveta abrir no momento do fechamento/cupom.",
@@ -1682,12 +2454,13 @@
         "Buffer de fechamento começa com b'\\x1b\\x70\\x00\\x19\\xfa'",
         "smoke_tc037_039 18/18 PASS"
       ],
-      "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado."
+      "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado.",
+      "completedAt": "2026-08-08T17:26:24.201Z"
     },
     "TC-039": {
       "id": "TC-039",
       "title": "QR PIX no cupom ESC/POS e na UI — QR nativo GS ( k no backend e placeholder/QR no CupomPDV/PainelPagamento reutilizando lib qrcode",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-039",
@@ -1738,10 +2511,19 @@
           "timestamp": "2026-08-08T16:38:01.120Z",
           "actor": "gate",
           "reason": "Payload PIX + CRC-16/CCITT + GS ( k + QRCodePix.tsx (smoke_tc037_039 18/18)"
+        },
+        {
+          "taskId": "TC-039",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.207Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.062Z",
-      "updatedAt": "2026-08-08T16:38:01.120Z",
+      "updatedAt": "2026-08-08T17:26:24.207Z",
       "path": ".opencode/taskcards/TC-039.json",
       "taskType": "card",
       "objective": "Gerar QR Code PIX no cupom ESC/POS (backend) e na UI (frontend): criar gerador de payload PIX (BR Code EMV com CRC-16/CCITT) + comando nativo GS ( k para impressora, e componente QRCodePix.tsx reutilizando a lib qrcode já presente, exibido no CupomPDV quando forma de pagamento é pix.",
@@ -1765,12 +2547,13 @@
         "QRCodePix.tsx gera payload consistente com backend",
         "smoke_tc037_039 18/18 PASS"
       ],
-      "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py."
+      "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py.",
+      "completedAt": "2026-08-08T17:26:24.207Z"
     },
     "TC-040": {
       "id": "TC-040",
       "title": "Fila de contingência + Reenviar Pedido — endpoint de reprocessamento da fila_impressao + UI listando trabalhos PENDENTE/ERRO com botão Reenviar Pedido",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-040",
@@ -1821,10 +2604,19 @@
           "timestamp": "2026-08-08T16:38:01.134Z",
           "actor": "gate",
           "reason": "printer-fila GET/POST reenviar + UI aba Impressoras (smoke_tc040 12/12)"
+        },
+        {
+          "taskId": "TC-040",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.214Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.067Z",
-      "updatedAt": "2026-08-08T16:38:01.134Z",
+      "updatedAt": "2026-08-08T17:26:24.214Z",
       "path": ".opencode/taskcards/TC-040.json",
       "taskType": "card",
       "objective": "Fila de contingência de impressão: expor GET /admin/printer-fila?status= (PENDENTE/ERRO/CONCLUIDO/TODOS) listando trabalhos da fila_impressao e POST /admin/printer-fila/{id}/reenviar para reprocessar trabalho com erro. UI na aba Impressoras do Admin lista PENDENTE/ERRO com botão Reenviar Pedido.",
@@ -1849,12 +2641,13 @@
         "Sem token retorna 401",
         "smoke_tc040 12/12 PASS"
       ],
-      "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py."
+      "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py.",
+      "completedAt": "2026-08-08T17:26:24.214Z"
     },
     "TC-041": {
       "id": "TC-041",
       "title": "Corrigir sistema de impressão CSS — consolidar blocos @media print do index.css (A4 sobrescreve 80mm) e adicionar classe de print ao modal de comanda (Comandas.tsx:320)",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-041",
@@ -1905,10 +2698,19 @@
           "timestamp": "2026-08-08T16:38:01.148Z",
           "actor": "gate",
           "reason": "index.css consolidado, @page 80mm + ficha-a4 named page, build OK"
+        },
+        {
+          "taskId": "TC-041",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.222Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.072Z",
-      "updatedAt": "2026-08-08T16:38:01.148Z",
+      "updatedAt": "2026-08-08T17:26:24.222Z",
       "path": ".opencode/taskcards/TC-041.json",
       "taskType": "card",
       "objective": "Corrigir o sistema de impressão CSS: consolidar os 3 blocos @media print duplicados do index.css em 1 único, definir @page { size: 80mm auto } global, usar named page ficha-a4 para a ficha A4 (para o A4 NÃO sobrescrever o 80mm), e adicionar classe de print ao modal de comanda (Comandas.tsx).",
@@ -1928,12 +2730,13 @@
         "npm run build OK",
         "npm run lint 0 erros"
       ],
-      "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante."
+      "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante.",
+      "completedAt": "2026-08-08T17:26:24.222Z"
     },
     "TC-042": {
       "id": "TC-042",
       "title": "Aba Impressoras no Admin — UI de configuração (tipo network/usb/serial, host, porta, baud, timeout, ativo) + botão Testar Impressora via adminService getPrinterConfig/updatePrinterConfig/testPrinter",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-042",
@@ -1984,10 +2787,19 @@
           "timestamp": "2026-08-08T16:38:01.161Z",
           "actor": "gate",
           "reason": "Aba Impressoras no Admin (form/status/testar/salvar) — build/lint OK"
+        },
+        {
+          "taskId": "TC-042",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.229Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.078Z",
-      "updatedAt": "2026-08-08T16:38:01.161Z",
+      "updatedAt": "2026-08-08T17:26:24.229Z",
       "path": ".opencode/taskcards/TC-042.json",
       "taskType": "card",
       "objective": "Aba Impressoras no Admin: UI de configuração das impressoras (tipo network/usb/serial, host, porta, baud, timeout, ativo), chips dos setores configurados (CAIXA/COZINHA/BAR), botão Checar Status (DLE EOT via GET /admin/printer-status), Testar Impressora e Salvar via adminService ampliado (getPrinterConfigs, getPrinterStatus, createPrinterConfig).",
@@ -2008,12 +2820,13 @@
         "Checar Status dispara adminService.getPrinterStatus",
         "npm run build OK + npm run lint 0 erros + tsc -b OK"
       ],
-      "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem)."
+      "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem).",
+      "completedAt": "2026-08-08T17:26:24.229Z"
     },
     "TC-043": {
       "id": "TC-043",
       "title": "Emulador CLI ASCII — emulador ESC/POS de 48 colunas + regex de limpeza de comandos binários/hex para visualização",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-043",
@@ -2064,10 +2877,19 @@
           "timestamp": "2026-08-08T16:38:01.174Z",
           "actor": "gate",
           "reason": "Emulador CLI ASCII 48 col + limpar_comandos_escpos — execução sem erro"
+        },
+        {
+          "taskId": "TC-043",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.235Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.083Z",
-      "updatedAt": "2026-08-08T16:38:01.174Z",
+      "updatedAt": "2026-08-08T17:26:24.235Z",
       "path": ".opencode/taskcards/TC-043.json",
       "taskType": "card",
       "objective": "Emulador CLI ASCII de ESC/POS 48 colunas (neonbar/backend/app/worker/emulador_escpos.py): argumentos --comanda/--qtd/--obs/--fechamento/--raw/--colunas, função limpar_comandos_escpos() que remove comandos binários/hex e os substitui por rótulos legíveis (ex \"CORTE PARCIAL\"), e renderizar_ascii() com centralização para preview visual sem impressora.",
@@ -2085,12 +2907,13 @@
         "limpar_comandos_escpos remove bytes binários do buffer",
         "Saída renderizada tem largura <= colunas e centraliza título"
       ],
-      "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas."
+      "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas.",
+      "completedAt": "2026-08-08T17:26:24.235Z"
     },
     "TC-044": {
       "id": "TC-044",
       "title": "Visualizador web/híbrido de impressão 80mm — container com serrilhado de rasgo, tipografia monoespaçada e placeholder QR PIX (reutilizar/evoluir CupomPDV e Label80mm)",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-044",
@@ -2141,10 +2964,19 @@
           "timestamp": "2026-08-08T16:38:01.188Z",
           "actor": "gate",
           "reason": "Visualizador80mm com serrilha + modal Preview Cupom 80mm — build/lint OK"
+        },
+        {
+          "taskId": "TC-044",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:24.241Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-07T01:33:33.088Z",
-      "updatedAt": "2026-08-08T16:38:01.188Z",
+      "updatedAt": "2026-08-08T17:26:24.241Z",
       "path": ".opencode/taskcards/TC-044.json",
       "taskType": "card",
       "objective": "Visualizador web/híbrido de impressão 80mm: componente Visualizador80mm.tsx com container serrilhado de rasgo (borda lateral e inferior), tipografia monoespaçada, envolvendo o CupomPDV (com placeholder QR PIX), exibido no PDV no modal \"Preview Cupom 80mm\".",
@@ -2165,12 +2997,13 @@
         "PDV abre modal Preview Cupom 80mm",
         "npm run build OK + npm run lint 0 erros"
       ],
-      "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local)."
+      "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local).",
+      "completedAt": "2026-08-08T17:26:24.241Z"
     },
     "TC-045": {
       "id": "TC-045",
       "title": "Criar opção no painel de cancelar pedido",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-045",
@@ -2221,10 +3054,19 @@
           "timestamp": "2026-08-08T16:47:36.764Z",
           "actor": "gate",
           "reason": "Smoke backend 6/6 PASS (Cancelado 200, inválido 400, fora de ativos, filtro, 401) + tsc/build/lint OK"
+        },
+        {
+          "taskId": "TC-045",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:31.988Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-08T16:39:48.642Z",
-      "updatedAt": "2026-08-08T16:47:36.764Z",
+      "updatedAt": "2026-08-08T17:26:31.988Z",
       "path": ".opencode/taskcards/TC-045.json",
       "taskType": "card",
       "objective": "Adicionar opção de CANCELAR pedido no Painel de Pedidos em tempo real (Dashboard): cada OrderCard dos pedidos ativos (Novo/Preparando/Pronto) ganha botão Cancelar com modal de confirmação (motivo opcional), e o backend passa a aceitar o status 'Cancelado' no endpoint PATCH /pedidos/{id}/status para que o pedido saia da lista de ativos (listarAtivos filtra Novo/Preparando).",
@@ -2250,12 +3092,13 @@
         "Dashboard abre modal de confirmação e chama atualizarStatus com 'Cancelado'",
         "tsc -b + npm run build + npm run lint sem erros"
       ],
-      "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel."
+      "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel.",
+      "completedAt": "2026-08-08T17:26:31.988Z"
     },
     "TC-046": {
       "id": "TC-046",
       "title": "Opção de tema claro e escuro do sistema sem mudar a interface do sistema",
-      "status": "verified",
+      "status": "completed",
       "statusHistory": [
         {
           "taskId": "TC-046",
@@ -2306,10 +3149,19 @@
           "timestamp": "2026-08-08T17:05:48.170Z",
           "actor": "gate",
           "reason": "Tema claro/escuro: useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC + tokens overlay/glass/neutral + override paleta light — smoke browser CDP 12/12 PASS + tsc/build/lint OK"
+        },
+        {
+          "taskId": "TC-046",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:32.319Z",
+          "actor": "user"
         }
       ],
       "createdAt": "2026-08-08T16:49:00.741Z",
-      "updatedAt": "2026-08-08T17:05:48.170Z",
+      "updatedAt": "2026-08-08T17:26:32.319Z",
       "path": ".opencode/taskcards/TC-046.json",
       "taskType": "card",
       "objective": "Adicionar tema claro e escuro ao sistema (BARIZE) sem alterar a interface/layout. O usuário alterna entre os dois temas por um toggle na Sidebar e na tela de Login; a escolha persiste em localStorage ('barize-theme'). O tema é implementado via design tokens CSS: sobreposição (overlay), vidro (glass) e neutro (neutral) passam a usar variáveis --overlay-rgb/--glass-rgb/--neutral-rgb trocadas em [data-theme], além de override da paleta clara. A estrutura visual, tamanhos, fontes e componentes permanecem idênticos — apenas as cores mudam.",
@@ -2337,7 +3189,988 @@
         "Nenhum rgba(255,255,255|28,27,27|59,73,76) hardcoded permanece nos tsx/ts (exceto os 3 intencionais: overlay de imagem, sombra inset, preview etiqueta em papel branco)",
         "tsc -b + npm run build + npm run lint sem erros"
       ],
-      "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar."
+      "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar.",
+      "completedAt": "2026-08-08T17:26:32.319Z"
+    },
+    "TC-047": {
+      "id": "TC-047",
+      "title": "Na área de etiquetas - inserir área de responsável",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:16:37.156Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:17:49.312Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:18:41.233Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:23:57.882Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:23:57.890Z",
+          "actor": "gate",
+          "reason": "Área RESPONSÁVEL na etiqueta 80mm: campo no InsumoEtiquetaModal + Label80mm com RESPONSÁVEL + pré-preenchimento com usuario.nome — smoke browser 9/9 PASS + tsc/build/lint OK"
+        },
+        {
+          "taskId": "TC-047",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:26:32.638Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-08T17:13:38.645Z",
+      "updatedAt": "2026-08-08T17:26:32.638Z",
+      "path": ".opencode/taskcards/TC-047.json",
+      "taskType": "card",
+      "objective": "Na área de etiquetas (Etiquetas.tsx), inserir campo 'Responsável' na geração de etiqueta de insumo: o campo entra no formulário do InsumoEtiquetaModal, é exibido/preenchido na etiqueta 80mm (Label80mm) e pré-preenchido com o nome do usuário logado (useAuth). A etiqueta passa a conter uma área 'Responsável' com o nome impresso.",
+      "acceptanceCriteria": [
+        "FORM 1 — InsumoEtiquetaModal.tsx: EtiquetaForm ganha campo 'responsavel'; input 'Responsável' adicionado ao formulário (entre Categoria e os botões)",
+        "LABEL 2 — Label80mm.tsx: aceita prop 'responsavel' e renderiza área 'RESPONSÁVEL' na etiqueta 80mm (preferencialmente no rodapé, acima do 'BARIZE · Estoque & Validade')",
+        "PRE-FILL 3 — Etiquetas.tsx: ao abrir 'Nova Etiqueta de Insumo' e ao gerar 'Etiqueta' por item, pré-preenche responsavel com usuario.nome (useAuth)",
+        "PREVIEW 4 — Preview do modal reflete o responsável em tempo real (Label80mm compartilhado)",
+        "VALIDAÇÃO 5 — tsc -b + npm run build + npm run lint passam"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+        "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+        "neonbar/frontend/src/pages/Etiquetas.tsx"
+      ],
+      "tests": [
+        "EtiquetaForm possui responsavel e emptyForm inicia com ''",
+        "Label80mm renderiza 'RESPONSÁVEL' + nome quando responsavel informado e oculta quando vazio",
+        "Etiquetas.tsx pré-preenche responsavel com usuario.nome ao abrir modal (nova etiqueta e por item)",
+        "tsc -b + npm run build + npm run lint sem erros"
+      ],
+      "notes": "A área de etiquetas é a página Etiquetas.tsx (menu Etiquetas). A etiqueta 80mm é gerada pelo Label80mm.tsx (BARIZE) usado no InsumoEtiquetaModal e no PDV/CupomPDV. O responsável é apenas um campo do formulário de impressão — NÃO é persistido em banco (a etiqueta é impressa sob demanda). useAuth expõe usuario.nome para pré-preenchimento.",
+      "completedAt": "2026-08-08T17:26:32.638Z"
+    },
+    "TC-048": {
+      "id": "TC-048",
+      "title": "No menu Ficha Técnica, inserir opção de editar ficha técnica",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:52:19.848Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T17:54:42.850Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-08T17:55:48.714Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a análise — iniciar execução"
+        },
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T18:03:02.931Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-08T18:03:02.943Z",
+          "actor": "gate",
+          "reason": "Validação: tsc OK, lint 0 erros, build OK, smoke browser 17/17 PASS"
+        },
+        {
+          "taskId": "TC-048",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-08T18:04:27.028Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-08T17:51:27.193Z",
+      "updatedAt": "2026-08-08T18:04:27.028Z",
+      "path": ".opencode/taskcards/TC-048.json",
+      "taskType": "card",
+      "objective": "Inserir opção de EDITAR ficha técnica na página Ficha Técnica (/fichas-tecnicas), que hoje é somente leitura. Reutilizar o endpoint já existente PUT /pdv/produtos/{produto_id}/ficha-tecnica (FichaTecnicaUpdate: modo_preparo, tipo_copo, guarnicao, tempo_preparo, dificuldade, teor_alcoolico) e o service fichasTecnicasService.atualizar. Adicionar botão 'Editar' no modal de detalhe (e/ou quick action nos cards/lista) que abre modal com os campos editáveis, salvando via API e recarregando a lista. Restrição de perfil: apenas admin/gerente podem editar (backend já exige verificar_role admin/gerente).",
+      "acceptanceCriteria": [
+        "UI 1 — Botão 'Editar' visível no modal de detalhe da ficha (FichaDetailModal) e/ou na quick action dos cards/lista (FichaCard/FichaListItem)",
+        "UI 2 — Botão 'Editar' visível SOMENTE para admin/gerente (useAuth usuario.role); bartender/outros não veem a ação de editar",
+        "UI 3 — Modal de edição com os campos: Dificuldade (select facil/medio/dificil), Teor Alcoólico (%) número, Tipo de Copo, Tempo de Preparo (min), Guarnição, Modo de Preparo (textarea)",
+        "UI 4 — Form pré-preenchido com os valores atuais da ficha selecionada",
+        "API 5 — Salvar chama fichasTecnicasService.atualizar(produto_id, {...}) e, em sucesso, fecha o modal e recarrega a lista",
+        "API 6 — Erro da API exibido no modal (ex: 403 sem permissão, 404 produto não encontrado)",
+        "CONSISTÊNCIA 7 — Dificuldade salva no formato da página (facil/medio/dificil) — alinhar com DIFICULDADE_LABELS existente (diverge do Admin que salva 'Fácil/Médio/Difícil')",
+        "VALIDAÇÃO 8 — build + lint frontend OK (0 erros) e smoke browser: login admin → /fichas-tecnicas → abrir ficha → Editar → alterar campo → Salvar → lista atualizada"
+      ],
+      "filesInvolved": [
+        "neonbar/frontend/src/pages/FichaTecnica.tsx",
+        "neonbar/frontend/src/services/api.ts"
+      ],
+      "tests": [
+        "Botão Editar visível para admin/gerente e oculto para bartender",
+        "Modal de edição pré-preenchido com dados atuais da ficha",
+        "Salvar chama PUT /pdv/produtos/{id}/ficha-tecnica com payload correto (dificuldade no formato facil/medio/dificil)",
+        "Após salvar, lista recarrega e exibe valores atualizados",
+        "403 sem permissão exibe mensagem no modal",
+        "Build + lint frontend OK",
+        "Smoke browser admin: editar ficha e persistir"
+      ],
+      "notes": "Diagnóstico: (1) Página /fichas-tecnicas (FichaTecnica.tsx) é 100% read-only — FichaCard/FichaListItem têm quick actions 'Ver' e 'Imprimir' apenas, e FichaDetailModal não tem edição. (2) Backend JÁ tem PUT /pdv/produtos/{produto_id}/ficha-tecnica (pdv.py:745-776) com schema FichaTecnicaUpdate e role admin/gerente. (3) Service fichasTecnicasService.atualizar JÁ existe (api.ts:407-408). (4) O Admin.tsx já tem aba 'Fichas Técnicas' com modal de edição dos MESMOS campos — reutilizar o padrão visual/lógica (handleFichaSelect/handleFichaSubmit, Admin.tsx:628-661, modal 1535-1596). (5) INCONSISTÊNCIA a corrigir: página usa dificuldade em 'facil/medio/dificil' (DIFICULDADE_LABELS/DIFICULDADE_COLORS), Admin salva 'Fácil/Médio/Difícil' (acentuados) — na edição da página, usar o formato da página e converter antes de salvar (mapear para o formato do backend/banco). NÃO criar endpoint novo; apenas UI na página Ficha Técnica.",
+      "completedAt": "2026-08-08T18:04:27.028Z"
+    },
+    "TC-049": {
+      "id": "TC-049",
+      "title": "na área categoria, sempre aparecer as opções de categorias já cadastradas no sistema",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:14:54.551Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:20:31.974Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:22:16.669Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a análise — iniciar execução"
+        },
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:25:40.774Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:25:56.009Z",
+          "actor": "gate",
+          "reason": "Endpoint /pdv/categorias OK (200 com token, 401 sem), py_compile OK, tsc/lint/build OK, smoke browser 4/4 PASS — dropdown mostra todas as categorias do sistema + Nova Categoria"
+        },
+        {
+          "taskId": "TC-049",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:26:11.025Z",
+          "actor": "user",
+          "reason": "Solucionado pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-09T00:13:18.827Z",
+      "updatedAt": "2026-08-09T00:26:11.025Z",
+      "path": ".opencode/taskcards/TC-049.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T00:26:11.025Z"
+    },
+    "TC-050": {
+      "id": "TC-050",
+      "title": "centralizar o card da área de entrada manual",
+      "status": "cancelled",
+      "statusHistory": [
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:49:55.178Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:53:05.678Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:53:45.274Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a análise — iniciar execução"
+        },
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:55:32.081Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T00:55:32.091Z",
+          "actor": "gate",
+          "reason": "Tile Entrada Manual col-span-full + flex justify-center (max-w-md) — tsc/lint/build OK, smoke browser 4/4 PASS (tile centralizado diffCenter=2px, clique abre modal)"
+        },
+        {
+          "taskId": "TC-050",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T00:55:49.419Z",
+          "actor": "user",
+          "reason": "Solucionado pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-09T00:41:40.310Z",
+      "updatedAt": "2026-08-09T00:55:49.419Z",
+      "path": ".opencode/taskcards/cancelled/TC-050.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T00:55:49.419Z",
+      "cancelledAt": "2026-08-09T01:01:57.333Z"
+    },
+    "TC-051": {
+      "id": "TC-051",
+      "title": "na área de etiquetas em visualizar e imprimir colocar o modelo da etiqueta igual a do nova etiqueta de insumo 80mm",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T01:04:38.603Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T01:06:23.890Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T01:07:39.710Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a análise — iniciar execução"
+        },
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T01:09:35.580Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T01:09:35.589Z",
+          "actor": "gate",
+          "reason": "Preview Visualizar e Imprimir agora usa Label80mm (BARIZE) — tsc/lint/build OK, smoke browser 7/7 PASS (7 Label80mm, LOTE/FAB/VAL, código de barras, RESPONSÁVEL, sem NEONBAR)"
+        },
+        {
+          "taskId": "TC-051",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T01:09:54.369Z",
+          "actor": "user",
+          "reason": "Solucionado pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-09T00:58:13.087Z",
+      "updatedAt": "2026-08-09T01:09:54.369Z",
+      "path": ".opencode/taskcards/TC-051.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T01:09:54.369Z"
+    },
+    "TC-052": {
+      "id": "TC-052",
+      "title": "o preview Visualizar e Imprimir deve visualizar apenas uma etiqueta referente ao insumo",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:08:09.699Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:09:39.027Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T02:10:13.673Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a análise — iniciar execução"
+        },
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:12:27.403Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:12:27.414Z",
+          "actor": "gate",
+          "reason": "Preview Visualizar e Imprimir mostra apenas 1 Label80mm (primeiro selecionado) + texto 1 etiqueta — tsc/lint/build OK, smoke browser 5/5 PASS"
+        },
+        {
+          "taskId": "TC-052",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T02:12:44.277Z",
+          "actor": "user",
+          "reason": "Solucionado pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-09T02:07:11.121Z",
+      "updatedAt": "2026-08-09T02:12:44.277Z",
+      "path": ".opencode/taskcards/TC-052.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T02:12:44.277Z"
+    },
+    "TC-053": {
+      "id": "TC-053",
+      "title": "no menu de ações Rápidas na área de reimprimir comanda padronizar o tamanho da comanda de 80mm e fundo branco",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:23:26.713Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:26:09.876Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T02:30:58.083Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:33:27.792Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:33:27.802Z",
+          "actor": "gate",
+          "reason": "Preview reimprimir comanda padronizado 80mm/fundo branco (comanda-print w-[80mm] bg-white) — tsc/lint OK, smoke browser 8/8 PASS"
+        },
+        {
+          "taskId": "TC-053",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T02:33:42.478Z",
+          "actor": "user",
+          "reason": "Usuário aprovou a implementação e testes do TC-053"
+        }
+      ],
+      "createdAt": "2026-08-09T02:18:27.596Z",
+      "updatedAt": "2026-08-09T02:33:42.478Z",
+      "path": ".opencode/taskcards/TC-053.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T02:33:42.478Z"
+    },
+    "TC-054": {
+      "id": "TC-054",
+      "title": "no menu PDV inserir barra de rolagem na área dos produtos",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:38:19.932Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T02:42:33.990Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T02:43:28.097Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:08:16.478Z",
+          "actor": "qa-engineer",
+          "reason": "Smoke funcional + regressão executados: painel produtos rolável internamente, main não rola no PDV, regressão 14/14 PASS"
+        },
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:08:16.490Z",
+          "actor": "gate",
+          "reason": "Testes completos: smoke 7/7 PASS + regressão 14/14 PASS"
+        },
+        {
+          "taskId": "TC-054",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T03:10:25.764Z",
+          "actor": "user",
+          "reason": "Usuário confirmou a finalização do card"
+        }
+      ],
+      "createdAt": "2026-08-09T02:37:21.810Z",
+      "updatedAt": "2026-08-09T03:10:25.764Z",
+      "path": ".opencode/taskcards/TC-054.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T03:10:25.764Z"
+    },
+    "TC-055": {
+      "id": "TC-055",
+      "title": "inserir opção calculadora no painel caixa e no registro e pagamento",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:18:29.472Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:21:29.181Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T03:22:10.278Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:36:26.410Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:36:26.421Z",
+          "actor": "gate",
+          "reason": "Calculadora no painel Caixa + modal Registrar Pagamento — tsc/lint/build OK, smoke browser 11/11 PASS, regressão TC-054 14/14 PASS"
+        },
+        {
+          "taskId": "TC-055",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T03:38:39.419Z",
+          "actor": "user",
+          "reason": "Calculadora no painel Caixa e no modal Registrar Pagamento implementada e validada — smoke 11/11, regressão TC-054 14/14, tsc/lint/build OK. Fix pré-existente RequireRole (Outlet) incluído. Finalizado pelo usuário."
+        }
+      ],
+      "createdAt": "2026-08-09T03:12:42.559Z",
+      "updatedAt": "2026-08-09T03:38:39.419Z",
+      "path": ".opencode/taskcards/TC-055.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T03:38:39.419Z"
+    },
+    "TC-056": {
+      "id": "TC-056",
+      "title": "inserir contador de pedido nos Pedidos Ativos",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:44:48.828Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:47:16.041Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T03:48:05.055Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:53:31.784Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, aguardando validação"
+        },
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:53:31.797Z",
+          "actor": "gate",
+          "reason": "Contador real de pedidos ativos no header global (MainLayout via GET /pedidos/ativos + polling 15s, substituindo hardcode 12) + badge no footer do Dashboard — tsc/lint/build OK, smoke 4/4 PASS, regressão TC-054 14/14 PASS"
+        },
+        {
+          "taskId": "TC-056",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-09T03:54:13.009Z",
+          "actor": "user",
+          "reason": "Contador real de pedidos ativos no header global (MainLayout) e badge no footer do Dashboard — smoke 4/4, regressão TC-054 14/14, tsc/lint/build OK. Finalizado pelo usuário."
+        }
+      ],
+      "createdAt": "2026-08-09T03:43:17.684Z",
+      "updatedAt": "2026-08-09T03:54:13.009Z",
+      "path": ".opencode/taskcards/TC-056.json",
+      "taskType": "card",
+      "completedAt": "2026-08-09T03:54:13.009Z"
+    },
+    "TC-057": {
+      "id": "TC-057",
+      "title": "inserir na área de novo funcionário a opção de foto do funcionário",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:57:04.480Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-09T03:59:23.286Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-09T04:00:15.544Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T17:48:25.778Z",
+          "actor": "qa-engineer",
+          "reason": "Smoke backend + CDP completos (upload foto, criar com foto_url, preview, coluna Foto, thumbnail); regressão TC-055/056 PASS"
+        },
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T17:48:25.791Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-057",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-10T18:30:17.844Z",
+          "actor": "user",
+          "reason": "Usuário confirmou a conclusão"
+        }
+      ],
+      "createdAt": "2026-08-09T03:56:12.284Z",
+      "updatedAt": "2026-08-10T18:30:17.844Z",
+      "path": ".opencode/taskcards/TC-057.json",
+      "taskType": "card",
+      "completedAt": "2026-08-10T18:30:17.844Z"
+    },
+    "TC-058": {
+      "id": "TC-058",
+      "title": "atualizar e sincronizar os dados do menu financeiro",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T17:55:50.346Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T18:07:16.460Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-10T18:17:03.658Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano, iniciando implementação"
+        },
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T18:28:30.255Z",
+          "actor": "qa-engineer",
+          "reason": "Smoke backend + CDP completos (receita_ultimos_dias, movimentações completas, total_pedidos); regressão TC-055/056 PASS"
+        },
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T18:28:30.265Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-058",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-10T18:30:17.834Z",
+          "actor": "user",
+          "reason": "Usuário confirmou a conclusão"
+        }
+      ],
+      "createdAt": "2026-08-10T17:54:07.263Z",
+      "updatedAt": "2026-08-10T18:30:17.834Z",
+      "path": ".opencode/taskcards/TC-058.json",
+      "taskType": "card",
+      "completedAt": "2026-08-10T18:30:17.834Z"
+    },
+    "TC-059": {
+      "id": "TC-059",
+      "title": "analisar, SINCRONIZAR E CORRIGIR os dados do CMV",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T18:47:33.930Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-10T18:47:33.944Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-10T19:05:27.807Z",
+          "actor": "user",
+          "reason": "Usuário aprovou o plano: corrigir custo cachaça 0,030/ml + snapshots + producao.py"
+        },
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T01:16:46.675Z",
+          "actor": "qa-engineer",
+          "reason": "Dados CMV corrigidos (cachaça 0,030/ml, gin 0,050/ml + snapshots); producao.py preenche quantidade_produto; relatorios_cmv.py datas None fix; smoke CDP 8/8 PASS; regressão TC-055/056/058 PASS"
+        },
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T01:16:46.694Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-059",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T01:19:40.342Z",
+          "actor": "user",
+          "reason": "Usuário confirmou a conclusão"
+        }
+      ],
+      "createdAt": "2026-08-10T18:45:29.533Z",
+      "updatedAt": "2026-08-11T01:19:40.342Z",
+      "path": ".opencode/taskcards/TC-059.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T01:19:40.342Z"
     }
   }
 }

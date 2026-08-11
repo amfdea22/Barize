@@ -1,12 +1,94 @@
 {
   "id": "TC-011",
-  "title": "Padronizar tamanho da visualização de todas as bebidas igual ao de bebidas/drinks",
-  "status": "backlog",
-  "statusHistory": [],
+  "title": "Padronizar tamanho da visualizaÃ§Ã£o de todas as bebidas igual ao de bebidas/drinks",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.178Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.427Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.805Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.060Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.075Z",
+      "actor": "gate",
+      "reason": "Batch A: card único uniforme aspect-[16/10] para todas as categorias validado — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-011",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.616Z",
+      "actor": "user"
+    }
+  ],
   "createdAt": "2026-07-26T05:07:58.951Z",
-  "updatedAt": "2026-07-26T05:07:58.951Z",
+  "updatedAt": "2026-08-08T21:15:03.616Z",
   "path": ".opencode/taskcards/TC-011.json",
   "taskType": "card",
   "createdBy": "user",
-  "agent": "build"
+  "agent": "build",
+  "objective": "Padronizar o tamanho da visualização de TODAS as bebidas no cardápio digital (/cardapio) para ficar igual ao da área Drinks — mesma proporção de foto (aspect-[16/10]), mesmo tamanho de nome, descrição e preço, independentemente da categoria (Bebidas, Cervejas, Chopps, Vinhos, Destilados, Não Alcoólicos).",
+  "acceptanceCriteria": [
+    "CARDAPIO 1 — Todas as categorias usam o MESMO card (mesma classe de imagem aspect-[16/10], mesmo padding p-3, mesmo estilo de nome/descrição/preço) — sem variação por categoria no CardapioDigital.tsx",
+    "CARDAPIO 2 — Produtos de bebidas com foto real (foto_url) exibem imagem object-cover no mesmo tamanho que drinks",
+    "CARDAPIO 3 — Produtos sem foto exibem fallback (emoji/imagem text-4xl centralizado) no mesmo tamanho que drinks",
+    "CARDAPIO 4 — Nome (text-[13px] semibold break-words), descrição (text-[11px] line-clamp-2) e preço (font-mono) idênticos entre categorias",
+    "VALIDAÇÃO 5 — Verificação visual contra ui/templates/layout/menu_e_lan_amentos_pdv/screen.png (área drinks × demais categorias) em smoke browser; ajustar apenas o que divergir",
+    "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Todas as categorias renderizam o mesmo grid (grid-cols-2/3/4) e card com aspect-[16/10]",
+    "Produto de bebida com foto_url renderiza img object-cover preenchendo o card",
+    "Produto sem foto renderiza emoji centralizado (fallback) do mesmo tamanho",
+    "Nome/descrição/preço com as mesmas classes de tipografia em todas as categorias",
+    "Smoke browser: /cardapio exibe bebidas com mesmo tamanho de foto/nome/preço que drinks",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Análise: CardapioDigital.tsx já usa UM ÚNICO card para todas as categorias (linhas 248-320) — a padronização estrutural já existe. Divergência possível: produtos de bebidas sem foto_url renderizam emoji fallback enquanto drinks têm foto real, ou proporções diferentes percebidas pelo usuário. Como não consigo ler a imagem de referência screen.png (modelo sem visão), este card valida a consistência e corrige apenas o que divergir visualmente. Premissa de escopo: apenas CardapioDigital.tsx (público), sem mudanças no PDV.",
+  "completedAt": "2026-08-08T21:15:03.616Z"
 }

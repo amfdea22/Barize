@@ -21,6 +21,7 @@ import {
   Send,
   Wifi,
   AlertTriangle,
+  Upload,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useTelemetry } from '../hooks/useTelemetry';
@@ -32,7 +33,7 @@ import Badge from '../components/Badge';
 import Card from '../components/Card';
 import StatsCard from '../components/StatsCard';
 import DataTable from '../components/DataTable';
-import { produtoLotesService, fichasTecnicasService, pdvService, adminService, funcionariosService, authService, mesasService } from '../services/api';
+import { produtoLotesService, fichasTecnicasService, pdvService, adminService, funcionariosService, authService, mesasService, uploadService } from '../services/api';
 import type { ProdutoLote, ProdutoLoteCreate, Produto, Funcionario, FuncionarioCreate, Usuario, Mesa, MesaCreate, PrinterConfig, PrinterType, PrinterStatus, FilaImpressaoItem } from '../types';
 
 const CARGO_LABELS: Record<string, string> = {
@@ -126,6 +127,7 @@ const Admin: React.FC = () => {
     telefone: '',
     email: '',
     endereco: '',
+    foto_url: '',
     cargo: 'bartender',
     data_admissao: new Date().toISOString().split('T')[0],
     salario_hora: 0,
@@ -135,6 +137,7 @@ const Admin: React.FC = () => {
     carga_horaria_semanal: 44,
     observacoes: '',
   });
+  const [uploadingFoto, setUploadingFoto] = useState(false);
   const [funcFiltroCargo, setFuncFiltroCargo] = useState('');
   const [funcFiltroAtivo, setFuncFiltroAtivo] = useState('');
   const [funcBusca, setFuncBusca] = useState('');
@@ -437,6 +440,7 @@ const Admin: React.FC = () => {
       telefone: '',
       email: '',
       endereco: '',
+      foto_url: '',
       cargo: 'bartender',
       data_admissao: new Date().toISOString().split('T')[0],
       salario_hora: 0,
@@ -447,6 +451,22 @@ const Admin: React.FC = () => {
       observacoes: '',
     });
     setFuncionarioTab('dados');
+  };
+
+  const handleFotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingFoto(true);
+    setError('');
+    try {
+      const res = await uploadService.uploadImagem(file);
+      setFuncionarioForm((f) => ({ ...f, foto_url: res.data.url }));
+    } catch (err: any) {
+      setError('Falha no upload da foto: ' + (err?.response?.data?.detail || err.message));
+    } finally {
+      setUploadingFoto(false);
+      e.target.value = '';
+    }
   };
 
   const openFuncionarioModal = async (funcionario?: Funcionario) => {
@@ -466,6 +486,7 @@ const Admin: React.FC = () => {
         telefone: funcionario.telefone || '',
         email: funcionario.email || '',
         endereco: funcionario.endereco || '',
+        foto_url: funcionario.foto_url || '',
         cargo: funcionario.cargo,
         data_admissao: funcionario.data_admissao ? funcionario.data_admissao.split('T')[0] : '',
         salario_hora: funcionario.salario_hora || 0,
@@ -487,10 +508,15 @@ const Admin: React.FC = () => {
     if (!funcionarioForm.nome.trim()) { setError('Informe o nome do funcionário.'); return; }
     try {
       setLoading(true);
+      const payload = { ...funcionarioForm };
+      const nullableFields = ['rg', 'data_nascimento', 'telefone', 'email', 'endereco', 'foto_url', 'observacoes'] as const;
+      for (const k of nullableFields) {
+        if (payload[k] === '') (payload as Record<string, unknown>)[k] = null;
+      }
       if (editingFuncionario) {
-        await funcionariosService.atualizar(editingFuncionario.id, funcionarioForm);
+        await funcionariosService.atualizar(editingFuncionario.id, payload);
       } else {
-        await funcionariosService.criar(funcionarioForm);
+        await funcionariosService.criar(payload);
       }
       setShowFuncionarioModal(false);
       setEditingFuncionario(null);
@@ -1139,6 +1165,21 @@ const Admin: React.FC = () => {
             <DataTable
                 columns={[
                   {
+                    key: 'foto',
+                    header: 'Foto',
+                    render: (f) => (
+                      <div className="w-9 h-9 rounded-full overflow-hidden bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] shrink-0">
+                        {f.foto_url ? (
+                          <img src={f.foto_url} alt={f.nome} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[var(--color-outline)]/50">
+                            <Users size={16} />
+                          </div>
+                        )}
+                      </div>
+                    ),
+                  },
+                  {
                     key: 'ativo',
                     header: 'Status',
                     render: (f) => (
@@ -1644,6 +1685,33 @@ const Admin: React.FC = () => {
         <form onSubmit={handleFuncionarioSubmit} className="space-y-md">
           {funcionarioTab === 'dados' && (
             <>
+              <div className="flex items-center gap-md mb-md">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-[var(--color-surface-container-high)] shrink-0 border border-[rgba(var(--overlay-rgb),0.08)]">
+                  {funcionarioForm.foto_url ? (
+                    <img src={funcionarioForm.foto_url} alt="Foto do funcionário" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[var(--color-outline)]/50">
+                      <Users size={28} />
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="flex items-center gap-2 px-3 h-9 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-xs font-medium text-[var(--color-on-surface)] hover:border-[var(--color-primary)]/50 transition-colors cursor-pointer">
+                    <Upload size={14} className="text-[var(--color-primary)]" />
+                    <span>{uploadingFoto ? 'Enviando...' : 'Enviar foto'}</span>
+                    <input type="file" accept="image/*" className="hidden" disabled={uploadingFoto} onChange={handleFotoSelect} />
+                  </label>
+                  {funcionarioForm.foto_url && (
+                    <button
+                      type="button"
+                      onClick={() => setFuncionarioForm((f) => ({ ...f, foto_url: '' }))}
+                      className="text-xs text-[var(--color-error)] hover:opacity-70 transition-opacity cursor-pointer text-left"
+                    >
+                      Remover foto
+                    </button>
+                  )}
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-md">
                 <Input label="Nome *" value={funcionarioForm.nome} onChange={(e) => setFuncionarioForm({ ...funcionarioForm, nome: e.target.value })} required />
                 <Input label="CPF *" placeholder="Somente números" value={funcionarioForm.cpf} onChange={(e) => setFuncionarioForm({ ...funcionarioForm, cpf: e.target.value })} required />

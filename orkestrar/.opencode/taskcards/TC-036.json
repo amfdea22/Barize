@@ -1,7 +1,7 @@
 {
   "id": "TC-036",
   "title": "Comanda de produção sem preços — remover valores da comanda de cozinha/bar (backend impressao_worker.py e frontend Comandas.tsx), título FONT_LARGE, itens negrito com quantidade e obs em destaque",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-036",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.081Z",
       "actor": "gate",
       "reason": "Comanda sem preços (ESC/POS + Comandas.tsx) — tsc/build/lint OK"
+    },
+    {
+      "taskId": "TC-036",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.186Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.045Z",
-  "updatedAt": "2026-08-08T16:38:01.081Z",
+  "updatedAt": "2026-08-08T17:26:24.186Z",
   "path": ".opencode/taskcards/TC-036.json",
   "taskType": "card",
   "objective": "Remover valores (preços, totais) da comanda de produção de cozinha/bar, tanto no backend (impressao_worker.py, fluxo COMANDA) quanto no frontend (modal de comanda em Comandas.tsx). Título da comanda em FONT_LARGE, itens em negrito com quantidade e observações em destaque.",
@@ -75,5 +84,6 @@
     "Modal de comanda renderiza itens sem moeda/preços",
     "tsc -b + npm run build passam"
   ],
-  "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print."
+  "notes": "Comanda de produção é para cozinha/bar verem o que preparar, não o que cobrar. Título \"Comanda de Produção\". Obs marcada com prefixo \"Obs:\" em destaque. Frontend usa classe comanda-print.",
+  "completedAt": "2026-08-08T17:26:24.186Z"
 }

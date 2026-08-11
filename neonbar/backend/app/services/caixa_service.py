@@ -185,10 +185,19 @@ class CaixaService:
             .all()
         )
 
+        # Total de pedidos criados no dia
+        from ..models.pedido import Pedido
+        total_pedidos = (
+            db.query(func.count(Pedido.id))
+            .filter(Pedido.created_at.between(data_inicio, data_fim))
+            .scalar() or 0
+        )
+
         return {
             "data": data.isoformat(),
             "receita_total": round(receita, 2),
             "total_itens_vendidos": int(total_itens),
+            "total_pedidos": int(total_pedidos),
             "caixas_abertos": len([c for c in caixas if c.status == "ABERTO"]),
             "caixas_fechados": len([c for c in caixas if c.status == "FECHADO"]),
         }

@@ -1,0 +1,74 @@
+{
+  "id": "TC-055",
+  "title": "inserir opção calculadora no painel caixa e no registro e pagamento",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:18:29.472Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:21:29.181Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T03:22:10.278Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano, iniciando implementação"
+    },
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:36:26.410Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:36:26.421Z",
+      "actor": "gate",
+      "reason": "Calculadora no painel Caixa + modal Registrar Pagamento — tsc/lint/build OK, smoke browser 11/11 PASS, regressão TC-054 14/14 PASS"
+    },
+    {
+      "taskId": "TC-055",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T03:38:39.419Z",
+      "actor": "user",
+      "reason": "Calculadora no painel Caixa e no modal Registrar Pagamento implementada e validada — smoke 11/11, regressão TC-054 14/14, tsc/lint/build OK. Fix pré-existente RequireRole (Outlet) incluído. Finalizado pelo usuário."
+    }
+  ],
+  "createdAt": "2026-08-09T03:12:42.559Z",
+  "updatedAt": "2026-08-09T03:38:39.419Z",
+  "path": ".opencode/taskcards/TC-055.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T03:38:39.419Z",
+  "summary": "Calculadora no painel Caixa e no modal Registrar Pagamento",
+  "result": "Novo componente Calculadora.tsx (display + teclado 4x5 + Apagar/Usar resultado); Caixa.tsx com botão Calculadora no header e botão 'Abrir calculadora' no modal Registrar Pagamento (onResult preenche novoPagamento.valor). Fix pré-existente: RequireRole (App.tsx) trocou {children} por <Outlet/> (ADR-016) — rotas protegidas nunca renderizavam em produção. Smoke 11/11 + regressão TC-054 14/14 PASS, tsc/lint/build OK."
+}

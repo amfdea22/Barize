@@ -14,8 +14,11 @@ import type { EtiquetaItem } from '../types';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
 import InsumoEtiquetaModal, { type EtiquetaForm } from '../components/etiqueta/InsumoEtiquetaModal';
+import Label80mm from '../components/etiqueta/Label80mm';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Etiquetas() {
+  const { usuario } = useAuth();
   const [etiquetas, setEtiquetas] = useState<EtiquetaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -70,7 +73,7 @@ export default function Etiquetas() {
           <Button variant="ghost" className="h-[44px]" onClick={loadEtiquetas}>
             Atualizar
           </Button>
-          <Button size="lg" onClick={() => { setEtiquetaInitial(undefined); setEtiquetaOpen(true); }}>
+          <Button size="lg" onClick={() => { setEtiquetaInitial({ responsavel: usuario?.nome || '' }); setEtiquetaOpen(true); }}>
             <Tag size={16} /> Nova Etiqueta de Insumo
           </Button>
         </div>
@@ -201,6 +204,7 @@ export default function Etiquetas() {
                         lote: e.codigo_lote || '',
                         fabricacao: e.data_fabricacao || '',
                         validade: e.data_validade || '',
+                        responsavel: usuario?.nome || '',
                       });
                       setEtiquetaOpen(true);
                     }}
@@ -218,53 +222,35 @@ export default function Etiquetas() {
 
       {/* Preview Modal */}
       <Modal open={showPreview} onClose={() => setShowPreview(false)} title="Visualização de Impressão" size="xl">
-        <div className="space-y-4">
-          <p className="text-xs text-[var(--color-on-surface-variant)] font-mono tracking-wider uppercase">
-            {itemsToPrint.length} etiqueta(s) — use Ctrl+P para imprimir
-          </p>
+        {itemsToPrint[0] && (
+          <div className="space-y-4">
+            <p className="text-xs text-[var(--color-on-surface-variant)] font-mono tracking-wider uppercase">
+              1 etiqueta — use Ctrl+P para imprimir
+            </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[600px] overflow-y-auto p-4 bg-white rounded-lg border border-[rgba(0,0,0,0.1)]">
-            {itemsToPrint.map((e) => (
-              <div key={e.item_id} className="bg-white border border-black/20 rounded-sm p-3 text-xs leading-relaxed font-mono select-all" style={{ width: '100%', minWidth: '180px' }}>
-                <div className="text-center font-bold text-sm tracking-widest mb-1">NEONBAR</div>
-                <div className="text-center uppercase text-[10px] mb-2">
-                  {e.tipo === 'insumo' ? 'Insumo' : 'Produto'}
-                </div>
-                <div className="border-t border-dashed border-black/20 mb-1" />
+            <div className="flex justify-center items-start p-4 bg-white rounded-lg border border-[rgba(0,0,0,0.1)] overflow-x-auto">
+              <Label80mm
+                nome={itemsToPrint[0].nome}
+                quantidade={itemsToPrint[0].quantidade ?? 1}
+                unidade={itemsToPrint[0].unidade_medida || ''}
+                categoria={itemsToPrint[0].categoria || ''}
+                lote={itemsToPrint[0].codigo_lote || ''}
+                fabricacao={itemsToPrint[0].data_fabricacao || ''}
+                validade={itemsToPrint[0].data_validade || ''}
+                responsavel={usuario?.nome || ''}
+              />
+            </div>
 
-                <div className="text-left space-y-0.5 mb-1">
-                  <div className="font-bold text-[11px] truncate">{e.nome}</div>
-                  <div className="text-[10px] text-black/60">Lote: {e.codigo_lote}</div>
-                  {e.categoria && <div className="text-[10px] text-black/60">{e.categoria}</div>}
-                  {e.unidade_medida && <div className="text-[10px] text-black/60">{e.unidade_medida}</div>}
-                </div>
-
-                <div className="border-t border-dashed border-black/20 mb-1" />
-
-                <div className="flex justify-between text-[10px] mb-1">
-                  <span>Validade:</span>
-                  <span className="font-bold">{e.data_validade ? new Date(e.data_validade).toLocaleDateString('pt-BR') : '—'}</span>
-                </div>
-
-                <div className="border-t border-dashed border-black/20 mb-1" />
-
-                <div className="text-center text-[9px] text-black/50 space-y-0.5">
-                  <div>NEONBAR — Controle de Validade</div>
-                  <div className="text-black/30">Obrigado!</div>
-                </div>
-              </div>
-            ))}
+            <div className="flex gap-3 pt-2">
+              <Button variant="ghost" className="flex-1" onClick={() => setShowPreview(false)}>
+                Fechar
+              </Button>
+              <Button className="flex-1" onClick={() => window.print()}>
+                <Printer size={16} /> Imprimir
+              </Button>
+            </div>
           </div>
-
-          <div className="flex gap-3 pt-2">
-            <Button variant="ghost" className="flex-1" onClick={() => setShowPreview(false)}>
-              Fechar
-            </Button>
-            <Button className="flex-1" onClick={() => window.print()}>
-              <Printer size={16} /> Imprimir
-            </Button>
-          </div>
-        </div>
+        )}
       </Modal>
 
       {/* Nova Etiqueta de Insumo Modal */}

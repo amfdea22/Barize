@@ -1,0 +1,72 @@
+{
+  "id": "TC-051",
+  "title": "na área de etiquetas em visualizar e imprimir colocar o modelo da etiqueta igual a do nova etiqueta de insumo 80mm",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T01:04:38.603Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T01:06:23.890Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T01:07:39.710Z",
+      "actor": "user",
+      "reason": "Usuário aprovou a análise — iniciar execução"
+    },
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T01:09:35.580Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T01:09:35.589Z",
+      "actor": "gate",
+      "reason": "Preview Visualizar e Imprimir agora usa Label80mm (BARIZE) — tsc/lint/build OK, smoke browser 7/7 PASS (7 Label80mm, LOTE/FAB/VAL, código de barras, RESPONSÁVEL, sem NEONBAR)"
+    },
+    {
+      "taskId": "TC-051",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T01:09:54.369Z",
+      "actor": "user",
+      "reason": "Solucionado pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-09T00:58:13.087Z",
+  "updatedAt": "2026-08-09T01:09:54.369Z",
+  "path": ".opencode/taskcards/TC-051.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T01:09:54.369Z"
+}

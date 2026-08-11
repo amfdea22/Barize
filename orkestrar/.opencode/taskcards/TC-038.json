@@ -1,7 +1,7 @@
 {
   "id": "TC-038",
   "title": "Abertura de gaveta via pulso RJ11 — comando \\x1b\\x70\\x00\\x19\\xfa como primeiro byte do buffer de fechamento",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-038",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.108Z",
       "actor": "gate",
       "reason": "ABRIR_GAVETA como primeiro byte do fechamento (smoke_tc037_039 18/18)"
+    },
+    {
+      "taskId": "TC-038",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.201Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.057Z",
-  "updatedAt": "2026-08-08T16:38:01.108Z",
+  "updatedAt": "2026-08-08T17:26:24.201Z",
   "path": ".opencode/taskcards/TC-038.json",
   "taskType": "card",
   "objective": "Adicionar abertura de gaveta de dinheiro via pulso RJ11 (comando ESC/POS \\x1b\\x70\\x00\\x19\\xfa) como PRIMEIRO byte do buffer de fechamento ESC/POS, para a gaveta abrir no momento do fechamento/cupom.",
@@ -71,5 +80,6 @@
     "Buffer de fechamento começa com b'\\x1b\\x70\\x00\\x19\\xfa'",
     "smoke_tc037_039 18/18 PASS"
   ],
-  "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado."
+  "notes": "Comando de pulso: ESC p m t1 t2 (0x1b 0x70 0x00 0x19 0xfa) -> pulso 25*2ms=50ms, padrão para gaveta RJ11. Deve ser o primeiro comando para a gaveta abrir antes do papel ser cortado.",
+  "completedAt": "2026-08-08T17:26:24.201Z"
 }

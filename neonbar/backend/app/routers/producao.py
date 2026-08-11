@@ -19,10 +19,18 @@ router = APIRouter(prefix="/producoes", tags=["Produções"])
 
 @router.get("/", response_model=List[ProducaoResponse])
 def listar_producoes(
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
-    producoes = db.query(Producao).order_by(Producao.data_producao.desc()).all()
+    producoes = (
+        db.query(Producao)
+        .order_by(Producao.data_producao.desc())
+        .limit(limit)
+        .offset(offset)
+        .all()
+    )
     return [ProducaoResponse.model_validate(p) for p in producoes]
 
 
@@ -83,7 +91,7 @@ def criar_producao(
             raise HTTPException(status_code=400, detail=f"Produto '{produto.nome}' não possui receita cadastrada")
 
         custo_unitario = 0.0
-        for r in receitas:
+        for i, r in enumerate(receitas):
             insumo = db.query(Insumo).filter(Insumo.id == r.insumo_id).first()
             if not insumo:
                 raise HTTPException(status_code=404, detail=f"Insumo ID {r.insumo_id} não encontrado")
@@ -106,6 +114,7 @@ def criar_producao(
                 quantidade=-consumo,
                 custo_no_momento=insumo.custo_unitario,
                 produto_id=produto.id,
+                quantidade_produto=(item_data.quantidade_produzida if i == 0 else None),
                 observacao=f"Produção #{producao.id}: {item_data.quantidade_produzida}x '{produto.nome}'",
                 usuario_id=current_user.id,
             )

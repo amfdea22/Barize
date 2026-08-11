@@ -1,0 +1,72 @@
+{
+  "id": "TC-058",
+  "title": "atualizar e sincronizar os dados do menu financeiro",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T17:55:50.346Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T18:07:16.460Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-10T18:17:03.658Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano, iniciando implementação"
+    },
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T18:28:30.255Z",
+      "actor": "qa-engineer",
+      "reason": "Smoke backend + CDP completos (receita_ultimos_dias, movimentações completas, total_pedidos); regressão TC-055/056 PASS"
+    },
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T18:28:30.265Z",
+      "actor": "gate",
+      "reason": "Todos os testes passaram"
+    },
+    {
+      "taskId": "TC-058",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-10T18:30:17.834Z",
+      "actor": "user",
+      "reason": "Usuário confirmou a conclusão"
+    }
+  ],
+  "createdAt": "2026-08-10T17:54:07.263Z",
+  "updatedAt": "2026-08-10T18:30:17.834Z",
+  "path": ".opencode/taskcards/TC-058.json",
+  "taskType": "card",
+  "completedAt": "2026-08-10T18:30:17.834Z"
+}

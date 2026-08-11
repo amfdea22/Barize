@@ -26,6 +26,7 @@ class Funcionario(Base):
     telefone = Column(String(20), nullable=True)
     email = Column(String(200), nullable=True)
     endereco = Column(Text, nullable=True)
+    foto_url = Column(String(255), nullable=True)
 
     # Dados profissionais
     cargo = Column(String(50), nullable=False, index=True)  # bartender, garcom, caixa, estoquista, cozinheiro, auxiliar_cozinha, gerente_operacional, outro

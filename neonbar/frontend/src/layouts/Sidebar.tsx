@@ -58,6 +58,23 @@ const adminNavItems = [
   { to: '/admin', icon: Shield, label: 'Administração' },
 ];
 
+// Áreas acessíveis ao bartender (operacionais) — TC-025
+const operacionalRoutes = [
+  '/',
+  '/pdv',
+  '/comandas',
+  '/fichas-tecnicas',
+  '/precificacao',
+  '/etiquetas',
+  '/estoque',
+  '/pops',
+];
+
+function podeAcessar(role: Usuario['role'], to: string) {
+  if (role === 'admin' || role === 'gerente') return true;
+  return operacionalRoutes.includes(to);
+}
+
 export default function Sidebar({ usuario, onLogout, collapsed, onToggle }: SidebarProps) {
   const navigate = useNavigate();
   const [showQR, setShowQR] = useState(false);
@@ -132,7 +149,7 @@ export default function Sidebar({ usuario, onLogout, collapsed, onToggle }: Side
 
         {/* Primary Nav */}
         <nav className="flex-1 px-sm space-y-xs">
-          {navItems.map((item) => (
+          {navItems.filter((item) => podeAcessar(usuario.role, item.to)).map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -193,14 +210,16 @@ export default function Sidebar({ usuario, onLogout, collapsed, onToggle }: Side
 
         {/* Footer Nav */}
         <div className="mt-auto px-sm border-t border-[rgba(0,218,243,0.08)] pt-lg">
-          <a
-            className={`flex items-center ${collapsed ? 'justify-center px-0' : 'gap-md px-md'} py-sm text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)] hover:backdrop-blur-[4px] transition-all duration-200 rounded-lg cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_6px_rgba(0,218,243,0.08)]`}
-            onClick={(e) => { e.preventDefault(); navigate('/admin'); }}
-            title={collapsed ? 'Configurações' : undefined}
-          >
-            <Settings size={20} />
-            {!collapsed && <span className="text-label-md uppercase">Configurações</span>}
-          </a>
+          {(usuario.role === 'admin' || usuario.role === 'gerente') && (
+            <a
+              className={`flex items-center ${collapsed ? 'justify-center px-0' : 'gap-md px-md'} py-sm text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)] hover:backdrop-blur-[4px] transition-all duration-200 rounded-lg cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_6px_rgba(0,218,243,0.08)]`}
+              onClick={(e) => { e.preventDefault(); navigate('/admin'); }}
+              title={collapsed ? 'Configurações' : undefined}
+            >
+              <Settings size={20} />
+              {!collapsed && <span className="text-label-md uppercase">Configurações</span>}
+            </a>
+          )}
           <a
             className={`flex items-center ${collapsed ? 'justify-center px-0' : 'gap-md px-md'} py-sm text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.04)] hover:backdrop-blur-[4px] transition-all duration-200 rounded-lg cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_6px_rgba(0,218,243,0.08)]`}
             onClick={(e) => { e.preventDefault(); alert('Suporte: (11) 99999-0000'); }}

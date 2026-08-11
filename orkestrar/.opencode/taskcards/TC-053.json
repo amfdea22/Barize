@@ -1,0 +1,72 @@
+{
+  "id": "TC-053",
+  "title": "no menu de ações Rápidas na área de reimprimir comanda padronizar o tamanho da comanda de 80mm e fundo branco",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:23:26.713Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:26:09.876Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T02:30:58.083Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano, iniciando implementação"
+    },
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:33:27.792Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:33:27.802Z",
+      "actor": "gate",
+      "reason": "Preview reimprimir comanda padronizado 80mm/fundo branco (comanda-print w-[80mm] bg-white) — tsc/lint OK, smoke browser 8/8 PASS"
+    },
+    {
+      "taskId": "TC-053",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T02:33:42.478Z",
+      "actor": "user",
+      "reason": "Usuário aprovou a implementação e testes do TC-053"
+    }
+  ],
+  "createdAt": "2026-08-09T02:18:27.596Z",
+  "updatedAt": "2026-08-09T02:33:42.478Z",
+  "path": ".opencode/taskcards/TC-053.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T02:33:42.478Z"
+}

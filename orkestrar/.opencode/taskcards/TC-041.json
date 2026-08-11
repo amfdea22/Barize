@@ -1,7 +1,7 @@
 {
   "id": "TC-041",
   "title": "Corrigir sistema de impressão CSS — consolidar blocos @media print do index.css (A4 sobrescreve 80mm) e adicionar classe de print ao modal de comanda (Comandas.tsx:320)",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-041",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.148Z",
       "actor": "gate",
       "reason": "index.css consolidado, @page 80mm + ficha-a4 named page, build OK"
+    },
+    {
+      "taskId": "TC-041",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.222Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.072Z",
-  "updatedAt": "2026-08-08T16:38:01.148Z",
+  "updatedAt": "2026-08-08T17:26:24.222Z",
   "path": ".opencode/taskcards/TC-041.json",
   "taskType": "card",
   "objective": "Corrigir o sistema de impressão CSS: consolidar os 3 blocos @media print duplicados do index.css em 1 único, definir @page { size: 80mm auto } global, usar named page ficha-a4 para a ficha A4 (para o A4 NÃO sobrescrever o 80mm), e adicionar classe de print ao modal de comanda (Comandas.tsx).",
@@ -75,5 +84,6 @@
     "npm run build OK",
     "npm run lint 0 erros"
   ],
-  "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante."
+  "notes": "Antes: 3 blocos @media print duplicados, e a regra A4 sobrescrevia o size 80mm do cupom/comanda. Named page (page: ficha-a4) isola a ficha A4 sem afetar o restante.",
+  "completedAt": "2026-08-08T17:26:24.222Z"
 }

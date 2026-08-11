@@ -55,6 +55,58 @@
 | 41 | TC-044: Visualizador web 80mm com serrilha (Visualizador80mm + modal Preview Cupom) | build | ✅ Concluído |
 | 42 | TC-045: Cancelar pedido no Painel (Dashboard) — status Cancelado + modal motivo + botão no OrderCard | build | ✅ Concluído |
 | 43 | TC-046: Tema claro/escuro sem mudar interface — tokens CSS (overlay/glass/neutral) + override paleta light + useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC | build | ✅ Concluído |
+| 44 | TC-047: Área de Responsável na etiqueta 80mm — campo no InsumoEtiquetaModal + Label80mm RESPONSÁVEL + pré-preenchimento com usuário logado | build | ✅ Concluído |
+| 45 | TC-048: Editar ficha técnica na página Ficha Técnica — botão Editar (cards/lista/modal detalhe, admin/gerente) + modal com Dificuldade/Teor/Copo/Tempo/Guarnição/Modo de Preparo via PUT /pdv/produtos/{id}/ficha-tecnica | build | ✅ Concluído |
+| 46 | TC-005: Paginação nos endpoints de listagem | build | ✅ Concluído |
+| 47 | TC-011/TC-012: Padronizar card das bebidas igual a drinks (card único aspect-[16/10] validado) | build | ✅ Concluído |
+| 48 | TC-013: Cardápio Digital Básico — toggle Básico/Completo + localStorage barize-cardapio-modo | build | ✅ Concluído |
+| 49 | TC-016: Scrollbar visível no cardápio digital (.scrollbar-visible WebKit+Firefox) | build | ✅ Concluído |
+| 50 | TC-017: Scrollbar visível no painel de produtos do PDV | build | ✅ Concluído |
+| 51 | TC-019: QR code cardápio (já existente) validado — smoke 16/16 | build | ✅ Concluído |
+| 52 | TC-021: Edição de comandas (já existente) validada — smoke 16/16 | build | ✅ Concluído |
+| 53 | TC-025: Áreas de acesso por perfil — menu filtrado (Sidebar podeAcessar) + rotas restritas (RequireRole) | build | ✅ Concluído |
+| 54 | TC-005: Paginação limit/offset nos 10 routers de listagem (pdv, estoque, relatorios, recebimentos, funcionarios, materiais, copos, mesas, copos-quebrados, producoes) — smoke 14/14 | build | ✅ Concluído |
+| 55 | TC-009: Imagens dos produtos com nome em área própria abaixo (aspect-[16/10]) — validado 6/6 | build | ✅ Concluído |
+| 56 | TC-053: Padronizar preview reimprimir comanda para 80mm e fundo branco | build | ✅ Concluído |
+| 57 | TC-054: Inserir barra de rolagem visível na área dos produtos do PDV | build | ✅ Concluído |
+| 58 | TC-055: Inserir opção calculadora no painel Caixa e no registro de pagamento | build | ✅ Concluído |
+| 59 | TC-056: Inserir contador de pedido nos Pedidos Ativos | build | ✅ Concluído |
+| 60 | TC-057: Foto do funcionário na área Novo Funcionário (upload, preview, coluna Foto na listagem) | build | ✅ Concluído |
+| 61 | TC-058: Atualizar e sincronizar os dados do menu financeiro | build | ✅ Concluído |
+| 62 | TC-059: Analisar, sincronizar e corrigir os dados do CMV | build | ✅ Concluído |
+
+## Notas TC-059 (Corrigir Dados do CMV)
+
+- **Dados corrompidos corrigidos** (banco dev):
+  - Cachaça 51 (insumo 1): `custo_unitario` 25,0 → **0,030/ml** (garrafa 1L = R$30, confirmado pelo usuário). Snapshots `custo_no_momento` das 4 movs VENDA atualizados (25,0 → 0,030).
+  - Gin (insumo 3): `custo_unitario` 50,0 → **0,050/ml** (garrafa 1L = R$50, confirmado). Snapshots das 2 movs VENDA atualizados (0,12 → 0,050).
+  - Resultado: CMV 30d de ~1858% → **25,82%** (Custo R$70,50 / Receita R$273,00). Caipirinha 14,5%, Caipiroska 27%, Gin Tônica 34,8%.
+- **Bug corrigido `producao.py`**: movimentações VENDA de produção não preenchiam `quantidade_produto` → custo sem receita inflava CMV. Agora preenche na primeira receita (i==0), igual ao `finalizar_comanda`.
+- **Bug corrigido `relatorios_cmv.py`**: endpoints `/produtos`, `/categorias`, `/insumos`, `/insumos/{id}/produtos` usavam `data_inicio`/`data_fim` originais (None) no retorno → 500 quando chamados sem datas. Agora usam as datas resolvidas de `_periodo`.
+- **Validação**: py_compile OK; tsc/lint OK; smoke CDP 8/8 PASS; regressão TC-055 (11/11), TC-056 (4/4), TC-058 (6/6) PASS.
+- **Status**: executing→testing (qa-engineer)→verified (gate) OK. Aguardando confirmação do usuário para `verified→completed`.
+- **Observação**: Refrigerante (produto 5) tinha CMV 116,7% — venda abaixo do custo. **Corrigido**: preço de venda R$6,00 → **R$14,00** (CMV 50%, custo R$7,00/un). CMV geral 30d agora **25,09%** (Custo R$70,50 / Receita R$281,00).
+
+## Notas TC-058 (Sincronizar Dados Financeiros)
+
+- **Backend**:
+  - `relatorios.py` `dashboard-executivo` agora retorna `receita_ultimos_dias` (7 dias, vendas por dia) e movimentações completas (`custo_no_momento`, `insumo_id`, `produto_id`, `quantidade_produto`, `created_at`) — antes só `id/tipo/quantidade/data`.
+  - `caixa_service.py` `obter_resumo_diario` agora retorna `total_pedidos` (contagem de pedidos do dia).
+- **Frontend** `services/api.ts` `carregarPainel()`:
+  - `receitaHoje` unificada com o Caixa (soma dos pagamentos do dia), fallback `receita_total`.
+  - `receitaUltimosDias` agora vem de `dashboard-executivo` (gráfico "Receita Diária" deixa de ficar vazio).
+  - `totalPedidosHoje` usa `total_pedidos` do resumo-diario (antes campo inexistente → sempre 0).
+  - Movimentações usam `custo_no_momento`/`created_at` (agora retornados) — colunas Valor/Data corretas.
+- **Validação**: py_compile OK; tsc/lint/build OK; smoke backend (7 dias + movs completas + total_pedidos) OK; smoke CDP 6/6 PASS; regressão TC-055 (11/11) e TC-056 (4/4) PASS.
+- **Status**: executing→testing (qa-engineer)→verified (gate) OK. Aguardando confirmação do usuário para `verified→completed`.
+
+## Notas TC-057 (Foto do Funcionário)
+
+- **Backend**: coluna `foto_url` em `models/funcionario.py` (String 255, nullable); `schemas/funcionario.py` `foto_url` em `FuncionarioBase`/`FuncionarioUpdate`/`FuncionarioListItem`; `routers/funcionarios.py` `_serialize_funcionario` + create/update + **listagem** (GET / e GET /ativos) incluem `foto_url`. Migração manual em `database.py` + alembic `0017_add_foto_url_funcionarios.py`.
+- **Frontend**: `types/index.ts` `foto_url?` em Funcionario/Create/Update; `Admin.tsx` — upload via `uploadService.uploadImagem` (padrão PDV), preview circular na tab dados, botão Remover foto, coluna Foto (thumbnail circular) na DataTable.
+- **Bug pré-existente corrigido**: form enviava `data_nascimento:''` (e outros opcionais vazios) → backend rejeitava 422. `handleFuncionarioSubmit` agora converte campos opcionais vazios para `null` antes do envio.
+- **Validação**: py_compile OK; tsc/lint/build OK; smoke backend (upload/criar/listar/detalhe/update/delete) PASS; smoke CDP 12/12 PASS; regressão TC-055 (11/11) e TC-056 (4/4) PASS.
+- **Status**: transitions executing→testing (qa-engineer)→verified (gate) OK. Aguardando confirmação do usuário para `verified→completed`.
 
 ## Notas TC-026 (Etiqueta de Insumo na Comanda)
 
@@ -247,7 +299,7 @@
   - `Comandas.tsx`: `statusConfig` adiciona Cancelado (ícone X, cor error) + filtro "Cancelado".
 - **Validação**: smoke backend 6/6 PASS (status inválido→400, cancelar→200, response status Cancelado, fora de ativos, filtro Cancelado listado, 401 sem token); `tsc -b` OK; `npm run build` OK; `npm run lint` 0 erros (5 warnings pré-existentes).
 - **Escopo**: cancelamento de pedido KDS em aberto NÃO estorna estoque (baixa só ocorre em `/pdv/finalizar-comanda`).
-- **Em 2026-08-08**: backlog→analyzing→ready→executing(user)→testing(qa-engineer)→verified(gate). TC-045 aguarda usuário finalizar (completeTask 'user').
+- **Em 2026-08-08**: backlog→analyzing→ready→executing(user)→testing(qa-engineer)→verified(gate). **Finalizado pelo usuário em 2026-08-08 (completeTask 'user').**
 
 ## Notas TC-046 (Tema claro/escuro sem mudar a interface)
 
@@ -257,4 +309,104 @@
 - **Batch substituição**: ~164 usos `rgba(255,255,255,…)` + `rgba(28,27,27,…)`(4) + `rgba(59,73,76,…)`(18) nos tsx/ts → `rgba(var(--overlay-rgb)/--glass-rgb/--neutral-rgb,…)`. Variantes cobertas: overlay 0.03/0.04/0.05/0.06/0.08/0.10/0.15/0.02; glass 0.6/0.85/0.9; neutral 0.1/0.2/0.3/0.4. **3 usos mantidos intencionais**: CardapioDigital backdrop `rgba(0,0,0,0.6)` sobre imagem, Dashboard sombra inset `rgba(0,0,0,0.5)`, Etiquetas preview `bg-white`/`border rgba(0,0,0,0.1)` (papel de impressão branco em qualquer tema).
 - **Arquivos**: `index.html` (script anti-FOUC inline lê `localStorage['barize-theme']` e seta `data-theme`), `index.css` (tokens + override light + `.ghost-border`/autofill/scrollbar-track com vars), novos `hooks/useTheme.ts` (getInitialTheme/applyTheme/toggleTheme, key `barize-theme`) e `components/ThemeToggle.tsx` (Sol/Lua, prop `collapsed`), wiring em `layouts/Sidebar.tsx` (rodapé antes do perfil) e `pages/Login.tsx` (header, ícone-only).
 - **Validação**: `tsc -b` OK; `npm run lint` 0 erros (5 warnings pré-existentes); `npm run build` OK; smoke browser CDP 12/12 PASS (data-theme default dark → toggle light → localStorage persiste → reload mantém → color-scheme light → tokens --color-primary #006874 e --overlay-rgb 0,0,0 → toggle volta dark → tokens restaurados).
-- **Em 2026-08-08**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate). TC-046 aguarda usuário finalizar (completeTask 'user').
+- **Em 2026-08-08**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate). **Finalizado pelo usuário em 2026-08-08 (completeTask 'user').**
+
+## Notas TC-047 (Área de Responsável na etiqueta)
+
+- **Pedido do usuário**: "na área de etiquetas - inserir área de responsável" — a etiqueta 80mm de insumo deve conter o nome de quem é responsável.
+- **Mudanças**:
+  - `InsumoEtiquetaModal.tsx`: `EtiquetaForm` ganhou `responsavel` (emptyForm = ''); input "Responsável" (ícone Package) após Categoria.
+  - `Label80mm.tsx`: prop `responsavel`; nova seção 6 "RESPONSÁVEL" (label + nome uppercase) entre o destaque de validade/código de barras e o rodapé; renderiza só quando preenchido.
+  - `Etiquetas.tsx`: `useAuth()` adicionado; `responsavel: usuario?.nome` pré-preenchido tanto no botão "Nova Etiqueta de Insumo" quanto no "Etiqueta" por item.
+- **Escopo**: campo de impressão apenas — NÃO persistido em banco (etiqueta sob demanda).
+- **Validação**: smoke browser CDP 9/9 PASS (login → /etiquetas → modal Nova Etiqueta → campo presente + pré-preenchido "Administrador" → preenche Leite Integral/Ana Souza → preview com RESPONSÁVEL + ANA SOUZA + LEITE INTEGRAL); `tsc -b` OK; `npm run lint` 0 erros (5 warnings pré-existentes); `npm run build` OK.
+- **Em 2026-08-08**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate). **Finalizado pelo usuário em 2026-08-08 (completeTask 'user').**
+
+## Notas TC-049 (Sempre aparecer as categorias cadastradas no dropdown do PDV)
+
+- **Pedido do usuário**: "na área categoria, sempre aparecer as opções de categorias já cadastradas no sistema" — dropdown Categoria do modal Novo/Editar Produto e chips de filtro devem listar TODAS as categorias cadastradas, não apenas as dos produtos carregados.
+- **Causa raiz**: `PDV.tsx` derivava categorias de `produtos.map(p => p.categoria)`, limitado ao `limit=50` do `GET /pdv/produtos` — categorias de produtos além dos 50 primeiros ou de produtos desativados não apareciam.
+- **Mudanças**:
+  - `backend/app/routers/pdv.py`: novo endpoint `GET /pdv/categorias` — lista categorias distintas de produtos ATIVOS (sem paginação), mesmo padrão de `/precificacao/categorias/lista`.
+  - `frontend/src/services/api.ts`: `pdvService.categorias()`.
+  - `frontend/src/pages/PDV.tsx`: estado `categoriasSistema` carregado no mount via endpoint; `useMemo categorias` agora faz união (produtos carregados + categoriasSistema) e mantém 'all'. Opção '+ Nova Categoria' preservada.
+- **Escopo decidido pelo usuário**: dropdown PDV apenas (sem criar tabela de categorias — categorias são strings no Produto).
+- **Validação**: py_compile OK; smoke backend GET /pdv/categorias → 200 com token admin e bartender (["Drinks","Cervejas","Bebidas","Porções"]), 401 sem token; `tsc -b` OK; `npm run lint` 0 erros; `npm run build` OK; smoke browser CDP 4/4 PASS (login → /pdv → modal Novo Produto → dropdown com as 4 categorias + '+ Nova Categoria').
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate)→completed(user).
+
+
+## Notas TC-050 (Centralizar card Entrada Manual no Dashboard)
+
+- **Pedido do usuário**: "centralizar o card da área de entrada manual" — tile Entrada Manual do Dashboard ficava colado à esquerda quando a grid de pedidos não estava cheia.
+- **Causa raiz**: Dashboard.tsx:392-405 — tile é o último item do grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3; com poucos pedidos ficava na primeira coluna livre à esquerda.
+- **Mudanças**:
+  - `frontend/src/pages/Dashboard.tsx`: tile Entrada Manual agora em wrapper `col-span-full flex justify-center` com card `w-full max-w-md` — fica centralizado horizontalmente na área de pedidos independente de quantos pedidos existam. Conteúdo interno (círculo + texto) mantém centralização (flex items-center justify-center + text-center). Clique preservado (abre modal Novo Pedido — Entrada Manual).
+- **Escopo decidido pelo usuário**: 'Tile centralizado no grid'.
+- **Validação**: `tsc -b` OK; `npm run lint` 0 erros; `npm run build` OK; smoke browser CDP 4/4 PASS (login → /dashboard → tile Entrada Manual centralizado diffCenter=2px → clique abre modal Novo Pedido).
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate)→completed(user).
+
+
+## Notas TC-051 (Modelo de etiqueta no Visualizar e Imprimir = Label80mm)
+
+- **Pedido do usuário**: "na área de etiquetas em visualizar e imprimir colocar o modelo da etiqueta igual a do nova etiqueta de insumo 80mm" — preview de impressão deveria usar o modelo oficial Label80mm (BARIZE), não o HTML antigo NEONBAR.
+- **Causa raiz**: Etiquetas.tsx:229-260 — modal 'Visualização de Impressão' (botão 'Visualizar e Imprimir') usava card inline NEONBAR (sem código de barras real, sem status colorido, sem responsável).
+- **Mudanças**:
+  - `frontend/src/pages/Etiquetas.tsx`: import de `Label80mm`; grid do preview (agora grid-cols-1 sm:2 lg:3 justify-items-center) renderiza `<Label80mm>` mapeando EtiquetaItem → props (nome, quantidade, unidade_medida, categoria, codigo_lote, data_fabricacao, data_validade, responsavel=usuario.nome). Botão Imprimir (window.print) e classe print-80mm preservados.
+- **Validação**: `tsc -b` OK; `npm run lint` 0 erros (1 warning pré-existente exhaustive-deps em loadEtiquetas); `npm run build` OK; smoke browser CDP 7/7 PASS (login → /etiquetas → 31 itens → Visualizar e Imprimir → 7 Label80mm BARIZE com LOTE/FAB/VAL, 7 códigos de barras CSS, RESPONSÁVEL preenchido, NEONBAR ausente).
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate)→completed(user).
+
+
+## Notas TC-052 (Preview Visualizar e Imprimir mostra apenas uma etiqueta)
+
+- **Pedido do usuário**: "o preview Visualizar e Imprimir deve visualizar apenas uma etiqueta referente ao insumo" — hoje exibia grid com todas as selecionadas.
+- **Causa raiz**: Etiquetas.tsx:230-245 — modal 'Visualização de Impressão' renderizava itemsToPrint.map (grid de Label80mm) com todas as etiquetas selecionadas.
+- **Mudanças**:
+  - `frontend/src/pages/Etiquetas.tsx`: preview agora exibe APENAS `itemsToPrint[0]` (primeiro item selecionado) como Label80mm único, centralizado em container `flex justify-center` com fundo branco. Texto indicativo fixo "1 etiqueta — use Ctrl+P para imprimir". Botão Imprimir (window.print) preservado.
+- **Escopo decidido pelo usuário**: 'Primeira selecionada'.
+- **Validação**: `tsc -b` OK; `npm run lint` 0 erros (1 warning pré-existente exhaustive-deps); `npm run build` OK; smoke browser CDP 5/5 PASS (login → /etiquetas → selecionar 3 itens (primeiro Cachaça 51) → Visualizar e Imprimir → preview com 1 Label80mm e texto '1 etiqueta').
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate)→completed(user).
+
+
+## Notas TC-053 (Padronizar preview reimprimir comanda — 80mm e fundo branco)
+
+- **Pedido do usuário**: "no menu de ações Rápidas na área de reimprimir comanda padronizar o tamanho da comanda de 80mm e fundo branco" — o modal 'Pré-visualização da Comanda' do Dashboard deveria seguir o padrão térmico 80mm/fundo branco usado nas demais comandas.
+- **Causa raiz**: Dashboard.tsx:485-534 — preview do reimprimir era simulador ESC/POS estilizado com fundo preto (`bg-black/80`), cores neon do tema e largura livre, divergente do padrão do projeto (Comandas.tsx:321 `comanda-print w-[80mm] bg-white`, CupomPDV.tsx:41).
+- **Mudanças**:
+  - `frontend/src/pages/Dashboard.tsx`: preview do modal reimprimir trocou `bg-black/80` por `comanda-print bg-white text-black rounded-sm p-4 font-mono w-[80mm] min-w-[80mm] shrink-0 mx-auto max-h-[340px] overflow-y-auto`; cores neon → tons preto/black-alpha; cabeçalho NEONBAR → BARIZE; texto "Visualização do formato de impressão ESC/POS" → "Visualização do formato de impressão 80mm"; removido o aviso "Esta é uma simulação..." (AC5). Conteúdo (itens, obs, total, taxa, atendente, mesa) preservado.
+  - CSS `@media print` (index.css:365-402) já consolidava `.comanda-print` para 80mm/fundo branco — nenhuma mudança necessária.
+- **Validação**: `tsc -b` OK; `npm run lint` 0 erros; smoke browser CDP 8/8 PASS (login → /dashboard → REIMPRIMIR → modal com comanda-print, fundo branco, w-[80mm], sem bg-black, sem texto "Esta é uma simulação" → Fechar fecha modal).
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate, allTestsPassed:true)→completed(user).
+
+
+## Notas TC-054 (Barra de rolagem visível na área dos produtos do PDV)
+
+- **Pedido do usuário**: "no menu PDV inserir barra de rolagem na área dos produtos" — o painel de produtos deve ter scrollbar visível e rolar internamente.
+- **Causa raiz**: `PDV.tsx:362` já tinha `flex-1 overflow-y-auto min-h-0 scrollbar-visible`, mas NUNCA rolava internamente porque o wrapper `MainLayout.tsx:72` (`<div className="p-lg animate-fade-in">`) crescia com o conteúdo (medido 1025px vs main 743px), delegando o scroll ao `<main>` com barra global invisível.
+- **Mudanças**:
+  - `frontend/src/layouts/MainLayout.tsx`: wrapper do Outlet ganhou `h-full min-h-0` → o conteúdo passa a ficar contido na altura do `<main>` (`h-[calc(100vh-4rem)] overflow-y-auto`) e cada página passa a gerenciar seu próprio scroll.
+  - `frontend/src/pages/PDV.tsx`: painel de venda (linha 379) ganhou `min-h-0 overflow-y-auto` — sem isso o cabeçalho (343px) + rodapé (290px) excediam a altura e o `<main>` voltava a rolar.
+- **Validação**:
+  - Diagnóstico CDP (diag5): painel produtos rola internamente (ch=433 sh=813), main NÃO rola no PDV, painel venda rola internamente.
+  - Smoke funcional 7/7 PASS (painel rolável, main sem scroll no PDV, prods acessíveis, rolagem funcional, Comandas renderiza, Relatorios renderiza).
+  - Regressão 14/14 PASS (rotas operacionais via clique NavLink: Comandas/Etiquetas/FichaTécnica/PDV/Estoque/Precificação renderizam sem corte; conteúdo longo — Estoque wrSh=685, Precificação wrSh=1180 — rola no main corretamente).
+- **Nota importante**: rotas dentro de `RequireRole` (DRE, Relatorios, Admin) NÃO montam conteúdo no headless (wrapper vazio, chunk lazy nunca requisitado) — confirmado pré-existente (DRE não monta nem sem o fix, stash testado). É limitação do teste CDP com rotas aninhadas, NÃO regressão do TC-054. O smoke 7/7 anterior teve falso positivo em "Relatorios renderiza" (contava botões da sidebar, não o conteúdo do wrapper).
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate, allTestsPassed:true). **Finalizado pelo usuário em 2026-08-09 (completeTask 'user') → completed.**
+
+## Notas TC-056 (Contador de pedido nos Pedidos Ativos)
+
+- **Pedido do usuário**: "inserir contador de pedido nos Pedidos Ativos" — clarificado via pergunta → **Ambos**: header global (MainLayout) + footer do Dashboard.
+- **Mudanças**:
+  - `frontend/src/layouts/MainLayout.tsx`: `activeOrdersCount` deixou de ser hardcoded `useState(12)` (nunca atualizado) e agora é carregado via `pedidosService.listarAtivos()` (`GET /pedidos/ativos`) com polling a cada 15s (useEffect + setInterval, cleanup com `cancelled`). Header `Pedidos Ativos (N)` visível em todas as páginas.
+  - `frontend/src/pages/Dashboard.tsx`: footer "Pedidos Ativos" ganhou `<Badge variant="primary">{pedidos.length}</Badge>` ao lado do label (import do componente Badge).
+- **Validação**: `tsc -b` OK; `npm run lint` 0 erros (5 warnings pré-existentes); `npm run build` OK; smoke browser CDP 4/4 PASS (form login, header com contador real "Pedidos Ativos (0)" == API /pedidos/ativos, badge no footer = 0). Regressão TC-054 14/14 PASS.
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate, allTestsPassed:true). **Finalizado pelo usuário em 2026-08-09 (completeTask 'user') → completed.**
+
+## Notas TC-055 (Calculadora no painel Caixa e no registro de pagamento)
+
+- **Pedido do usuário**: "inserir opção calculadora no painel caixa e no registro e pagamento" — botão Calculadora no painel `/caixa` e no modal "Registrar Pagamento", com botão "Usar resultado" preenchendo o campo Valor.
+- **Mudanças**:
+  - `frontend/src/components/Calculadora.tsx` (NOVO): modal + display `.text-data-display` + teclado 4x5 (C/±/%/÷/×/−/+/=/decimal) + botões "Apagar"/"Usar resultado"; prop `onResult` opcional.
+  - `frontend/src/pages/Caixa.tsx`: botão "Calculadora" (ghost, ícone Calculator) no header do painel + botão `aria-label="Abrir calculadora"` ao lado do Input Valor no modal Registrar Pagamento + `<Calculadora>` standalone (consulta) e com `onResult` (seta `novoPagamento.valor`) no fim do JSX.
+- **Bug real de produção descoberto e corrigido (ADR-016)**: `RequireRole` (App.tsx) usava `{children}`, mas rotas via `<Route element={...}>` no react-router v7 NÃO passam children — exigem `<Outlet/>`. Consequência: TODAS as rotas protegidas (/caixa, /cmv, /relatorios, /financeiro, /analise-estoque, /dre, /fornecedores, /admin) nunca renderizavam conteúdo em NENHUM ambiente (o headless só expôs; o ADR-015 classificou como limitação do headless de forma incorreta). Fix: `RequireRole` agora retorna `<Outlet/>` e recebe apenas `roles`. Sem isso o chunk `Caixa.tsx` nunca era requisitado e o smoke não encontrava os botões.
+- **Validação**: smoke browser CDP 11/11 PASS (form login, navegação /caixa, botão Calculadora, abre standalone, 20+30=50, caixa aberto, modal Registrar Pagamento, botão calculadora no modal, Usar resultado preenche Valor=125, pagamento registrado); regressão TC-054 14/14 PASS; `tsc -b` OK; `npm run lint` 0 erros (5 warnings pré-existentes); `npm run build` OK.
+- **Em 2026-08-09**: backlog→analyzing→ready→executing(user, aprovado)→testing(qa-engineer)→verified(gate, allTestsPassed:true). **Finalizado pelo usuário em 2026-08-09 (completeTask 'user') → completed.**

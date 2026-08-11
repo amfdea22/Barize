@@ -21,6 +21,7 @@ export default function PDV() {
   const { usuario } = useAuth();
   const { mesas } = useMesas();
   const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [categoriasSistema, setCategoriasSistema] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -108,12 +109,17 @@ export default function PDV() {
     carregarProdutos()
       .then(() => setLoading(false))
       .catch(() => { setError('Erro ao carregar produtos'); setLoading(false); });
+    pdvService.categorias()
+      .then(res => setCategoriasSistema(res.data))
+      .catch(() => { /* filtro usa categorias derivadas dos produtos */ });
   }, []);
 
   const categorias = useMemo(() => {
-    const cats = new Set(produtos.map(p => p.categoria).filter(Boolean));
+    const cats = new Set<string>();
+    produtos.forEach(p => { if (p.categoria) cats.add(p.categoria); });
+    categoriasSistema.forEach(c => cats.add(c));
     return ['all', ...Array.from(cats)] as string[];
-  }, [produtos]);
+  }, [produtos, categoriasSistema]);
 
   const filtered = useMemo(() => {
     return produtos.filter(p => {
@@ -353,7 +359,7 @@ export default function PDV() {
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto min-h-0">
+        <div className="flex-1 overflow-y-auto min-h-0 scrollbar-visible">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-md">
             {filtered.map(p => (
               <ProdutoCardPDV key={p.id} produto={p} quantidade={qtyMap[p.id] || 0} onAdd={addToCart} onEdit={setEditingProduct} />
@@ -370,7 +376,7 @@ export default function PDV() {
       </div>
 
       {/* ─── Painel de Venda ─── */}
-      <div className="w-[360px] xl:w-[400px] shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] flex flex-col">
+      <div className="w-[360px] xl:w-[400px] shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] flex flex-col min-h-0 overflow-y-auto">
         <div className="p-lg border-b border-[rgba(var(--overlay-rgb),0.06)] space-y-md">
           <h2 className="text-headline-md font-bold text-[var(--color-on-surface)] flex items-center gap-2">
             <ShoppingCart size={20} /> Venda

@@ -20,6 +20,8 @@ router = APIRouter(prefix="/copos", tags=["Copos"])
 @router.get("/", response_model=List[CopoResponse])
 def listar_copos(
     baixo_estoque: Optional[bool] = Query(default=None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -27,7 +29,7 @@ def listar_copos(
     query = db.query(Copo).filter(Copo.deleted_at.is_(None))
     if baixo_estoque:
         query = query.filter(Copo.estoque_atual <= Copo.estoque_minimo)
-    copos = query.order_by(Copo.nome).all()
+    copos = query.order_by(Copo.nome).limit(limit).offset(offset).all()
     return [CopoResponse.model_validate(c) for c in copos]
 
 

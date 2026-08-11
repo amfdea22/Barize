@@ -8,21 +8,63 @@
 
 ~~/card inserir opção de pagamentos no caixa~~
 
-
-
 ~~/card resgatar as informações do menu configurações~~
 
+~~/card criar opção no painel de cancelar pedido~~
+
+~~/card Gerar etiquetas de validade e controle de insumos e produtos~~
+
+~~/card criar menu de ficha técnica~~
+
+~~/card cadastrar receita~~
+
+~~/card na área de etiquetas inserir área de responsável~~
+
+~~/card opção de tema claro e escuro do sistema sem mudar a interface do sistema~~
+
+~~/card no menu ficha técnica, inserir opção de editar ficha técnica~~
+
+~~/card na área categoria, sempre aparecer as opções de categorias já cadastradas no sistema~~
+
+~~/card centralizar o card da área de entrada manual~~
+
+~~/card na área de etiquetas em visualiza e imprimir colocar o modelo da etiqueta igual a do nova etiqueta de insumo 80mm~~
+
+~~/card no menu de ações Rápidas na área de reimprimir comanda padronizar o tamanho da comanda de 80mm e fundo branco~~
+
+~~/card no menu PDV inserir barra de rolagem na área dos produtos~~
+
+~~/card inserir opção calculadora no painel caixa e no registro e pagamento~~
+
+~~/card inserir contador de pedido nos Pedidos Ativos~~ 
 
 
-/card criar opção no painel de cancelar pedido
+
+/card atualizar e sincronizar os dados do menu financeiro 
+
+/card atualizar e sincronizar os dados do menu relatório
+
+/card no menu configuração inserir opçãp de logomarca da emprea e FAVcon
+
+/card inserir na área de novo funcionário a opção de foto do funcionário
+
+/card inserir relógio de hora
+
+/card inserir qrcode nas etiquetas para levar a área de controle de insumos
+
+/card no tema claro deixar as cores mais vibrantes 
+
+/card inserir legendas nos botões de mesa e ações rápidas ao passar o mouse
 
 
 
-/card @architect @ui-designer o menu administração deve ter o mesmo designer das outras páginas
+/card analisar o checklist\_tecnico.md e mostrar o que deve ser implementado e pedir para autorizar se necessário as melhorias.
 
 
 
-**/card Gerar etiquetas de validade e controle de insumos e produtos -- em andamento...**
+
+
+
 
 
 
@@ -30,55 +72,7 @@
 
 
 
-
-
-/card opção de tema claro e escuro do sistema
-
-
-
-/card criar opção de editar pedido
-
-**/card criar menu de ficha técnica**
-
-**/card cadastrar receita**
-
-/card cadastrar produtos
-
-/card ajustar a área de Novo insumo
-
 /card melhorar o painel caixa
-
-/card o caixa não esta integrado e não esta atualizando
-
-/card na área de etiquetas - inserir área de responsável
-
-/card inserir opção calculadora no painel caixa
-
-/card inserir contador de pedido
-
-/card inserir relógio de hora
-
-/card inserir alertas
-
-
-
-
-
-/card criar opção de editar pedido
-
-/card criar opção de gerar etiqueta de insumos
-
-/card criar menu de ficha técnica
-
-/card cadastrar receita
-
-/card cadastrar produtos
-
-/card ajustar a área de Novo insumo
-
-/card melhorar o painel caixa
-
-/card visualizar comanda
 
 /card criar versão mobile do sistema
 

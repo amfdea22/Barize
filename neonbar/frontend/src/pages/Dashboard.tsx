@@ -18,6 +18,7 @@ import Modal from '../components/Modal';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import OrderCard from '../components/OrderCard';
+import Badge from '../components/Badge';
 
 /* ─── Main Dashboard ─── */
 export default function Dashboard() {
@@ -419,9 +420,12 @@ export default function Dashboard() {
             </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-label-md text-[10px] uppercase tracking-widest opacity-60">
-              Pedidos Ativos
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-label-md text-[10px] uppercase tracking-widest opacity-60">
+                Pedidos Ativos
+              </span>
+              <Badge variant="primary">{pedidos.length}</Badge>
+            </div>
             <span className="text-data-display text-[var(--color-on-surface)]">
               {pedidos.length}
             </span>
@@ -478,63 +482,59 @@ export default function Dashboard() {
       <Modal open={showReimprimir} onClose={() => setShowReimprimir(false)} title="Pré-visualização da Comanda" size="lg">
         <div className="space-y-4">
           <p className="text-xs text-[var(--color-on-surface-variant)] font-mono tracking-wider uppercase">
-            Visualização do formato de impressão ESC/POS
+            Visualização do formato de impressão 80mm
           </p>
 
           {/* Comanda Preview */}
-          <div className="bg-black/80 rounded-xl p-4 font-mono text-[10px] leading-relaxed text-center select-all border border-[rgba(var(--overlay-rgb),0.1)] shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] max-h-[340px] overflow-y-auto">
-            <div className="text-[var(--color-primary)] font-bold text-xs tracking-[0.2em] mb-0.5">
-              ★ NEONBAR ★
+          <div className="comanda-print bg-white text-black rounded-sm p-4 font-mono text-[10px] leading-relaxed select-all w-[80mm] min-w-[80mm] shrink-0 mx-auto max-h-[340px] overflow-y-auto">
+            <div className="text-center font-bold text-xs tracking-[0.2em] mb-0.5">
+              BARIZE
             </div>
-            <div className="text-[var(--color-on-surface)] text-[9px] uppercase tracking-wider mb-1">
+            <div className="text-center text-[9px] uppercase tracking-wider text-black/60 mb-1">
               Comanda de Bar
             </div>
-            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] mb-1" />
+            <div className="border-t border-dashed border-black/20 mb-1" />
 
-            <div className="flex justify-between text-[var(--color-on-surface-variant)] text-[9px] mb-1">
+            <div className="flex justify-between text-[9px] text-black/70 mb-1">
               <span>#{Math.floor(800 + Math.random() * 200)}</span>
               <span>{new Date().toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: '2-digit' })}</span>
             </div>
 
             <div className="text-left space-y-0.5 mb-1">
-              <div className="flex justify-between text-[var(--color-on-surface)] text-[10px]">
+              <div className="flex justify-between text-[10px] text-black">
                 <span>2x Dry Martini</span>
                 <span>R$ 36,00</span>
               </div>
-              <div className="text-[8px] text-[var(--color-on-surface-variant)] pl-3">
+              <div className="text-[8px] text-black/50 pl-3">
                 Obs: Com azeitona extra
               </div>
-              <div className="flex justify-between text-[var(--color-on-surface)] text-[10px]">
+              <div className="flex justify-between text-[10px] text-black">
                 <span>1x Negroni</span>
                 <span>R$ 28,00</span>
               </div>
-              <div className="flex justify-between text-[var(--color-on-surface)] text-[10px]">
+              <div className="flex justify-between text-[10px] text-black">
                 <span>3x Chopp Heineken</span>
                 <span>R$ 45,00</span>
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] mb-1" />
+            <div className="border-t border-dashed border-black/20 mb-1" />
 
-            <div className="flex justify-between text-[var(--color-primary)] font-bold text-xs mb-0.5">
+            <div className="flex justify-between font-bold text-xs mb-0.5">
               <span>TOTAL</span>
               <span>R$ 109,00</span>
             </div>
-            <div className="text-[var(--color-on-surface-variant)] text-[8px]">
+            <div className="text-[8px] text-black/70">
               Taxa 8%: R$ 8,72
             </div>
 
-            <div className="border-t border-dashed border-[rgba(var(--overlay-rgb),0.15)] my-1" />
+            <div className="border-t border-dashed border-black/20 my-1" />
 
-            <div className="text-[var(--color-on-surface-variant)] text-[8px] space-y-0.5">
+            <div className="text-[8px] text-black/70 space-y-0.5">
               <div>Atendente: Admin</div>
               <div>Mesa 12 • Cliente 1</div>
-              <div className="text-[var(--color-primary)]/60 text-[9px] mt-0.5">Obrigado!</div>
+              <div className="text-black/50 text-[9px] mt-0.5 text-center">Obrigado!</div>
             </div>
-          </div>
-
-          <div className="text-[10px] text-[var(--color-outline)] text-center">
-            Esta é uma simulação. A formatação real depende do modelo da impressora.
           </div>
 
           <div className="flex gap-3 pt-1">

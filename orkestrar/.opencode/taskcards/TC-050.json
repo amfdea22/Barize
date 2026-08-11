@@ -1,0 +1,73 @@
+{
+  "id": "TC-050",
+  "title": "centralizar o card da área de entrada manual",
+  "status": "cancelled",
+  "statusHistory": [
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:49:55.178Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:53:05.678Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:53:45.274Z",
+      "actor": "user",
+      "reason": "Usuário aprovou a análise — iniciar execução"
+    },
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:55:32.081Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:55:32.091Z",
+      "actor": "gate",
+      "reason": "Tile Entrada Manual col-span-full + flex justify-center (max-w-md) — tsc/lint/build OK, smoke browser 4/4 PASS (tile centralizado diffCenter=2px, clique abre modal)"
+    },
+    {
+      "taskId": "TC-050",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:55:49.419Z",
+      "actor": "user",
+      "reason": "Solucionado pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-09T00:41:40.310Z",
+  "updatedAt": "2026-08-09T00:55:49.419Z",
+  "path": ".opencode/taskcards/cancelled/TC-050.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T00:55:49.419Z",
+  "cancelledAt": "2026-08-09T01:01:57.333Z"
+}

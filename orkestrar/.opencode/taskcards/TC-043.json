@@ -1,7 +1,7 @@
 {
   "id": "TC-043",
   "title": "Emulador CLI ASCII — emulador ESC/POS de 48 colunas + regex de limpeza de comandos binários/hex para visualização",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-043",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.174Z",
       "actor": "gate",
       "reason": "Emulador CLI ASCII 48 col + limpar_comandos_escpos — execução sem erro"
+    },
+    {
+      "taskId": "TC-043",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.235Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.083Z",
-  "updatedAt": "2026-08-08T16:38:01.174Z",
+  "updatedAt": "2026-08-08T17:26:24.235Z",
   "path": ".opencode/taskcards/TC-043.json",
   "taskType": "card",
   "objective": "Emulador CLI ASCII de ESC/POS 48 colunas (neonbar/backend/app/worker/emulador_escpos.py): argumentos --comanda/--qtd/--obs/--fechamento/--raw/--colunas, função limpar_comandos_escpos() que remove comandos binários/hex e os substitui por rótulos legíveis (ex \"CORTE PARCIAL\"), e renderizar_ascii() com centralização para preview visual sem impressora.",
@@ -73,5 +82,6 @@
     "limpar_comandos_escpos remove bytes binários do buffer",
     "Saída renderizada tem largura <= colunas e centraliza título"
   ],
-  "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas."
+  "notes": "Ferramenta de dev/QA para validar o conteúdo impresso sem hardware. Regex de limpeza: remove \\x1b[^\\n]{1,6} (ESC ...) e \\x1d[^\\n]{1,20} (GS ...), substituindo por rótulos; comando conhecidos (corte, guilhotina, qrcode, gaveta) ganham linhas legíveis. Saída com serrilhado ~ nas bordas.",
+  "completedAt": "2026-08-08T17:26:24.235Z"
 }

@@ -1,14 +1,93 @@
-﻿{
-    "taskType":  "card",
-    "createdBy":  "user",
-    "id":  "TC-012",
-    "createdAt":  "2026-07-26T05:19:28.558Z",
-    "agent":  "build",
-    "statusHistory":  [
-
-                      ],
-    "updatedAt":  "2026-07-26T05:19:28.558Z",
-    "status":  "backlog",
-    "path":  ".opencode/taskcards/TC-012.json",
-    "title":  "Padronizar tamanho das fotos e visualização dos nomes e preços do produto da área de todas as bebidas para ficar igual à área drinks"
+{
+  "taskType": "card",
+  "createdBy": "user",
+  "id": "TC-012",
+  "createdAt": "2026-07-26T05:19:28.558Z",
+  "agent": "build",
+  "statusHistory": [
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.186Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.439Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.817Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.087Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.097Z",
+      "actor": "gate",
+      "reason": "Batch A: foto/nome/preço idênticos a drinks validados — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-012",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.631Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.631Z",
+  "status": "completed",
+  "path": ".opencode/taskcards/TC-012.json",
+  "title": "Padronizar tamanho das fotos e visualizaÃ§Ã£o dos nomes e preÃ§os do produto da Ã¡rea de todas as bebidas para ficar igual Ã  Ã¡rea drinks",
+  "objective": "Padronizar o tamanho das FOTOS e a visualização de NOMES e PREÇOS dos produtos da área \"todas as bebidas\" para ficar igual à área drinks — garantir que foto, nome e preço tenham o mesmo destaque e proporção em todas as categorias do cardápio digital.",
+  "acceptanceCriteria": [
+    "FOTO 1 — Fotos (foto_url) de bebidas renderizam object-cover na mesma proporção (aspect-[16/10]) que drinks",
+    "NOME 2 — Nome do produto exibido abaixo da imagem com a mesma tipografia (text-[13px] semibold break-words leading-snug) em todas as categorias",
+    "PREÇO 3 — Preço exibido com a mesma tipografia mono (font-mono text-[15px] semibold) e mesma cor de destaque por categoria",
+    "FALLBACK 4 — Sem foto: emoji/imagem centralizado no mesmo tamanho que drinks",
+    "VALIDAÇÃO 5 — Verificação visual contra a referência ui/templates/layout/menu_e_lan_amentos_pdv/screen.png",
+    "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Produtos de bebidas com foto exibem foto no mesmo tamanho que drinks",
+    "Nome/preço de bebidas com as mesmas classes de tipografia que drinks",
+    "Sem foto, fallback emoji do mesmo tamanho que drinks",
+    "Smoke browser: /cardapio comparando categoria de bebidas × drinks",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Sobrepõe-se ao TC-011 (mesma área CardapioDigital). Se ambos forem aprovados, implementar em conjunto em um único batch — TC-011 garante o card único, TC-012 garante foto/nome/preço idênticos a drinks. Referência visual: ui/templates/layout/menu_e_lan_amentos_pdv/screen.png (não lida pelo modelo — sem visão).",
+  "completedAt": "2026-08-08T21:15:03.631Z"
 }

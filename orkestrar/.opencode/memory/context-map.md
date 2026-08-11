@@ -55,6 +55,24 @@
 | `neonbar/frontend/src/layouts/Sidebar.tsx` | 2026-08-08 | build | TC-046: ThemeToggle no rodapé (antes do perfil, respeita collapsed) |
 | `neonbar/frontend/src/pages/Login.tsx` | 2026-08-08 | build | TC-046: ThemeToggle no header (ícone-only) |
 | `neonbar/frontend/src/pages/*.tsx` + components | 2026-08-08 | build | TC-046: batch ~164 usos rgba(255,255,255)/rgba(28,27,27)/rgba(59,73,76) → rgba(var(--overlay-rgb)/--glass-rgb/--neutral-rgb,…) |
+| `neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx` | 2026-08-08 | build | TC-047: EtiquetaForm.responsavel + input "Responsável" |
+| `neonbar/frontend/src/components/etiqueta/Label80mm.tsx` | 2026-08-08 | build | TC-047: prop responsavel + seção "RESPONSÁVEL" na etiqueta |
+| `neonbar/frontend/src/pages/Etiquetas.tsx` | 2026-08-08 | build | TC-047: useAuth + pré-preenche responsavel com usuario.nome (Nova Etiqueta e por item) |
+| `neonbar/frontend/src/pages/FichaTecnica.tsx` | 2026-08-08 | build | TC-048: página read-only → edição — imports Pencil/Input/useAuth; estado editFicha/editForm/savingEdit/editError + isAdminOrGerente; openEdit() (GET ficha via obterProdutoFicha) + handleEditSubmit() (PUT atualizar, trata 403/404/detail); grid/lista passam onEdit; FichaCard/FichaListItem/FichaDetailModal com botão Editar; Modal de edição (Dificuldade select facil/medio/dificil, Teor, Copo, Tempo, Guarnição, Modo de Preparo textarea, erro inline, Cancelar/Salvar) |
+| `neonbar/frontend/src/services/api.ts` | 2026-08-08 | build | TC-048: fichasTecnicasService.obterProdutoFicha(produtoId) → GET /pdv/produtos/{id}/ficha-tecnica |
+| `neonbar/frontend/src/pages/CardapioDigital.tsx` | 2026-08-08 | build | TC-013: toggle Básico/Completo (localStorage barize-cardapio-modo); modo Básico oculta descrição/ingredientes; main com .scrollbar-visible (TC-016) |
+| `neonbar/frontend/src/index.css` | 2026-08-08 | build | TC-016/017: classe .scrollbar-visible (WebKit thumb primary-container + Firefox scrollbar-color) |
+| `neonbar/frontend/src/pages/PDV.tsx` | 2026-08-08 | build | TC-017: painel de produtos com .scrollbar-visible |
+| `neonbar/frontend/src/layouts/Sidebar.tsx` | 2026-08-08 | build | TC-025: podeAcessar() filtra navItems por role (bartender só operacionais); Configurações oculto p/ bartender |
+| `neonbar/frontend/src/App.tsx` | 2026-08-08 | build | TC-025: RequireRole (roles admin/gerente) protege /cmv /caixa /relatorios /financeiro /analise-estoque /dre /fornecedores /admin; bartender → redirect /pdv |
+| `neonbar/backend/app/routers/recebimentos.py` | 2026-08-08 | build | TC-005: paginação limit(50,le=500)/offset em listar_recebimentos |
+| `neonbar/backend/app/routers/funcionarios.py` | 2026-08-08 | build | TC-005: paginação em listar_funcionarios e listar_funcionarios_ativos |
+| `neonbar/backend/app/routers/materiais.py` | 2026-08-08 | build | TC-005: paginação em listar_materiais |
+| `neonbar/backend/app/routers/copos.py` | 2026-08-08 | build | TC-005: paginação em listar_copos |
+| `neonbar/backend/app/routers/mesas.py` | 2026-08-08 | build | TC-005: paginação em listar_mesas (limit default 100) |
+| `neonbar/backend/app/routers/copos_quebrados.py` | 2026-08-08 | build | TC-005: paginação em listar_quebras |
+| `neonbar/backend/app/routers/producao.py` | 2026-08-08 | build | TC-005: paginação em listar_producoes |
+| `neonbar/frontend/src/components/pdv/ProdutoCardPDV.tsx` | 2026-08-08 | build | TC-009 (validado): imagem aspect-[16/10] no topo + nome/preço/categoria em p-3 abaixo |
 
 ## Modified Files
 

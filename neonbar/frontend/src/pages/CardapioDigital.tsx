@@ -37,14 +37,39 @@ function getCatAccent(cat: string) {
   return catAccent[cat] || 'var(--color-primary-container)';
 }
 
+type ModoCardapio = 'completo' | 'basico';
+
+const MODO_KEY = 'barize-cardapio-modo';
+
+function loadModo(): ModoCardapio {
+  try {
+    return localStorage.getItem(MODO_KEY) === 'basico' ? 'basico' : 'completo';
+  } catch {
+    return 'completo';
+  }
+}
+
 export default function CardapioDigital() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('');
+  const [modo, setModo] = useState<ModoCardapio>(loadModo);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const mainRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
+
+  const basico = modo === 'basico';
+
+  const toggleModo = () => {
+    setModo((prev) => {
+      const next = prev === 'completo' ? 'basico' : 'completo';
+      try {
+        localStorage.setItem(MODO_KEY, next);
+      } catch {}
+      return next;
+    });
+  };
 
   useEffect(() => {
     api.get('/cardapio/')
@@ -143,9 +168,26 @@ export default function CardapioDigital() {
                 </p>
                       </div>
                     </div>
-            <span className="text-label-md text-[var(--color-outline)]">
-              {filtered.length} {filtered.length === 1 ? 'item' : 'itens'}
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-label-md text-[var(--color-outline)]">
+                {filtered.length} {filtered.length === 1 ? 'item' : 'itens'}
+              </span>
+              <button
+                type="button"
+                onClick={toggleModo}
+                aria-pressed={basico}
+                title={basico ? 'Modo Básico ativo — clique para o modo Completo' : 'Ativar modo Básico (nome, preço e foto apenas)'}
+                className={[
+                  'px-3 py-1.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border transition-all duration-200 select-none',
+                  basico
+                    ? 'text-[var(--color-on-primary-container)] border-transparent shadow-[0_0_16px_rgba(0,229,255,0.2)]'
+                    : 'text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:text-[var(--color-on-surface)] hover:border-[rgba(var(--overlay-rgb),0.15)]',
+                ].join(' ')}
+                style={{ backgroundColor: basico ? 'var(--color-primary-container)' : 'var(--color-surface-container-high)' }}
+              >
+                {basico ? 'Básico' : 'Completo'}
+              </button>
+            </div>
           </div>
 
           <div className="relative">
@@ -197,7 +239,7 @@ export default function CardapioDigital() {
 
       <main
         ref={mainRef}
-        className="flex-1 overflow-y-scroll"
+        className="flex-1 overflow-y-scroll scrollbar-visible"
         style={{ scrollbarGutter: 'stable' }}
       >
         {loading ? (
@@ -295,7 +337,7 @@ export default function CardapioDigital() {
                         <h3 className="text-[13px] font-semibold leading-snug text-[var(--color-on-surface)] break-words">
                           {produto.nome}
                         </h3>
-                        {produto.descricao && (
+                        {!basico && produto.descricao && (
                           <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-tight line-clamp-2">
                             {produto.descricao}
                           </p>
@@ -308,7 +350,7 @@ export default function CardapioDigital() {
                         </span>
                       </div>
 
-                      {produto.ingredientes && (
+                      {!basico && produto.ingredientes && (
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-16px)] opacity-0 group-hover:opacity-100 translate-y-0 group-hover:-translate-y-full transition-all duration-300 ease-out pointer-events-none">
                           <div className="bg-[var(--color-surface-container-high)] text-[11px] leading-snug text-[var(--color-on-surface-variant)] px-3 py-2 rounded-lg border border-[rgba(var(--overlay-rgb),0.06)] shadow-xl backdrop-blur-sm">
                             <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--color-primary-container)] block mb-0.5">Ingredientes</span>

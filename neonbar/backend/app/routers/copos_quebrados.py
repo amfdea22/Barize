@@ -2,7 +2,7 @@
 BARIZE - Rotas de Copos Quebrados (Registro de Perdas)
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime, timezone, timedelta
@@ -21,6 +21,8 @@ router = APIRouter(prefix="/copos-quebrados", tags=["Copos Quebrados"])
 
 @router.get("/", response_model=List[CopoQuebradoResponse])
 def listar_quebras(
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -28,6 +30,8 @@ def listar_quebras(
     quebras = (
         db.query(CopoQuebrado)
         .order_by(CopoQuebrado.created_at.desc())
+        .limit(limit)
+        .offset(offset)
         .all()
     )
     return [CopoQuebradoResponse.model_validate(q) for q in quebras]

@@ -1,13 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { Search, Bell, UserCircle } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { useAuth } from '../hooks/useAuth';
+import { pedidosService } from '../services/api';
 
 export default function MainLayout() {
   const { usuario, loading, logout, isAuthenticated } = useAuth();
-  const [activeOrdersCount] = useState(12);
+  const [activeOrdersCount, setActiveOrdersCount] = useState(0);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await pedidosService.listarAtivos();
+        if (!cancelled) setActiveOrdersCount(Array.isArray(res.data) ? res.data.length : 0);
+      } catch {
+        // silent — mantém último valor
+      }
+    };
+    load();
+    const interval = setInterval(load, 15000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -69,7 +88,7 @@ export default function MainLayout() {
 
       {/* Main Content */}
       <main className={`${sidebarCollapsed ? 'ml-16 w-[calc(100%-4rem)]' : 'ml-64 w-[calc(100%-16rem)]'} pt-16 h-[calc(100vh-4rem)] overflow-y-auto`}>
-        <div className="p-lg animate-fade-in">
+        <div className="p-lg animate-fade-in h-full min-h-0">
           <Outlet />
         </div>
       </main>

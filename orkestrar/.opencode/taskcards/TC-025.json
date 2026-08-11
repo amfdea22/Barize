@@ -1,10 +1,94 @@
 {
   "id": "TC-025",
   "title": "no menu administração criar áreas de acessos no sistema para administrador, gerente e bartender",
-  "status": "backlog",
-  "statusHistory": [],
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.225Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.503Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.875Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.172Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.183Z",
+      "actor": "gate",
+      "reason": "Batch D: menu por perfil (Sidebar podeAcessar) + rotas restritas (RequireRole) — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-025",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.711Z",
+      "actor": "user"
+    }
+  ],
   "createdAt": "2026-08-06T21:01:55.144Z",
-  "updatedAt": "2026-08-06T21:01:55.144Z",
-  "path": ".opencode/taskcards/active/TC-025.json",
-  "taskType": "card"
+  "updatedAt": "2026-08-08T21:15:03.711Z",
+  "path": ".opencode/taskcards/TC-025.json",
+  "taskType": "card",
+  "objective": "Criar áreas de acesso por perfil (admin, gerente, bartender) no sistema. Premissa adotada (usuário dispensou a pergunta de esclarecimento): filtrar o MENU lateral por perfil + proteger rotas — admin vê tudo, gerente vê administração/gestão, bartender vê apenas as áreas operacionais (Painel, PDV, Comandas, Cardápio Digital, Ficha Técnica/Estoque se aplicável). Hoje o Sidebar já oculta \"Administração\" de bartenders (Sidebar.tsx:153) e o Admin.tsx redireciona não-admin/gerente (Admin.tsx:177-180); o card formaliza e amplia esse controle.",
+  "acceptanceCriteria": [
+    "MENU 1 — Sidebar filtra itens por perfil: admin (todos), gerente (todos exceto restritos), bartender (apenas operacionais — Painel, PDV, Comandas, Cardápio Digital, Ficha Técnica, Estoque, Etiquetas)",
+    "ROTA 2 — Rotas protegidas por perfil: /admin acessível apenas admin/gerente (redirect para /pdv para os demais — já existe em Admin.tsx)",
+    "ROTA 3 — Rota /relatorios, /financeiro, /cmv, /dre, /caixa, /analise-estoque restritas a admin/gerente (bartender não acessa por URL direta)",
+    "BACKEND 4 — Endpoints sensíveis já protegidos por verificar_role/requer_role (admin/gerente) — validar cobertura nos routers financeiro/relatorios/cmv/caixa",
+    "UI 5 — Item 'Configurações' do rodapé do Sidebar oculto para bartender (aponta /admin)",
+    "VALIDAÇÃO 6 — Smoke browser: login bartender não vê Administração/Relatórios/Financeiro/CMV/DRE/Caixa no menu nem acessa via URL; login admin vê tudo; build + lint frontend OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/layouts/Sidebar.tsx",
+    "neonbar/frontend/src/App.tsx",
+    "neonbar/frontend/src/layouts/MainLayout.tsx"
+  ],
+  "tests": [
+    "Sidebar admin exibe todos os itens",
+    "Sidebar gerente exibe itens de gestão + admin",
+    "Sidebar bartender exibe apenas operacionais (sem Administração/Relatórios/Financeiro/CMV/DRE/Caixa)",
+    "Bartender acessando /admin, /relatorios, /financeiro, /cmv, /dre, /caixa via URL é redirecionado",
+    "Admin acessa todas as rotas normalmente",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Premissa adotada (usuário dispensou a pergunta de esclarecimento): filtro de menu por perfil + proteção de rotas. Sem tela de configuração de permissões (matriz persistida) nesta versão — apenas filtro estático por role. Atenção: definir a lista exata de áreas do bartender com o usuário antes de implementar (Painel/PDV/Comandas/cardápio/etiquetas/estoque são o candidato). Backend já protege os endpoints sensíveis.",
+  "completedAt": "2026-08-08T21:15:03.711Z"
 }

@@ -162,6 +162,13 @@ def init_db():
             # Backfill: registros antigos (sem setor) viram CAIXA
             conn.execute(text("UPDATE printer_config SET setor = 'CAIXA' WHERE setor IS NULL OR setor = ''"))
             conn.commit()
+
+            # Coluna 'foto_url' em funcionarios (foto do funcionário no RH)
+            func_cols = [row[1] for row in conn.execute(text("PRAGMA table_info('funcionarios')")).fetchall()]
+            if 'foto_url' not in func_cols:
+                conn.execute(text("ALTER TABLE funcionarios ADD COLUMN foto_url VARCHAR(255)"))
+                conn.commit()
+                logger.info("[BARIZE] Coluna foto_url adicionada à tabela funcionarios")
     except Exception:
         pass  # Tabela pode não existir ainda
 

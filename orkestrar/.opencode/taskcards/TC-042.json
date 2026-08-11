@@ -1,7 +1,7 @@
 {
   "id": "TC-042",
   "title": "Aba Impressoras no Admin — UI de configuração (tipo network/usb/serial, host, porta, baud, timeout, ativo) + botão Testar Impressora via adminService getPrinterConfig/updatePrinterConfig/testPrinter",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-042",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.161Z",
       "actor": "gate",
       "reason": "Aba Impressoras no Admin (form/status/testar/salvar) — build/lint OK"
+    },
+    {
+      "taskId": "TC-042",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.229Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.078Z",
-  "updatedAt": "2026-08-08T16:38:01.161Z",
+  "updatedAt": "2026-08-08T17:26:24.229Z",
   "path": ".opencode/taskcards/TC-042.json",
   "taskType": "card",
   "objective": "Aba Impressoras no Admin: UI de configuração das impressoras (tipo network/usb/serial, host, porta, baud, timeout, ativo), chips dos setores configurados (CAIXA/COZINHA/BAR), botão Checar Status (DLE EOT via GET /admin/printer-status), Testar Impressora e Salvar via adminService ampliado (getPrinterConfigs, getPrinterStatus, createPrinterConfig).",
@@ -76,5 +85,6 @@
     "Checar Status dispara adminService.getPrinterStatus",
     "npm run build OK + npm run lint 0 erros + tsc -b OK"
   ],
-  "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem)."
+  "notes": "Consome endpoints do TC-035 (printer-status) e TC-040 (printer-fila/reenviar). PrintConfig tem setor (chip). Tipos ampliados em types/index.ts (PrinterConfig, PrinterStatus, FilaImpressaoItem).",
+  "completedAt": "2026-08-08T17:26:24.229Z"
 }

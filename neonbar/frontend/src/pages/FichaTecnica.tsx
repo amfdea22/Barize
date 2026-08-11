@@ -17,6 +17,7 @@ import {
   Eye,
   Grid,
   List,
+  Pencil,
   
   
   Info,
@@ -36,6 +37,8 @@ import { fichasTecnicasService } from '../services/api';
 import type { FichaTecnicaItem, FichaTecnicaFilter } from '../types';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
+import Input from '../components/Input';
+import { useAuth } from '../hooks/useAuth';
 
 const DIFICULDADE_LABELS: Record<string, string> = {
   facil: 'Fácil',
@@ -71,6 +74,7 @@ const DIFICULDADE_COLORS: Record<string, string> = {
 };
 
 export default function FichaTecnica() {
+  const { usuario } = useAuth();
   const [fichas, setFichas] = useState<FichaTecnicaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -89,6 +93,80 @@ export default function FichaTecnica() {
   const [categorias, setCategorias] = useState<string[]>([]);
   const [tagsDisponiveis, setTagsDisponiveis] = useState<string[]>([]);
   const [alergenosDisponiveis, setAlergenosDisponiveis] = useState<string[]>([]);
+
+  // Edição
+  const [editFicha, setEditFicha] = useState<FichaTecnicaItem | null>(null);
+  const [editForm, setEditForm] = useState({
+    dificuldade: '',
+    teor_alcoolico: '',
+    tipo_copo: '',
+    tempo_preparo: '',
+    guarnicao: '',
+    modo_preparo: '',
+  });
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editError, setEditError] = useState('');
+
+  const isAdminOrGerente = !!usuario && (usuario.role === 'admin' || usuario.role === 'gerente');
+
+  const openEdit = async (ficha: FichaTecnicaItem) => {
+    setEditFicha(ficha);
+    setEditError('');
+    setEditForm({
+      dificuldade: ficha.dificuldade || '',
+      teor_alcoolico: ficha.teor_alcoolico !== undefined && ficha.teor_alcoolico !== null ? String(ficha.teor_alcoolico) : '',
+      tipo_copo: '',
+      tempo_preparo: '',
+      guarnicao: '',
+      modo_preparo: '',
+    });
+    try {
+      const res = await fichasTecnicasService.obterProdutoFicha(ficha.produto_id);
+      const ft = res.data?.ficha_tecnica;
+      if (ft) {
+        setEditForm({
+          dificuldade: ficha.dificuldade || ft.dificuldade || '',
+          teor_alcoolico: ft.teor_alcoolico !== undefined && ft.teor_alcoolico !== null ? String(ft.teor_alcoolico) : (ficha.teor_alcoolico !== undefined && ficha.teor_alcoolico !== null ? String(ficha.teor_alcoolico) : ''),
+          tipo_copo: ft.tipo_copo || '',
+          tempo_preparo: ft.tempo_preparo !== undefined && ft.tempo_preparo !== null ? String(ft.tempo_preparo) : '',
+          guarnicao: ft.guarnicao || '',
+          modo_preparo: ft.modo_preparo || '',
+        });
+      }
+    } catch {
+      // Sem dados extras (modo_preparo/tipo_copo/etc) — mantém dificuldade/teor do item
+    }
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editFicha) return;
+    setSavingEdit(true);
+    setEditError('');
+    try {
+      await fichasTecnicasService.atualizar(editFicha.produto_id, {
+        dificuldade: editForm.dificuldade || undefined,
+        teor_alcoolico: editForm.teor_alcoolico ? parseFloat(editForm.teor_alcoolico) : undefined,
+        modo_preparo: editForm.modo_preparo || undefined,
+        tipo_copo: editForm.tipo_copo || undefined,
+        guarnicao: editForm.guarnicao || undefined,
+        tempo_preparo: editForm.tempo_preparo ? parseInt(editForm.tempo_preparo, 10) : undefined,
+      });
+      setEditFicha(null);
+      setSelectedFicha(null);
+      await loadFichas();
+    } catch (err: any) {
+      if (err?.response?.status === 403) {
+        setEditError('Você não tem permissão para editar fichas técnicas');
+      } else if (err?.response?.status === 404) {
+        setEditError('Produto não encontrado');
+      } else {
+        setEditError(err?.response?.data?.detail || 'Erro ao salvar alterações');
+      }
+    } finally {
+      setSavingEdit(false);
+    }
+  };
 
   const loadFichas = async () => {
     setLoading(true);
@@ -356,13 +434,13 @@ export default function FichaTecnica() {
           {viewMode === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
               {filtered.map(ficha => (
-                <FichaCard key={ficha.produto_id} ficha={ficha} onClick={() => setSelectedFicha(ficha)} />
+                <FichaCard key={ficha.produto_id} ficha={ficha} onClick={() => setSelectedFicha(ficha)} onEdit={isAdminOrGerente ? () => openEdit(ficha) : undefined} />
               ))}
             </div>
           ) : (
             <div className="space-y-sm">
               {filtered.map(ficha => (
-                <FichaListItem key={ficha.produto_id} ficha={ficha} onClick={() => setSelectedFicha(ficha)} />
+                <FichaListItem key={ficha.produto_id} ficha={ficha} onClick={() => setSelectedFicha(ficha)} onEdit={isAdminOrGerente ? () => openEdit(ficha) : undefined} />
               ))}
             </div>
           )}
@@ -371,7 +449,77 @@ export default function FichaTecnica() {
 
       {/* Detail Modal */}
       <Modal open={!!selectedFicha} onClose={() => setSelectedFicha(null)} title="" size="xl">
-        {selectedFicha && <FichaDetailModal ficha={selectedFicha} onClose={() => setSelectedFicha(null)} />}
+        {selectedFicha && <FichaDetailModal ficha={selectedFicha} onClose={() => setSelectedFicha(null)} onEdit={isAdminOrGerente ? () => openEdit(selectedFicha) : undefined} />}
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal open={!!editFicha} onClose={() => setEditFicha(null)} title={editFicha ? `Editar Ficha Técnica — ${editFicha.nome}` : 'Editar Ficha Técnica'} size="lg">
+        {editFicha && (
+          <form onSubmit={handleEditSubmit} className="space-y-md">
+            <div className="grid grid-cols-2 gap-md">
+              <div>
+                <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1.5">Dificuldade</label>
+                <select
+                  className="w-full h-12 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] outline-none px-md focus:border-[var(--color-primary-container)]"
+                  value={editForm.dificuldade}
+                  onChange={(e) => setEditForm({ ...editForm, dificuldade: e.target.value })}
+                >
+                  <option value="">Selecione...</option>
+                  <option value="facil">Fácil</option>
+                  <option value="medio">Médio</option>
+                  <option value="dificil">Difícil</option>
+                </select>
+              </div>
+              <Input
+                label="Teor Alcoólico (%)"
+                type="number"
+                step="0.1"
+                min="0"
+                max="100"
+                value={editForm.teor_alcoolico}
+                onChange={(e) => setEditForm({ ...editForm, teor_alcoolico: e.target.value })}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-md">
+              <Input
+                label="Tipo de Copo"
+                value={editForm.tipo_copo}
+                onChange={(e) => setEditForm({ ...editForm, tipo_copo: e.target.value })}
+              />
+              <Input
+                label="Tempo de Preparo (min)"
+                type="number"
+                min="0"
+                value={editForm.tempo_preparo}
+                onChange={(e) => setEditForm({ ...editForm, tempo_preparo: e.target.value })}
+              />
+            </div>
+            <Input
+              label="Guarnição"
+              value={editForm.guarnicao}
+              onChange={(e) => setEditForm({ ...editForm, guarnicao: e.target.value })}
+            />
+            <div>
+              <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1.5">Modo de Preparo</label>
+              <textarea
+                rows={4}
+                className="w-full rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] outline-none px-md py-3 focus:border-[var(--color-primary-container)]"
+                value={editForm.modo_preparo}
+                onChange={(e) => setEditForm({ ...editForm, modo_preparo: e.target.value })}
+              />
+            </div>
+            {editError && (
+              <div className="flex items-center gap-sm px-md py-sm rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30 text-sm text-[var(--color-error)]" role="alert">
+                <AlertTriangle size={14} />
+                <span>{editError}</span>
+              </div>
+            )}
+            <div className="flex gap-3 pt-2">
+              <Button variant="ghost" className="flex-1" onClick={() => setEditFicha(null)} type="button">Cancelar</Button>
+              <Button type="submit" className="flex-1" loading={savingEdit}>Salvar</Button>
+            </div>
+          </form>
+        )}
       </Modal>
     </div>
   );
@@ -379,7 +527,7 @@ export default function FichaTecnica() {
 
 // ─── Components ───
 
-function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () => void }) {
+function FichaCard({ ficha, onClick, onEdit }: { ficha: FichaTecnicaItem; onClick: () => void; onEdit?: () => void }) {
   return (
     <div
       onClick={onClick}
@@ -496,10 +644,15 @@ function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () =>
         
         {/* Quick actions */}
         <div className="flex gap-1 pt-1 border-t border-[rgba(var(--overlay-rgb),0.06)]">
-          <button className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
+          <button onClick={(e) => { e.stopPropagation(); onClick(); }} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
             <Eye size={12} /> Ver
           </button>
-          <button className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
+          {onEdit && (
+            <button onClick={(e) => { e.stopPropagation(); onEdit(); }} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
+              <Pencil size={12} /> Editar
+            </button>
+          )}
+          <button onClick={(e) => { e.stopPropagation(); window.print(); }} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors">
             <Printer size={12} /> Imprimir
           </button>
         </div>
@@ -508,7 +661,7 @@ function FichaCard({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () =>
   );
 }
 
-function FichaListItem({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: () => void }) {
+function FichaListItem({ ficha, onClick, onEdit }: { ficha: FichaTecnicaItem; onClick: () => void; onEdit?: () => void }) {
   return (
     <div
       onClick={onClick}
@@ -557,12 +710,20 @@ function FichaListItem({ ficha, onClick }: { ficha: FichaTecnicaItem; onClick: (
       <div className="text-right shrink-0">
         <div className="text-data-display text-[var(--color-primary)] font-bold">R$ {ficha.preco_venda.toFixed(2)}</div>
         <div className="text-[10px] text-[var(--color-outline)] font-mono">Custo: R$ {ficha.custo_total?.toFixed(2) || '—'}</div>
+        {onEdit && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onEdit(); }}
+            className="mt-1.5 inline-flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors"
+          >
+            <Pencil size={10} /> Editar
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function FichaDetailModal({ ficha, onClose }: { ficha: FichaTecnicaItem; onClose: () => void }) {
+function FichaDetailModal({ ficha, onClose, onEdit }: { ficha: FichaTecnicaItem; onClose: () => void; onEdit?: () => void }) {
   const [activeTab, setActiveTab] = useState<string>('visao-geral');
   
   const tabs = [
@@ -598,6 +759,11 @@ function FichaDetailModal({ ficha, onClose }: { ficha: FichaTecnicaItem; onClose
           </div>
         </div>
         <div className="flex items-center gap-sm">
+          {onEdit && (
+            <Button variant="ghost" onClick={onEdit} className="h-[44px]">
+              <Pencil size={18} /> Editar
+            </Button>
+          )}
           <Button variant="ghost" onClick={onClose} className="h-[44px]">
             <X size={18} /> Fechar
           </Button>

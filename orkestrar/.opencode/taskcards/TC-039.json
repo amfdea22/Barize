@@ -1,7 +1,7 @@
 {
   "id": "TC-039",
   "title": "QR PIX no cupom ESC/POS e na UI — QR nativo GS ( k no backend e placeholder/QR no CupomPDV/PainelPagamento reutilizando lib qrcode",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-039",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.120Z",
       "actor": "gate",
       "reason": "Payload PIX + CRC-16/CCITT + GS ( k + QRCodePix.tsx (smoke_tc037_039 18/18)"
+    },
+    {
+      "taskId": "TC-039",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.207Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.062Z",
-  "updatedAt": "2026-08-08T16:38:01.120Z",
+  "updatedAt": "2026-08-08T17:26:24.207Z",
   "path": ".opencode/taskcards/TC-039.json",
   "taskType": "card",
   "objective": "Gerar QR Code PIX no cupom ESC/POS (backend) e na UI (frontend): criar gerador de payload PIX (BR Code EMV com CRC-16/CCITT) + comando nativo GS ( k para impressora, e componente QRCodePix.tsx reutilizando a lib qrcode já presente, exibido no CupomPDV quando forma de pagamento é pix.",
@@ -79,5 +88,6 @@
     "QRCodePix.tsx gera payload consistente com backend",
     "smoke_tc037_039 18/18 PASS"
   ],
-  "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py."
+  "notes": "BR Code EMV: payload inicia com 000201, campos 26/27 do merchant account com chave PIX, 52 merchant category, 53 BRL, 54 valor, 58 país BR, 59 nome recebedor (PIX_NOME_RECEBEDOR), 60 cidade (PIX_CIDADE), 62 txid. CRC-16/CCITT (polinômio 0x1021, init 0xFFFF) calculado sobre o payload que JÁ termina com \"6304\" (sufixo CRC em hex uppercase). Config PIX_CHAVE/PIX_NOME_RECEBEDOR/PIX_CIDADE em config.py.",
+  "completedAt": "2026-08-08T17:26:24.207Z"
 }

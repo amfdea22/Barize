@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { DollarSign, Lock, Unlock, RefreshCw, Receipt, Plus, CreditCard, Banknote, Smartphone } from 'lucide-react';
+import { DollarSign, Lock, Unlock, RefreshCw, Receipt, Plus, CreditCard, Banknote, Smartphone, Calculator } from 'lucide-react';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Badge from '../components/Badge';
 import StatsCard from '../components/StatsCard';
 import Modal from '../components/Modal';
+import Calculadora from '../components/Calculadora';
 import type { Caixa, Pagamento } from '../types';
 import { caixaService, pagamentoService } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
@@ -42,6 +43,10 @@ export default function CaixaPage() {
   const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
   const [showPagamento, setShowPagamento] = useState(false);
   const [novoPagamento, setNovoPagamento] = useState({ forma_pagamento: 'dinheiro', valor: 0 });
+
+  // Calculadora
+  const [showCalcPainel, setShowCalcPainel] = useState(false);
+  const [showCalcPagamento, setShowCalcPagamento] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -144,6 +149,7 @@ export default function CaixaPage() {
               Abrir Caixa
             </Button>
           )}
+          <Button variant="ghost" icon={<Calculator size={16} />} onClick={() => setShowCalcPainel(true)}>Calculadora</Button>
           <Button variant="ghost" icon={<RefreshCw size={16} />} onClick={() => { load(); loadPagamentos(); }}>Atualizar</Button>
         </div>
       </div>
@@ -288,10 +294,23 @@ export default function CaixaPage() {
               ))}
             </div>
           </div>
-          <Input label="Valor (R$)" type="number" step="0.01" min={0}
-            value={novoPagamento.valor || ''}
-            onChange={(e) => setNovoPagamento((prev) => ({ ...prev, valor: Number(e.target.value) }))}
-          />
+          <div className="flex items-end gap-2">
+            <div className="flex-1">
+              <Input label="Valor (R$)" type="number" step="0.01" min={0}
+                value={novoPagamento.valor || ''}
+                onChange={(e) => setNovoPagamento((prev) => ({ ...prev, valor: Number(e.target.value) }))}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowCalcPagamento(true)}
+              title="Abrir calculadora"
+              aria-label="Abrir calculadora"
+              className="h-12 w-12 flex items-center justify-center rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-[var(--color-primary)] hover:bg-[var(--color-surface-container-high)] active:scale-95 transition-all cursor-pointer shrink-0"
+            >
+              <Calculator size={20} />
+            </button>
+          </div>
           <div className="flex gap-3 pt-2">
             <Button variant="ghost" className="flex-1" onClick={() => setShowPagamento(false)}>Cancelar</Button>
             <Button className="flex-1" onClick={handleRegistrarPagamento} disabled={novoPagamento.valor <= 0}>
@@ -322,6 +341,16 @@ export default function CaixaPage() {
           </div>
         </div>
       </Modal>
+      {/* Modal: Calculadora do Painel (consulta) */}
+      <Calculadora open={showCalcPainel} onClose={() => setShowCalcPainel(false)} title="Calculadora - Caixa" />
+
+      {/* Modal: Calculadora do Registro de Pagamento */}
+      <Calculadora
+        open={showCalcPagamento}
+        onClose={() => setShowCalcPagamento(false)}
+        title="Calculadora - Registrar Pagamento"
+        onResult={(valor) => setNovoPagamento((prev) => ({ ...prev, valor }))}
+      />
     </div>
   );
 }

@@ -98,9 +98,10 @@ def cmv_por_produto(
             "cmv_pct": round(cmv_pct, 2),
         })
 
+    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
     return {
-        "data_inicio": data_inicio.isoformat() if data_inicio else None,
-        "data_fim": data_fim.isoformat(),
+        "data_inicio": data_inicio_final.isoformat(),
+        "data_fim": data_fim_final.isoformat(),
         "total_receita": round(sum(i["receita"] for i in itens), 2),
         "total_custo": round(sum(i["custo"] for i in itens), 2),
         "total_margem": round(sum(i["margem_bruta"] for i in itens), 2),
@@ -149,9 +150,10 @@ def cmv_por_categoria(
             "cmv_pct": round(cmv_pct, 2),
         })
 
+    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
     return {
-        "data_inicio": data_inicio.isoformat() if data_inicio else None,
-        "data_fim": data_fim.isoformat(),
+        "data_inicio": data_inicio_final.isoformat(),
+        "data_fim": data_fim_final.isoformat(),
         "categorias": categorias,
     }
 
@@ -185,9 +187,10 @@ def consumo_insumos(
     """
     rows = db.execute(text(sql), {"di": di, "df": df}).fetchall()
 
+    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
     return {
-        "data_inicio": data_inicio.isoformat() if data_inicio else None,
-        "data_fim": data_fim.isoformat(),
+        "data_inicio": data_inicio_final.isoformat(),
+        "data_fim": data_fim_final.isoformat(),
         "total_custo": round(sum(r.custo for r in rows), 2),
         "insumos": [
             {
@@ -239,10 +242,11 @@ def produtos_por_insumo(
         text(sql), {"insumo_id": insumo_id, "di": di, "df": df}
     ).fetchall()
 
+    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
     return {
         "insumo_id": insumo_id,
-        "data_inicio": data_inicio.isoformat() if data_inicio else None,
-        "data_fim": data_fim.isoformat(),
+        "data_inicio": data_inicio_final.isoformat(),
+        "data_fim": data_fim_final.isoformat(),
         "produtos": [
             {
                 "produto_id": r.id,

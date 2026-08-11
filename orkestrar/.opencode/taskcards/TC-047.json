@@ -1,0 +1,91 @@
+{
+  "id": "TC-047",
+  "title": "Na área de etiquetas - inserir área de responsável",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:16:37.156Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:17:49.312Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:18:41.233Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:23:57.882Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:23:57.890Z",
+      "actor": "gate",
+      "reason": "Área RESPONSÁVEL na etiqueta 80mm: campo no InsumoEtiquetaModal + Label80mm com RESPONSÁVEL + pré-preenchimento com usuario.nome — smoke browser 9/9 PASS + tsc/build/lint OK"
+    },
+    {
+      "taskId": "TC-047",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:32.638Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-08T17:13:38.645Z",
+  "updatedAt": "2026-08-08T17:26:32.638Z",
+  "path": ".opencode/taskcards/TC-047.json",
+  "taskType": "card",
+  "objective": "Na área de etiquetas (Etiquetas.tsx), inserir campo 'Responsável' na geração de etiqueta de insumo: o campo entra no formulário do InsumoEtiquetaModal, é exibido/preenchido na etiqueta 80mm (Label80mm) e pré-preenchido com o nome do usuário logado (useAuth). A etiqueta passa a conter uma área 'Responsável' com o nome impresso.",
+  "acceptanceCriteria": [
+    "FORM 1 — InsumoEtiquetaModal.tsx: EtiquetaForm ganha campo 'responsavel'; input 'Responsável' adicionado ao formulário (entre Categoria e os botões)",
+    "LABEL 2 — Label80mm.tsx: aceita prop 'responsavel' e renderiza área 'RESPONSÁVEL' na etiqueta 80mm (preferencialmente no rodapé, acima do 'BARIZE · Estoque & Validade')",
+    "PRE-FILL 3 — Etiquetas.tsx: ao abrir 'Nova Etiqueta de Insumo' e ao gerar 'Etiqueta' por item, pré-preenche responsavel com usuario.nome (useAuth)",
+    "PREVIEW 4 — Preview do modal reflete o responsável em tempo real (Label80mm compartilhado)",
+    "VALIDAÇÃO 5 — tsc -b + npm run build + npm run lint passam"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+    "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+    "neonbar/frontend/src/pages/Etiquetas.tsx"
+  ],
+  "tests": [
+    "EtiquetaForm possui responsavel e emptyForm inicia com ''",
+    "Label80mm renderiza 'RESPONSÁVEL' + nome quando responsavel informado e oculta quando vazio",
+    "Etiquetas.tsx pré-preenche responsavel com usuario.nome ao abrir modal (nova etiqueta e por item)",
+    "tsc -b + npm run build + npm run lint sem erros"
+  ],
+  "notes": "A área de etiquetas é a página Etiquetas.tsx (menu Etiquetas). A etiqueta 80mm é gerada pelo Label80mm.tsx (BARIZE) usado no InsumoEtiquetaModal e no PDV/CupomPDV. O responsável é apenas um campo do formulário de impressão — NÃO é persistido em banco (a etiqueta é impressa sob demanda). useAuth expõe usuario.nome para pré-preenchimento.",
+  "completedAt": "2026-08-08T17:26:32.638Z"
+}

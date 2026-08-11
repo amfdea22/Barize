@@ -1,0 +1,96 @@
+{
+  "id": "TC-048",
+  "title": "No menu Ficha Técnica, inserir opção de editar ficha técnica",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:52:19.848Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:54:42.850Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:55:48.714Z",
+      "actor": "user",
+      "reason": "Usuário aprovou a análise — iniciar execução"
+    },
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T18:03:02.931Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T18:03:02.943Z",
+      "actor": "gate",
+      "reason": "Validação: tsc OK, lint 0 erros, build OK, smoke browser 17/17 PASS"
+    },
+    {
+      "taskId": "TC-048",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T18:04:27.028Z",
+      "actor": "user"
+    }
+  ],
+  "createdAt": "2026-08-08T17:51:27.193Z",
+  "updatedAt": "2026-08-08T18:04:27.028Z",
+  "path": ".opencode/taskcards/TC-048.json",
+  "taskType": "card",
+  "objective": "Inserir opção de EDITAR ficha técnica na página Ficha Técnica (/fichas-tecnicas), que hoje é somente leitura. Reutilizar o endpoint já existente PUT /pdv/produtos/{produto_id}/ficha-tecnica (FichaTecnicaUpdate: modo_preparo, tipo_copo, guarnicao, tempo_preparo, dificuldade, teor_alcoolico) e o service fichasTecnicasService.atualizar. Adicionar botão 'Editar' no modal de detalhe (e/ou quick action nos cards/lista) que abre modal com os campos editáveis, salvando via API e recarregando a lista. Restrição de perfil: apenas admin/gerente podem editar (backend já exige verificar_role admin/gerente).",
+  "acceptanceCriteria": [
+    "UI 1 — Botão 'Editar' visível no modal de detalhe da ficha (FichaDetailModal) e/ou na quick action dos cards/lista (FichaCard/FichaListItem)",
+    "UI 2 — Botão 'Editar' visível SOMENTE para admin/gerente (useAuth usuario.role); bartender/outros não veem a ação de editar",
+    "UI 3 — Modal de edição com os campos: Dificuldade (select facil/medio/dificil), Teor Alcoólico (%) número, Tipo de Copo, Tempo de Preparo (min), Guarnição, Modo de Preparo (textarea)",
+    "UI 4 — Form pré-preenchido com os valores atuais da ficha selecionada",
+    "API 5 — Salvar chama fichasTecnicasService.atualizar(produto_id, {...}) e, em sucesso, fecha o modal e recarrega a lista",
+    "API 6 — Erro da API exibido no modal (ex: 403 sem permissão, 404 produto não encontrado)",
+    "CONSISTÊNCIA 7 — Dificuldade salva no formato da página (facil/medio/dificil) — alinhar com DIFICULDADE_LABELS existente (diverge do Admin que salva 'Fácil/Médio/Difícil')",
+    "VALIDAÇÃO 8 — build + lint frontend OK (0 erros) e smoke browser: login admin → /fichas-tecnicas → abrir ficha → Editar → alterar campo → Salvar → lista atualizada"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/FichaTecnica.tsx",
+    "neonbar/frontend/src/services/api.ts"
+  ],
+  "tests": [
+    "Botão Editar visível para admin/gerente e oculto para bartender",
+    "Modal de edição pré-preenchido com dados atuais da ficha",
+    "Salvar chama PUT /pdv/produtos/{id}/ficha-tecnica com payload correto (dificuldade no formato facil/medio/dificil)",
+    "Após salvar, lista recarrega e exibe valores atualizados",
+    "403 sem permissão exibe mensagem no modal",
+    "Build + lint frontend OK",
+    "Smoke browser admin: editar ficha e persistir"
+  ],
+  "notes": "Diagnóstico: (1) Página /fichas-tecnicas (FichaTecnica.tsx) é 100% read-only — FichaCard/FichaListItem têm quick actions 'Ver' e 'Imprimir' apenas, e FichaDetailModal não tem edição. (2) Backend JÁ tem PUT /pdv/produtos/{produto_id}/ficha-tecnica (pdv.py:745-776) com schema FichaTecnicaUpdate e role admin/gerente. (3) Service fichasTecnicasService.atualizar JÁ existe (api.ts:407-408). (4) O Admin.tsx já tem aba 'Fichas Técnicas' com modal de edição dos MESMOS campos — reutilizar o padrão visual/lógica (handleFichaSelect/handleFichaSubmit, Admin.tsx:628-661, modal 1535-1596). (5) INCONSISTÊNCIA a corrigir: página usa dificuldade em 'facil/medio/dificil' (DIFICULDADE_LABELS/DIFICULDADE_COLORS), Admin salva 'Fácil/Médio/Difícil' (acentuados) — na edição da página, usar o formato da página e converter antes de salvar (mapear para o formato do backend/banco). NÃO criar endpoint novo; apenas UI na página Ficha Técnica.",
+  "completedAt": "2026-08-08T18:04:27.028Z"
+}

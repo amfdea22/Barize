@@ -1,0 +1,72 @@
+{
+  "id": "TC-049",
+  "title": "na área categoria, sempre aparecer as opções de categorias já cadastradas no sistema",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:14:54.551Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:20:31.974Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:22:16.669Z",
+      "actor": "user",
+      "reason": "Usuário aprovou a análise — iniciar execução"
+    },
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:25:40.774Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:25:56.009Z",
+      "actor": "gate",
+      "reason": "Endpoint /pdv/categorias OK (200 com token, 401 sem), py_compile OK, tsc/lint/build OK, smoke browser 4/4 PASS — dropdown mostra todas as categorias do sistema + Nova Categoria"
+    },
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:26:11.025Z",
+      "actor": "user",
+      "reason": "Solucionado pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-09T00:13:18.827Z",
+  "updatedAt": "2026-08-09T00:26:11.025Z",
+  "path": ".opencode/taskcards/TC-049.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T00:26:11.025Z"
+}

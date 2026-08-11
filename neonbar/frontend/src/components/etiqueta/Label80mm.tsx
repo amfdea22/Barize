@@ -6,6 +6,7 @@ interface Label80mmData {
   lote?: string;
   fabricacao?: string;
   validade?: string;
+  responsavel?: string;
 }
 
 const fmtDate = (s?: string): string => {
@@ -25,7 +26,7 @@ const diffDias = (hoje: Date, validade?: string): number | null => {
 const barcodeBackground =
   'repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 2px, #000 2px 3px, transparent 3px 5px, #000 5px 6px, transparent 6px 8px, #000 8px 9px, transparent 9px 10px)';
 
-export default function Label80mm({ nome, quantidade, unidade, categoria, lote, fabricacao, validade }: Label80mmData) {
+export default function Label80mm({ nome, quantidade, unidade, categoria, lote, fabricacao, validade, responsavel }: Label80mmData) {
   const dias = diffDias(new Date(), validade);
   const vencido = dias !== null && dias < 0;
   const proximo = dias !== null && dias >= 0 && dias <= 7;
@@ -107,7 +108,18 @@ export default function Label80mm({ nome, quantidade, unidade, categoria, lote, 
         <div className="text-[9px] tracking-[0.3em] font-mono text-black/70 mt-0.5">{lote || '000000'}</div>
       </div>
 
-      {/* 6. Rodapé */}
+      {/* 6. Responsável */}
+      {responsavel && (
+        <>
+          <div className="border-t border-dashed border-black/30 my-1.5" />
+          <div className="flex justify-between">
+            <span className="text-black/60">RESPONSÁVEL</span>
+            <span className="font-bold uppercase">{responsavel}</span>
+          </div>
+        </>
+      )}
+
+      {/* 7. Rodapé */}
       <div className="border-t border-dashed border-black/30 my-1.5" />
       <div className="text-center text-[8px] text-black/50 space-y-0.5">
         <div>BARIZE · Estoque &amp; Validade</div>

@@ -1,0 +1,74 @@
+{
+  "id": "TC-056",
+  "title": "inserir contador de pedido nos Pedidos Ativos",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:44:48.828Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:47:16.041Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T03:48:05.055Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano, iniciando implementação"
+    },
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:53:31.784Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação concluída, aguardando validação"
+    },
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:53:31.797Z",
+      "actor": "gate",
+      "reason": "Contador real de pedidos ativos no header global (MainLayout via GET /pedidos/ativos + polling 15s, substituindo hardcode 12) + badge no footer do Dashboard — tsc/lint/build OK, smoke 4/4 PASS, regressão TC-054 14/14 PASS"
+    },
+    {
+      "taskId": "TC-056",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T03:54:13.009Z",
+      "actor": "user",
+      "reason": "Contador real de pedidos ativos no header global (MainLayout) e badge no footer do Dashboard — smoke 4/4, regressão TC-054 14/14, tsc/lint/build OK. Finalizado pelo usuário."
+    }
+  ],
+  "createdAt": "2026-08-09T03:43:17.684Z",
+  "updatedAt": "2026-08-09T03:54:13.009Z",
+  "path": ".opencode/taskcards/TC-056.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T03:54:13.009Z",
+  "summary": "Contador real de pedidos ativos nos Pedidos Ativos (header global + footer Dashboard)",
+  "result": "MainLayout.tsx: activeOrdersCount deixou de ser hardcoded (12) e passa a usar GET /pedidos/ativos com polling 15s — header 'Pedidos Ativos (N)' real em todas as páginas. Dashboard.tsx: footer ganhou Badge primary com pedidos.length. Smoke 4/4 + regressão TC-054 14/14 PASS, tsc/lint/build OK."
+}

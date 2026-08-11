@@ -1,0 +1,23 @@
+{
+  "id": "TC-049",
+  "title": "no menu ficha técnica, inserir opção de editar ficha técnica",
+  "status": "cancelled",
+  "statusHistory": [
+    {
+      "taskId": "TC-049",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "cancelled",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:12:03.565Z",
+      "actor": "user",
+      "reason": "duplicado do TC-048 (edição de ficha técnica já implementada e completed)"
+    }
+  ],
+  "createdAt": "2026-08-09T00:10:44.659Z",
+  "updatedAt": "2026-08-09T00:10:44.659Z",
+  "path": ".opencode/taskcards/TC-049.json",
+  "taskType": "card",
+  "cancelledAt": "2026-08-09T00:12:03.564Z",
+  "cancelReason": "duplicado do TC-048 (edição de ficha técnica já implementada e completed)"
+}

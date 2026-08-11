@@ -1,0 +1,72 @@
+{
+  "id": "TC-059",
+  "title": "analisar, SINCRONIZAR E CORRIGIR os dados do CMV",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T18:47:33.930Z",
+      "actor": "build",
+      "reason": "Iniciando análise"
+    },
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-10T18:47:33.944Z",
+      "actor": "build",
+      "reason": "Análise concluída, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-10T19:05:27.807Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano: corrigir custo cachaça 0,030/ml + snapshots + producao.py"
+    },
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-11T01:16:46.675Z",
+      "actor": "qa-engineer",
+      "reason": "Dados CMV corrigidos (cachaça 0,030/ml, gin 0,050/ml + snapshots); producao.py preenche quantidade_produto; relatorios_cmv.py datas None fix; smoke CDP 8/8 PASS; regressão TC-055/056/058 PASS"
+    },
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-11T01:16:46.694Z",
+      "actor": "gate",
+      "reason": "Todos os testes passaram"
+    },
+    {
+      "taskId": "TC-059",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-11T01:19:40.342Z",
+      "actor": "user",
+      "reason": "Usuário confirmou a conclusão"
+    }
+  ],
+  "createdAt": "2026-08-10T18:45:29.533Z",
+  "updatedAt": "2026-08-11T01:19:40.342Z",
+  "path": ".opencode/taskcards/TC-059.json",
+  "taskType": "card",
+  "completedAt": "2026-08-11T01:19:40.342Z"
+}

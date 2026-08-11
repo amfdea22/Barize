@@ -1,6 +1,6 @@
 {
     "version":  "1.0",
-    "updatedAt":  "2026-08-08T16:20:00-03:00",
+    "updatedAt":  "2026-08-10T15:00:00-03:00",
     "currentSession":  {
                            "agent":  "build",
                            "subagentes":  [
@@ -8,12 +8,122 @@
                                                "gate",
                                                "user"
                                            ],
-                           "task":  "TC-046 VERIFIED (aguardando usuário finalizar): Tema claro/escuro sem mudar interface. TC-036..044 e TC-045 também verified. Próximo: usuário rodar tc036-044-complete.mjs + tc045-complete.mjs + tc046-complete.mjs.",
-                           "workflowStep":  "VERIFIED",
-                           "status":  "awaiting-user",
-                           "startedAt":  "2026-08-08T16:20:00-03:00"
+                           "task":  "TC-059 COMPLETED (corrigir dados do CMV). Backlog vazio.",
+                           "workflowStep":  "COMPLETED",
+                           "status":  "idle",
+                           "startedAt":  "2026-08-10T19:45:00-03:00"
                        },
     "checkpoints":  [
+                        {
+                            "timestamp":  "2026-08-10T15:40:00-03:00",
+                            "description":  "TC-058 em verified: sincronização do painel financeiro — dashboard-executivo retorna receita_ultimos_dias (7 dias) + movimentações completas (custo_no_momento/created_at); resumo-diario retorna total_pedidos; carregarPainel unifica receitaHoje com pagamentos do Caixa, usa total_pedidos e receita_ultimos_dias (gráfico Receita Diária deixa de ficar vazio; colunas Valor/Data das movimentações corretas). Smoke backend OK, smoke CDP 6/6 PASS, regressão TC-055 11/11 + TC-056 4/4 PASS, tsc/lint/build OK. Backend reiniciado.",
+                            "files":  [
+                                           "neonbar/backend/app/routers/relatorios.py",
+                                           "neonbar/backend/app/services/caixa_service.py",
+                                           "neonbar/frontend/src/services/api.ts"
+                                       ]
+                        },
+                            "timestamp":  "2026-08-10T15:00:00-03:00",
+                            "description":  "TC-057 em verified: foto do funcionário — backend foto_url (model/schema/router + listagem + migração manual + alembic 0017), frontend Admin.tsx (upload uploadService, preview circular, Remover foto, coluna Foto thumbnail). Bug pré-existente corrigido: campos opcionais vazios ('') → null no submit. Smoke backend PASS, smoke CDP 12/12 PASS, regressão TC-055 11/11 + TC-056 4/4 PASS, tsc/lint/build OK. Backend reiniciado com nova coluna.",
+                            "files":  [
+                                           "neonbar/backend/app/models/funcionario.py",
+                                           "neonbar/backend/app/schemas/funcionario.py",
+                                           "neonbar/backend/app/routers/funcionarios.py",
+                                           "neonbar/backend/app/database.py",
+                                           "neonbar/backend/alembic/versions/0017_add_foto_url_funcionarios.py",
+                                           "neonbar/frontend/src/types/index.ts",
+                                           "neonbar/frontend/src/pages/Admin.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T03:55:00-03:00",
+                            "description":  "TC-056 COMPLETED: contador real de pedidos ativos — MainLayout.tsx activeOrdersCount deixa de ser hardcoded 12 e passa a usar GET /pedidos/ativos com polling 15s; Dashboard.tsx footer ganha Badge primary com pedidos.length. Smoke 4/4 + regressão TC-054 14/14 PASS, tsc/lint/build OK.",
+                            "files":  [
+                                           "neonbar/frontend/src/layouts/MainLayout.tsx",
+                                           "neonbar/frontend/src/pages/Dashboard.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T03:45:00-03:00",
+                            "description":  "TC-055 COMPLETED: Calculadora no painel Caixa (/caixa) + modal Registrar Pagamento — Calculadora.tsx novo (display + teclado 4x5 + Usar resultado), Caixa.tsx integrado (botão header + botão aria-label ao lado do Input Valor + onResult seta novoPagamento.valor). Smoke 11/11 + regressão TC-054 14/14 PASS, tsc/lint/build OK. ADR-016: bug real de produção — RequireRole usava {children} mas rotas <Route element> exigem <Outlet/> (rotas protegidas nunca renderizavam); corrigido em App.tsx.",
+                            "files":  [
+                                           "neonbar/frontend/src/components/Calculadora.tsx",
+                                           "neonbar/frontend/src/pages/Caixa.tsx",
+                                           "neonbar/frontend/src/App.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T03:20:00-03:00",
+                            "description":  "TC-054 COMPLETED: barra de rolagem visível na área dos produtos do PDV — MainLayout.tsx wrapper ganhou h-full min-h-0 (conteúdo contido no main) + PDV.tsx painel venda ganhou min-h-0 overflow-y-auto; painel produtos rola internamente (ch=433 sh=813), main não rola no PDV. Smoke 7/7 + regressão 14/14 PASS. Rotas RequireRole não montam no headless (pré-existente). tsc/lint OK. Finalizado pelo usuário.",
+                            "files":  [
+                                           "neonbar/frontend/src/layouts/MainLayout.tsx",
+                                           "neonbar/frontend/src/pages/PDV.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T02:35:00-03:00",
+                            "description":  "TC-053 COMPLETED: preview do modal reimprimir comanda padronizado 80mm/fundo branco — Dashboard.tsx trocou bg-black/80 por comanda-print w-[80mm] bg-white text-black, cabeçalho NEONBAR→BARIZE, removido aviso 'Esta é uma simulação'. tsc/lint OK, smoke browser 8/8 PASS.",
+                            "files":  [
+                                           "neonbar/frontend/src/pages/Dashboard.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T02:15:00-03:00",
+                            "description":  "TC-052 COMPLETED: preview Visualizar e Imprimir mostra apenas 1 Label80mm (itemsToPrint[0]) centralizado + texto '1 etiqueta'. tsc/lint/build OK, smoke browser 5/5 PASS.",
+                            "files":  [
+                                           "neonbar/frontend/src/pages/Etiquetas.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-09T00:20:00-03:00",
+                            "description":  "TC-049 COMPLETED: dropdown Categoria do PDV sempre mostra categorias cadastradas — novo endpoint GET /pdv/categorias (distinct Produto.categoria ativos, sem limit) + pdvService.categorias + PDV.tsx união (categoriasSistema ∪ produtos). py_compile OK, smoke backend 200/401, tsc/lint/build OK, smoke browser 4/4 PASS.",
+                            "files":  [
+                                           "neonbar/backend/app/routers/pdv.py",
+                                           "neonbar/frontend/src/services/api.ts",
+                                           "neonbar/frontend/src/pages/PDV.tsx"
+                                       ]
+                        },
+                        {
+                            "timestamp":  "2026-08-08T19:05:00-03:00",
+                            "description":  "TC-005 + TC-009 COMPLETED: paginação limit/offset nos 10 routers de listagem (smoke backend 14/14); nomes dos produtos em área própria abaixo das imagens validado (smoke 6/6, /cardapio e /pdv 16/16 cards). Backend reiniciado. Backlog sem cards ativos.",
+                            "files":  [
+                                          "neonbar/backend/app/routers/recebimentos.py",
+                                          "neonbar/backend/app/routers/funcionarios.py",
+                                          "neonbar/backend/app/routers/materiais.py",
+                                          "neonbar/backend/app/routers/copos.py",
+                                          "neonbar/backend/app/routers/mesas.py",
+                                          "neonbar/backend/app/routers/copos_quebrados.py",
+                                          "neonbar/backend/app/routers/producao.py"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-08T18:40:00-03:00",
+                            "description":  "Batch 8 cards COMPLETED: TC-011/012 (card único bebidas=drinks validado), TC-013 (toggle Cardápio Básico/Completo + localStorage), TC-016 (scrollbar-visible /cardapio), TC-017 (scrollbar-visible PDV), TC-019 (QR local validado), TC-021 (edição comanda validada), TC-025 (menu por perfil + rotas restritas RequireRole). tsc/lint/build OK, smoke A/B/D 18/18 + C 16/16 PASS. Restam TC-005/TC-009 executing.",
+                            "files":  [
+                                          "neonbar/frontend/src/pages/CardapioDigital.tsx",
+                                          "neonbar/frontend/src/index.css",
+                                          "neonbar/frontend/src/pages/PDV.tsx",
+                                          "neonbar/frontend/src/layouts/Sidebar.tsx",
+                                          "neonbar/frontend/src/App.tsx"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-08T18:05:00-03:00",
+                            "description":  "TC-048 COMPLETED: edição de ficha técnica na página /fichas-tecnicas — botão Editar em cards/lista/modal de detalhe (somente admin/gerente), modal com Dificuldade/Teor Alcoólico/Tipo de Copo/Tempo de Preparo/Guarnição/Modo de Preparo via GET+PUT /pdv/produtos/{id}/ficha-tecnica; fichasTecnicasService.obterProdutoFicha em api.ts. tsc EXIT=0, lint 0 erros, build OK, smoke browser CDP 17/17 PASS. Cards aguardando: TC-005/TC-009 executing, TC-011/012/013/016/017/019/021/025 ready.",
+                            "files":  [
+                                          "neonbar/frontend/src/pages/FichaTecnica.tsx",
+                                          "neonbar/frontend/src/services/api.ts"
+                                      ]
+                        },
+                        {
+                            "timestamp":  "2026-08-08T17:00:00-03:00",
+                            "description":  "TC-047 em verified: área RESPONSÁVEL na etiqueta 80mm — EtiquetaForm.responsavel + input no InsumoEtiquetaModal, seção RESPONSÁVEL no Label80mm, pré-preenchimento com usuario.nome em Etiquetas.tsx. Smoke browser 9/9 PASS + tsc/build/lint OK. Aguarda completeTask do usuário.",
+                            "files":  [
+                                          "neonbar/frontend/src/components/etiqueta/InsumoEtiquetaModal.tsx",
+                                          "neonbar/frontend/src/components/etiqueta/Label80mm.tsx",
+                                          "neonbar/frontend/src/pages/Etiquetas.tsx"
+                                      ]
+                        },
                         {
                             "timestamp":  "2026-08-08T16:20:00-03:00",
                             "description":  "TC-046 em verified: tema claro/escuro completo — anti-FOUC em index.html, tokens --overlay-rgb/--glass-rgb/--neutral-rgb + override paleta light em index.css, hooks/useTheme.ts + components/ThemeToggle.tsx novos, wiring Sidebar (rodapé) e Login (header), batch ~164 rgba hardcoded → vars. tsc OK, lint 0 erros, build OK, smoke browser CDP 12/12 PASS. Aguarda completeTask do usuário.",

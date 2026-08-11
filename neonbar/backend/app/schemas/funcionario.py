@@ -16,6 +16,7 @@ class FuncionarioBase(BaseModel):
     telefone: Optional[str] = Field(None, max_length=20)
     email: Optional[str] = Field(None, max_length=200)
     endereco: Optional[str] = None
+    foto_url: Optional[str] = Field(None, max_length=255)
 
     cargo: CargoTipo
     data_admissao: date
@@ -79,6 +80,7 @@ class FuncionarioUpdate(BaseModel):
     telefone: Optional[str] = Field(None, max_length=20)
     email: Optional[str] = Field(None, max_length=200)
     endereco: Optional[str] = None
+    foto_url: Optional[str] = Field(None, max_length=255)
 
     cargo: Optional[CargoTipo] = None
     data_admissao: Optional[date] = None
@@ -147,6 +149,7 @@ class FuncionarioListItem(BaseModel):
     turno: Optional[str] = None
     data_admissao: date
     ativo: int
+    foto_url: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
 

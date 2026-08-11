@@ -1,7 +1,7 @@
 {
   "id": "TC-040",
   "title": "Fila de contingência + Reenviar Pedido — endpoint de reprocessamento da fila_impressao + UI listando trabalhos PENDENTE/ERRO com botão Reenviar Pedido",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-040",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.134Z",
       "actor": "gate",
       "reason": "printer-fila GET/POST reenviar + UI aba Impressoras (smoke_tc040 12/12)"
+    },
+    {
+      "taskId": "TC-040",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.214Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.067Z",
-  "updatedAt": "2026-08-08T16:38:01.134Z",
+  "updatedAt": "2026-08-08T17:26:24.214Z",
   "path": ".opencode/taskcards/TC-040.json",
   "taskType": "card",
   "objective": "Fila de contingência de impressão: expor GET /admin/printer-fila?status= (PENDENTE/ERRO/CONCLUIDO/TODOS) listando trabalhos da fila_impressao e POST /admin/printer-fila/{id}/reenviar para reprocessar trabalho com erro. UI na aba Impressoras do Admin lista PENDENTE/ERRO com botão Reenviar Pedido.",
@@ -80,5 +89,6 @@
     "Sem token retorna 401",
     "smoke_tc040 12/12 PASS"
   ],
-  "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py."
+  "notes": "Fila de contingência permite recuperar impressões que falharam (papel esgotado, offline) sem reemitir o pedido. O worker processa PENDENTE e marca CONCLUIDO ou ERRO após 3 tentativas. FilaImpressaoItem schema novo em schemas/printer.py.",
+  "completedAt": "2026-08-08T17:26:24.214Z"
 }

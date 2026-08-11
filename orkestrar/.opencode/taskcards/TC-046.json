@@ -1,7 +1,7 @@
 {
   "id": "TC-046",
   "title": "Opção de tema claro e escuro do sistema sem mudar a interface do sistema",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-046",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T17:05:48.170Z",
       "actor": "gate",
       "reason": "Tema claro/escuro: useTheme + ThemeToggle (Sidebar/Login) + anti-FOUC + tokens overlay/glass/neutral + override paleta light — smoke browser CDP 12/12 PASS + tsc/build/lint OK"
+    },
+    {
+      "taskId": "TC-046",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:32.319Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-08T16:49:00.741Z",
-  "updatedAt": "2026-08-08T17:05:48.170Z",
+  "updatedAt": "2026-08-08T17:26:32.319Z",
   "path": ".opencode/taskcards/TC-046.json",
   "taskType": "card",
   "objective": "Adicionar tema claro e escuro ao sistema (BARIZE) sem alterar a interface/layout. O usuário alterna entre os dois temas por um toggle na Sidebar e na tela de Login; a escolha persiste em localStorage ('barize-theme'). O tema é implementado via design tokens CSS: sobreposição (overlay), vidro (glass) e neutro (neutral) passam a usar variáveis --overlay-rgb/--glass-rgb/--neutral-rgb trocadas em [data-theme], além de override da paleta clara. A estrutura visual, tamanhos, fontes e componentes permanecem idênticos — apenas as cores mudam.",
@@ -83,5 +92,6 @@
     "Nenhum rgba(255,255,255|28,27,27|59,73,76) hardcoded permanece nos tsx/ts (exceto os 3 intencionais: overlay de imagem, sombra inset, preview etiqueta em papel branco)",
     "tsc -b + npm run build + npm run lint sem erros"
   ],
-  "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar."
+  "notes": "Tema não muda interface: apenas tokens de cor. Overrides em :root[data-theme='light'] redefinem os tokens do @theme (surfaces, on-surface, outline, primary/secondary/tertiary/error containers, background). Os 3 rgba intencionais mantidos: CardapioDigital backdrop rgba(0,0,0,0.6) sobre imagem, Dashboard sombra inset preta, Etiquetas preview bg-white/border black (papel de impressão é branco em qualquer tema). @media print continua com bg branco para etiqueta/cupom. FOUC evitado por script inline em index.html antes do bundle. Toggle visível no Login mesmo antes de autenticar.",
+  "completedAt": "2026-08-08T17:26:32.319Z"
 }

@@ -1,9 +1,93 @@
 {
-    "id": "TC-016",
-    "title": "TC-015 scrollbar não está visível no cardápio digital",
-    "status": "backlog",
-    "taskType": "card",
-    "createdAt": "2026-07-26T05:50:00.000Z",
-    "createdBy": "user",
-    "agent": "build"
+  "id": "TC-016",
+  "title": "TC-015 scrollbar não está visível no cardápio digital",
+  "status": "completed",
+  "taskType": "card",
+  "createdAt": "2026-07-26T05:50:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "statusHistory": [
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.198Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.459Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.836Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.129Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.139Z",
+      "actor": "gate",
+      "reason": "Batch A: classe scrollbar-visible no /cardapio (WebKit+Firefox) — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-016",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.658Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.658Z",
+  "path": ".opencode/taskcards/TC-016.json",
+  "objective": "Tornar a barra de rolagem VISÍVEL no cardápio digital (/cardapio) — o main já usa overflow-y-scroll (CardapioDigital.tsx:198-202), mas o scrollbar global é fino/transparente (index.css:188-207: track rgba 0.03 + scrollbar-width:thin no Firefox), ficando praticamente invisível. Estilizar o scrollbar da área de conteúdo do cardápio com contraste visível.",
+  "acceptanceCriteria": [
+    "SCROLL 1 — Área de conteúdo do /cardapio exibe barra de rolagem visível quando houver overflow (thumb com contraste — usar var(--color-primary-container)/outline-variant no thumb e track levemente visível)",
+    "SCROLL 2 — Scrollbar VISÍVEL no Firefox (scrollbar-width/scrollbar-color ou fallback) — não apenas WebKit",
+    "SCROLL 3 — Nav de categorias (barra horizontal) continua com scrollbar oculto (scrollbarWidth:none já existente) — sem regressão",
+    "SCROLL 4 — Funcionalidade de scroll (scroll spy de categoria ativo) preservada",
+    "VALIDAÇÃO 5 — Smoke browser: scrollbar visível ao rolar /cardapio com muitos itens; build + lint frontend OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/CardapioDigital.tsx",
+    "neonbar/frontend/src/index.css"
+  ],
+  "tests": [
+    "Scrollbar do main do cardápio visível (WebKit thumb com contraste)",
+    "Scrollbar visível no Firefox",
+    "Nav horizontal de categorias sem scrollbar visível (regressão)",
+    "Scroll spy de categoria continua destacando a categoria ativa",
+    "Smoke browser + build + lint frontend OK"
+  ],
+  "notes": "Causa raiz provável: scrollbar global estilizado quase invisível (index.css:188-207) aplicado ao main overflow-y-scroll do cardápio. Escopo: estilizar scrollbar da área de conteúdo do CardapioDigital (CSS scoped ou classe própria) sem afetar as demais páginas. Relacionado ao TC-017 (mesmo padrão de scrollbar no PDV).",
+  "completedAt": "2026-08-08T21:15:03.658Z"
 }

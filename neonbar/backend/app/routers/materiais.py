@@ -20,6 +20,8 @@ router = APIRouter(prefix="/materiais", tags=["Materiais"])
 @router.get("/", response_model=List[MaterialResponse])
 def listar_materiais(
     baixo_estoque: Optional[bool] = Query(default=None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -27,7 +29,7 @@ def listar_materiais(
     query = db.query(Material).filter(Material.deleted_at.is_(None))
     if baixo_estoque:
         query = query.filter(Material.estoque_atual <= Material.estoque_minimo)
-    materiais = query.order_by(Material.nome).all()
+    materiais = query.order_by(Material.nome).limit(limit).offset(offset).all()
     return [MaterialResponse.model_validate(m) for m in materiais]
 
 

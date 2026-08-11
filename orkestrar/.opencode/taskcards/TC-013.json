@@ -1,12 +1,94 @@
 {
-    "taskType": "card",
-    "createdBy": "user",
-    "id": "TC-013",
-    "createdAt": "2026-07-26T02:31:19.765Z",
-    "agent": "build",
-    "statusHistory": [],
-    "updatedAt": "2026-07-26T02:31:19.765Z",
-    "status": "backlog",
-    "path": ".opencode/taskcards/TC-013.json",
-    "title": "Inserir op��o Card�pio Digital B�sico"
+  "taskType": "card",
+  "createdBy": "user",
+  "id": "TC-013",
+  "createdAt": "2026-07-26T02:31:19.765Z",
+  "agent": "build",
+  "statusHistory": [
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.192Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.448Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.827Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.108Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.119Z",
+      "actor": "gate",
+      "reason": "Batch A: toggle Cardápio Básico/Completo + localStorage barize-cardapio-modo — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-013",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.643Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.643Z",
+  "status": "completed",
+  "path": ".opencode/taskcards/TC-013.json",
+  "title": "Inserir opÃ§Ã£o CardÃ¡pio Digital BÃ¡sico",
+  "objective": "Inserir uma opção de Cardápio Digital BÁSICO — modo simplificado do cardápio (/cardapio) que exibe apenas nome, preço e (opcional) descrição curta, sem ingredientes/hover tooltip e com visual mais leve, para acesso rápido e melhor desempenho. Implementado como um toggle dentro da página CardapioDigital (premissa adotada após usuário dispensar a pergunta de esclarecimento).",
+  "acceptanceCriteria": [
+    "TOGGLE 1 — Botão/toggle na página CardapioDigital para alternar entre modos 'Completo' (atual) e 'Básico'",
+    "BASICO 2 — Modo Básico exibe foto (ou fallback), nome e preço; descrição curta opcional (1 linha)",
+    "BASICO 3 — Modo Básico oculta ingredientes e o tooltip hover de ingredientes",
+    "BASICO 4 — Modo Básico mantém busca, categorias (nav) e contagem de itens",
+    "BASICO 5 — Escolha persistida em localStorage (barize-cardapio-modo) para manter entre visitas",
+    "VALIDAÇÃO 6 — build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Toggle alterna entre Completo e Básico",
+    "Modo Básico sem tooltip de ingredientes",
+    "Modo Básico mostra nome + preço (foto/emoji) para todos os produtos",
+    "Busca e navegação por categoria funcionam no modo Básico",
+    "Preferência persiste em localStorage entre recargas",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Premissa adotada (usuário dispensou a pergunta de esclarecimento): \"Básico\" = modo simplificado via toggle na própria página /cardapio, sem nova rota, sem backend. Se a intenção for outra (ex: nova rota separada /cardapio-basico ou versão impressa sem fotos), ajustar antes da implementação.",
+  "completedAt": "2026-08-08T21:15:03.643Z"
 }

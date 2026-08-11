@@ -61,6 +61,7 @@ export const authService = {
 /* ─── PDV / Produtos ─── */
 export const pdvService = {
   listarProdutos: () => api.get('/pdv/produtos'),
+  categorias: () => api.get('/pdv/categorias'),
   criarProduto: (data: any) => api.post('/pdv/produtos', data),
   atualizarProduto: (produto_id: number, data: any) =>
     api.put(`/pdv/produtos/${produto_id}`, data),
@@ -263,13 +264,16 @@ export const financeiroService = {
     const ontemData = ontemRes.data || {};
     const semanaData = semanaRes.data || {};
 
-    const receitaHoje = hojeData.receita_total || 0;
+    // Receita de hoje unificada com o Caixa (soma dos pagamentos do dia)
+    const pagamentos = pagRes.data || [];
+    const hojeInicio = new Date(hoje); hojeInicio.setHours(0, 0, 0, 0);
+    const pagamentosHoje = pagamentos.filter((p: any) => p.created_at && new Date(p.created_at) >= hojeInicio);
+    const receitaHoje = pagamentosHoje.reduce((s: number, p: any) => s + p.valor, 0) || hojeData.receita_total || 0;
     const receitaMes = cmvData.receita_mes || indicadores.receita_mes || 0;
     const custoMes = cmvData.custo_mes || 0;
     const cmvPct = cmvData.cmv_percentual || 0;
 
     // Agrupar pagamentos por forma
-    const pagamentos = pagRes.data || [];
     const totalPag = pagamentos.reduce((s: number, p: any) => s + p.valor, 0) || 1;
     const formaMap: Record<string, number> = {};
     pagamentos.forEach((p: any) => {
@@ -304,7 +308,7 @@ export const financeiroService = {
 
     // Faturamento do turno (caixa ativo)
     const receitaTurno = caixaAberto
-      ? (caixaAberto as any).receita_parcial || hojeData.receita_total || 0
+      ? (caixaAberto as any).receita_parcial || receitaHoje || 0
       : 0;
 
     return {
@@ -401,6 +405,7 @@ export const etiquetasService = {
 export const fichasTecnicasService = {
   listar: (params?: import('../types').FichaTecnicaFilter) => api.get('/fichas-tecnicas/', { params }),
   obter: (produtoId: number) => api.get(`/fichas-tecnicas/${produtoId}`),
+  obterProdutoFicha: (produtoId: number) => api.get(`/pdv/produtos/${produtoId}/ficha-tecnica`),
   categorias: () => api.get('/fichas-tecnicas/categorias/lista'),
   tags: () => api.get('/fichas-tecnicas/tags/lista'),
   alergenos: () => api.get('/fichas-tecnicas/alergenos/lista'),

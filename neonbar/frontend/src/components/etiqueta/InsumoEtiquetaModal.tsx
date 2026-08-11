@@ -13,6 +13,7 @@ export interface EtiquetaForm {
   lote: string;
   fabricacao: string;
   validade: string;
+  responsavel: string;
 }
 
 interface Props {
@@ -29,6 +30,7 @@ const emptyForm: EtiquetaForm = {
   lote: '',
   fabricacao: '',
   validade: '',
+  responsavel: '',
 };
 
 export default function InsumoEtiquetaModal({ open, onClose, initial }: Props) {
@@ -96,6 +98,13 @@ export default function InsumoEtiquetaModal({ open, onClose, initial }: Props) {
             placeholder="Ex: Bebidas"
             value={form.categoria}
             onChange={(e) => set('categoria', e.target.value)}
+          />
+          <Input
+            label="Responsável"
+            icon={<Package size={18} />}
+            placeholder="Ex: João da Silva"
+            value={form.responsavel}
+            onChange={(e) => set('responsavel', e.target.value)}
           />
 
           <div className="flex gap-3 pt-2">

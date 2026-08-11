@@ -29,6 +29,7 @@ def _serialize_funcionario(f: Funcionario) -> dict:
         "telefone": f.telefone,
         "email": f.email,
         "endereco": f.endereco,
+        "foto_url": f.foto_url,
         "cargo": f.cargo,
         "data_admissao": f.data_admissao.isoformat() if f.data_admissao else None,
         "data_demissao": f.data_demissao.isoformat() if f.data_demissao else None,
@@ -51,6 +52,8 @@ def listar_funcionarios(
     cargo: Optional[str] = Query(default=None),
     ativo: Optional[int] = Query(default=None),
     busca: Optional[str] = Query(default=None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -67,7 +70,7 @@ def listar_funcionarios(
             (Funcionario.nome.ilike(f"%{busca}%")) | (Funcionario.cpf.ilike(f"%{busca}%"))
         )
 
-    funcionarios = query.order_by(Funcionario.nome).all()
+    funcionarios = query.order_by(Funcionario.nome).limit(limit).offset(offset).all()
     return [
         {
             "id": f.id,
@@ -77,6 +80,7 @@ def listar_funcionarios(
             "turno": f.turno,
             "data_admissao": f.data_admissao,
             "ativo": f.ativo,
+            "foto_url": f.foto_url,
         }
         for f in funcionarios
     ]
@@ -85,6 +89,8 @@ def listar_funcionarios(
 @router.get("/ativos", response_model=List[FuncionarioListItem])
 def listar_funcionarios_ativos(
     cargo: Optional[str] = Query(default=None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -95,7 +101,7 @@ def listar_funcionarios_ativos(
     if cargo:
         query = query.filter(Funcionario.cargo == cargo)
 
-    funcionarios = query.order_by(Funcionario.nome).all()
+    funcionarios = query.order_by(Funcionario.nome).limit(limit).offset(offset).all()
     return [
         {
             "id": f.id,
@@ -105,6 +111,7 @@ def listar_funcionarios_ativos(
             "turno": f.turno,
             "data_admissao": f.data_admissao,
             "ativo": f.ativo,
+            "foto_url": f.foto_url,
         }
         for f in funcionarios
     ]
@@ -157,6 +164,7 @@ def criar_funcionario(
         telefone=data.telefone,
         email=data.email,
         endereco=data.endereco,
+        foto_url=data.foto_url,
         cargo=data.cargo,
         data_admissao=data.data_admissao,
         data_demissao=data.data_demissao,
@@ -203,6 +211,7 @@ def atualizar_funcionario(
 
     for campo in [
         "nome", "rg", "data_nascimento", "telefone", "email", "endereco",
+        "foto_url",
         "cargo", "data_admissao", "data_demissao", "motivo_demissao",
         "salario_hora", "tipo_contrato", "turno", "dias_semana",
         "carga_horaria_semanal", "ativo", "observacoes",

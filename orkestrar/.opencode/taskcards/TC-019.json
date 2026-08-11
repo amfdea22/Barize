@@ -6,19 +6,87 @@
   "createdAt": "2026-07-26T06:35:00.000Z",
   "createdBy": "user",
   "agent": "build",
-  "objective": "Gerar QR code do cardápio digital localmente, sem depender de API externa (api.qrserver.com) — mesmo problema resolvido no TC-001 (recursos externos quebram offline)",
+  "statusHistory": [
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.212Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.482Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.858Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:08:50.010Z",
+      "actor": "qa-engineer",
+      "reason": "Validação de implementação existente"
+    },
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:08:50.025Z",
+      "actor": "gate",
+      "reason": "Batch C: QR local lib qrcode validado — botão Sidebar abre modal, QR data:image png, botão Baixar PNG — smoke 16/16 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-019",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.681Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.681Z",
+  "path": ".opencode/taskcards/TC-019.json",
+  "objective": "Gerar QR code para o cardápio digital — JÁ IMPLEMENTADO. A Sidebar.tsx (linhas 67-92, 184-191, 257-304) gera o QR localmente com a lib `qrcode` (sem API externa), exibe em modal e permite download (qrcode-cardapio.png) apontando para /cardapio. Este card valida a implementação existente contra os critérios e encerra o ciclo.",
   "acceptanceCriteria": [
-    "QR code gerado localmente no browser (lib qrcode)",
-    "Nenhuma dependência de api.qrserver.com no frontend",
-    "Botão Baixar QR Code gera o download localmente",
-    "Build e lint passam"
+    "QR 1 — QR code gerado LOCALMENTE (lib qrcode), sem api.qrserver.com nem recurso externo (regra frontend-no-external-resources)",
+    "QR 2 — Botão 'QR Code do Cardápio' na Sidebar abre modal com o QR",
+    "QR 3 — Modal permite BAIXAR o QR como PNG (qrcode-cardapio.png)",
+    "QR 4 — QR aponta para a URL do cardápio (/cardapio)",
+    "VALIDAÇÃO 5 — Smoke browser: login → Sidebar → botão QR → modal → QR visível → download; build + lint frontend OK"
   ],
   "filesInvolved": [
-    "neonbar/frontend/src/layouts/Sidebar.tsx",
-    "neonbar/frontend/package.json",
-    "orkestrar/.opencode/rules/frontend-no-external-resources.md",
-    "orkestrar/.opencode/rules/frontend-layout-constraints.md"
+    "neonbar/frontend/src/layouts/Sidebar.tsx"
   ],
-  "tests": [],
-  "notes": "Resolvido: instalado qrcode@1.5.4 + @types/qrcode; Sidebar.tsx gera QR com QRCode.toDataURL localmente; criada regra frontend-no-external-resources.md para impedir reintrodução de CDN/APIs externas no frontend. Correção final: modal do QR usava max-w-sm w-full mx-lg (mesmo padrão de overflow do TC-001) → refatorado para padrão Modal.tsx (w-full min-w-0 max-w-sm + wrapper p-4); criada regra frontend-layout-constraints.md proibindo max-w+w-full+mx-* no mesmo elemento."
+  "tests": [
+    "QR gerado com lib qrcode (sem chamada a serviço externo de QR)",
+    "Modal abre com QR ao clicar no botão",
+    "Download gera PNG com nome qrcode-cardapio.png",
+    "Conteúdo do QR = window.location.origin + /cardapio",
+    "Smoke browser + build + lint frontend OK"
+  ],
+  "notes": "JÁ IMPLEMENTADO em sessão anterior (progress-tracker item 17/18): QR local via lib `qrcode`, modal corrigido para o padrão Modal.tsx (removido max-w-sm w-full mx-lg que causava overflow). Este card NÃO exige nova implementação — seguir direto para testing→verified com base no código existente e smoke test. Nenhuma mudança de código necessária.",
+  "completedAt": "2026-08-08T21:15:03.681Z"
 }

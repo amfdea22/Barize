@@ -21,6 +21,8 @@ def listar_recebimentos(
     data_inicio: Optional[date] = Query(default=None),
     data_fim: Optional[date] = Query(default=None),
     fornecedor: Optional[str] = Query(default=None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -31,7 +33,7 @@ def listar_recebimentos(
         query = query.filter(Recebimento.data_recebimento <= data_fim)
     if fornecedor:
         query = query.filter(Recebimento.fornecedor_nome.ilike(f"%{fornecedor}%"))
-    recebimentos = query.order_by(Recebimento.data_recebimento.desc()).all()
+    recebimentos = query.order_by(Recebimento.data_recebimento.desc()).limit(limit).offset(offset).all()
     return [RecebimentoResponse.model_validate(r) for r in recebimentos]
 
 

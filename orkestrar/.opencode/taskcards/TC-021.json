@@ -6,12 +6,98 @@
   "createdAt": "2026-07-26T06:50:00.000Z",
   "createdBy": "user",
   "agent": "build",
-  "completedAt": "2026-07-29T00:00:00.000Z",
   "files": [
     "backend/app/schemas/pedido.py",
     "backend/app/routers/pedidos.py",
     "frontend/src/types/index.ts",
     "frontend/src/services/api.ts",
     "frontend/src/pages/Comandas.tsx"
-  ]
+  ],
+  "statusHistory": [
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.218Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.492Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.866Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:08:50.037Z",
+      "actor": "qa-engineer",
+      "reason": "Validação de implementação existente"
+    },
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:08:50.049Z",
+      "actor": "gate",
+      "reason": "Batch C: edição de comanda validada — modal Editar com Mesa/Cliente/Tempo/Obs/Itens + PATCH Salvar — smoke 16/16 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-021",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.695Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.695Z",
+  "path": ".opencode/taskcards/TC-021.json",
+  "objective": "Edição de Comandas — JÁ IMPLEMENTADO. Frontend: modal \"Editar Comanda #id\" em Comandas.tsx (linhas 375-420) permite editar mesa, cliente, observação, tempo de preparo e itens (adicionar/remover/quantidade). Backend: PATCH /pedidos/{id} em pedidos.py (linhas 114-145) persiste as alterações com role check. Este card valida a implementação existente e encerra o ciclo.",
+  "acceptanceCriteria": [
+    "FRONT 1 — Modal 'Editar Comanda' acessível pelo botão Editar em cada comanda (Comandas.tsx:296-302)",
+    "FRONT 2 — Edição de mesa, cliente, observação, tempo de preparo e itens (quantidade/remover/adicionar produto)",
+    "BACK 3 — PATCH /pedidos/{id} (PedidoUpdate) persiste mesa/cliente/observacao/itens/tempo_preparo_estimado e recalcula total (pedidos.py:114-145)",
+    "BACK 4 — Role check no PATCH: apenas admin/gerente/bartender (pedidos.py:122)",
+    "BACK 5 — Pedido inexistente → 404; sem token → 401",
+    "VALIDAÇÃO 6 — Smoke test backend PATCH (200, recalculo total, 401/404) + smoke browser edição; build + lint frontend OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Comandas.tsx",
+    "neonbar/backend/app/routers/pedidos.py",
+    "neonbar/backend/app/schemas/pedido.py"
+  ],
+  "tests": [
+    "PATCH /pedidos/{id} com mesa/cliente/obs/itens → 200 e dados persistidos",
+    "Alteração de itens recalcula total corretamente",
+    "PATCH sem token → 401; pedido inexistente → 404",
+    "Modal Editar abre, edita campos e salva (smoke browser)",
+    "Adicionar/remover item no modal funciona",
+    "Build + lint frontend OK"
+  ],
+  "notes": "JÁ IMPLEMENTADO em sessão anterior (progress-tracker item 3): backend PATCH + frontend modal, incluindo adição/remoção de itens. Este card NÃO exige nova implementação — seguir direto para testing→verified com smoke tests do endpoint e do modal. Nenhuma mudança de código necessária (a menos que smoke revele bug).",
+  "completedAt": "2026-08-08T21:15:03.695Z"
 }

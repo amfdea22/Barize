@@ -1,7 +1,7 @@
 {
   "id": "TC-009",
   "title": "Ajustar tamanho das imagens dos produtos para visualizar os nomes",
-  "status": "ready",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-009",
@@ -22,11 +22,50 @@
       "timestamp": "2026-08-06T21:13:46.697Z",
       "actor": "build",
       "reason": "Análise completa, aguardando aprovação"
+    },
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:39:23.475Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário via /card-iniciar"
+    },
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:02:04.943Z",
+      "actor": "qa-engineer",
+      "reason": "Validação de implementação existente (nomes abaixo das imagens)"
+    },
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T00:02:04.953Z",
+      "actor": "gate",
+      "reason": "Imagens aspect-[16/10] no topo + nome em área própria — smoke browser 6/6 PASS (/cardapio e /pdv 16/16 cards)"
+    },
+    {
+      "taskId": "TC-009",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T00:08:02.745Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-07-26T04:53:07.565Z",
-  "updatedAt": "2026-08-06T21:13:46.697Z",
-  "path": ".opencode/taskcards/active/TC-009.json",
+  "updatedAt": "2026-08-09T00:08:02.745Z",
+  "path": ".opencode/taskcards/TC-009.json",
   "taskType": "card",
   "createdBy": "user",
   "agent": "build",
@@ -39,5 +78,6 @@
   ],
   "filesInvolved": [],
   "tests": [],
-  "notes": ""
+  "notes": "",
+  "completedAt": "2026-08-09T00:08:02.745Z"
 }

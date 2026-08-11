@@ -8,6 +8,11 @@
 | ADR-009 | 2026-07-31 | Frontend: proibir recursos externos (no-CDN) e constraints de largura (max-w+w-full+mx-*) | Aprovado |
 | ADR-010 | 2026-08-06 | finalizar-comanda atômico: commit único (estoque+pagamento+auditoria+pedido) com rollback + validação de range (desconto 0-100, taxa ≥0, quantidade >0) | Aprovado |
 | ADR-011 | 2026-08-08 | Tema claro/escuro via design tokens: --overlay-rgb/--glass-rgb/--neutral-rgb + override paleta em :root[data-theme='light'] + toggle persistido em localStorage (barize-theme) — interface inalterada | Aprovado |
+| ADR-012 | 2026-08-08 | Etiqueta 80mm de insumo ganha área RESPONSÁVEL (campo no formulário + impressão no Label80mm) — campo de impressão, não persistido em banco; pré-preenchido com usuário logado | Aprovado |
+| ADR-013 | 2026-08-09 | Preview de reimprimir comanda no Dashboard padronizado para comanda térmica 80mm fundo branco (classe comanda-print, w-[80mm], bg-white) — substitui simulador ESC/POS com fundo preto, alinhando ao padrão de Comandas.tsx/CupomPDV | Aprovado |
+| ADR-014 | 2026-08-09 | Cadeia de altura para scrollbar visível no PDV: wrapper do MainLayout com h-full min-h-0 (conteúdo contido na altura do main) + painel de venda do PDV com min-h-0 overflow-y-auto — painel de produtos (flex-1 overflow-y-auto scrollbar-visible) rola internamente e o main não rola | Aprovado |
+| ADR-015 | 2026-08-09 | Limitação do teste CDP headless: rotas aninhadas dentro de <Route element={<RequireRole/>}> (DRE, Relatorios, Admin) não montam o chunk lazy (wrapper vazio, sem requisição ao chunk) — comportamento pré-existente, NÃO causado por mudanças de layout; regressão dessas páginas deve ser validada manualmente ou fora do headless | Aprovado |
+| ADR-016 | 2026-08-09 | Corrigido bug real de produção no RequireRole: componente usava `{children}` mas é renderizado via `<Route element={...}>` (react-router v7), que NÃO passa children — exige `<Outlet/>`. Resultado: TODAS as rotas protegidas (/caixa, /cmv, /relatorios, /financeiro, /analise-estoque, /dre, /fornecedores, /admin) nunca renderizavam conteúdo em nenhum ambiente (não era limitação do headless como assumido no ADR-015). Fix: App.tsx `RequireRole` agora retorna `<Outlet/>` e recebe só `roles`. Descoberto durante smoke do TC-055 | Aprovado |
 
 ## ADR-008: Estrat�gia de Estabilidade do Backend em Desenvolvimento
 
@@ -93,3 +98,20 @@
   2. PDV: nome `truncate` → `break-words leading-snug`.
 - **Consequências**: [+] Mudança visível imediata no menu Comanda, [+] Etiqueta imprimível em impressora térmica 80mm, [+] Nomes de produtos 100% visíveis, [+] Sem dependências externas, [-] Imagem de referência `ui/comanda/Comanda.jpg` não lida pelo modelo (sem visão) — validação visual manual pendente
 - **Status**: Implementado (build + lint OK, 0 erros; 3 warnings pré-existentes missing-deps)
+
+## ADR: Cancelamento do TC-049
+
+- **Data**: 2026-08-08
+- **Contexto**: Card criado como "no menu ficha técnica, inserir opção de editar ficha técnica", duplicado do TC-048
+- **Decisão**: Cancelado — TC-048 já implementa edição de ficha técnica (botão Editar + modal via PUT /pdv/produtos/{id}/ficha-tecnica) e está completed
+- **Consequências**: [+]$'backlog limpo', [-]$'nenhuma' 
+- **Status**: Cancelado
+
+
+## ADR: Cancelamento do TC-050 (desfeito pelo usuário)
+
+- **Data**: 2026-08-09
+- **Contexto**: Card "centralizar o card da área de entrada manual" foi implementado e concluído (tile Entrada Manual centralizado no Dashboard via col-span-full + flex justify-center). Usuário pediu para desfazer.
+- **Decisão**: Reverter o código no `Dashboard.tsx` (tile Entrada Manual de volta ao estado original do grid) e mover o card TC-050 para `cancelled/` com status `cancelled`, preservando histórico.
+- **Consequências**: [+] Código revertido (git diff limpo em Dashboard.tsx), [+] Histórico preservado em cancelled/, [-] Centralização perdida
+- **Status**: Cancelado

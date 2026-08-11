@@ -792,6 +792,7 @@ export interface Funcionario {
   telefone?: string;
   email?: string;
   endereco?: string;
+  foto_url?: string;
   cargo: string;
   data_admissao: string;
   data_demissao?: string;
@@ -816,6 +817,7 @@ export interface FuncionarioCreate {
   telefone?: string;
   email?: string;
   endereco?: string;
+  foto_url?: string;
   cargo: string;
   data_admissao: string;
   data_demissao?: string;
@@ -837,6 +839,7 @@ export interface FuncionarioUpdate {
   telefone?: string;
   email?: string;
   endereco?: string;
+  foto_url?: string;
   cargo?: string;
   data_admissao?: string;
   data_demissao?: string;

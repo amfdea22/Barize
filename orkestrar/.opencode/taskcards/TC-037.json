@@ -1,7 +1,7 @@
 {
   "id": "TC-037",
   "title": "Corte parcial da guilhotina — trocar \\x1d\\x56\\x00 (total) por \\x1d\\x56\\x01 (parcial) e garantir 3 feeds \\n\\n\\n antes do corte",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-037",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.094Z",
       "actor": "gate",
       "reason": "Corte parcial \\x1d\\x56\\x01 + 3 feeds verificados (smoke_tc037_039 18/18)"
+    },
+    {
+      "taskId": "TC-037",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.195Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.050Z",
-  "updatedAt": "2026-08-08T16:38:01.094Z",
+  "updatedAt": "2026-08-08T17:26:24.195Z",
   "path": ".opencode/taskcards/TC-037.json",
   "taskType": "card",
   "objective": "Trocar o corte total da guilhotina (\\x1d\\x56\\x00) por corte parcial (\\x1d\\x56\\x01) na comanda e no fechamento, garantindo 3 feeds (\\n\\n\\n) antes do corte para não cortar a última linha impressa.",
@@ -72,5 +81,6 @@
     "Buffer de fechamento contém b'\\x1d\\x56\\x01' e 3 feeds antes",
     "smoke_tc037_039 18/18 PASS"
   ],
-  "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão."
+  "notes": "Corte parcial mantém o último trecho do papel preso (o de 3mm), ideal para talão contínuo. Já verificado presente vindo do TC-034; card formaliza e garante regressão.",
+  "completedAt": "2026-08-08T17:26:24.195Z"
 }

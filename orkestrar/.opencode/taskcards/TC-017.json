@@ -1,9 +1,95 @@
 {
   "id": "TC-017",
   "title": "Inserir barra de rolagem no painel do PDV para ver todas as bebidas",
-  "status": "backlog",
+  "status": "completed",
   "taskType": "card",
   "createdAt": "2026-07-26T06:00:00.000Z",
   "createdBy": "user",
-  "agent": "build"
+  "agent": "build",
+  "statusHistory": [
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:30:15.204Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T17:41:24.470Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-08T20:55:00.849Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário — batch de 8 cards"
+    },
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.150Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-08T21:04:54.161Z",
+      "actor": "gate",
+      "reason": "Batch B: scrollbar-visible no painel de produtos do PDV — smoke 18/18 PASS, tsc/lint/build OK"
+    },
+    {
+      "taskId": "TC-017",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T21:15:03.669Z",
+      "actor": "user"
+    }
+  ],
+  "updatedAt": "2026-08-08T21:15:03.669Z",
+  "path": ".opencode/taskcards/TC-017.json",
+  "objective": "Inserir barra de rolagem visível no painel de produtos do PDV (/pdv) para que todas as bebidas/produtos sejam alcançáveis — o container de produtos já tem overflow-y-auto min-h-0 (PDV.tsx:356), mas o scrollbar global fino/transparente (index.css:188-207) torna a rolagem pouco visível e o painel pode não scrollar se a cadeia de altura não estiver correta.",
+  "acceptanceCriteria": [
+    "SCROLL 1 — Painel de produtos do PDV rola verticalmente com barra de rolagem VISÍVEL quando a lista excede a altura disponível",
+    "SCROLL 2 — Todos os produtos/bebidas alcançáveis por rolagem (nenhum item inacessível)",
+    "SCROLL 3 — Cadeia de altura correta (h-full/min-h-0) para que o overflow-y-auto realmente atue no painel esquerdo",
+    "SCROLL 4 — Scrollbar visível no Firefox e WebKit (mesmo padrão do TC-016)",
+    "SCROLL 5 — Painel de venda (carrinho) continua com scroll próprio sem regressão",
+    "VALIDAÇÃO 6 — Smoke browser: /pdv com muitos produtos, rolagem visível; build + lint frontend OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/PDV.tsx",
+    "neonbar/frontend/src/index.css"
+  ],
+  "tests": [
+    "Painel de produtos do PDV exibe scrollbar visível com lista longa",
+    "Todos os produtos acessíveis via rolagem",
+    "Altura da cadeia (flex h-full, min-h-0) correta no painel de produtos",
+    "Scrollbar visível em WebKit e Firefox",
+    "Painel de venda/carrinho sem regressão",
+    "Smoke browser + build + lint frontend OK"
+  ],
+  "notes": "Causa raiz provável: scrollbar global quase invisível + possível quebra na cadeia de altura (o container raiz é flex h-full; o painel de produtos é flex-1 min-h-0 overflow-y-auto — validar no browser). Escopo: PDV.tsx + estilização de scrollbar compartilhada com TC-016 (extrair classe .scrollbar-visible em index.css).",
+  "completedAt": "2026-08-08T21:15:03.669Z"
 }

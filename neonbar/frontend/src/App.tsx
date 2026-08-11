@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
+import { useAuth } from './hooks/useAuth';
+import type { UserRole } from './types';
 
 const Login = lazy(() => import('./pages/Login'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -20,6 +22,15 @@ const AnaliseEstoque = lazy(() => import('./pages/AnaliseEstoque'));
 const DRE = lazy(() => import('./pages/DRE'));
 const Fornecedores = lazy(() => import('./pages/Fornecedores'));
 const POPs = lazy(() => import('./pages/POPs'));
+
+function RequireRole({ roles }: { roles: UserRole[] }) {
+  const { usuario, loading } = useAuth();
+  if (loading) return null;
+  if (usuario && !roles.includes(usuario.role)) {
+    return <Navigate to="/pdv" replace />;
+  }
+  return <Outlet />;
+}
 
 function PageLoader() {
   return (
@@ -51,16 +62,19 @@ export default function App() {
             <Route path="/fichas-tecnicas" element={<FichaTecnica />} />
             <Route path="/etiquetas" element={<Etiquetas />} />
             <Route path="/estoque" element={<Estoque />} />
-            <Route path="/cmv" element={<CMV />} />
-            <Route path="/caixa" element={<CaixaPage />} />
-            <Route path="/relatorios" element={<Relatorios />} />
-            <Route path="/financeiro" element={<Financeiro />} />
             <Route path="/precificacao" element={<Precificacao />} />
-            <Route path="/analise-estoque" element={<AnaliseEstoque />} />
-            <Route path="/dre" element={<DRE />} />
-            <Route path="/fornecedores" element={<Fornecedores />} />
             <Route path="/pops" element={<POPs />} />
-            <Route path="/admin" element={<Admin />} />
+
+            <Route element={<RequireRole roles={['admin', 'gerente']} />}>
+              <Route path="/cmv" element={<CMV />} />
+              <Route path="/caixa" element={<CaixaPage />} />
+              <Route path="/relatorios" element={<Relatorios />} />
+              <Route path="/financeiro" element={<Financeiro />} />
+              <Route path="/analise-estoque" element={<AnaliseEstoque />} />
+              <Route path="/dre" element={<DRE />} />
+              <Route path="/fornecedores" element={<Fornecedores />} />
+              <Route path="/admin" element={<Admin />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

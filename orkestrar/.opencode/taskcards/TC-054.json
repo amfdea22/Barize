@@ -1,0 +1,72 @@
+{
+  "id": "TC-054",
+  "title": "no menu PDV inserir barra de rolagem na área dos produtos",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:38:19.932Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T02:42:33.990Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-09T02:43:28.097Z",
+      "actor": "user",
+      "reason": "Usuário aprovou o plano, iniciando implementação"
+    },
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:08:16.478Z",
+      "actor": "qa-engineer",
+      "reason": "Smoke funcional + regressão executados: painel produtos rolável internamente, main não rola no PDV, regressão 14/14 PASS"
+    },
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-09T03:08:16.490Z",
+      "actor": "gate",
+      "reason": "Testes completos: smoke 7/7 PASS + regressão 14/14 PASS"
+    },
+    {
+      "taskId": "TC-054",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-09T03:10:25.764Z",
+      "actor": "user",
+      "reason": "Usuário confirmou a finalização do card"
+    }
+  ],
+  "createdAt": "2026-08-09T02:37:21.810Z",
+  "updatedAt": "2026-08-09T03:10:25.764Z",
+  "path": ".opencode/taskcards/TC-054.json",
+  "taskType": "card",
+  "completedAt": "2026-08-09T03:10:25.764Z"
+}

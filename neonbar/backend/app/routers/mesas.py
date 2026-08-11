@@ -15,6 +15,8 @@ router = APIRouter(prefix="/admin/mesas", tags=["Admin - Mesas"])
 @router.get("/", response_model=List[MesaResponse])
 def listar_mesas(
     ativo: Optional[int] = Query(default=None),
+    limit: int = Query(100, ge=1, le=500),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
@@ -22,7 +24,7 @@ def listar_mesas(
     query = db.query(Mesa)
     if ativo is not None:
         query = query.filter(Mesa.ativo == ativo)
-    mesas = query.order_by(Mesa.nome).all()
+    mesas = query.order_by(Mesa.nome).limit(limit).offset(offset).all()
     return mesas
 
 

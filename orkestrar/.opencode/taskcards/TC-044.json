@@ -1,7 +1,7 @@
 {
   "id": "TC-044",
   "title": "Visualizador web/híbrido de impressão 80mm — container com serrilhado de rasgo, tipografia monoespaçada e placeholder QR PIX (reutilizar/evoluir CupomPDV e Label80mm)",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-044",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:38:01.188Z",
       "actor": "gate",
       "reason": "Visualizador80mm com serrilha + modal Preview Cupom 80mm — build/lint OK"
+    },
+    {
+      "taskId": "TC-044",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:24.241Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-07T01:33:33.088Z",
-  "updatedAt": "2026-08-08T16:38:01.188Z",
+  "updatedAt": "2026-08-08T17:26:24.241Z",
   "path": ".opencode/taskcards/TC-044.json",
   "taskType": "card",
   "objective": "Visualizador web/híbrido de impressão 80mm: componente Visualizador80mm.tsx com container serrilhado de rasgo (borda lateral e inferior), tipografia monoespaçada, envolvendo o CupomPDV (com placeholder QR PIX), exibido no PDV no modal \"Preview Cupom 80mm\".",
@@ -76,5 +85,6 @@
     "PDV abre modal Preview Cupom 80mm",
     "npm run build OK + npm run lint 0 erros"
   ],
-  "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local)."
+  "notes": "Serrilha simulada com CSS (repetição de caracteres ou borda tracejada vertical). Reutiliza CupomPDV existente; frontend NUNCA depende de recursos externos (lib qrcode já local).",
+  "completedAt": "2026-08-08T17:26:24.241Z"
 }

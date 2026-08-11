@@ -444,9 +444,34 @@ def dashboard_executivo(
         ultimas_movs = (
             db.query(Movimentacao)
             .order_by(Movimentacao.data.desc())
-            .limit(5)
+            .limit(10)
             .all()
         )
+
+        # Receita dos últimos 7 dias (inclusive hoje)
+        sql_receita_ultimos_dias = text("""
+            SELECT DATE(m.data) AS dia, COALESCE(SUM(p.preco_venda * m.quantidade_produto), 0) AS receita
+            FROM movimentacoes m
+            JOIN produtos p ON p.id = m.produto_id
+            WHERE m.tipo = 'VENDA'
+            AND m.data >= :di
+            AND m.produto_id IS NOT NULL
+            AND m.quantidade_produto IS NOT NULL
+            GROUP BY DATE(m.data)
+            ORDER BY dia
+        """)
+        inicio_7d = hoje - timedelta(days=6)
+        rows_7d = db.execute(
+            sql_receita_ultimos_dias, {"di": datetime.combine(inicio_7d, datetime.min.time())}
+        ).fetchall()
+        receita_por_dia = {r.dia: round(r.receita or 0, 2) for r in rows_7d}
+        receita_ultimos_dias = [
+            {
+                "dia": (inicio_7d + timedelta(days=i)).isoformat(),
+                "receita": receita_por_dia.get((inicio_7d + timedelta(days=i)).isoformat(), 0),
+            }
+            for i in range(7)
+        ]
 
         return {
             "indicadores": {
@@ -455,12 +480,17 @@ def dashboard_executivo(
                 "total_produtos": total_produtos,
                 "insumos_criticos": insumos_criticos_count,
             },
+            "receita_ultimos_dias": receita_ultimos_dias,
             "ultimas_movimentacoes": [
                 {
                     "id": m.id,
                     "tipo": m.tipo,
                     "quantidade": m.quantidade,
-                    "data": m.data.isoformat(),
+                    "custo_no_momento": m.custo_no_momento,
+                    "insumo_id": m.insumo_id,
+                    "produto_id": m.produto_id,
+                    "quantidade_produto": m.quantidade_produto,
+                    "created_at": m.data.isoformat(),
                 }
                 for m in ultimas_movs
             ],

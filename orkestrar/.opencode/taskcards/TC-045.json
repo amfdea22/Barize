@@ -1,7 +1,7 @@
 {
   "id": "TC-045",
   "title": "Criar opção no painel de cancelar pedido",
-  "status": "verified",
+  "status": "completed",
   "statusHistory": [
     {
       "taskId": "TC-045",
@@ -52,10 +52,19 @@
       "timestamp": "2026-08-08T16:47:36.764Z",
       "actor": "gate",
       "reason": "Smoke backend 6/6 PASS (Cancelado 200, inválido 400, fora de ativos, filtro, 401) + tsc/build/lint OK"
+    },
+    {
+      "taskId": "TC-045",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-08T17:26:31.988Z",
+      "actor": "user"
     }
   ],
   "createdAt": "2026-08-08T16:39:48.642Z",
-  "updatedAt": "2026-08-08T16:47:36.764Z",
+  "updatedAt": "2026-08-08T17:26:31.988Z",
   "path": ".opencode/taskcards/TC-045.json",
   "taskType": "card",
   "objective": "Adicionar opção de CANCELAR pedido no Painel de Pedidos em tempo real (Dashboard): cada OrderCard dos pedidos ativos (Novo/Preparando/Pronto) ganha botão Cancelar com modal de confirmação (motivo opcional), e o backend passa a aceitar o status 'Cancelado' no endpoint PATCH /pedidos/{id}/status para que o pedido saia da lista de ativos (listarAtivos filtra Novo/Preparando).",
@@ -81,5 +90,6 @@
     "Dashboard abre modal de confirmação e chama atualizarStatus com 'Cancelado'",
     "tsc -b + npm run build + npm run lint sem erros"
   ],
-  "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel."
+  "notes": "Dashboard é o 'Painel de Pedidos' em tempo real (listarAtivos = Novo/Preparando; o auto-polling de 15s recarrega pedidos). listarAtivos filtra Novo/Preparando, então ao cancelar um pedido Pronto ele permanece na tela até o próximo refresh (aceitável) e um pedido Novo/Preparando sai na hora. OrderCard usa STATUS_CONFIG tipado por Record<PedidoStatus, ...> — adicionar 'Cancelado' ao tipo exige adicionar a entrada no Record para o tsc passar. Comandas.tsx statusConfig também tem fallback seguro (|| Clock / outline). Cancelar não estorna estoque (pedido KDS ainda não baixou estoque — baixa só ocorre em /pdv/finalizar-comanda); este card trata apenas o cancelamento de pedido em aberto no painel.",
+  "completedAt": "2026-08-08T17:26:31.988Z"
 }
