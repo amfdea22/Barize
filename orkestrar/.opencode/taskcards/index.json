@@ -1,5 +1,5 @@
 {
-  "nextId": 60,
+  "nextId": 75,
   "cards": {
     "TC-002": {
       "id": "TC-002",
@@ -4171,6 +4171,836 @@
       "path": ".opencode/taskcards/TC-059.json",
       "taskType": "card",
       "completedAt": "2026-08-11T01:19:40.342Z"
+    },
+    "TC-060": {
+      "id": "TC-060",
+      "title": "atualizar e sincronizar os dados do menu relatório",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T01:40:58.613Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T01:40:58.628Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T02:00:22.752Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T02:16:42.540Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, iniciando testes"
+        },
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T02:16:42.556Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-060",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T19:46:58.058Z",
+          "actor": "user",
+          "reason": "Aprovado e concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-11T01:33:02.457Z",
+      "updatedAt": "2026-08-11T19:46:58.058Z",
+      "path": ".opencode/taskcards/TC-060.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T19:46:58.058Z"
+    },
+    "TC-061": {
+      "id": "TC-061",
+      "title": "no painel de vendas do PDV retirar a barra de rolagem quando anexar o pedido, como era antes",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T19:53:00.738Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T19:53:00.748Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T19:59:31.015Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T19:59:31.026Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, iniciando testes"
+        },
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T19:59:31.037Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-061",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:05:18.043Z",
+          "actor": "user",
+          "reason": "Aprovado e concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-11T19:50:25.046Z",
+      "updatedAt": "2026-08-11T20:05:18.043Z",
+      "path": ".opencode/taskcards/TC-061.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:05:18.043Z"
+    },
+    "TC-062": {
+      "id": "TC-062",
+      "title": "retirar todas as barras de rolagem do card venda do PDV",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:10:59.288Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:10:59.300Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:13:19.358Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:13:19.370Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, iniciando testes"
+        },
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:13:19.379Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-062",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:15:37.045Z",
+          "actor": "user",
+          "reason": "Aprovado e concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-11T20:10:03.805Z",
+      "updatedAt": "2026-08-11T20:15:37.045Z",
+      "path": ".opencode/taskcards/TC-062.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:15:37.045Z"
+    },
+    "TC-063": {
+      "id": "TC-063",
+      "title": "inserir barra de rolagem na area VENDA do pdv",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:16:45.911Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:16:45.923Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:23:14.636Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:25:22.095Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, iniciando testes"
+        },
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:25:22.106Z",
+          "actor": "gate",
+          "reason": "Todos os testes passaram"
+        },
+        {
+          "taskId": "TC-063",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:33:21.959Z",
+          "actor": "user",
+          "reason": "Concluído — superseded pelo TC-064"
+        }
+      ],
+      "createdAt": "2026-08-11T20:15:37.056Z",
+      "updatedAt": "2026-08-11T20:33:21.959Z",
+      "path": ".opencode/taskcards/TC-063.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:33:21.959Z"
+    },
+    "TC-064": {
+      "id": "TC-064",
+      "title": "a area de VENDA do pdv esta totalmente desorganizada e os pedidos estao em cima das outras informacoes. Corrigir e deixar tudo organizado sem erros",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:27:37.382Z",
+          "actor": "build",
+          "reason": "Iniciando análise"
+        },
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:27:37.393Z",
+          "actor": "build",
+          "reason": "Análise concluída, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:30:01.144Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:32:39.537Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, smoke 8/8 PASS"
+        },
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:32:39.548Z",
+          "actor": "gate",
+          "reason": "Smoke TC-064 8/8 PASS, regressão TC-055 11/11 PASS, tsc+build OK"
+        },
+        {
+          "taskId": "TC-064",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:33:21.970Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — área VENDA organizada"
+        }
+      ],
+      "createdAt": "2026-08-11T20:26:34.308Z",
+      "updatedAt": "2026-08-11T20:33:21.970Z",
+      "path": ".opencode/taskcards/TC-064.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:33:21.970Z"
+    },
+    "TC-065": {
+      "id": "TC-065",
+      "title": "inserir barra de rolagem no painel venda",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:40:12.065Z",
+          "actor": "build",
+          "reason": "Início da análise"
+        },
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:40:12.076Z",
+          "actor": "build",
+          "reason": "Análise concluída"
+        },
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:42:39.465Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário (barra na borda do painel inteiro)"
+        },
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:43:36.466Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, smoke 8/8 PASS"
+        },
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:43:36.478Z",
+          "actor": "gate",
+          "reason": "Smoke TC-065 8/8 PASS, tsc+build OK"
+        },
+        {
+          "taskId": "TC-065",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:44:31.273Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — barra na borda do painel venda"
+        }
+      ],
+      "createdAt": "2026-08-11T20:39:14.442Z",
+      "updatedAt": "2026-08-11T20:44:31.273Z",
+      "path": ".opencode/taskcards/TC-065.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:44:31.273Z"
+    },
+    "TC-066": {
+      "id": "TC-066",
+      "title": "a configuração da area venda esta certa e correta. Não alterar mais e proteger contra alterações",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:51:59.865Z",
+          "actor": "build",
+          "reason": "Início da análise"
+        },
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:51:59.877Z",
+          "actor": "build",
+          "reason": "Análise concluída"
+        },
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:53:47.637Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:53:47.647Z",
+          "actor": "qa-engineer",
+          "reason": "Regra de proteção criada, sem mudança de código"
+        },
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T20:53:47.657Z",
+          "actor": "gate",
+          "reason": "Nenhuma alteração de código — apenas regra + AGENTS.md + memória"
+        },
+        {
+          "taskId": "TC-066",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T20:59:24.638Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário — Área Venda congelada"
+        }
+      ],
+      "createdAt": "2026-08-11T20:46:51.713Z",
+      "updatedAt": "2026-08-11T20:59:24.638Z",
+      "path": ".opencode/taskcards/TC-066.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T20:59:24.638Z"
+    },
+    "TC-067": {
+      "id": "TC-067",
+      "title": "os pedidos enviados do pdv não estão sendo direcionados para o painel de pedidos. Corrigir definitivamente",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T21:07:06.925Z",
+          "actor": "build",
+          "reason": "Início da análise"
+        },
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T21:15:15.735Z",
+          "actor": "build",
+          "reason": "Causa raiz identificada"
+        },
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-11T23:00:54.391Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T23:00:54.402Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação concluída, teste ao vivo PASS"
+        },
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-11T23:00:54.413Z",
+          "actor": "gate",
+          "reason": "Pedido criado e visível no painel para produtos sem receita"
+        },
+        {
+          "taskId": "TC-067",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-11T23:00:54.421Z",
+          "actor": "user",
+          "reason": "Concluído"
+        }
+      ],
+      "createdAt": "2026-08-11T21:05:37.366Z",
+      "updatedAt": "2026-08-11T23:00:54.421Z",
+      "path": ".opencode/taskcards/TC-067.json",
+      "taskType": "card",
+      "completedAt": "2026-08-11T23:00:54.421Z"
+    },
+    "TC-068": {
+      "id": "TC-068",
+      "title": "Segurança: adicionar autenticação e validação de conteúdo no upload de imagens",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T17:20:28.361Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T17:20:28.380Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-20T17:25:10.138Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T17:34:00.708Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T17:34:00.724Z",
+          "actor": "gate",
+          "reason": "Smoke test upload 8/8 PASS (401/403/400/200), py_compile OK, ruff OK"
+        },
+        {
+          "taskId": "TC-068",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-20T18:04:42.259Z",
+          "actor": "user"
+        }
+      ],
+      "createdAt": "2026-08-20T17:07:56.354Z",
+      "updatedAt": "2026-08-20T18:04:42.259Z",
+      "path": ".opencode/taskcards/TC-068.json",
+      "taskType": "card",
+      "objective": "Proteger o endpoint POST /api/v1/upload/imagem: exigir autenticação (JWT) e role admin/gerente, validar o conteúdo real do arquivo (magic bytes) e não apenas a extensão, e impedir que arquivos arbitrários sejam servidos publicamente. Adicionar uploads/ ao .gitignore para evitar commit de arquivos polyglot.",
+      "acceptanceCriteria": [
+        "SEG 1 — POST /api/v1/upload/imagem exige token JWT válido (401 sem token)",
+        "SEG 2 — Apenas roles admin/gerente podem fazer upload (403 para bartender/outros)",
+        "SEG 3 — Conteúdo validado por magic bytes (PNG \\x89PNG, JPEG \\xFF\\xD8\\xFF, GIF87a/89a, WEBP RIFF....WEBP) — arquivo polyglot PNG/ZIP é rejeitado (400)",
+        "SEG 4 — Extensão deve corresponder ao magic byte detectado (ex.: .png com conteúdo JPEG → 400)",
+        "SEG 5 — Tamanho máximo 5MB mantido; nome gerado com uuid (sem path traversal)",
+        "SEG 6 — neonbar/backend/app/uploads/ adicionado ao .gitignore",
+        "SEG 7 — Frontend (Admin.tsx:462, PDV.tsx:269) continua funcionando — já envia Authorization header",
+        "VALIDAÇÃO 8 — Smoke test: upload sem token → 401; com bartender → 403; com admin PNG válido → 200; arquivo ZIP renomeado .png → 400; build + lint OK"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/upload.py",
+        "neonbar/.gitignore"
+      ],
+      "tests": [
+        "POST /upload/imagem sem Authorization → 401",
+        "POST /upload/imagem com token bartender → 403",
+        "POST /upload/imagem com token admin + PNG válido → 200 e url /uploads/<uuid>.png",
+        "POST /upload/imagem com arquivo ZIP renomeado para .png → 400 (magic bytes)",
+        "POST /upload/imagem com extensão .png mas conteúdo JPEG → 400 (mismatch)",
+        "Arquivo > 5MB → 400",
+        "uploads/ presente no .gitignore"
+      ],
+      "completedAt": "2026-08-20T18:04:42.259Z"
+    },
+    "TC-069": {
+      "id": "TC-069",
+      "title": "Segurança: aplicar verificar_role no backend dos endpoints financeiros/relatórios",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T18:05:32.019Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "ready",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T18:08:10.515Z",
+          "actor": "build",
+          "reason": "Análise completa, aguardando aprovação do usuário"
+        },
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "ready",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-20T19:45:11.837Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "executing",
+          "to": "testing",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T16:55:57.468Z",
+          "actor": "qa-engineer",
+          "reason": "Implementação completa, aguardando validação"
+        },
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "testing",
+          "to": "verified",
+          "trigger": "agent",
+          "timestamp": "2026-08-20T16:55:57.468Z",
+          "actor": "gate",
+          "reason": "Smoke tests 12/12 PASS (bartender 403, admin 200, dashboard-executivo 200), py_compile OK nos 7 routers"
+        },
+        {
+          "taskId": "TC-069",
+          "taskType": "card",
+          "from": "verified",
+          "to": "completed",
+          "trigger": "user",
+          "timestamp": "2026-08-20T16:55:57.468Z",
+          "actor": "user",
+          "reason": "Concluído pelo usuário"
+        }
+      ],
+      "createdAt": "2026-08-20T17:07:56.388Z",
+      "updatedAt": "2026-08-20T16:55:57.468Z",
+      "completedAt": "2026-08-20T16:55:57.468Z",
+      "path": ".opencode/taskcards/TC-069.json",
+      "taskType": "card",
+      "objective": "Aplicar verificar_role(current_user, [\"admin\", \"gerente\"]) no backend dos endpoints financeiros/relatórios que hoje só têm proteção no frontend (App.tsx RequireRole). Impedir que bartender/outros leiam receita, CMV, DRE, auditoria, fornecedores e análise de estoque, ou operem o caixa, via chamada direta à API.",
+      "acceptanceCriteria": [
+        "SEG 1 — caixa.py: abrir, fechar, aberto, resumo-diario exigem admin/gerente (403 para bartender)",
+        "SEG 2 — cmv.py: calcular e dashboard exigem admin/gerente",
+        "SEG 3 — relatorios.py: analytics/resumo, analytics/receita-por-hora, analytics/top-produtos, analytics/desempenho-equipe, auditoria/acoes, alertas/config (GET), alertas/historico exigem admin/gerente",
+        "SEG 4 — relatorios.py: dashboard-executivo permanece acessível a todos os autenticados (usado pela página Dashboard, que é de todas as roles — decisão documentada)",
+        "SEG 5 — financeiro_plus.py: vendas-por-categoria, dre, custos-fixos (GET/POST/PUT/DELETE), metas exigem admin/gerente",
+        "SEG 6 — relatorios_cmv.py: produtos, categorias, insumos, insumos/{id}/produtos e exports CSV exigem admin/gerente",
+        "SEG 7 — analise_estoque.py: giro, abc, ponto-pedido exigem admin/gerente",
+        "SEG 8 — fornecedores.py: listar, obter, criar, atualizar, excluir exigem admin/gerente",
+        "VALIDAÇÃO 9 — Smoke test: bartender recebe 403 em todos os endpoints acima; admin recebe 200; Dashboard (todas roles) continua funcionando com dashboard-executivo",
+        "VALIDAÇÃO 10 — py_compile + ruff OK"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/caixa.py",
+        "neonbar/backend/app/routers/cmv.py",
+        "neonbar/backend/app/routers/relatorios.py",
+        "neonbar/backend/app/routers/financeiro_plus.py",
+        "neonbar/backend/app/routers/relatorios_cmv.py",
+        "neonbar/backend/app/routers/analise_estoque.py",
+        "neonbar/backend/app/routers/fornecedores.py"
+      ],
+      "tests": [
+        "POST /caixa/abrir com bartender → 403; com admin → 200",
+        "POST /caixa/fechar/{id} com bartender → 403",
+        "GET /caixa/aberto com bartender → 403",
+        "GET /caixa/resumo-diario com bartender → 403",
+        "GET /cmv/calcular com bartender → 403",
+        "GET /cmv/dashboard com bartender → 403",
+        "GET /relatorios/analytics/resumo com bartender → 403",
+        "GET /relatorios/dashboard-executivo com bartender → 200 (todas roles)",
+        "GET /financeiro-plus/dre com bartender → 403",
+        "GET /cmv/relatorios/produtos com bartender → 403",
+        "GET /analise-estoque/giro com bartender → 403",
+        "GET /fornecedores/ com bartender → 403",
+        "Todos os endpoints acima com admin → 200"
+      ]
+    },
+    "TC-070": {
+      "id": "TC-070",
+      "title": "Corrigir produção inflando receita no CMV",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-20T17:07:56.409Z",
+      "updatedAt": "2026-08-20T17:07:56.409Z",
+      "path": ".opencode/taskcards/TC-070.json",
+      "taskType": "card"
+    },
+    "TC-071": {
+      "id": "TC-071",
+      "title": "Paginação sem suporte no frontend trunca listas com >50 registros",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-20T17:07:56.430Z",
+      "updatedAt": "2026-08-20T17:07:56.430Z",
+      "path": ".opencode/taskcards/TC-071.json",
+      "taskType": "card"
+    },
+    "TC-072": {
+      "id": "TC-072",
+      "title": "Path traversal em assign_product_image (admin.py:93)",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-20T17:07:56.446Z",
+      "updatedAt": "2026-08-20T17:07:56.446Z",
+      "path": ".opencode/taskcards/TC-072.json",
+      "taskType": "card"
+    },
+    "TC-073": {
+      "id": "TC-073",
+      "title": "Regressão: preview de etiquetas imprime apenas a primeira etiqueta",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-20T17:07:56.464Z",
+      "updatedAt": "2026-08-20T17:07:56.464Z",
+      "path": ".opencode/taskcards/TC-073.json",
+      "taskType": "card"
+    },
+    "TC-074": {
+      "id": "TC-074",
+      "title": "Corrigir fallback de receitaHoje e comparação de datas em api.ts",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-20T17:07:56.479Z",
+      "updatedAt": "2026-08-20T17:07:56.479Z",
+      "path": ".opencode/taskcards/TC-074.json",
+      "taskType": "card"
     }
   }
 }

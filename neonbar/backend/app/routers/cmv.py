@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, date, timezone
 
 from ..database import get_db
 from ..models.usuario import Usuario
-from ..services.auth_service import get_current_user
+from ..services.auth_service import get_current_user, verificar_role
 from ..services.estoque_service import EstoqueService
 
 router = APIRouter(prefix="/cmv", tags=["CMV - Custos"])
@@ -29,6 +29,8 @@ def calcular_cmv(
     CMV = Custo total dos insumos vendidos / Receita total × 100
     Ideal: < 30% para bares com margem saudável.
     """
+    verificar_role(current_user, ["admin", "gerente"])
+
     if not data_fim:
         data_fim = datetime.now(timezone.utc).date()
     if not data_inicio:
@@ -74,6 +76,8 @@ def dashboard_financeiro(
     - Receita do dia
     - Total de vendas do mês
     """
+    verificar_role(current_user, ["admin", "gerente"])
+
     hoje = datetime.now(timezone.utc).date()
     inicio_mes = date(hoje.year, hoje.month, 1)
     inicio_mes_dt = datetime.combine(inicio_mes, datetime.min.time())

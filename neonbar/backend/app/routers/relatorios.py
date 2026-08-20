@@ -48,6 +48,8 @@ def analytics_resumo(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Resumo de KPIs de vendas no período."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from sqlalchemy import func, text
     from ..models.movimentacao import Movimentacao
     from ..models.pedido import Pedido
@@ -66,27 +68,19 @@ def analytics_resumo(
     """)
     receita = db.execute(sql_receita, {"inicio": inicio, "fim": fim}).scalar() or 0.0
 
-    # Número de vendas (pedidos) no período — distinto por produto+data aproximada
-    sql_vendas = text("""
-        SELECT COUNT(DISTINCT m.documento_referencia)
-        FROM movimentacoes m
-        WHERE m.tipo = 'VENDA'
-        AND m.data BETWEEN :inicio AND :fim
-        AND m.documento_referencia IS NOT NULL
-    """)
-    total_pedidos = db.execute(sql_vendas, {"inicio": inicio, "fim": fim}).scalar() or 0
-
-    # Fallback: se não há documento_referencia, conta vendas por id
-    if not total_pedidos:
-        total_pedidos = (
-            db.query(func.count(func.distinct(Movimentacao.id)))
-            .filter(
-                Movimentacao.tipo == "VENDA",
-                Movimentacao.data.between(inicio, fim),
-                Movimentacao.produto_id.isnot(None),
-            )
-            .scalar() or 0
+    # Número de vendas (pedidos) no período — conta vendas reais de produto.
+    # Cada venda gera uma linha VENDA com quantidade_produto preenchida
+    # (as demais linhas são consumo de insumos da receita).
+    total_pedidos = (
+        db.query(func.count(Movimentacao.id))
+        .filter(
+            Movimentacao.tipo == "VENDA",
+            Movimentacao.data.between(inicio, fim),
+            Movimentacao.produto_id.isnot(None),
+            Movimentacao.quantidade_produto.isnot(None),
         )
+        .scalar() or 0
+    )
 
     ticket_medio = round(receita / total_pedidos, 2) if total_pedidos > 0 else 0.0
 
@@ -101,10 +95,10 @@ def analytics_resumo(
         .scalar() or 0
     )
 
-    # Pedidos ativos (KDS) — proxy para mesas em atendimento
+    # Pedidos ativos (KDS) — apenas Novo/Preparando, alinhado ao KDS
     pedidos_ativos = (
         db.query(Pedido)
-        .filter(Pedido.status.in_(["Novo", "Preparando", "Pronto"]))
+        .filter(Pedido.status.in_(["Novo", "Preparando"]))
         .all()
     )
     mesas_ativas = len({p.mesa for p in pedidos_ativos if p.mesa})
@@ -148,6 +142,8 @@ def analytics_receita_por_hora(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Receita por hora (dia) ou por dia (semana/mes)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from sqlalchemy import text
     from datetime import datetime as _dt
 
@@ -206,6 +202,8 @@ def analytics_top_produtos(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Produtos mais vendidos no período (por quantidade e receita)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from sqlalchemy import text
 
     inicio, fim = _periodo_datas(periodo)
@@ -241,6 +239,8 @@ def analytics_desempenho_equipe(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Desempenho por usuário (vendas registradas no período)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from sqlalchemy import text
 
     inicio, fim = _periodo_datas(periodo)
@@ -310,6 +310,8 @@ def listar_tipos_acao(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Lista todos os tipos de ação de auditoria disponíveis."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from ..models.audit_log import AuditLog
 
     acoes = (
@@ -329,6 +331,8 @@ def listar_config_alertas(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Lista configurações de alerta."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     configs = db.query(AlertaConfig).all()
     return [AlertaConfigResponse.model_validate(c) for c in configs]
 
@@ -379,6 +383,8 @@ def historico_alertas(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Histórico de alertas disparados."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     alertas = (
         db.query(AlertaDisparado)
         .order_by(AlertaDisparado.created_at.desc())

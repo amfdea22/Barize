@@ -1,0 +1,109 @@
+{
+  "id": "TC-069",
+  "title": "Segurança: aplicar verificar_role no backend dos endpoints financeiros/relatórios",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-20T18:05:32.019Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-20T18:08:10.515Z",
+      "actor": "build",
+      "reason": "Análise completa, aguardando aprovação do usuário"
+    },
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-20T19:45:11.837Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "executing",
+      "to": "testing",
+      "trigger": "agent",
+      "timestamp": "2026-08-20T16:55:57.468Z",
+      "actor": "qa-engineer",
+      "reason": "Implementação completa, aguardando validação"
+    },
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "testing",
+      "to": "verified",
+      "trigger": "agent",
+      "timestamp": "2026-08-20T16:55:57.468Z",
+      "actor": "gate",
+      "reason": "Smoke tests 12/12 PASS (bartender 403, admin 200, dashboard-executivo 200), py_compile OK nos 7 routers"
+    },
+    {
+      "taskId": "TC-069",
+      "taskType": "card",
+      "from": "verified",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-20T16:55:57.468Z",
+      "actor": "user",
+      "reason": "Concluído pelo usuário"
+    }
+  ],
+  "createdAt": "2026-08-20T17:07:56.388Z",
+  "updatedAt": "2026-08-20T16:55:57.468Z",
+  "completedAt": "2026-08-20T16:55:57.468Z",
+  "path": ".opencode/taskcards/TC-069.json",
+  "taskType": "card",
+  "objective": "Aplicar verificar_role(current_user, [\"admin\", \"gerente\"]) no backend dos endpoints financeiros/relatórios que hoje só têm proteção no frontend (App.tsx RequireRole). Impedir que bartender/outros leiam receita, CMV, DRE, auditoria, fornecedores e análise de estoque, ou operem o caixa, via chamada direta à API.",
+  "acceptanceCriteria": [
+    "SEG 1 — caixa.py: abrir, fechar, aberto, resumo-diario exigem admin/gerente (403 para bartender)",
+    "SEG 2 — cmv.py: calcular e dashboard exigem admin/gerente",
+    "SEG 3 — relatorios.py: analytics/resumo, analytics/receita-por-hora, analytics/top-produtos, analytics/desempenho-equipe, auditoria/acoes, alertas/config (GET), alertas/historico exigem admin/gerente",
+    "SEG 4 — relatorios.py: dashboard-executivo permanece acessível a todos os autenticados (usado pela página Dashboard, que é de todas as roles — decisão documentada)",
+    "SEG 5 — financeiro_plus.py: vendas-por-categoria, dre, custos-fixos (GET/POST/PUT/DELETE), metas exigem admin/gerente",
+    "SEG 6 — relatorios_cmv.py: produtos, categorias, insumos, insumos/{id}/produtos e exports CSV exigem admin/gerente",
+    "SEG 7 — analise_estoque.py: giro, abc, ponto-pedido exigem admin/gerente",
+    "SEG 8 — fornecedores.py: listar, obter, criar, atualizar, excluir exigem admin/gerente",
+    "VALIDAÇÃO 9 — Smoke test: bartender recebe 403 em todos os endpoints acima; admin recebe 200; Dashboard (todas roles) continua funcionando com dashboard-executivo",
+    "VALIDAÇÃO 10 — py_compile + ruff OK"
+  ],
+  "filesInvolved": [
+    "neonbar/backend/app/routers/caixa.py",
+    "neonbar/backend/app/routers/cmv.py",
+    "neonbar/backend/app/routers/relatorios.py",
+    "neonbar/backend/app/routers/financeiro_plus.py",
+    "neonbar/backend/app/routers/relatorios_cmv.py",
+    "neonbar/backend/app/routers/analise_estoque.py",
+    "neonbar/backend/app/routers/fornecedores.py"
+  ],
+  "tests": [
+    "POST /caixa/abrir com bartender → 403; com admin → 200",
+    "POST /caixa/fechar/{id} com bartender → 403",
+    "GET /caixa/aberto com bartender → 403",
+    "GET /caixa/resumo-diario com bartender → 403",
+    "GET /cmv/calcular com bartender → 403",
+    "GET /cmv/dashboard com bartender → 403",
+    "GET /relatorios/analytics/resumo com bartender → 403",
+    "GET /relatorios/dashboard-executivo com bartender → 200 (todas roles)",
+    "GET /financeiro-plus/dre com bartender → 403",
+    "GET /cmv/relatorios/produtos com bartender → 403",
+    "GET /analise-estoque/giro com bartender → 403",
+    "GET /fornecedores/ com bartender → 403",
+    "Todos os endpoints acima com admin → 200"
+  ]
+}

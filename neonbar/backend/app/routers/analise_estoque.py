@@ -11,7 +11,7 @@ from ..models.insumo import Insumo
 from ..models.movimentacao import Movimentacao
 from ..models.lote import Lote
 from ..models.fornecedor import Fornecedor
-from ..services.auth_service import get_current_user
+from ..services.auth_service import get_current_user, verificar_role
 
 router = APIRouter(prefix="/analise-estoque", tags=["Análise de Estoque"])
 
@@ -24,6 +24,8 @@ def calcular_giro_estoque(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     if not data_fim:
         data_fim = datetime.now(timezone.utc).date()
     if not data_inicio:
@@ -81,6 +83,8 @@ def curva_abc(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     if not data_fim:
         data_fim = datetime.now(timezone.utc).date()
     if not data_inicio:
@@ -164,6 +168,8 @@ def calcular_ponto_pedido(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     hoje = datetime.now(timezone.utc).date()
     inicio_30d = datetime.combine(hoje - timedelta(days=30), datetime.min.time())
     fim_dt = datetime.combine(hoje, datetime.max.time())

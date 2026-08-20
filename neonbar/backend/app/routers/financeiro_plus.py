@@ -10,7 +10,7 @@ from ..models.usuario import Usuario
 from ..models.produto import Produto
 from ..models.movimentacao import Movimentacao
 from ..models.custo_fixo import CustoFixo
-from ..services.auth_service import get_current_user
+from ..services.auth_service import get_current_user, verificar_role
 
 router = APIRouter(prefix="/financeiro-plus", tags=["Financeiro Plus"])
 
@@ -22,6 +22,8 @@ def vendas_por_categoria(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     if not data_fim:
         data_fim = datetime.now(timezone.utc).date()
     if not data_inicio:
@@ -79,6 +81,8 @@ def dre(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     if not data_fim:
         data_fim = datetime.now(timezone.utc).date()
     if not data_inicio:
@@ -139,6 +143,8 @@ def listar_custos_fixos(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     query = db.query(CustoFixo)
     if ativos:
         query = query.filter(CustoFixo.ativo == 1)
@@ -168,6 +174,8 @@ def criar_custo_fixo(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     custo = CustoFixo(
         nome=data["nome"],
         categoria=data.get("categoria"),
@@ -189,6 +197,8 @@ def atualizar_custo_fixo(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     c = db.query(CustoFixo).filter(CustoFixo.id == custo_id).first()
     if not c:
         raise HTTPException(status_code=404, detail="Custo fixo não encontrado")
@@ -205,6 +215,8 @@ def excluir_custo_fixo(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     c = db.query(CustoFixo).filter(CustoFixo.id == custo_id).first()
     if not c:
         raise HTTPException(status_code=404, detail="Custo fixo não encontrado")
@@ -218,6 +230,8 @@ def listar_metas(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     hoje = datetime.now(timezone.utc).date()
     inicio_mes = date(hoje.year, hoje.month, 1)
     fim_mes = date(hoje.year, hoje.month + 1, 1) - timedelta(days=1) if hoje.month < 12 else date(hoje.year, 12, 31)

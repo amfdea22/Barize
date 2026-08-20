@@ -74,6 +74,92 @@
 | 60 | TC-057: Foto do funcionário na área Novo Funcionário (upload, preview, coluna Foto na listagem) | build | ✅ Concluído |
 | 61 | TC-058: Atualizar e sincronizar os dados do menu financeiro | build | ✅ Concluído |
 | 62 | TC-059: Analisar, sincronizar e corrigir os dados do CMV | build | ✅ Concluído |
+| 63 | TC-060: Atualizar e sincronizar os dados do menu Relatório | build | ✅ Concluído |
+| 64 | TC-061: Retirar barra de rolagem do painel de vendas do PDV ao anexar o pedido | build | ✅ Concluído |
+| 65 | TC-062: Retirar todas as barras de rolagem do card venda do PDV | build | ✅ Concluído |
+| 66 | TC-063: Inserir barra de rolagem na área VENDA do PDV (painel com overflow, carrinho sem scroll) | build | ✅ Concluído |
+| 67 | TC-064: Organizar área VENDA do PDV (pedidos sobrepondo informações) — carrinho rola internamente | build | ✅ Concluído |
+| 68 | TC-065: Inserir barra de rolagem visível na borda do painel venda do PDV | build | ✅ Concluído |
+| 69 | TC-066: Congelar configuração da Área Venda do PDV — proteger contra alterações | build | ✅ Concluído |
+| 70 | TC-067: Corrigir pedidos enviados do PDV não aparecendo no painel (bloqueio por falta de receita) | build | ✅ Concluído |
+| 71 | TC-069: Segurança — aplicar verificar_role no backend dos endpoints financeiros/relatórios (caixa, cmv, relatorios, financeiro_plus, relatorios_cmv, analise_estoque, fornecedores) | build | ✅ Concluído |
+
+## Notas TC-069 (Segurança — verificar_role no backend financeiro/relatórios)
+
+- **Pedido do usuário**: endpoints financeiros/relatórios só tinham proteção no frontend (App.tsx RequireRole) — bartender podia ler receita, CMV, DRE, auditoria, fornecedores e análise de estoque, ou operar o caixa, via chamada direta à API.
+- **Mudanças** (39 chamadas `verificar_role(current_user, ["admin", "gerente"])` adicionadas):
+  - `caixa.py`: abrir, fechar, aberto, resumo-diario.
+  - `cmv.py`: calcular, dashboard.
+  - `relatorios.py`: analytics/resumo, analytics/receita-por-hora, analytics/top-produtos, analytics/desempenho-equipe, auditoria/acoes, alertas/config (GET), alertas/historico. **dashboard-executivo permanece acessível a todas as roles** (usado pela página Dashboard — decisão documentada no card, SEG 4).
+  - `financeiro_plus.py`: vendas-por-categoria, dre, custos-fixos (GET/POST/PUT/DELETE), metas.
+  - `relatorios_cmv.py`: produtos, categorias, insumos, insumos/{id}/produtos e exports CSV.
+  - `analise_estoque.py`: giro, abc, ponto-pedido.
+  - `fornecedores.py`: listar, obter, criar, atualizar, excluir.
+- **Validação**: py_compile OK nos 7 routers; ruff apenas padrões pré-existentes (UP045/B008); smoke tests 12/12 PASS (bartender → 403 em todos os endpoints protegidos, admin → 200, dashboard-executivo → 200 para todas as roles); `git diff` apenas os 7 routers do card.
+- **Em 2026-08-20**: backlog→analyzing→ready→executing(user)→testing(qa-engineer)→verified(gate)→completed(user).
+
+## Notas TC-067 (Pedidos do PDV não aparecendo no painel)
+
+- **Causa raiz**: O backend `finalizar_comanda` bloqueava a venda (retornava 400) se qualquer produto da comanda não tivesse receita cadastrada. Como a maioria dos drinks do cardápio não tem receita, as vendas falhavam e nenhum pedido era criado para o painel.
+- **Correção `estoque_service.py`**:
+  - `finalizar_comanda`: alterada validação para permitir venda de produtos sem receita (apenas pula a baixa de estoque/movimentação para esses itens).
+- **Resultado**: Vendas de drinks sem receita agora finalizam com sucesso, criando o `Pedido` (status "Novo") que aparece corretamente no painel de pedidos (Dashboard).
+- **Validação**: teste ao vivo (venda de produto sem receita) → 200 OK, pedido criado e visível em `/pedidos/ativos`.
+- **Status**: backlog→analyzing→ready→executing→testing→verified→completed OK.
+
+## Notas TC-066 (Congelamento da Área Venda do PDV)
+
+- **Regra criada**: `orkestrar/.opencode/rules/pdv-areavenda-locked.md` — congela o bloco `{/* ─── Painel de Venda ─── */}` do `PDV.tsx`. Qualquer agente/card que tentar alterar a Área Venda DEVE parar e pedir aprovação explícita do usuário.
+- **AGENTS.md**: adicionada convenção `- [ ] Área Venda do PDV está CONGELADA — NÃO alterar sem aprovação explícita do usuário — ver pdv-areavenda-locked.md`.
+- **Estado congelado documentado**: container painel `overflow-y-auto scrollbar-visible` (linha 379); carrinho `p-lg space-y-3` (altura natural, linhas 401–403); cabeçalho (título Venda, mesa, vendedor, cliente); rodapé (Desconto/Taxa/SegmentedControl/Subtotal/Total/Finalizar Venda, linhas 405–469).
+- **Validação**: nenhuma alteração de código — apenas regra de proteção. Sem mudança de comportamento (nenhum teste afetado).
+- **Status**: backlog→analyzing→ready (build), aguardando transições executing→testing→verified→completed.
+
+## Notas TC-065 (Barra de rolagem na borda do painel venda do PDV)
+
+- **Mudança `PDV.tsx`**:
+  - Linha 379 (painel): `flex flex-col min-h-0` → `flex flex-col min-h-0 overflow-y-auto scrollbar-visible` (barra na borda direita do painel inteiro).
+  - Linha 401 (carrinho): `flex-1 overflow-y-auto ... [scrollbar-width:none]` → `p-lg space-y-3` (altura natural, sem overflow próprio). O painel inteiro (cabeçalho+carrinho+rodapé) rola junto.
+- **Decisão do usuário**: barra na borda do painel inteiro (opção escolhida em consulta), não na área interna do carrinho.
+- **Validação**: tsc OK; vite build OK; smoke CDP TC-065 8/8 PASS.
+- **Status**: ready→executing (user)→testing (qa-engineer)→verified (gate) OK. Aguardando confirmação do usuário para `verified→completed`.
+
+## Notas TC-064 (Organizar área VENDA do PDV)
+
+- **Bug**: painel VENDA com `overflow-y-auto` + carrinho `flex-1 min-h-0` sem overflow → carrinho colapsava para 48px e os itens transbordavam por cima do rodapé (Subtotal/Total/Finalizar). Medido via CDP: panelScrollH 995 vs clientH 581, cart h=48.
+- **Correção `PDV.tsx`**:
+  - Linha 379 (painel): removido `overflow-y-auto scrollbar-visible` → `flex flex-col min-h-0` (painel não rola como um todo).
+  - Linha 401 (carrinho): `flex-1 p-lg space-y-3 min-h-0` → `flex-1 overflow-y-auto p-lg space-y-3 min-h-0 scrollbar-visible` (carrinho rola internamente, padrão do painel de produtos).
+- **Resultado**: cabeçalho e rodapé (Total/Finalizar Venda) sempre visíveis; itens rolam dentro do carrinho; sem sobreposição.
+- **Validação**: tsc OK; vite build OK; smoke CDP TC-064 8/8 PASS; regressão TC-055 (11/11) PASS. Smoke TC-063 falha por design (testa layout antigo substituído).
+- **Status**: executing→testing (qa-engineer)→verified (gate) OK. Aguardando confirmação do usuário para `verified→completed`.
+
+## Notas TC-063 (Barra de rolagem na área VENDA do PDV)
+
+- **Mudança `PDV.tsx` (linha 379)**: container do Painel de Venda com `overflow-y-auto scrollbar-visible` (barra na borda do painel); carrinho (linha 401) sem overflow.
+- **SUPERSEDED pelo TC-064**: essa abordagem causou sobreposição (carrinho colapsava com `flex-1 min-h-0`). TC-064 moveu o scroll para dentro do carrinho (`overflow-y-auto scrollbar-visible` no carrinho, painel sem overflow).
+- **Status**: verified→completed (user) OK.
+
+## Notas TC-062 (Retirar barras de rolagem do card venda do PDV)
+
+- **Mudança `PDV.tsx` (linha 401)**: carrinho sem `overflow-y-auto` → `flex-1 p-lg space-y-3 min-h-0`.
+- **SUPERSEDED pelo TC-063/TC-064**: scroll foi reintroduzido (painel no TC-063, carrinho no TC-064) conforme pedido do usuário.
+- **Status**: verified→completed (user) OK.
+
+## Notas TC-061 (Painel de Venda do PDV sem scrollbar)
+
+- **Mudança `PDV.tsx` (linha 379)**: container do Painel de Venda removido `min-h-0 overflow-y-auto` → voltou a `flex flex-col` (como antes). Ao anexar itens ao carrinho o painel não cria barra de rolagem própria; o carrinho interno (`flex-1 overflow-y-auto`) continua rolável.
+- **Validação**: tsc OK; build vite OK; smoke CDP TC-061 7/7 PASS; regressão TC-055 (11/11) PASS. Nota: smoke TC-054 "main não rola" reflete mudança intencional (painel não rola internamente, comportamento anterior).
+- **Status**: ready→executing (user)→testing (qa-engineer)→verified (gate)→completed (user) OK.
+
+## Notas TC-060 (Sincronizar Dados do Menu Relatório)
+
+- **Bug corrigido `relatorios.py` `analytics_resumo` — `total_pedidos`/`ticket_medio`**:
+  - Contava `COUNT(DISTINCT documento_referencia)` (NULL nas vendas PDV) → fallback contava TODAS as 38 linhas VENDA (incluindo consumo de insumos) em vez das 12 vendas reais. `ticket_medio` ficava R$7,39 (281/38).
+  - Corrigido para contar vendas reais: `COUNT(*) WHERE tipo='VENDA' AND quantidade_produto IS NOT NULL` → 12 pedidos, `ticket_medio` R$23,42 (281/12), consistente com `desempenho-equipe`.
+- **Bug corrigido `pedidos_ativos`/`mesas_ativas`**: filtrava status `["Novo","Preparando","Pronto"]` (incluía concluídos) → mostrava 6 mesas ativas / 16 pedidos em preparo mesmo sem pedidos ativos. Corrigido para `["Novo","Preparando"]` (alinhado ao KDS `pedidos.py`) → 0/0 correto.
+- **Validação**: py_compile OK; tsc OK; smoke CDP TC-060 8/8 PASS; regressão TC-055 (11/11), TC-056 (4/4), TC-058 (6/6) PASS.
+- **Status**: executing→testing (qa-engineer)→verified (gate)→completed (user) OK.
 
 ## Notas TC-059 (Corrigir Dados do CMV)
 

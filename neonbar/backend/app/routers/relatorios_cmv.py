@@ -20,7 +20,7 @@ from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..models.usuario import Usuario
-from ..services.auth_service import get_current_user
+from ..services.auth_service import get_current_user, verificar_role
 
 router = APIRouter(prefix="/cmv/relatorios", tags=["CMV - Relatórios precisos"])
 
@@ -49,6 +49,8 @@ def cmv_por_produto(
     CMV e margem por produto no período: receita, custo, margem bruta (R$ e %),
     quantidade vendida e CMV%. Ordenável.
     """
+    verificar_role(current_user, ["admin", "gerente"])
+
     _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
     sql = """
@@ -100,8 +102,8 @@ def cmv_por_produto(
 
     data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
     return {
-        "data_inicio": data_inicio_final.isoformat(),
-        "data_fim": data_fim_final.isoformat(),
+        "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
+        "data_fim": data_fim_final.isoformat() if data_fim_final else None,
         "total_receita": round(sum(i["receita"] for i in itens), 2),
         "total_custo": round(sum(i["custo"] for i in itens), 2),
         "total_margem": round(sum(i["margem_bruta"] for i in itens), 2),
@@ -119,6 +121,8 @@ def cmv_por_categoria(
     current_user: Usuario = Depends(get_current_user),
 ):
     """CMV e margem agregados por categoria de produto no período."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
     sql = """
@@ -168,6 +172,8 @@ def consumo_insumos(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Consumo de insumos no período: quantidade consumida e custo consumido (somente VENDA)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
     sql = """
@@ -217,6 +223,8 @@ def produtos_por_insumo(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Quais produtos consomem o insumo X no período (quantidade e custo)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
     sql = """
@@ -285,6 +293,8 @@ def export_produtos_csv(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     payload = cmv_por_produto(data_inicio, data_fim, dias, db=db, current_user=current_user)
     header = ["Produto", "Categoria", "Preco Venda", "Qtd Vendida", "Receita", "Custo", "Margem Bruta", "Margem %", "CMV %"]
     rows = [
@@ -303,6 +313,8 @@ def export_categorias_csv(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     payload = cmv_por_categoria(data_inicio, data_fim, dias, db=db, current_user=current_user)
     header = ["Categoria", "Receita", "Custo", "Qtd Vendida", "Margem Bruta", "CMV %"]
     rows = [
@@ -320,6 +332,8 @@ def export_insumos_csv(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     payload = consumo_insumos(data_inicio, data_fim, dias, db=db, current_user=current_user)
     header = ["Insumo", "Categoria", "Unidade", "Qtd Consumida", "Custo Consumido"]
     rows = [

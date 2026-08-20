@@ -26,6 +26,8 @@ def abrir_caixa(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Abre um novo caixa (início do expediente)."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     sucesso, msg, caixa = CaixaService.abrir_caixa(
         db=db,
         usuario_id=current_user.id,
@@ -66,6 +68,8 @@ def fechar_caixa(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Fecha o caixa com conciliação de valores."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     sucesso, msg, resultado = CaixaService.fechar_caixa(
         db=db,
         caixa_id=caixa_id,
@@ -107,6 +111,8 @@ def caixa_aberto(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Retorna o caixa atualmente aberto, se houver."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     from ..models.caixa import Caixa as CaixaModel
 
     caixa = (
@@ -136,5 +142,7 @@ def resumo_diario(
     current_user: Usuario = Depends(get_current_user),
 ):
     """Resumo financeiro do dia."""
+    verificar_role(current_user, ["admin", "gerente"])
+
     resultado = CaixaService.obter_resumo_diario(db=db, data=data)
     return resultado

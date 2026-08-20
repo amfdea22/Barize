@@ -1,6 +1,6 @@
 {
     "version":  "1.0",
-    "updatedAt":  "2026-08-10T15:00:00-03:00",
+    "updatedAt":  "2026-08-20T16:55:57-03:00",
     "currentSession":  {
                            "agent":  "build",
                            "subagentes":  [
@@ -8,12 +8,25 @@
                                                "gate",
                                                "user"
                                            ],
-                           "task":  "TC-059 COMPLETED (corrigir dados do CMV). Backlog vazio.",
+                           "task":  "TC-069 COMPLETED (verificar_role no backend financeiro/relatórios). Backlog vazio.",
                            "workflowStep":  "COMPLETED",
                            "status":  "idle",
-                           "startedAt":  "2026-08-10T19:45:00-03:00"
+                           "startedAt":  "2026-08-20T16:55:57-03:00"
                        },
     "checkpoints":  [
+                        {
+                            "timestamp":  "2026-08-20T16:55:57-03:00",
+                            "description":  "TC-069 COMPLETED: verificar_role(current_user, ['admin','gerente']) aplicado em 39 endpoints financeiros/relatórios — caixa.py (abrir/fechar/aberto/resumo-diario), cmv.py (calcular/dashboard), relatorios.py (analytics/auditoria/alertas; dashboard-executivo permanece para todas roles), financeiro_plus.py (vendas-por-categoria/dre/custos-fixos/metas), relatorios_cmv.py (produtos/categorias/insumos/CSV), analise_estoque.py (giro/abc/ponto-pedido), fornecedores.py (CRUD). Smoke 12/12 PASS (bartender 403, admin 200, dashboard-executivo 200), py_compile OK, ruff apenas padrões pré-existentes. Backend reiniciado.",
+                            "files":  [
+                                           "neonbar/backend/app/routers/caixa.py",
+                                           "neonbar/backend/app/routers/cmv.py",
+                                           "neonbar/backend/app/routers/relatorios.py",
+                                           "neonbar/backend/app/routers/financeiro_plus.py",
+                                           "neonbar/backend/app/routers/relatorios_cmv.py",
+                                           "neonbar/backend/app/routers/analise_estoque.py",
+                                           "neonbar/backend/app/routers/fornecedores.py"
+                                       ]
+                        },
                         {
                             "timestamp":  "2026-08-10T15:40:00-03:00",
                             "description":  "TC-058 em verified: sincronização do painel financeiro — dashboard-executivo retorna receita_ultimos_dias (7 dias) + movimentações completas (custo_no_momento/created_at); resumo-diario retorna total_pedidos; carregarPainel unifica receitaHoje com pagamentos do Caixa, usa total_pedidos e receita_ultimos_dias (gráfico Receita Diária deixa de ficar vazio; colunas Valor/Data das movimentações corretas). Smoke backend OK, smoke CDP 6/6 PASS, regressão TC-055 11/11 + TC-056 4/4 PASS, tsc/lint/build OK. Backend reiniciado.",

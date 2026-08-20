@@ -21,6 +21,8 @@ def listar_fornecedores(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     query = db.query(Fornecedor)
     if ativos:
         query = query.filter(Fornecedor.ativo == 1)
@@ -57,6 +59,8 @@ def obter_fornecedor(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     f = db.query(Fornecedor).filter(Fornecedor.id == fornecedor_id).first()
     if not f:
         raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
@@ -82,6 +86,8 @@ def criar_fornecedor(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     fornecedor = Fornecedor(
         nome=data["nome"],
         cnpj=data.get("cnpj"),
@@ -106,6 +112,8 @@ def atualizar_fornecedor(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     f = db.query(Fornecedor).filter(Fornecedor.id == fornecedor_id).first()
     if not f:
         raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
@@ -126,6 +134,8 @@ def excluir_fornecedor(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
 ):
+    verificar_role(current_user, ["admin", "gerente"])
+
     f = db.query(Fornecedor).filter(Fornecedor.id == fornecedor_id).first()
     if not f:
         raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
