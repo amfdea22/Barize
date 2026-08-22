@@ -97,6 +97,75 @@ def atualizar_status_pedido(
     if not pedido:
         raise HTTPException(status_code=404, detail="Pedido não encontrado")
 
+    # ─── Regra de Negócio: Hierarquia de Cancelamento ───────────────────
+    if data.status == "Cancelado":
+        motivo = (data.motivo or "").strip()
+
+        if pedido.status in ("Preparando", "Pronto"):
+            # Cancelamento de pedido em preparo/pronto: requer gerente/admin + motivo
+            verificar_role(current_user, ["admin", "gerente"])
+            if not motivo or len(motivo) < 3:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Motivo obrigatório para cancelamento de pedidos em preparo ou prontos (mínimo 3 caracteres)",
+                )
+        else:
+            # "Novo": bartender pode cancelar diretamente, mas motivo é recomendado
+            verificar_role(current_user, ["admin", "gerente", "bartender"])
+
+        # Estorno de estoque: reverte movimentações vinculadas ao pedido
+        from ..models.insumo import Insumo
+        from ..models.movimentacao import Movimentacao as MovModel
+        from ..services.audit_service import AuditService
+
+        movs = db.query(MovModel).filter(
+            MovModel.pedido_id == pedido_id,
+            MovModel.tipo == "VENDA",
+        ).all()
+
+        estoque_restaurado = 0
+        for mov in movs:
+            insumo = db.query(Insumo).filter(Insumo.id == mov.insumo_id).first()
+            if insumo:
+                # mov.quantidade é negativa (saída), então -= negativo = +
+                insumo.estoque_atual -= mov.quantidade
+                estoque_restaurado += 1
+
+            # Cria movimentação de estorno
+            estorno = MovModel(
+                insumo_id=mov.insumo_id,
+                tipo="AJUSTE",
+                quantidade=-mov.quantidade,
+                custo_no_momento=mov.custo_no_momento,
+                produto_id=mov.produto_id,
+                pedido_id=pedido_id,
+                observacao=f"Estorno cancelamento Pedido #{pedido_id}. Motivo: {motivo or 'Não informado'}",
+                usuario_id=current_user.id,
+            )
+            db.add(estorno)
+
+        # Registra auditoria
+        AuditService.registrar(
+            db=db,
+            acao="PEDIDO_CANCELADO",
+            usuario_id=current_user.id,
+            usuario_nome=current_user.nome,
+            entidade_tipo="Pedido",
+            entidade_id=pedido.id,
+            descricao=(
+                f"Pedido #{pedido.id} cancelado (status: {pedido.status}). "
+                f"{estoque_restaurado} movimentação(ões) estornada(s). Motivo: {motivo or 'Não informado'}"
+            ),
+            motivo=motivo,
+            commit=False,
+        )
+
+        logger.warning(
+            f"[PEDIDOS] Pedido #{pedido.id} CANCELADO por {current_user.username} "
+            f"(era {pedido.status}). Motivo: {motivo or 'N/A'}. "
+            f"Estoque restaurado: {estoque_restaurado} movimentações"
+        )
+
     agora = datetime.now(timezone.utc).replace(tzinfo=None)
     pedido.status = data.status
     pedido.updated_at = agora

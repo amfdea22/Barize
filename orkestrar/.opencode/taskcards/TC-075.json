@@ -1,0 +1,31 @@
+{
+  "id": "TC-075",
+  "title": "Mudar cor do card da mesa/balcão quando selecionado no Salão",
+  "status": "backlog",
+  "statusHistory": [],
+  "createdAt": "2026-08-22T00:15:00.000Z",
+  "updatedAt": "2026-08-22T00:15:00.000Z",
+  "path": ".opencode/taskcards/TC-075.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Quando uma mesa ou balcão for selecionado no Salão (Sala.tsx), o card correspondente deve mudar de cor para indicar visualmente que está selecionado. Atualmente não há indicador visual de seleção — o usuário não sabe qual mesa/balcão está ativo.",
+  "acceptanceCriteria": [
+    "CARD 1 — Card da mesa/balcão selecionado exibe cor de fundo/borda diferente (ex: bg-primary/20 ou border-primary)",
+    "CARD 2 — Card não selecionado mantém a aparência atual (bg-white ou equivalente)",
+    "CARD 3 — Seleção é mútua — apenas um card fica destacado por vez (selecionar outro desmarca o anterior)",
+    "CARD 4 — Transição de cor suave (transition-colors ou equivalente)",
+    "VALIDAÇÃO 5 — Smoke browser: /sala → clicar mesa → cor muda → clicar outra → anterior volta ao normal; build + lint frontend OK"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/Sala.tsx"
+  ],
+  "tests": [
+    "Card selecionado tem cor de destaque diferente do não selecionado",
+    "Selecionar outro card desmarca o anterior",
+    "Transição de cor é suave",
+    "Ambas as abas (Mesas/Balcão) funcionam com a mesma lógica",
+    "Smoke browser + build + lint frontend OK"
+  ],
+  "notes": "Sala.tsx já tem grid de cards para mesas e balcão. Precisa de estado `mesaSelecionada` (ou `selecionadaId`) e condicional de classe Tailwind no card. Verificar se há compartilhamento de estado com PDV.tsx (modal Novo Pedido)."
+}

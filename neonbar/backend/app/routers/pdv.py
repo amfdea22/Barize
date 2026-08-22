@@ -440,7 +440,11 @@ class FinalizarComandaRequest(BaseModel):
     itens: list[ItemComanda] = []
     imprimir_comanda: bool = True
     desconto_percentual: Optional[float] = Field(default=0.0, ge=0, le=100)
+    desconto_fixo: Optional[float] = Field(default=0.0, ge=0)
     taxa_servico_percentual: Optional[float] = Field(default=8.0, ge=0)
+    gorjeta_percentual: Optional[float] = Field(default=0.0, ge=0, le=50)
+    couver_valor: Optional[float] = Field(default=0.0, ge=0)
+    tipo_pedido: Optional[str] = Field(default="consumo", pattern="^(consumo|delivery|levar|retirada)$")
     forma_pagamento: Optional[str] = "dinheiro"
     observacao: Optional[str] = None
     mesa: Optional[str] = None
@@ -466,6 +470,27 @@ def finalizar_comanda(
     from ..models.pagamento import Pagamento
     from ..models.produto import Produto as ProdutoModel
 
+    # ─── Regra de Negócio: Bloqueio de Fechamento ───────────────────────
+    # Impede fechamento de mesa/comanda se houver pedidos ativos (Novo/Preparando/Pronto)
+    if body.mesa:
+        pedidos_ativos = (
+            db.query(Pedido)
+            .filter(
+                Pedido.mesa == body.mesa,
+                Pedido.status.in_(["Novo", "Preparando", "Pronto"]),
+            )
+            .count()
+        )
+        if pedidos_ativos > 0:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    f"Não é possível fechar a mesa '{body.mesa}': "
+                    f"existem {pedidos_ativos} pedido(s) ativo(s) na cozinha/bar. "
+                    f"Aguarde a finalização de todos os pedidos antes de fechar."
+                ),
+            )
+
     itens_dict = [{"produto_id": i.produto_id, "quantidade": i.quantidade} for i in body.itens]
 
     try:
@@ -480,11 +505,13 @@ def finalizar_comanda(
             db.rollback()
             raise HTTPException(status_code=400, detail=msg)
 
-        # Calcula desconto e taxa de serviço
+        # Calcula desconto, taxa, gorjeta e couver
         valor_bruto = resultado["valor_total"]
-        desconto = round(valor_bruto * (body.desconto_percentual / 100), 2)
+        desconto = round(valor_bruto * (body.desconto_percentual / 100) + (body.desconto_fixo or 0), 2)
         taxa = round(valor_bruto * (body.taxa_servico_percentual / 100), 2)
-        valor_final = round(valor_bruto - desconto + taxa, 2)
+        gorjeta = round(valor_bruto * (body.gorjeta_percentual / 100), 2)
+        couver = round(body.couver_valor or 0, 2)
+        valor_final = round(valor_bruto + couver + gorjeta - desconto + taxa, 2)
 
         # Cria registro de pagamento vinculado à última movimentação
         venda_id = resultado.get("movimentacoes_ids", [None])[0] if resultado.get("movimentacoes_ids") else None
@@ -506,8 +533,8 @@ def finalizar_comanda(
             entidade_tipo="Comanda",
             descricao=(
                 f"Comanda finalizada: {resultado['total_itens']} itens, "
-                f"R${valor_bruto:.2f} - {body.desconto_percentual}% desc + "
-                f"{body.taxa_servico_percentual}% taxa = R${valor_final:.2f} "
+                f"R${valor_bruto:.2f} - desc R${desconto:.2f} + taxa R${taxa:.2f} "
+                f"+ gorjeta R${gorjeta:.2f} + couver R${couver:.2f} = R${valor_final:.2f} "
                 f"({body.forma_pagamento})"
             ),
             ip_origem=ip_origem,
@@ -581,9 +608,19 @@ def finalizar_comanda(
             itens=itens_pedido,
             total=round(valor_final, 2),
             observacao=body.observacao,
+            tipo_pedido=body.tipo_pedido or "consumo",
             tempo_preparo_estimado=tempo_preparo,
         )
         db.add(pedido)
+        db.flush()  # Garante que pedido.id está disponível
+
+        # Vincula movimentações de estoque ao Pedido (para estorno no cancelamento)
+        from ..models.movimentacao import Movimentacao as MovModel
+        mov_ids = resultado.get("movimentacoes_ids", [])
+        if mov_ids:
+            db.query(MovModel).filter(MovModel.id.in_(mov_ids)).update(
+                {MovModel.pedido_id: pedido.id}, synchronize_session=False
+            )
 
         # ─── COMMIT ÚNICO: tudo ou nada ───
         db.commit()

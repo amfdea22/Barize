@@ -17,6 +17,7 @@ class Pedido(Base):
     itens = Column(JSON, default=list, nullable=False)
     total = Column(Float, default=0.0, nullable=False)
     observacao = Column(String(500), nullable=True)
+    tipo_pedido = Column(String(20), default="consumo", nullable=False)  # consumo | delivery | levar | retirada
     created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     iniciado_em = Column(DateTime(timezone=True), nullable=True)

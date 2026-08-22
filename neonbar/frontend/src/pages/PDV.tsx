@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle, Upload, Printer } from 'lucide-react';
+import { Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle, Upload, Printer, Store, Coffee } from 'lucide-react';
 import { pdvService, uploadService } from '../services/api';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
@@ -17,6 +17,14 @@ import { useAuth } from '../hooks/useAuth';
 import { useMesas } from '../hooks/useMesas';
 import type { Produto, ProdutoCreate } from '../types';
 
+type TipoPedido = 'consumo' | 'delivery' | 'levar' | 'retirada';
+const TIPOS_PEDIDO: { key: TipoPedido; label: string; icon: string }[] = [
+  { key: 'consumo', label: 'Consumo', icon: '🍽️' },
+  { key: 'delivery', label: 'Delivery', icon: '🛵' },
+  { key: 'levar', label: 'Levar', icon: '🛍️' },
+  { key: 'retirada', label: 'Retirada', icon: '📦' },
+];
+
 export default function PDV() {
   const { usuario } = useAuth();
   const { mesas } = useMesas();
@@ -33,11 +41,18 @@ export default function PDV() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   // Parâmetros da venda
-  const [mesa, setMesa] = useState('');
+  const [pedidoNome, setPedidoNome] = useState('');
+  const [localPedido, setLocalPedido] = useState('');
+  const [showNovoPedido, setShowNovoPedido] = useState(true);
   const [cliente, setCliente] = useState('');
   const [vendedor, setVendedor] = useState('');
   const [descontoPercentual, setDescontoPercentual] = useState(0);
+  const [descontoTipo, setDescontoTipo] = useState<'percentual' | 'fixo'>('percentual');
+  const [descontoValor, setDescontoValor] = useState(0);
   const [taxaServicoPercentual, setTaxaServicoPercentual] = useState(0);
+  const [gorjetaPercentual, setGorjetaPercentual] = useState(0);
+  const [couverValor, setCouverValor] = useState(0);
+  const [tipoPedido, setTipoPedido] = useState<TipoPedido>('consumo');
   const [observacao, setObservacao] = useState('');
 
   // Fluxo de pagamento
@@ -114,6 +129,21 @@ export default function PDV() {
       .catch(() => { /* filtro usa categorias derivadas dos produtos */ });
   }, []);
 
+  const isBalcao = (local: string) => {
+    const l = (local || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return l.includes('balcao');
+  };
+
+  const mesasAtivas = mesas.filter(m => m.ativo);
+  const mesasSalao = mesasAtivas.filter(m => !isBalcao(m.local || ''));
+  const balcacoes = mesasAtivas.filter(m => isBalcao(m.local || ''));
+
+  const handleNovoPedido = () => {
+    const tipoLabel = TIPOS_PEDIDO.find(t => t.key === tipoPedido)?.label || 'Pedido';
+    setPedidoNome(tipoLabel);
+    setShowNovoPedido(false);
+  };
+
   const categorias = useMemo(() => {
     const cats = new Set<string>();
     produtos.forEach(p => { if (p.categoria) cats.add(p.categoria); });
@@ -158,9 +188,10 @@ export default function PDV() {
 
   // ─── Cálculos ───
   const subtotal = cart.reduce((sum, item) => sum + item.produto.preco_venda * item.quantidade, 0);
-  const desconto = subtotal * (descontoPercentual / 100);
+  const desconto = descontoTipo === 'percentual' ? subtotal * (descontoPercentual / 100) : descontoValor;
   const taxa = subtotal * (taxaServicoPercentual / 100);
-  const total = subtotal - desconto + taxa;
+  const gorjeta = subtotal * (gorjetaPercentual / 100);
+  const total = subtotal + couverValor + gorjeta - desconto + taxa;
 
   const handleConfirmarPagamento = (payload: {
     forma_pagamento: FormaPagamento;
@@ -186,10 +217,14 @@ export default function PDV() {
         {
           imprimir_comanda: true,
           observacao: observacao || undefined,
-          mesa: mesa || undefined,
+          mesa: localPedido || undefined,
           cliente: cliente || undefined,
-          desconto_percentual: descontoPercentual,
+          desconto_percentual: descontoTipo === 'percentual' ? descontoPercentual : 0,
+          desconto_fixo: descontoTipo === 'fixo' ? descontoValor : 0,
           taxa_servico_percentual: taxaServicoPercentual,
+          gorjeta_percentual: gorjetaPercentual,
+          couver_valor: couverValor,
+          tipo_pedido: tipoPedido,
           forma_pagamento: payload.forma_pagamento,
           vendedor: vendedor || usuario?.nome || undefined,
         },
@@ -204,16 +239,21 @@ export default function PDV() {
         total: resultado?.valor_final ?? total,
         forma_pagamento: payload.forma_pagamento,
         troco: payload.troco,
-        mesa,
+        mesa: localPedido,
         cliente,
         vendedor: vendedor || usuario?.nome || '',
         observacao,
       });
       setCart([]);
-      setMesa('');
+      setPedidoNome('');
+      setLocalPedido('');
       setCliente('');
       setDescontoPercentual(0);
+      setDescontoValor(0);
       setTaxaServicoPercentual(0);
+      setGorjetaPercentual(0);
+      setCouverValor(0);
+      setTipoPedido('consumo');
       setObservacao('');
       setShowPagamento(false);
     } catch (err: any) {
@@ -378,13 +418,28 @@ export default function PDV() {
       {/* ─── Painel de Venda ─── */}
       <div className="w-[360px] xl:w-[400px] shrink-0 bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] flex flex-col min-h-0 overflow-y-auto">
         <div className="p-lg border-b border-[rgba(var(--overlay-rgb),0.06)] space-y-md">
-          <h2 className="text-headline-md font-bold text-[var(--color-on-surface)] flex items-center gap-2">
-            <ShoppingCart size={20} /> Venda
-          </h2>
-          <div className="flex items-center gap-2 flex-wrap">
-            <SeletorMesa mesas={mesas.map(m => m.nome)} value={mesa} onChange={setMesa} />
-            <MesaBadge value={mesa} />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-md">
+              <h2 className="text-headline-md font-bold text-[var(--color-on-surface)] flex items-center gap-2">
+                <ShoppingCart size={20} /> {pedidoNome || 'Pedido'}
+              </h2>
+              <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]">
+                {TIPOS_PEDIDO.find(t => t.key === tipoPedido)?.icon} {TIPOS_PEDIDO.find(t => t.key === tipoPedido)?.label}
+              </span>
+            </div>
+            <button
+              onClick={() => setShowNovoPedido(true)}
+              className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-primary)] hover:underline cursor-pointer"
+            >
+              Novo Pedido
+            </button>
           </div>
+          {localPedido && (
+            <div className="flex items-center gap-2">
+              {isBalcao(localPedido) ? <Store size={14} className="text-[var(--color-primary)]" /> : <Coffee size={14} className="text-[var(--color-primary)]" />}
+              <span className="text-label-md text-[var(--color-on-surface)] font-mono">{localPedido}</span>
+            </div>
+          )}
           <SeletorVendedor value={vendedor} onChange={setVendedor} defaultName={usuario?.nome || ''} />
           <div>
             <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1.5">Cliente</label>
@@ -403,31 +458,72 @@ export default function PDV() {
         </div>
 
         <div className="p-lg border-t border-[rgba(var(--overlay-rgb),0.06)] space-y-3">
+          {/* Desconto */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase">Desconto</label>
+              <button
+                onClick={() => setDescontoTipo(descontoTipo === 'percentual' ? 'fixo' : 'percentual')}
+                className="text-[10px] font-mono text-[var(--color-primary)] hover:underline cursor-pointer"
+              >
+                {descontoTipo === 'percentual' ? 'R$' : '%'}
+              </button>
+            </div>
+            <input
+              type="number"
+              min={0}
+              max={descontoTipo === 'percentual' ? 100 : subtotal}
+              value={descontoTipo === 'percentual' ? (descontoPercentual || '') : (descontoValor || '')}
+              onChange={e => {
+                const val = parseFloat(e.target.value) || 0;
+                if (descontoTipo === 'percentual') setDescontoPercentual(Math.max(0, Math.min(100, val)));
+                else setDescontoValor(Math.max(0, Math.min(subtotal, val)));
+              }}
+              placeholder={descontoTipo === 'percentual' ? '0%' : 'R$ 0,00'}
+              className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
+            />
+          </div>
+
+          {/* Gorjeta + Couver */}
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Desconto %</label>
+              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Garçom %</label>
               <input
                 type="number"
                 min={0}
-                max={100}
-                value={descontoPercentual || ''}
-                onChange={e => setDescontoPercentual(Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)))}
-                placeholder="0"
+                max={50}
+                value={gorjetaPercentual || ''}
+                onChange={e => setGorjetaPercentual(Math.max(0, Math.min(50, parseFloat(e.target.value) || 0)))}
+                placeholder="0%"
                 className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Taxa Serv. %</label>
+              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Couver R$</label>
               <input
                 type="number"
                 min={0}
-                max={30}
-                value={taxaServicoPercentual || ''}
-                onChange={e => setTaxaServicoPercentual(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
-                placeholder="0"
+                step="0.50"
+                value={couverValor || ''}
+                onChange={e => setCouverValor(Math.max(0, parseFloat(e.target.value) || 0))}
+                placeholder="R$ 0,00"
                 className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
               />
             </div>
+          </div>
+
+          {/* Taxa de serviço */}
+          <div>
+            <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Taxa Serviço %</label>
+            <input
+              type="number"
+              min={0}
+              max={30}
+              value={taxaServicoPercentual || ''}
+              onChange={e => setTaxaServicoPercentual(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
+              placeholder="0%"
+              className="w-full h-10 rounded-lg bg-[var(--color-surface-container-low)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
+            />
           </div>
 
           <SegmentedControl
@@ -440,11 +536,24 @@ export default function PDV() {
             onChange={v => setTaxaServicoPercentual(Number(v))}
           />
 
+          {/* Resumo */}
           <div className="space-y-1 pt-1">
             <div className="flex items-center justify-between text-body-md text-[var(--color-on-surface-variant)]">
               <span>Subtotal</span>
               <span className="font-mono">R$ {subtotal.toFixed(2)}</span>
             </div>
+            {couverValor > 0 && (
+              <div className="flex items-center justify-between text-body-md text-[var(--color-on-surface-variant)]">
+                <span>Couver</span>
+                <span className="font-mono">+ R$ {couverValor.toFixed(2)}</span>
+              </div>
+            )}
+            {gorjeta > 0 && (
+              <div className="flex items-center justify-between text-body-md text-amber-400">
+                <span>Garçom ({gorjetaPercentual}%)</span>
+                <span className="font-mono">+ R$ {gorjeta.toFixed(2)}</span>
+              </div>
+            )}
             {desconto > 0 && (
               <div className="flex items-center justify-between text-body-md text-green-400">
                 <span>Desconto</span>
@@ -469,12 +578,83 @@ export default function PDV() {
         </div>
       </div>
 
+      {/* ─── Modal: Novo Pedido ─── */}
+      <Modal open={showNovoPedido} onClose={() => setShowNovoPedido(false)} title="Novo Pedido">
+        <div className="space-y-lg">
+          {mesasSalao.length > 0 && (
+            <div>
+              <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Mesa</label>
+              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1.5">
+                {mesasSalao.map(m => (
+                  <button
+                    key={m.id}
+                    onClick={() => setLocalPedido(localPedido === m.nome ? '' : m.nome)}
+                    className={`aspect-square flex flex-col items-center justify-center gap-0.5 rounded-lg text-[11px] font-mono transition-all cursor-pointer ${
+                      localPedido === m.nome
+                        ? 'bg-blue-500/10 text-blue-600 border border-blue-400/40 backdrop-blur-sm shadow-sm'
+                        : 'bg-white/5 text-[var(--color-on-surface-variant)] hover:bg-white/10 border border-white/5 backdrop-blur-sm'
+                    }`}
+                  >
+                    {m.nome}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {balcacoes.length > 0 && (
+            <div>
+              <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Balcão</label>
+              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1.5">
+                {balcacoes.map(m => (
+                  <button
+                    key={m.id}
+                    onClick={() => setLocalPedido(localPedido === m.nome ? '' : m.nome)}
+                    className={`aspect-square flex flex-col items-center justify-center gap-0.5 rounded-lg text-[11px] font-mono transition-all cursor-pointer ${
+                      localPedido === m.nome
+                        ? 'bg-blue-500/10 text-blue-600 border border-blue-400/40 backdrop-blur-sm shadow-sm'
+                        : 'bg-white/5 text-[var(--color-on-surface-variant)] hover:bg-white/10 border border-white/5 backdrop-blur-sm'
+                    }`}
+                  >
+                    {m.nome}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          <div>
+            <label className="block text-[11px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Tipo de Pedido</label>
+            <div className="grid grid-cols-4 gap-1.5">
+              {TIPOS_PEDIDO.map(t => (
+                <button
+                  key={t.key}
+                  type="button"
+                  onClick={() => setTipoPedido(t.key)}
+                  className={`flex flex-col items-center gap-0.5 py-2 rounded-lg border transition-all cursor-pointer ${
+                    tipoPedido === t.key
+                      ? 'bg-blue-500/10 text-blue-600 border-blue-400/40 backdrop-blur-sm shadow-sm'
+                      : 'bg-white/5 text-[var(--color-on-surface-variant)] border-white/5 hover:bg-white/10 backdrop-blur-sm'
+                  }`}
+                >
+                  <span className="text-sm">{t.icon}</span>
+                  <span className="text-[10px] font-medium">{t.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-end gap-sm pt-2 border-t border-[rgba(var(--overlay-rgb),0.08)]">
+            <Button onClick={handleNovoPedido}>Iniciar Pedido</Button>
+          </div>
+        </div>
+      </Modal>
+
       {/* ─── Modal: Pagamento ─── */}
       <Modal open={showPagamento} onClose={() => setShowPagamento(false)} title="Pagamento" size="lg">
         <PainelPagamento
           total={subtotal}
           desconto={desconto}
           taxa={taxa}
+          gorjeta={gorjeta}
+          couver={couverValor}
           valorFinal={total}
           onConfirm={handleConfirmarPagamento}
           onCancel={() => setShowPagamento(false)}

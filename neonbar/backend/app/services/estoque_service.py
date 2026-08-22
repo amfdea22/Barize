@@ -155,6 +155,7 @@ class EstoqueService:
         itens_validados = []
         valor_total = 0.0
         detalhes = []
+        avisos = []  # Produtos sem receita (ficha técnica)
 
         for item in itens:
             produto_id = item.get("produto_id")
@@ -167,20 +168,24 @@ class EstoqueService:
                 return False, f"Produto ID {produto_id} não encontrado", None
 
             receitas = db.query(Receita).filter(Receita.produto_id == produto_id).all()
-            if not receitas:
-                return False, f"Produto '{produto.nome}' não possui receita cadastrada", None
-
-            for r in receitas:
-                insumo = db.query(Insumo).filter(Insumo.id == r.insumo_id).first()
-                if not insumo:
-                    return False, f"Insumo ID {r.insumo_id} não encontrado", None
-                consumo = r.quantidade_necessaria * quantidade
-                if insumo.estoque_atual < consumo:
-                    return False, (
-                        f"Estoque insuficiente de '{insumo.nome}' para '{produto.nome}': "
-                        f"tem {insumo.estoque_atual:.2f} {insumo.unidade_medida}, "
-                        f"precisa de {consumo:.2f}"
-                    ), None
+            
+            if receitas:
+                for r in receitas:
+                    insumo = db.query(Insumo).filter(Insumo.id == r.insumo_id).first()
+                    if not insumo:
+                        return False, f"Insumo ID {r.insumo_id} não encontrado", None
+                    consumo = r.quantidade_necessaria * quantidade
+                    if insumo.estoque_atual < consumo:
+                        return False, (
+                            f"Estoque insuficiente de '{insumo.nome}' para '{produto.nome}': "
+                            f"tem {insumo.estoque_atual:.2f} {insumo.unidade_medida}, "
+                            f"precisa de {consumo:.2f}"
+                        ), None
+            else:
+                avisos.append(
+                    f"Produto '{produto.nome}' não possui ficha técnica (receita) cadastrada — "
+                    f"estoque não será baixado automaticamente"
+                )
 
             itens_validados.append((produto, quantidade, receitas))
             valor_total += produto.preco_venda * quantidade
@@ -194,6 +199,8 @@ class EstoqueService:
         # ─── 2. EFETIVAÇÃO (tudo numa transação) ───
         movimentacoes_ids = []
         for produto, quantidade, receitas in itens_validados:
+            if not receitas:
+                continue
             for i, r in enumerate(receitas):
                 insumo = db.query(Insumo).filter(Insumo.id == r.insumo_id).first()
                 consumo = r.quantidade_necessaria * quantidade
@@ -230,6 +237,7 @@ class EstoqueService:
             "valor_total": round(valor_total, 2),
             "movimentacoes": len(movimentacoes_ids),
             "movimentacoes_ids": movimentacoes_ids,
+            "avisos": avisos,
         }
 
     @staticmethod

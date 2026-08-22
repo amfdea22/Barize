@@ -30,7 +30,8 @@ class PedidoUpdate(BaseModel):
 
 
 class PedidoUpdateStatus(BaseModel):
-    status: str  # Novo | Preparando | Pronto | Entregue
+    status: str  # Novo | Preparando | Pronto | Entregue | Cancelado
+    motivo: Optional[str] = None  # Obrigatório para cancelamento de pedidos Preparando/Pronto
 
 
 class PedidoResponse(BaseModel):
@@ -41,6 +42,7 @@ class PedidoResponse(BaseModel):
     itens: list
     total: float
     observacao: Optional[str] = None
+    tipo_pedido: Optional[str] = "consumo"
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     iniciado_em: Optional[datetime] = None

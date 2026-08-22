@@ -1,0 +1,81 @@
+{
+  "id": "TC-076",
+  "title": "Opções de pagamento: % garçom, Couver e desconto",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-076",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T01:05:00.000Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-076",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T01:10:00.000Z",
+      "actor": "build",
+      "reason": "Análise completa"
+    },
+    {
+      "taskId": "TC-076",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-22T01:15:00.000Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-076",
+      "taskType": "card",
+      "from": "executing",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-22T01:45:00.000Z",
+      "actor": "user",
+      "reason": "Implementação concluída"
+    }
+  ],
+  "createdAt": "2026-08-22T01:00:00.000Z",
+  "updatedAt": "2026-08-22T01:45:00.000Z",
+  "completedAt": "2026-08-22T01:45:00.000Z",
+  "path": ".opencode/taskcards/TC-076.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar no modal/painel de pagamento do PDV opções para: 1) Definir percentual do garçom (gorjeta), 2) Definir valor do Couver (taxa de couvert artístico), 3) Definir desconto (valor fixo ou percentual). Esses valores devem ser somados/subtraídos no total da conta antes do fechamento.",
+  "acceptanceCriteria": [
+    "GARÇOM 1 — Campo/input para definir percentual de gorjeta do garçom (ex: 10%)",
+    "GARÇOM 2 — Valor da gorjeta é calculado sobre o subtotal e exibido no resumo",
+    "COUVER 1 — Campo/input para definir valor fixo do Couver (ex: R$ 25,00)",
+    "COUVER 2 — Valor do Couver é somado ao total da conta",
+    "DESCONTO 1 — Campo para definir desconto (percentual OU valor fixo — toggle entre os dois)",
+    "DESCONTO 2 — Desconto é subtraído do total da conta",
+    "RESUMO 3 — Resumo do pagamento mostra: Subtotal + Couver + Gorjeta - Desconto = Total",
+    "VALIDAÇÃO 4 — Valores são preservados ao fechar/reabrir o modal de pagamento",
+    "VALIDAÇÃO 5 — Total é recalculado automaticamente ao alterar qualquer campo"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/PDV.tsx",
+    "neonbar/frontend/src/components/pdv/PainelPagamento.tsx",
+    "neonbar/backend/app/routers/pdv.py"
+  ],
+  "tests": [
+    "Input de % garçom calcula valor corretamente sobre o subtotal",
+    "Input de Couver soma ao total",
+    "Toggle desconto % / R$ funciona",
+    "Desconto subtrai do total corretamente",
+    "Resumo mostra a composição: Subtotal + Couver + Gorjeta - Desconto = Total",
+    "Valores persistem no estado do PDV",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Backend: schema FinalizarComandaRequest atualizado com desconto_fixo, gorjeta_percentual, couver_valor. Cálculo: valor_bruto + couver + gorjeta - desconto + taxa."
+}

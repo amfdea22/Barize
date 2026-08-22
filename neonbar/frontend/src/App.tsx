@@ -20,6 +20,7 @@ const CardapioDigital = lazy(() => import('./pages/CardapioDigital'));
 const Precificacao = lazy(() => import('./pages/Precificacao'));
 const AnaliseEstoque = lazy(() => import('./pages/AnaliseEstoque'));
 const DRE = lazy(() => import('./pages/DRE'));
+const Sala = lazy(() => import('./pages/Sala'));
 const Fornecedores = lazy(() => import('./pages/Fornecedores'));
 const POPs = lazy(() => import('./pages/POPs'));
 
@@ -73,6 +74,7 @@ export default function App() {
               <Route path="/analise-estoque" element={<AnaliseEstoque />} />
               <Route path="/dre" element={<DRE />} />
               <Route path="/fornecedores" element={<Fornecedores />} />
+              <Route path="/sala" element={<Sala />} />
               <Route path="/admin" element={<Admin />} />
             </Route>
           </Route>

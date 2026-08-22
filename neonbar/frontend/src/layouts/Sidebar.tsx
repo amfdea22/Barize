@@ -20,6 +20,7 @@ import {
   ChevronLeft,
   ChevronRight,
   BarChart3,
+  Store,
   Truck,
   ClipboardList,
   Calculator,
@@ -37,7 +38,8 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Painel' },
+  { to: '/', icon: LayoutDashboard, label: 'Pedido' },
+  { to: '/sala', icon: Store, label: 'Salão' },
   { to: '/pdv', icon: ShoppingCart, label: 'PDV' },
   { to: '/comandas', icon: FileText, label: 'Comandas' },
   { to: '/fichas-tecnicas', icon: BookOpen, label: 'Ficha Técnica' },

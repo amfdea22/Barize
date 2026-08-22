@@ -46,6 +46,13 @@ class Movimentacao(Base):
         ForeignKey("usuarios.id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Vincula movimentação de VENDA a um Pedido (para estorno no cancelamento)
+    pedido_id = Column(
+        Integer,
+        ForeignKey("pedidos.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
     data = Column(DateTime, server_default=func.now(), nullable=False, index=True)
 
     # Relationships

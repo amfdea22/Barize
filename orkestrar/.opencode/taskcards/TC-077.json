@@ -1,0 +1,77 @@
+{
+  "id": "TC-077",
+  "title": "Opção de dividir conta no pagamento",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-077",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T02:05:00.000Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-077",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T02:10:00.000Z",
+      "actor": "build",
+      "reason": "Análise completa"
+    },
+    {
+      "taskId": "TC-077",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-22T02:12:00.000Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-077",
+      "taskType": "card",
+      "from": "executing",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-22T02:25:00.000Z",
+      "actor": "user",
+      "reason": "Implementação concluída"
+    }
+  ],
+  "createdAt": "2026-08-22T02:00:00.000Z",
+  "updatedAt": "2026-08-22T02:25:00.000Z",
+  "completedAt": "2026-08-22T02:25:00.000Z",
+  "path": ".opencode/taskcards/TC-077.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar opção de dividir conta no painel de pagamento do PDV. O usuário define em quantas partes a conta será dividida, e o sistema calcula o valor por pessoa. Possibilitar também divisão customizada (valor manual por pessoa).",
+  "acceptanceCriteria": [
+    "DIVISÃO 1 — Botão/toggle 'Dividir Conta' no painel de pagamento (PainelPagamento.tsx)",
+    "DIVISÃO 2 — Input numérico para definir quantidade de pessoas (2-20)",
+    "DIVISÃO 3 — Cálculo automático: Total / N pessoas = valor por pessoa",
+    "DIVISÃO 4 — Exibição do valor por pessoa ao lado da quantidade",
+    "CUSTOM 5 — Opção de divisão customizada: input de valor manual por pessoa (permite valores diferentes)",
+    "RESUMO 6 — Resumo mostra: 'Dividido em X pessoas — R$ YY,YY por pessoa'",
+    "VALIDAÇÃO 7 — Divisão desativada por padrão (conta inteira é o padrão)",
+    "VALIDAÇÃO 8 — Ao desativar divisão, volta para conta inteira sem resíduo"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/components/pdv/PainelPagamento.tsx"
+  ],
+  "tests": [
+    "Toggle 'Dividir Conta' ativa/desativa a divisão",
+    "Input de quantidade (2-20) calcula valor/pessoa corretamente",
+    "Divisão customizada permite valor manual por pessoa",
+    "Resumo mostra valor por pessoa na divisão",
+    "Desativar divisão volta ao estado normal",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Implementado 100% no PainelPagamento.tsx — sem mudanças no backend ou PDV.tsx. Divisão é apenas informativa (visual para o cliente)."
+}

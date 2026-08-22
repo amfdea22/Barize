@@ -1,5 +1,5 @@
 {
-  "nextId": 75,
+  "nextId": 79,
   "cards": {
     "TC-002": {
       "id": "TC-002",
@@ -5001,6 +5001,55 @@
       "updatedAt": "2026-08-20T17:07:56.479Z",
       "path": ".opencode/taskcards/TC-074.json",
       "taskType": "card"
+    },
+    "TC-075": {
+      "id": "TC-075",
+      "title": "Mudar cor do card da mesa/balcão quando selecionado no Salão",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-22T00:15:00.000Z",
+      "updatedAt": "2026-08-22T00:15:00.000Z",
+      "path": ".opencode/taskcards/TC-075.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-076": {
+      "id": "TC-076",
+      "title": "Opções de pagamento: % garçom, Couver e desconto",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-08-22T01:00:00.000Z",
+      "updatedAt": "2026-08-22T01:45:00.000Z",
+      "completedAt": "2026-08-22T01:45:00.000Z",
+      "path": ".opencode/taskcards/TC-076.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-077": {
+      "id": "TC-077",
+      "title": "Opção de dividir conta no pagamento",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-08-22T02:00:00.000Z",
+      "updatedAt": "2026-08-22T02:25:00.000Z",
+      "completedAt": "2026-08-22T02:25:00.000Z",
+      "path": ".opencode/taskcards/TC-077.json",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-078": {
+      "id": "TC-078",
+      "title": "Botões de tipo de pedido: Consumo, Delivery, Levar, Retirada",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-08-22T03:00:00.000Z",
+      "updatedAt": "2026-08-22T03:40:00.000Z",
+      "completedAt": "2026-08-22T03:40:00.000Z",
+      "path": ".opencode/taskcards/TC-078.json",
+      "createdBy": "user",
+      "agent": "build"
     }
   }
 }

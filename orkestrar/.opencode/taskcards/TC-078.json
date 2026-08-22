@@ -1,0 +1,80 @@
+{
+  "id": "TC-078",
+  "title": "Botões de tipo de pedido: Consumo, Delivery, Levar, Retirada",
+  "status": "completed",
+  "statusHistory": [
+    {
+      "taskId": "TC-078",
+      "taskType": "card",
+      "from": "backlog",
+      "to": "analyzing",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T03:05:00.000Z",
+      "actor": "build",
+      "reason": "Início da análise do card"
+    },
+    {
+      "taskId": "TC-078",
+      "taskType": "card",
+      "from": "analyzing",
+      "to": "ready",
+      "trigger": "agent",
+      "timestamp": "2026-08-22T03:10:00.000Z",
+      "actor": "build",
+      "reason": "Análise completa"
+    },
+    {
+      "taskId": "TC-078",
+      "taskType": "card",
+      "from": "ready",
+      "to": "executing",
+      "trigger": "user",
+      "timestamp": "2026-08-22T03:12:00.000Z",
+      "actor": "user",
+      "reason": "Aprovado pelo usuário"
+    },
+    {
+      "taskId": "TC-078",
+      "taskType": "card",
+      "from": "executing",
+      "to": "completed",
+      "trigger": "user",
+      "timestamp": "2026-08-22T03:40:00.000Z",
+      "actor": "user",
+      "reason": "Implementação concluída"
+    }
+  ],
+  "createdAt": "2026-08-22T03:00:00.000Z",
+  "updatedAt": "2026-08-22T03:40:00.000Z",
+  "completedAt": "2026-08-22T03:40:00.000Z",
+  "path": ".opencode/taskcards/TC-078.json",
+  "taskType": "card",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Adicionar 4 botões no modal Novo Pedido do PDV para classificar o tipo de pedido: Consumo (local), Delivery (entrega externa), Levar (retirada pelo cliente), Retirada (buscar em ponto). Essa classificação define o comportamento do pedido (impressão, fluxo KDS, etc).",
+  "acceptanceCriteria": [
+    "BOTÕES 1 — 4 botões/toggle no modal Novo Pedido do PDV: Consumo, Delivery, Levar, Retirada",
+    "DEFAULT 2 — 'Consumo' selecionado por padrão",
+    "ESTADO 3 — Valor do tipo selecionado é salvo no estado do PDV e enviado ao backend",
+    "VISUAL 4 — Botão selecionado com cor de destaque, demais neutros",
+    "BACKEND 5 — Campo 'tipo_pedido' aceito no FinalizarComandaRequest (ou extensão do Pedido)",
+    "KDS 6 — Tipo do pedido visível na comanda de produção (KDS/Comandas)"
+  ],
+  "filesInvolved": [
+    "neonbar/frontend/src/pages/PDV.tsx",
+    "neonbar/backend/app/routers/pdv.py",
+    "neonbar/backend/app/models/pedido.py",
+    "neonbar/backend/app/schemas/pedido.py",
+    "neonbar/backend/alembic/versions/0019_add_tipo_pedido.py"
+  ],
+  "tests": [
+    "4 botões renderizados no modal Novo Pedido",
+    "Consumo selecionado por padrão",
+    "Selecionar outro tipo muda o estado",
+    "Tipo é enviado no payload de finalização",
+    "Backend persiste tipo_pedido",
+    "KDS exibe tipo do pedido na comanda",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Migration criada (0019) e aplicada ao SQLite. Coluna tipo_pedido com default 'consumo'. Regex validation no backend: consumo|delivery|levar|retirada."
+}

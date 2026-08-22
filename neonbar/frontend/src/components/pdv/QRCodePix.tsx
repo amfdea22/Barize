@@ -15,7 +15,7 @@ function crc16(payload: string): string {
 }
 
 function tlv(id: string, valor: string): string {
-  const len = Buffer.byteLength(valor, 'latin1');
+  const len = valor.length;
   return `${id}${len.toString().padStart(2, '0')}${valor}`;
 }
 
