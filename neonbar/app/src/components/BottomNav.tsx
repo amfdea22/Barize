@@ -14,6 +14,7 @@ import {
   ClipboardList,
   Calculator,
   BarChart3,
+  Utensils,
 } from 'lucide-react';
 
 const mainTabs = [
@@ -61,6 +62,7 @@ export default function BottomNav() {
 export const moreMenuItems = [
   { to: '/sala', icon: Store, label: 'Salão', desc: 'Mesas e atendimento' },
   { to: '/fila-preparo', icon: CookingPot, label: 'Fila de Preparo', desc: 'Cozinha e bar' },
+  { to: '/cardapio', icon: Utensils, label: 'Cardápio Digital', desc: 'Visualizar cardápio' },
   { to: '/fichas-tecnicas', icon: BookOpen, label: 'Ficha Técnica', desc: 'Receitas e insumos' },
   { to: '/precificacao', icon: TrendingUp, label: 'Precificação', desc: 'Margens e preços' },
   { to: '/etiquetas', icon: Tag, label: 'Etiquetas', desc: 'Impressão de etiquetas' },
