@@ -1,4 +1,4 @@
-﻿import { lazy, Suspense } from 'react';
+﻿import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import BottomNav from './components/BottomNav';
 import ToastContainer from './components/Toast';
@@ -48,6 +48,16 @@ function RequireAuth() {
   return <Outlet />;
 }
 
+/** Aplica tema salvo no localStorage ao carregar */
+function ThemeInit() {
+  useEffect(() => {
+    const stored = localStorage.getItem('barize-theme');
+    const theme = stored === 'light' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  }, []);
+  return null;
+}
+
 /** Layout com BottomNav para todas as páginas internas */
 function AppLayout() {
   return (
@@ -63,6 +73,7 @@ function AppLayout() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ThemeInit />
       <ToastContainer />
       <Suspense fallback={<PageLoader />}>
         <Routes>
