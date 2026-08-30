@@ -13,7 +13,7 @@ import io
 from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -51,64 +51,69 @@ def cmv_por_produto(
     """
     verificar_role(current_user, ["admin", "gerente"])
 
-    _, _, di, df = _periodo(data_inicio, data_fim, dias)
+    try:
+        _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
-    sql = """
-        SELECT
-            p.id,
-            p.nome,
-            p.categoria,
-            p.preco_venda,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita,
-            COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo
-        FROM movimentacoes m
-        JOIN produtos p ON p.id = m.produto_id
-        WHERE m.tipo = 'VENDA'
-          AND m.produto_id IS NOT NULL
-          AND m.data >= :di AND m.data <= :df
-        GROUP BY p.id, p.nome, p.categoria, p.preco_venda
-    """
-    ordenacoes = {
-        "receita": "receita DESC",
-        "custo": "custo DESC",
-        "margem": "margem_bruta DESC",
-        "cmv": "cmv_pct DESC",
-        "nome": "p.nome ASC",
-    }
-    order = ordenacoes.get(order_by, "receita DESC")
+        sql = """
+            SELECT
+                p.id,
+                p.nome,
+                p.categoria,
+                p.preco_venda,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita,
+                COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo
+            FROM movimentacoes m
+            JOIN produtos p ON p.id = m.produto_id
+            WHERE m.tipo = 'VENDA'
+              AND m.produto_id IS NOT NULL
+              AND m.data >= :di AND m.data <= :df
+            GROUP BY p.id, p.nome, p.categoria, p.preco_venda
+        """
+        ordenacoes = {
+            "receita": "receita DESC",
+            "custo": "custo DESC",
+            "margem": "margem_bruta DESC",
+            "cmv": "cmv_pct DESC",
+            "nome": "p.nome ASC",
+        }
+        order = ordenacoes.get(order_by, "receita DESC")
 
-    rows = db.execute(
-        text(sql + f" ORDER BY {order}"), {"di": di, "df": df}
-    ).fetchall()
+        rows = db.execute(
+            text(sql + f" ORDER BY {order}"), {"di": di, "df": df}
+        ).fetchall()
 
-    itens = []
-    for r in rows:
-        margem_bruta = r.receita - r.custo
-        cmv_pct = (r.custo / r.receita * 100) if r.receita > 0 else 0
-        margem_pct = (margem_bruta / r.receita * 100) if r.receita > 0 else 0
-        itens.append({
-            "produto_id": r.id,
-            "nome": r.nome,
-            "categoria": r.categoria,
-            "preco_venda": round(r.preco_venda, 2),
-            "quantidade_vendida": round(r.quantidade, 2),
-            "receita": round(r.receita, 2),
-            "custo": round(r.custo, 2),
-            "margem_bruta": round(margem_bruta, 2),
-            "margem_pct": round(margem_pct, 2),
-            "cmv_pct": round(cmv_pct, 2),
-        })
+        itens = []
+        for r in rows:
+            margem_bruta = r.receita - r.custo
+            cmv_pct = (r.custo / r.receita * 100) if r.receita > 0 else 0
+            margem_pct = (margem_bruta / r.receita * 100) if r.receita > 0 else 0
+            itens.append({
+                "produto_id": r.id,
+                "nome": r.nome,
+                "categoria": r.categoria,
+                "preco_venda": round(r.preco_venda, 2),
+                "quantidade_vendida": round(r.quantidade, 2),
+                "receita": round(r.receita, 2),
+                "custo": round(r.custo, 2),
+                "margem_bruta": round(margem_bruta, 2),
+                "margem_pct": round(margem_pct, 2),
+                "cmv_pct": round(cmv_pct, 2),
+            })
 
-    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
-    return {
-        "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
-        "data_fim": data_fim_final.isoformat() if data_fim_final else None,
-        "total_receita": round(sum(i["receita"] for i in itens), 2),
-        "total_custo": round(sum(i["custo"] for i in itens), 2),
-        "total_margem": round(sum(i["margem_bruta"] for i in itens), 2),
-        "produtos": itens,
-    }
+        data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
+        return {
+            "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
+            "data_fim": data_fim_final.isoformat() if data_fim_final else None,
+            "total_receita": round(sum(i["receita"] for i in itens), 2),
+            "total_custo": round(sum(i["custo"] for i in itens), 2),
+            "total_margem": round(sum(i["margem_bruta"] for i in itens), 2),
+            "produtos": itens,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao calcular CMV: {str(e)}")
 
 
 # ─── CMV por categoria ───────────────────────────────────────────────────────
@@ -123,43 +128,48 @@ def cmv_por_categoria(
     """CMV e margem agregados por categoria de produto no período."""
     verificar_role(current_user, ["admin", "gerente"])
 
-    _, _, di, df = _periodo(data_inicio, data_fim, dias)
+    try:
+        _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
-    sql = """
-        SELECT
-            COALESCE(p.categoria, 'Sem categoria') AS categoria,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita,
-            COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade
-        FROM movimentacoes m
-        JOIN produtos p ON p.id = m.produto_id
-        WHERE m.tipo = 'VENDA'
-          AND m.produto_id IS NOT NULL
-          AND m.data >= :di AND m.data <= :df
-        GROUP BY COALESCE(p.categoria, 'Sem categoria')
-        ORDER BY receita DESC
-    """
-    rows = db.execute(text(sql), {"di": di, "df": df}).fetchall()
+        sql = """
+            SELECT
+                COALESCE(p.categoria, 'Sem categoria') AS categoria,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita,
+                COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade
+            FROM movimentacoes m
+            JOIN produtos p ON p.id = m.produto_id
+            WHERE m.tipo = 'VENDA'
+              AND m.produto_id IS NOT NULL
+              AND m.data >= :di AND m.data <= :df
+            GROUP BY COALESCE(p.categoria, 'Sem categoria')
+            ORDER BY receita DESC
+        """
+        rows = db.execute(text(sql), {"di": di, "df": df}).fetchall()
 
-    categorias = []
-    for r in rows:
-        margem_bruta = r.receita - r.custo
-        cmv_pct = (r.custo / r.receita * 100) if r.receita > 0 else 0
-        categorias.append({
-            "categoria": r.categoria,
-            "receita": round(r.receita, 2),
-            "custo": round(r.custo, 2),
-            "quantidade_vendida": round(r.quantidade, 2),
-            "margem_bruta": round(margem_bruta, 2),
-            "cmv_pct": round(cmv_pct, 2),
-        })
+        categorias = []
+        for r in rows:
+            margem_bruta = r.receita - r.custo
+            cmv_pct = (r.custo / r.receita * 100) if r.receita > 0 else 0
+            categorias.append({
+                "categoria": r.categoria,
+                "receita": round(r.receita, 2),
+                "custo": round(r.custo, 2),
+                "quantidade_vendida": round(r.quantidade, 2),
+                "margem_bruta": round(margem_bruta, 2),
+                "cmv_pct": round(cmv_pct, 2),
+            })
 
-    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
-    return {
-        "data_inicio": data_inicio_final.isoformat(),
-        "data_fim": data_fim_final.isoformat(),
-        "categorias": categorias,
-    }
+        data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
+        return {
+            "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
+            "data_fim": data_fim_final.isoformat() if data_fim_final else None,
+            "categorias": categorias,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao calcular CMV por categoria: {str(e)}")
 
 
 # ─── Consumo / custo de insumos no período ───────────────────────────────────
@@ -174,42 +184,47 @@ def consumo_insumos(
     """Consumo de insumos no período: quantidade consumida e custo consumido (somente VENDA)."""
     verificar_role(current_user, ["admin", "gerente"])
 
-    _, _, di, df = _periodo(data_inicio, data_fim, dias)
+    try:
+        _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
-    sql = """
-        SELECT
-            i.id,
-            i.nome,
-            i.categoria,
-            i.unidade_medida,
-            COALESCE(SUM(ABS(m.quantidade)), 0) AS quantidade,
-            COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo
-        FROM movimentacoes m
-        JOIN insumos i ON i.id = m.insumo_id
-        WHERE m.tipo = 'VENDA'
-          AND m.data >= :di AND m.data <= :df
-        GROUP BY i.id, i.nome, i.categoria, i.unidade_medida
-        ORDER BY custo DESC
-    """
-    rows = db.execute(text(sql), {"di": di, "df": df}).fetchall()
+        sql = """
+            SELECT
+                i.id,
+                i.nome,
+                i.categoria,
+                i.unidade_medida,
+                COALESCE(SUM(ABS(m.quantidade)), 0) AS quantidade,
+                COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo
+            FROM movimentacoes m
+            JOIN insumos i ON i.id = m.insumo_id
+            WHERE m.tipo = 'VENDA'
+              AND m.data >= :di AND m.data <= :df
+            GROUP BY i.id, i.nome, i.categoria, i.unidade_medida
+            ORDER BY custo DESC
+        """
+        rows = db.execute(text(sql), {"di": di, "df": df}).fetchall()
 
-    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
-    return {
-        "data_inicio": data_inicio_final.isoformat(),
-        "data_fim": data_fim_final.isoformat(),
-        "total_custo": round(sum(r.custo for r in rows), 2),
-        "insumos": [
-            {
-                "insumo_id": r.id,
-                "nome": r.nome,
-                "categoria": r.categoria,
-                "unidade_medida": r.unidade_medida,
-                "quantidade_consumida": round(r.quantidade, 2),
-                "custo_consumido": round(r.custo, 2),
-            }
-            for r in rows
-        ],
-    }
+        data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
+        return {
+            "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
+            "data_fim": data_fim_final.isoformat() if data_fim_final else None,
+            "total_custo": round(sum(r.custo for r in rows), 2),
+            "insumos": [
+                {
+                    "insumo_id": r.id,
+                    "nome": r.nome,
+                    "categoria": r.categoria,
+                    "unidade_medida": r.unidade_medida,
+                    "quantidade_consumida": round(r.quantidade, 2),
+                    "custo_consumido": round(r.custo, 2),
+                }
+                for r in rows
+            ],
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao calcular consumo de insumos: {str(e)}")
 
 
 # ─── Produtos que consomem um insumo ─────────────────────────────────────────
@@ -225,49 +240,54 @@ def produtos_por_insumo(
     """Quais produtos consomem o insumo X no período (quantidade e custo)."""
     verificar_role(current_user, ["admin", "gerente"])
 
-    _, _, di, df = _periodo(data_inicio, data_fim, dias)
+    try:
+        _, _, di, df = _periodo(data_inicio, data_fim, dias)
 
-    sql = """
-        SELECT
-            p.id,
-            p.nome,
-            p.categoria,
-            p.preco_venda,
-            COALESCE(SUM(ABS(m.quantidade)), 0) AS quantidade_insumo,
-            COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade_produto,
-            COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita
-        FROM movimentacoes m
-        JOIN produtos p ON p.id = m.produto_id
-        WHERE m.tipo = 'VENDA'
-          AND m.insumo_id = :insumo_id
-          AND m.produto_id IS NOT NULL
-          AND m.data >= :di AND m.data <= :df
-        GROUP BY p.id, p.nome, p.categoria, p.preco_venda
-        ORDER BY quantidade_insumo DESC
-    """
-    rows = db.execute(
-        text(sql), {"insumo_id": insumo_id, "di": di, "df": df}
-    ).fetchall()
+        sql = """
+            SELECT
+                p.id,
+                p.nome,
+                p.categoria,
+                p.preco_venda,
+                COALESCE(SUM(ABS(m.quantidade)), 0) AS quantidade_insumo,
+                COALESCE(SUM(ABS(m.quantidade) * m.custo_no_momento), 0) AS custo,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN m.quantidade_produto END), 0) AS quantidade_produto,
+                COALESCE(SUM(CASE WHEN m.quantidade_produto IS NOT NULL THEN p.preco_venda * m.quantidade_produto END), 0) AS receita
+            FROM movimentacoes m
+            JOIN produtos p ON p.id = m.produto_id
+            WHERE m.tipo = 'VENDA'
+              AND m.insumo_id = :insumo_id
+              AND m.produto_id IS NOT NULL
+              AND m.data >= :di AND m.data <= :df
+            GROUP BY p.id, p.nome, p.categoria, p.preco_venda
+            ORDER BY quantidade_insumo DESC
+        """
+        rows = db.execute(
+            text(sql), {"insumo_id": insumo_id, "di": di, "df": df}
+        ).fetchall()
 
-    data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
-    return {
-        "insumo_id": insumo_id,
-        "data_inicio": data_inicio_final.isoformat(),
-        "data_fim": data_fim_final.isoformat(),
-        "produtos": [
-            {
-                "produto_id": r.id,
-                "nome": r.nome,
-                "categoria": r.categoria,
-                "quantidade_insumo": round(r.quantidade_insumo, 2),
-                "custo_insumo": round(r.custo, 2),
-                "quantidade_produto": round(r.quantidade_produto, 2),
-                "receita": round(r.receita, 2),
-            }
-            for r in rows
-        ],
-    }
+        data_inicio_final, data_fim_final, _, _ = _periodo(data_inicio, data_fim, dias)
+        return {
+            "insumo_id": insumo_id,
+            "data_inicio": data_inicio_final.isoformat() if data_inicio_final else None,
+            "data_fim": data_fim_final.isoformat() if data_fim_final else None,
+            "produtos": [
+                {
+                    "produto_id": r.id,
+                    "nome": r.nome,
+                    "categoria": r.categoria,
+                    "quantidade_insumo": round(r.quantidade_insumo, 2),
+                    "custo_insumo": round(r.custo, 2),
+                    "quantidade_produto": round(r.quantidade_produto, 2),
+                    "receita": round(r.receita, 2),
+                }
+                for r in rows
+            ],
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao buscar produtos por insumo: {str(e)}")
 
 
 # ─── Exportação CSV ──────────────────────────────────────────────────────────
