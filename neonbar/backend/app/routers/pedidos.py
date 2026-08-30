@@ -22,10 +22,10 @@ def listar_pedidos_ativos(
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Retorna todos os pedidos com status Novo ou Preparando."""
+    """Retorna todos os pedidos ativos (Novo, Preparando, Pronto, Entregue — mesa so libera apos pagamento)."""
     pedidos = (
         db.query(Pedido)
-        .filter(Pedido.status.in_(["Novo", "Preparando"]))
+        .filter(Pedido.status.in_(["Novo", "Preparando", "Pronto", "Entregue"]))
         .order_by(Pedido.created_at.desc())
         .all()
     )
@@ -86,7 +86,7 @@ def atualizar_status_pedido(
     db: Session = Depends(get_db),
 ):
     """Atualiza o status de um pedido (ex: Novo → Preparando → Pronto)."""
-    valid_status = ["Novo", "Preparando", "Pronto", "Entregue", "Cancelado"]
+    valid_status = ["Novo", "Preparando", "Pronto", "Entregue", "Cancelado", "Arquivado"]
     if data.status not in valid_status:
         raise HTTPException(
             status_code=400,

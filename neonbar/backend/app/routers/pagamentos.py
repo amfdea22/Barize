@@ -47,6 +47,11 @@ def criar_pagamento(
         venda_id=data.venda_id,
         forma_pagamento=data.forma_pagamento,
         valor=data.valor,
+        valor_servico_pago=data.valor_servico_pago,
+        valor_couvert_pago=data.valor_couvert_pago,
+        isencao_servico=data.isencao_servico,
+        isencao_couvert=data.isencao_couvert,
+        motivo_isencao=data.motivo_isencao,
     )
     db.add(pagamento)
     db.commit()

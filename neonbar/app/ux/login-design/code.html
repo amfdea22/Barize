@@ -1,0 +1,201 @@
+<!DOCTYPE html><html class="dark" lang="pt-BR" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Barize - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e9ddff",
+                        "inverse-primary": "#006875",
+                        "surface-container": "#201f1f",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed-variant": "#5700c9",
+                        "surface": "#131313",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#001f24",
+                        "on-error": "#690005",
+                        "on-primary-fixed-variant": "#004f58",
+                        "error-container": "#93000a",
+                        "on-primary": "#00363d",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary": "#452b00",
+                        "secondary": "#ffcf8f",
+                        "secondary-fixed-dim": "#ffb950",
+                        "tertiary-container": "#d9c8ff",
+                        "on-secondary-fixed-variant": "#624000",
+                        "on-secondary-fixed": "#291800",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#00daf3",
+                        "on-primary-container": "#00626e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary": "#3c0090",
+                        "secondary-container": "#feaa00",
+                        "primary-fixed": "#9cf0ff",
+                        "inverse-on-surface": "#313030",
+                        "outline-variant": "#3b494c",
+                        "outline": "#849396",
+                        "tertiary-fixed-dim": "#d1bcff",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "on-tertiary-container": "#6c00f7",
+                        "primary": "#c3f5ff",
+                        "surface-container-highest": "#353534",
+                        "primary-container": "#00e5ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-variant": "#353534",
+                        "surface-bright": "#393939",
+                        "surface-tint": "#00daf3",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#bac9cc",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-container": "#684300",
+                        "on-tertiary-fixed": "#23005b",
+                        "tertiary": "#f2e9ff",
+                        "secondary-fixed": "#ffddb3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "touch-target": "48px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "xl": "40px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "data-display": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "data-display": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+        .neon-glow:focus-within {
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+            border-color: #00e5ff;
+        }
+        .bg-mixology-pattern {
+            background-image: radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.05), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(255, 207, 143, 0.03), transparent 25%);
+        }
+        /* Custom input autofill override for dark theme */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #1c1b1b inset !important;
+            -webkit-text-fill-color: #e5e2e1 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen font-body-md antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container" style="background-color: rgb(0, 0, 0);">
+
+<div class="relative z-10 min-h-screen flex flex-col justify-center items-center p-lg md:p-xl w-full max-w-md mx-auto">
+<header class="w-full flex flex-col items-center mb-xl">
+<div class="w-48 h-auto mb-md flex items-center justify-center">
+<img alt="Barize Logo" class="w-full h-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wju_En_SfnWlvcQQortDTno-uNshRVKtqlIv4eDeW2osNEcYvO1rElKWUtxnRpm-lnrANyjGZc3RmgR6k3ji-47_Wd0lDx7xwhtnZjT-LL-zkDfI5ZSVlI9u65YsQN2y0Tg8_tecS6ZhcSxlHvusThrvYr3XqrCAbD2JsH8BhnAXiBuMqQBf7K_PzqdaRueJvsTmlvmimaR1QUXiMd1-gU1sSidYo8UhtW72Pk4Io055wHZHmVzusfMx4">
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface text-center mt-sm">Bem-vindo ao Barize</h1>
+<p class="font-body-md text-body-md text-on-surface-variant text-center mt-xs">Gestão de Alta Coquetelaria</p>
+</header>
+<main class="w-full">
+<form action="#" class="space-y-lg flex flex-col w-full" id="loginForm" method="POST">
+<div class="flex flex-col space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase ml-xs" for="username">E-mail ou Usuário</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary-container transition-colors">person</span>
+<input autocomplete="username" class="w-full h-touch-target bg-surface-container-low border border-outline-variant rounded-lg pl-[48px] pr-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-0 focus:border-b-2 focus:border-b-primary-container transition-all" id="username" name="username" placeholder="Seu acesso..." required="" type="text">
+</div>
+</div>
+<div class="flex flex-col space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase ml-xs" for="password">Senha</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary-container transition-colors">lock</span>
+<input autocomplete="current-password" class="w-full h-touch-target bg-surface-container-low border border-outline-variant rounded-lg pl-[48px] pr-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-0 focus:border-b-2 focus:border-b-primary-container transition-all" id="password" name="password" placeholder="••••••••" required="" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex justify-between items-center w-full mt-sm">
+<a class="font-body-md text-body-md text-primary-container hover:text-primary transition-colors" href="#">Esqueci minha senha</a>
+</div>
+<button class="w-full h-touch-target mt-xl bg-primary-container text-black font-headline-md text-headline-md rounded-lg flex items-center justify-center neon-glow hover:bg-primary transition-all active:scale-[0.98]" type="submit">
+                    Entrar
+                </button>
+</form>
+<div class="mt-xl text-center w-full flex flex-col items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Primeiro turno?</span>
+<a class="font-body-md text-body-md text-primary-container hover:text-primary mt-xs border-b border-transparent hover:border-primary transition-all" href="#">Solicitar acesso</a>
+</div>
+</main>
+<footer class="mt-auto pt-xl w-full text-center">
+<p class="font-label-md text-label-md text-outline-variant">© 2024 Barize. Velocity Dark.</p>
+</footer>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const togglePasswordBtn = document.querySelector('button[aria-label="Toggle password visibility"]');
+            const passwordInput = document.getElementById('password');
+            const icon = togglePasswordBtn.querySelector('.material-symbols-outlined');
+
+            togglePasswordBtn.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.textContent = 'visibility';
+                } else {
+                    passwordInput.type = 'password';
+                    icon.textContent = 'visibility_off';
+                }
+            });
+
+            // Prevent form submit for demo
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span>';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 1500);
+            });
+        });
+    </script>
+
+
+</body></html>

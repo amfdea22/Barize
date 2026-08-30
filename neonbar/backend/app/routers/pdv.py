@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from typing import List, Optional
 from pydantic import BaseModel, Field
 from loguru import logger
+from datetime import datetime, timezone
 
 from ..database import get_db
 from ..models.produto import Produto
@@ -470,8 +471,8 @@ def finalizar_comanda(
     from ..models.pagamento import Pagamento
     from ..models.produto import Produto as ProdutoModel
 
-    # ─── Regra de Negócio: Bloqueio de Fechamento ───────────────────────
-    # Impede fechamento de mesa/comanda se houver pedidos ativos (Novo/Preparando/Pronto)
+    # ─── Regra de Negócio: Entrega automática ao fechar ─────────────────
+    # Ao fechar a mesa, marca pedidos ativos como Entregues (pagamento implica entrega)
     if body.mesa:
         pedidos_ativos = (
             db.query(Pedido)
@@ -479,16 +480,15 @@ def finalizar_comanda(
                 Pedido.mesa == body.mesa,
                 Pedido.status.in_(["Novo", "Preparando", "Pronto"]),
             )
-            .count()
+            .all()
         )
-        if pedidos_ativos > 0:
-            raise HTTPException(
-                status_code=409,
-                detail=(
-                    f"Não é possível fechar a mesa '{body.mesa}': "
-                    f"existem {pedidos_ativos} pedido(s) ativo(s) na cozinha/bar. "
-                    f"Aguarde a finalização de todos os pedidos antes de fechar."
-                ),
+        if pedidos_ativos:
+            agora = datetime.now(timezone.utc).replace(tzinfo=None)
+            for p in pedidos_ativos:
+                p.status = "Entregue"
+                p.updated_at = agora
+            logger.info(
+                f"[PDV] Mesa '{body.mesa}': {len(pedidos_ativos)} pedido(s) marcado(s) como Entregue no fechamento"
             )
 
     itens_dict = [{"produto_id": i.produto_id, "quantidade": i.quantidade} for i in body.itens]
@@ -928,3 +928,47 @@ def cancelar_venda(
         "sucesso": True,
         "mensagem": f"Venda #{mov.id} cancelada. Estoque restaurado.",
     }
+
+
+# ─── Impressão de cupom avulso ────────────────────────────────
+
+class CupomPrintRequest(BaseModel):
+    itens: list = []
+    subtotal: float = 0
+    desconto: float = 0
+    taxa: float = 0
+    valor_final: float = 0
+    forma_pagamento: str = ""
+    mesa: str = ""
+    cliente: str = ""
+    vendedor: str = ""
+    observacao: str = ""
+
+
+@router.post("/imprimir-cupom")
+def imprimir_cupom(
+    body: CupomPrintRequest,
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Enfileira cupom de fechamento na FilaImpressao para impressão via ESC/POS."""
+    fila = FilaImpressao(
+        tipo="FECHAMENTO",
+        status="PENDENTE",
+        dados_json={
+            "mesa": body.mesa,
+            "cliente": body.cliente,
+            "itens": body.itens,
+            "valor_bruto": body.subtotal,
+            "desconto": body.desconto,
+            "taxa": body.taxa,
+            "valor_final": body.valor_final,
+            "forma_pagamento": body.forma_pagamento,
+            "atendente": body.vendedor or current_user.nome,
+        },
+        impressora_destino="CAIXA",
+    )
+    db.add(fila)
+    db.commit()
+    logger.info(f"[PDV] Cupom enfileirado para impressão (setor CAIXA)")
+    return {"sucesso": True, "mensagem": "Cupom enviado para impressão"}
