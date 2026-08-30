@@ -333,12 +333,12 @@ export default function CardapioDigital() {
                         />
                       </div>
 
-                      <div className="p-3 space-y-1">
+                      <div className="p-3 space-y-1.5">
                         <h3 className="text-[13px] font-semibold leading-snug text-[var(--color-on-surface)] break-words">
                           {produto.nome}
                         </h3>
-                        {!basico && produto.descricao && (
-                          <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-tight line-clamp-2">
+                        {produto.descricao && (
+                          <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-relaxed line-clamp-3">
                             {produto.descricao}
                           </p>
                         )}
