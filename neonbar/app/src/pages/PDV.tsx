@@ -138,6 +138,11 @@ export default function PDV() {
         setMesasOcupadas(ocupadas);
       }).catch(() => {}),
     ]).finally(() => setLoading(false));
+
+    const interval = setInterval(() => {
+      carregarProdutos().catch(() => {});
+    }, 30000);
+    return () => clearInterval(interval);
   }, []);
   const isBalcao = (local: string) => {
     const l = (local || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/gu, '');

@@ -87,8 +87,12 @@ export default function Sala() {
   useEffect(() => {
     loadMesas();
     loadOcupadas();
-    const interval = setInterval(loadOcupadas, 30000);
-    return () => clearInterval(interval);
+    const intervalOcupadas = setInterval(loadOcupadas, 30000);
+    const intervalMesas = setInterval(loadMesas, 60000);
+    return () => {
+      clearInterval(intervalOcupadas);
+      clearInterval(intervalMesas);
+    };
   }, []);
 
   const isBalcao = (m: Mesa) => {
