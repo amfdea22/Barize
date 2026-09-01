@@ -164,7 +164,7 @@ app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
 
 # ─── Registro de Rotas ──────────────────────────────────────
-from .routers import auth, pdv, estoque, cmv, caixa, relatorios, admin, pedidos, pagamentos, clientes, funcionarios
+from .routers import auth, pdv, estoque, cmv, caixa, relatorios, admin, pedidos, pagamentos, clientes, funcionarios, impressoras
 from .routers import copos, materiais, copos_quebrados
 from .routers import lotes, recebimentos, contagens, producao
 from .routers import upload, cardapio, produto_lotes, etiquetas, fichas_tecnicas, precificacao, analise_estoque, fornecedores, financeiro_plus, pops, mesas
@@ -200,6 +200,7 @@ app.include_router(financeiro_plus.router, prefix=settings.API_PREFIX)
 app.include_router(pops.router, prefix=settings.API_PREFIX)
 app.include_router(mesas.router, prefix=settings.API_PREFIX)
 app.include_router(relatorios_cmv.router, prefix=settings.API_PREFIX)
+app.include_router(impressoras.router, prefix=settings.API_PREFIX)
 
 
 # ─── Health Check ───────────────────────────────────────────

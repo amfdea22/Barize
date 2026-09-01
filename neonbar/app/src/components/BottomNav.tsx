@@ -18,10 +18,10 @@ import {
 } from 'lucide-react';
 
 const mainTabs = [
-  { to: '/comandas', icon: LayoutDashboard, label: 'Pedidos' },
+  { to: '/', icon: LayoutDashboard, label: 'Início' },
+  { to: '/comandas', icon: ClipboardList, label: 'Pedidos' },
   { to: '/pdv', icon: ShoppingCart, label: 'PDV' },
   { to: '/sala', icon: Store, label: 'Mesas' },
-  { to: '/estoque', icon: Package, label: 'Estoque' },
   { to: '/mais', icon: Settings, label: 'Mais' },
 ];
 
@@ -32,7 +32,9 @@ export default function BottomNav() {
     <nav className="safe-bottom border-t border-[rgba(var(--overlay-rgb),0.1)] bg-[rgba(var(--glass-rgb),0.8)] backdrop-blur-[16px]">
       <div className="flex items-center justify-around px-2 py-1">
         {mainTabs.map((tab) => {
-          const isActive = tab.to === '/comandas'
+          const isActive = tab.to === '/'
+            ? location.pathname === '/' || location.pathname === '/dashboard'
+            : tab.to === '/comandas'
             ? location.pathname === '/comandas' || location.pathname.startsWith('/fila-preparo')
             : tab.to === '/sala'
             ? location.pathname === '/sala'

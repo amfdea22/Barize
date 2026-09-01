@@ -1,0 +1,26 @@
+{
+  "id": "TC-111",
+  "title": "Mudar fundo dos cards do cardápio para cinza",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T01:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Mudar o fundo dos cards de itens do Cardápio Digital para cor cinza.",
+  "acceptanceCriteria": [
+    "CARD 1 — Fundo dos cards de itens com cor cinza (bg-surface-container-high ou similar)",
+    "CARD 2 — Borda mantida com efeito sutil",
+    "CARD 3 — Hover e glassmorphism preservados",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Cards com fundo cinza",
+    "Borda visível",
+    "Hover funcional",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Trocar bg-surface-container por bg-surface-container-high nos cards."
+}

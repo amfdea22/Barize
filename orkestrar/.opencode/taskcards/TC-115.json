@@ -1,0 +1,31 @@
+{
+  "id": "TC-115",
+  "title": "Criar opção de personalizar o cardápio digital no menu",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T04:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Criar opção de personalizar o cardápio digital no menu do app Barize, permitindo ao usuário alterar cores, logo, informações do estabelecimento.",
+  "acceptanceCriteria": [
+    "MENU 1 — Opção 'Personalizar Cardápio' no menu do app",
+    "MENU 2 — Página de personalização com opções: Cores, Logo, Informações",
+    "MENU 3 — Preview em tempo real das alterações",
+    "MENU 4 — Salvar preferências em localStorage",
+    "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/PersonalizarCardapio.tsx",
+    "neonbar/app/src/App.tsx",
+    "neonbar/app/src/pages/Mais.tsx"
+  ],
+  "tests": [
+    "Opção aparece no menu",
+    "Página de personalização carrega",
+    "Alterações de cor refletem no preview",
+    "Logo pode ser alterada",
+    "Preferências são salvas",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Criar página de personalização do cardápio digital com opções de cores, logo e informações."
+}

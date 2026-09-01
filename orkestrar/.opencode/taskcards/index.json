@@ -1,6 +1,369 @@
 {
-  "nextId": 79,
+  "nextId": 118,
   "cards": {
+    "TC-117": {
+      "id": "TC-117",
+      "title": "Inserir ícone de tema no Dashboard",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T05:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Inserir ícone de meia lua no Dashboard para alternar entre aparência clara e escura do app Barize.",
+      "acceptanceCriteria": [
+        "ICON 1 — Ícone de meia lua no header do Dashboard",
+        "ICON 2 — Clique alterna entre tema claro/escuro",
+        "ICON 3 — Ícone muda conforme tema atual (lua/sol)",
+        "ICON 4 — Tema persiste em localStorage",
+        "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Ícone aparece no header",
+        "Clique alterna tema",
+        "Ícone reflete tema atual",
+        "Tema persiste ao recarregar",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Adicionar botão com ícone Moon/Sun no header do Dashboard usando useTheme hook."
+    },
+    "TC-116": {
+      "id": "TC-116",
+      "title": "Criar opção editar cardápio digital no menu personalizar",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T04:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar opção de editar os itens, menu e botões do cardápio digital na página de personalização.",
+      "acceptanceCriteria": [
+        "EDIT 1 — Aba 'Editar Itens' na página de personalização",
+        "EDIT 2 — Lista de itens com opção de editar/excluir",
+        "EDIT 3 — Modal para editar nome, descrição, preço, categoria, imagem",
+        "EDIT 4 — Botão para adicionar novo item",
+        "EDIT 5 — Edição das categorias (Coquetéis, Vinhos, Cervejas, Petiscos)",
+        "EDIT 6 — Salvar alterações em localStorage",
+        "VALIDAÇÃO 7 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PersonalizarCardapio.tsx"
+      ],
+      "tests": [
+        "Aba 'Editar Itens' funciona",
+        "Lista de itens exibida",
+        "Modal de edição abre e salva",
+        "Novo item pode ser adicionado",
+        "Item pode ser excluído",
+        "Categorias editáveis",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Adicionar aba de edição de itens na página de personalização do cardápio."
+    },
+    "TC-115": {
+      "id": "TC-115",
+      "title": "Criar opção de personalizar o cardápio digital no menu",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T04:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar opção de personalizar o cardápio digital no menu do app Barize, permitindo ao usuário alterar cores, logo, informações do estabelecimento.",
+      "acceptanceCriteria": [
+        "MENU 1 — Opção 'Personalizar Cardápio' no menu do app",
+        "MENU 2 — Página de personalização com opções: Cores, Logo, Informações",
+        "MENU 3 — Preview em tempo real das alterações",
+        "MENU 4 — Salvar preferências em localStorage",
+        "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PersonalizarCardapio.tsx",
+        "neonbar/app/src/App.tsx",
+        "neonbar/app/src/pages/Mais.tsx"
+      ],
+      "tests": [
+        "Opção aparece no menu",
+        "Página de personalização carrega",
+        "Alterações de cor refletem no preview",
+        "Logo pode ser alterada",
+        "Preferências são salvas",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Criar página de personalização do cardápio digital com opções de cores, logo e informações."
+    },
+    "TC-114": {
+      "id": "TC-114",
+      "title": "Inserir valores dos itens no cardápio digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T03:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Exibir os preços dos itens no cardápio digital do Barize.",
+      "acceptanceCriteria": [
+        "PREÇO 1 — Preço exibido em todos os cards do cardápio",
+        "PREÇO 2 — Formatação monetária (R$ XX,XX)",
+        "PREÇO 3 — Estilo destacado (cor primary-container, font-mono)",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Preço exibido em todos os cards",
+        "Formatação correta (R$ XX,XX)",
+        "Estilo visível e destacado",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Adicionar elemento de preço após a descrição no card."
+    },
+    "TC-113": {
+      "id": "TC-113",
+      "title": "Criar descrições inteligentes para itens sem descrição",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T03:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar descrições inteligentes para itens do cardápio digital que estão sem descrição de ingredientes.",
+      "acceptanceCriteria": [
+        "DESC 1 — Função para gerar descrição inteligente baseada no nome do produto",
+        "DESC 2 — Descrições para categorias: Drinks, Cervejas, Vinhos, Porções",
+        "DESC 3 — Fallback para produtos sem descrição",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Produtos sem descrição exibem descrição gerada",
+        "Descrições são relevantes para a categoria",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Implementar função getSmartDescription() que gera descrições baseadas no nome e categoria."
+    },
+    "TC-112": {
+      "id": "TC-112",
+      "title": "Implementar textos e figuras do cardápio de referência",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T02:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Copiar os textos e figuras do cardápio de referência e implementar no Cardápio Digital do app Barize.",
+      "acceptanceCriteria": [
+        "ITENS 1 — Negroni Clássico: Gin, Campari, Vermute tinto doce e twist de laranja",
+        "ITENS 2 — Moscow Mule: Vodka, espuma de gengibre, limão tahiti e xarope simples",
+        "ITENS 3 — Fritas Trufadas: Batatas fritas rústicas com azeite trufado e parmesão ralado",
+        "ITENS 4 — Old Fashioned: Bourbon premium, bitters de angostura, torrão de açúcar e casca de laranja",
+        "ITENS 5 — Dry Martini: Gin London Dry, Vermute seco e azeitona siciliana ou twist de limão",
+        "ITENS 6 — Cosmopolitan: Vodka, Cointreau, suco de cranberry e suco de limão fresco",
+        "ITENS 7 — Whisky Sour: Bourbon, suco de limão, xarope de açúcar e clara de ovo pasteurizada",
+        "VALIDAÇÃO 8 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Todos os 7 itens exibidos corretamente",
+        "Descrições conferem com a referência",
+        "Layout mantido",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Itens de exemplo do cardápio de referência para demonstração."
+    },
+    "TC-111": {
+      "id": "TC-111",
+      "title": "Mudar fundo dos cards do cardápio para cinza",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T01:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Mudar o fundo dos cards de itens do Cardápio Digital para cor cinza.",
+      "acceptanceCriteria": [
+        "CARD 1 — Fundo dos cards de itens com cor cinza (bg-surface-container-high ou similar)",
+        "CARD 2 — Borda mantida com efeito sutil",
+        "CARD 3 — Hover e glassmorphism preservados",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Cards com fundo cinza",
+        "Borda visível",
+        "Hover funcional",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Trocar bg-surface-container por bg-surface-container-high nos cards."
+    },
+    "TC-110": {
+      "id": "TC-110",
+      "title": "Centralizar imagem da logomarca no Cardápio Digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T01:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Centralizar a imagem da logomarca Barize no header do Cardápio Digital.",
+      "acceptanceCriteria": [
+        "LOGO 1 — Imagem da logomarca centralizada horizontalmente no header",
+        "LOGO 2 — Logo mantém tamanho h-20/w-20",
+        "LOGO 3 — Efeito de borda neon e sombra preservados",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Logo centralizada horizontalmente",
+        "Logo com tamanho correto",
+        "Efeito neon visível",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Ajuste de centralização using mx-auto."
+    },
+    "TC-109": {
+      "id": "TC-109",
+      "title": "Corrigir logomarca duplicada no Cardápio Digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T00:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir logomarca Barize duplicada no Cardápio Digital — remover texto 'Barize' que aparece abaixo da imagem da logo.",
+      "acceptanceCriteria": [
+        "LOGO 1 — Apenas a imagem da logomarca exibida (sem texto 'Barize' abaixo)",
+        "LOGO 2 — Subtítulo 'High-End Cocktails' mantido abaixo da logo",
+        "LOGO 3 — Logo centralizada no header",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Apenas imagem da logo exibida",
+        "Texto 'Barize' não aparece",
+        "Subtítulo 'High-End Cocktails' visível",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Remover h1 com texto 'Barize' do header, manter apenas img e subtítulo."
+    },
+    "TC-108": {
+      "id": "TC-108",
+      "title": "Diminuir tamanho do cabeçalho do Cardápio Digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T00:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Reduzir o tamanho do cabeçalho do Cardápio Digital para ocupar menos espaço vertical.",
+      "acceptanceCriteria": [
+        "HEADER 1 — Logo reduzida de h-24/w-24 para h-20/w-20",
+        "HEADER 2 — Espaçamento py-6 reduzido para py-4",
+        "HEADER 3 — Margem inferior da logo mb-4 reduzida para mb-3",
+        "HEADER 4 — Título e subtítulo mantidos com tamanho legível",
+        "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Cabeçalho ocupa menos espaço vertical",
+        "Logo mantém qualidade e efeito neon",
+        "Título e subtítulo legíveis",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Ajuste sutil: apenas reduzir logo e padding do header."
+    },
+    "TC-107": {
+      "id": "TC-107",
+      "title": "Importar logo original do Barize para o Cardápio Digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-08-31T23:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Importar a logo original do Barize (barize-logo.png) para o header do Cardápio Digital.",
+      "acceptanceCriteria": [
+        "LOGO 1 — Logo original barize-logo.png exibida no header do Cardápio Digital",
+        "LOGO 2 — Logo mantém proporção e qualidade (object-cover)",
+        "LOGO 3 — Efeito de borda neon e sombra preservados",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Logo original exibida no header",
+        "Logo com borda neon e sombra",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Logo encontrada em neonbar/app/public/barize-logo.png"
+    },
+    "TC-106": {
+      "id": "TC-106",
+      "title": "Remover busca e adicionar descrições no Cardápio Digital",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-08-31T23:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Remover campo de busca do Cardápio Digital e garantir que todos os itens tenham descrição visível.",
+      "acceptanceCriteria": [
+        "SEARCH 1 — Campo de busca removido do header do Cardápio Digital",
+        "DESCRIPTION 2 — Todos os itens do cardápio exibem descrição abaixo do nome",
+        "DESCRIPTION 3 — Descrição com estilo text-on-surface-variant line-clamp-2",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Campo de busca não aparece no header",
+        "Todos os itens exibem descrição",
+        "Descrição formatada corretamente",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Simples: remover input de busca e manter descrição em todos os cards."
+    },
+    "TC-105": {
+      "id": "TC-105",
+      "title": "Redesign completo do Cardápio Digital com nova interface premium",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-08-31T22:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Redesenhar completamente a página Cardápio Digital (/cardapio) com interface premium conforme referência visual: header com logo BARIZE neon, cards horizontais com imagem à esquerda, navegação inferior por categorias (Coquetéis, Vinhos, Cervejas, Petiscos), tema escuro elegante com efeitos glassmorphism.",
+      "acceptanceCriteria": [
+        "HEADER 1 — Header com logo BARIZE (ícone de coquetel dentro de círculo neon azul), nome 'BARIZE' e subtítulo 'HIGH-END COCKTAILS'",
+        "CARDS 2 — Cards horizontais com imagem à esquerda (borda arredondada), nome do drink em negrito branco, descrição em cinza",
+        "NAVEGAÇÃO 3 — Barra de navegação inferior com 4 categorias: Coquetéis, Vinhos, Cervejas, Petiscos",
+        "DESIGN 4 — Tema escuro elegante com fundo gradiente, cards com efeito glassmorphism (borda semi-transparente, sombra sutil)",
+        "ANIMAÇÕES 5 — Transições suaves entre categorias, hover nos cards com efeito de brilho",
+        "BUSCA 6 — Campo de busca integrado no header para filtrar itens",
+        "RESPONSIVO 7 — Layout responsivo para mobile (cards empilhados) e desktop (grid)",
+        "PREÇO 8 — Preço exibido em destaque com formatação monetária",
+        "VALIDAÇÃO 9 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx",
+        "neonbar/app/src/index.css"
+      ],
+      "tests": [
+        "Header exibe logo BARIZE com efeito neon, nome e subtítulo",
+        "Cards horizontais com imagem, nome e descrição",
+        "Navegação inferior funciona entre categorias",
+        "Busca filtra itens corretamente",
+        "Animações de transição entre categorias",
+        "Layout responsivo mobile/desktop",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Referência visual: imagem fornecida pelo usuário. Design premium com tema escuro, logo neon, cards horizontais e navegação inferior por categorias."
+    },
     "TC-002": {
       "id": "TC-002",
       "title": "Verificar problema da classe max-w nas divs em todas as telas",
@@ -5023,7 +5386,6 @@
       "updatedAt": "2026-08-22T01:45:00.000Z",
       "completedAt": "2026-08-22T01:45:00.000Z",
       "path": ".opencode/taskcards/TC-076.json",
-      "taskType": "card",
       "createdBy": "user",
       "agent": "build"
     },
@@ -5050,6 +5412,1476 @@
       "path": ".opencode/taskcards/TC-078.json",
       "createdBy": "user",
       "agent": "build"
+    },
+    "TC-079": {
+      "id": "TC-079",
+      "title": "Barra de ações rápidas horizontal no topo do painel de vendas",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-22T04:00:00.000Z",
+      "updatedAt": "2026-08-22T04:00:00.000Z",
+      "path": ".opencode/taskcards/TC-079.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-080": {
+      "id": "TC-080",
+      "title": "Prevenir uso indevido de max-w em divs no app Barize — revisão preventiva",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-080",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-29T23:55:00.000Z",
+          "actor": "build",
+          "reason": "Início da análise do card"
+        },
+        {
+          "taskId": "TC-080",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T00:05:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuário"
+        },
+        {
+          "taskId": "TC-080",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T00:10:00.000Z",
+          "actor": "build",
+          "reason": "Correcao aplicada (Estoque.tsx:439 w-full max-w-[120px] -> w-[120px]), tsc OK, 5/6 ocorrencias classificadas como OK-intencionais"
+        }
+      ],
+      "createdAt": "2026-08-29T23:50:00.000Z",
+      "updatedAt": "2026-08-30T00:10:00.000Z",
+      "path": ".opencode/taskcards/TC-080.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Verificar todo o código do app Barize (neonbar/app/src/) para garantir que NENHUMA div use max-w-* que possa quebrar o layout w-full. Os erros TC-001 e TC-002 já corrigiram isso no frontend web (neonbar/frontend/), mas o app PWA pode ter o mesmo problema. Criar regra/documentação para evitar reincidência.",
+      "acceptanceCriteria": [
+        "VARREDURA 1 — Busca completa por max-w-* em todos os .tsx/.ts/.jsx de neonbar/app/src/",
+        "CORREÇÃO 2 — Remover ou ajustar qualquer max-w-* que force largura fixa em divs com w-full ou flex",
+        "EXCEÇÃO 3 — Elementos como Modal, progress bars e inputs que usam max-w intencionalmente são preservados",
+        "REGRA 4 — Documentar em AGENTS.md ou DESIGN.md a regra: 'NUNCA usar max-w-* em divs container com w-full'",
+        "VALIDAÇÃO 5 — Build + TypeScript compile OK (neonbar/app)",
+        "VALIDAÇÃO 6 — Layout responsivo preservado em todas as telas do app"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/**/*.tsx",
+        "neonbar/app/src/**/*.ts",
+        "neonbar/app/src/index.css"
+      ],
+      "tests": [
+        "Nenhuma div com w-full ou flex também usa max-w-* (exceto Modal/inputs/progress)",
+        "Todas as páginas do app renderizam corretamente sem overflow",
+        "Build OK sem erros de TypeScript",
+        "Documentação da regra criada"
+      ],
+      "notes": "Baseado nos cards TC-001 (login) e TC-002 (todas as telas) que já resolveram isso no frontend web. O app PWA (neonbar/app/) é um projeto separado e pode ter os mesmos erros. Esta é uma revisão PREVENTIVA para garantir que o erro não volte a acontecer.",
+      "completedAt": "2026-08-30T00:10:00.000Z"
+    },
+    "TC-081": {
+      "id": "TC-081",
+      "title": "Redesign do login do app Barize参照ando estilo Raio FX (card escuro, inputs modernos)",
+      "status": "cancelled",
+      "statusHistory": [
+        {
+          "taskId": "TC-081",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T01:05:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise do card"
+        },
+        {
+          "taskId": "TC-081",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T01:15:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado pelo usuario"
+        },
+        {
+          "taskId": "TC-081",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T01:20:00.000Z",
+          "actor": "build",
+          "reason": "Redesign completo: card centralizado com borda sutil, inputs escuros, checkbox Lembrar senha, botao gradiente azul, erros dentro do card, modais atualizados. tsc OK."
+        },
+        {
+          "taskId": "TC-081",
+          "taskType": "card",
+          "from": "completed",
+          "to": "cancelled",
+          "trigger": "user",
+          "timestamp": "2026-08-30T01:25:00.000Z",
+          "actor": "user",
+          "reason": "Desfeito pelo usuario"
+        }
+      ],
+      "createdAt": "2026-08-30T01:00:00.000Z",
+      "updatedAt": "2026-08-30T01:25:00.000Z",
+      "path": ".opencode/taskcards/TC-081.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Redesign da tela de login do app Barize (neonbar/app/src/pages/Login.tsx)参照ando a referencia visual do Raio FX: card centralizado com borda sutil, inputs escuros com borda leve, checkbox Lembrar senha, botao Entrar gradiente azul full-width, links Esqueci minha senha e Solicitar acesso. Manter todos os dados existentes (logo Barize, titulo, subtitulo).",
+      "acceptanceCriteria": [
+        "LAYOUT 1 — Card centralizado com borda sutil (glass-morphism sutil) contendo todos os campos",
+        "INPUTS 2 — Inputs EMAIL e SENHA com fundo escuro (surface-container-high), borda sutil (outline-variant), texto claro, placeholder",
+        "ICONES 3 — Icone de usuario no campo email, cadeado no campo senha, olho para mostrar/ocultar senha",
+        "CHECKBOX 4 — Checkbox Lembrar senha com cor de destaque (cyan/teal) abaixo do campo senha",
+        "ERRO 5 — Mensagem de erro exibida como banner vermelho dentro do card (nao flutuante)",
+        "BOTAO 6 — Botao Entrar full-width, gradiente azul, bordas arredondadas, texto branco",
+        "LINKS 7 — Links Esqueci minha senha e Solicitar acesso abaixo do botao, com cor de destaque",
+        "DADOS 8 — Manter logo Barize, titulo Bem-vindo ao Barize, subtitulo Gestao de Alta Coquetelaria",
+        "COR 9 — Fundo preto/escuro, card com fundo semi-transparente, acentos em cyan/teal",
+        "VALIDACAO 10 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Login.tsx"
+      ],
+      "tests": [
+        "Login renderiza com card centralizado com borda",
+        "Inputs tem fundo escuro e borda sutil",
+        "Checkbox Lembrar senha funciona",
+        "Botao Entrar tem gradiente azul",
+        "Links Esqueci minha senha e Solicitar acesso visiveis",
+        "Erro aparece como banner dentro do card",
+        "Logo e dados do Barize preservados",
+        "Build OK"
+      ],
+      "notes": "Referencia visual: tela de login do Raio FX (app de sinais de trading). Estilo dark com card centralizado, inputs modernos, acentos em cyan. Manter identidade visual do Barize.",
+      "completedAt": "2026-08-30T01:20:00.000Z"
+    },
+    "TC-082": {
+      "id": "TC-082",
+      "title": "Imprimir cupom deve ir direto para impressao sem abrir aba de preview no app Barize",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-082",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T01:35:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-082",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T01:45:00.000Z",
+          "actor": "user",
+          "reason": "Opcao A aprovada"
+        },
+        {
+          "taskId": "TC-082",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T01:55:00.000Z",
+          "actor": "build",
+          "reason": "Opcao A implementada: POST /pdv/imprimir-cupom enfileira na FilaImpressao. PDV.tsx e Sala.tsx chamam endpoint ao inves de window.print(). tsc OK."
+        }
+      ],
+      "createdAt": "2026-08-30T01:30:00.000Z",
+      "updatedAt": "2026-08-30T01:55:00.000Z",
+      "path": ".opencode/taskcards/TC-082.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Ao clicar em Imprimir Cupom na area de pagamento do app Barize, o sistema deve enviar direto para a impressora sem abrir uma aba/janela de preview do navegador. Atualmente o botao Imprimir Cupom abre window.print() que mostra a aba de configuracao de impressao do navegador.",
+      "acceptanceCriteria": [
+        "FLUXO 1 — Ao clicar Imprimir Cupom, o cupom 80mm e enviado diretamente para a impressora configurada",
+        "FLUXO 2 — Nao abre aba/janela de preview do navegador (window.print() removido ou substituido)",
+        "COMPATIBILIDADE 3 — Funciona em mobile (PWA) e desktop",
+        "FALLBACK 4 — Se impressora nao configurada, exibe mensagem orientando configurar",
+        "VALIDACAO 5 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx",
+        "neonbar/app/src/pages/Sala.tsx",
+        "neonbar/app/src/components/pdv/CupomPDV.tsx",
+        "neonbar/app/src/components/pdv/Visualizador80mm.tsx"
+      ],
+      "tests": [
+        "Clicar Imprimir Cupom nao abre aba de preview",
+        "Cupom e enviado para impressora",
+        "Funciona em mobile e desktop",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T01:55:00.000Z"
+    },
+    "TC-083": {
+      "id": "TC-083",
+      "title": "Mesa so desocupa apos pagamento — nao ao entregar pedido",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-083",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:05:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-083",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T02:15:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-083",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:20:00.000Z",
+          "actor": "build",
+          "reason": "pedidos.py:28 inclui Pronto+Entregue, Sala.tsx:76 inclui Entregue. Mesa so libera apos pagamento."
+        }
+      ],
+      "createdAt": "2026-08-30T02:00:00.000Z",
+      "updatedAt": "2026-08-30T02:20:00.000Z",
+      "path": ".opencode/taskcards/TC-083.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir comportamento onde a mesa e desocupada ao entregar o pedido. A mesa so deve ser liberada (desocupada) quando o cliente efetuar o pagamento completo. Entregar pedido nao deve alterar status da mesa.",
+      "acceptanceCriteria": [
+        "FLUXO 1 — Entregar pedido (status Entregue/Concluido) NAO desocupa a mesa",
+        "FLUXO 2 — Pagamento confirmado (finalizar comanda) desocupa a mesa automaticamente",
+        "FLUXO 3 — Mesa permanece como ocupada durante todo o ciclo: aberta > pedidos > entregues > aguardando pagamento",
+        "VALIDACAO 4 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/pedidos.py",
+        "neonbar/backend/app/routers/pdv.py",
+        "neonbar/backend/app/services/estoque_service.py",
+        "neonbar/app/src/pages/Sala.tsx",
+        "neonbar/app/src/pages/Comandas.tsx"
+      ],
+      "tests": [
+        "Entregar pedido nao desocupa mesa",
+        "Pagamento desocupa mesa automaticamente",
+        "Mesa fica ocupada durante todo o ciclo ate pagamento",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T02:20:00.000Z"
+    },
+    "TC-084": {
+      "id": "TC-084",
+      "title": "Toast de impressao desalinhado — centralizar no topo da tela",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-084",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:30:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-084",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:35:00.000Z",
+          "actor": "build",
+          "reason": "Toast.tsx:55 fixed top-4 right-4 -> fixed top-4 left-1/2 -translate-x-1/2"
+        }
+      ],
+      "createdAt": "2026-08-30T02:25:00.000Z",
+      "updatedAt": "2026-08-30T02:35:00.000Z",
+      "path": ".opencode/taskcards/TC-084.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "A mensagem toast/popup apos clicar em Imprimir Cupom esta desalinhada. Precisa aparecer centralizada no topo da tela do app Barize.",
+      "acceptanceCriteria": [
+        "TOAST 1 — Mensagem de toast aparece centralizada horizontalmente no topo da tela",
+        "TOAST 2 — Nao aparece no canto superior direito, mas sim no centro do topo",
+        "TOAST 3 — Funciona em todas as telas do app (PDV, Sala, etc)",
+        "VALIDACAO 4 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/components/Toast.tsx",
+        "neonbar/app/src/pages/PDV.tsx",
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Toast aparece centralizado no topo apos imprimir cupom",
+        "Toast funciona em PDV e Sala",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T02:35:00.000Z"
+    },
+    "TC-085": {
+      "id": "TC-085",
+      "title": "Pedidos entregues nao devem aparecer na area de pedidos ativos",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-085",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:45:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-085",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T02:50:00.000Z",
+          "actor": "build",
+          "reason": "FilaPreparo.tsx:68 filtra Entregue/Cancelado. Comandas.tsx e KitchenDisplay.tsx ja filtravam."
+        }
+      ],
+      "createdAt": "2026-08-30T02:40:00.000Z",
+      "updatedAt": "2026-08-30T02:50:00.000Z",
+      "path": ".opencode/taskcards/TC-085.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Na area de pedidos ativos (KDS/Comandas), pedidos com status Entregue nao devem aparecer. Apenas pedidos sendo preparados (Novo, Preparando, Pronto) devem aparecer. O TC-083 adicionou Entregue ao /pedidos/ativos para manter mesa ocupada, mas isso polui a tela de pedidos.",
+      "acceptanceCriteria": [
+        "KDS 1 — Pedidos Entregue nao aparecem na tela de pedidos ativos/Comandas",
+        "KDS 2 — Apenas Novo, Preparando e Pronto aparecem no KDS",
+        "MESA 3 — Mesa continua ocupada com pedidos Entregue (TC-083 preservado)",
+        "VALIDACAO 4 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/pedidos.py",
+        "neonbar/app/src/pages/Comandas.tsx",
+        "neonbar/app/src/pages/KitchenDisplay.tsx"
+      ],
+      "tests": [
+        "Pedidos Entregue nao aparecem no KDS/Comandas",
+        "Pedidos Novo/Preparando/Pronto continuam aparecendo",
+        "Mesa continua ocupada com pedidos Entregue",
+        "Build OK"
+      ],
+      "notes": "Consequencia do TC-083: ao adicionar Entregue ao /pedidos/ativos para manter mesa ocupada, os pedidos entregues passaram a aparecer na tela de pedidos. Precisa filtrar no frontend para nao exibir Entregues no KDS.",
+      "completedAt": "2026-08-30T02:50:00.000Z"
+    },
+    "TC-086": {
+      "id": "TC-086",
+      "title": "Bug: selecionar mesa seleciona outra junto — selecao duplicada",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-086",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T03:00:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-086",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T03:10:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-086",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T03:15:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: borda 2px cyan + scale 1.03 + check icon + texto maior para selecionada. Diferenca visual clara entre selecionada (cyan) e ocupada (amber)."
+        }
+      ],
+      "createdAt": "2026-08-30T02:55:00.000Z",
+      "updatedAt": "2026-08-30T03:15:00.000Z",
+      "path": ".opencode/taskcards/TC-086.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Ao selecionar uma mesa na tela Sala, outra mesa tambem aparece selecionada. Corrigir bug de selecao duplicada.",
+      "acceptanceCriteria": [
+        "SELECAO 1 — Clicar em uma mesa seleciona APENAS aquela mesa",
+        "SELECAO 2 — Nenhuma outra mesa fica selecionada junto",
+        "SELECAO 3 — Clicar em outra mesa deseleciona a anterior e seleciona a nova",
+        "VALIDACAO 4 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Clicar em M1 seleciona apenas M1",
+        "Clicar em M2 deseleciona M1 e seleciona M2",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T03:15:00.000Z"
+    },
+    "TC-087": {
+      "id": "TC-087",
+      "title": "Mesas ocupadas devem aparecer em vermelho na area de novo pedido do PDV",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-087",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T03:25:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-087",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T03:30:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-087",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T03:45:00.000Z",
+          "actor": "build",
+          "reason": "PDV.tsx: mesas ocupadas aparecem em vermelho com label ocupada. Busca pedidos ativos na inicializacao."
+        }
+      ],
+      "createdAt": "2026-08-30T03:20:00.000Z",
+      "updatedAt": "2026-08-30T03:45:00.000Z",
+      "path": ".opencode/taskcards/TC-087.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Na area de novo pedido (PDV), as mesas que ja estao ocupadas devem ser sinalizadas na cor vermelha para o operador saber que ja tem pedido ativo naquela mesa.",
+      "acceptanceCriteria": [
+        "PDV 1 — Mesas ocupadas aparecem com indicador vermelho no seletor de mesa do PDV",
+        "PDV 2 — Mesas livres continuam com cor normal",
+        "PDV 3 — Indicador visual claro para distinguir ocupada de livre",
+        "VALIDACAO 4 — Build + TypeScript compile OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Mesa ocupada aparece vermelha no PDV",
+        "Mesa livre aparece normal",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T03:45:00.000Z"
+    },
+    "TC-088": {
+      "id": "TC-088",
+      "title": "Ao clicar na mesa ocupada no PDV, exibir aviso de mesa ocupada",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-088",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T04:05:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-088",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T04:10:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-088",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T04:15:00.000Z",
+          "actor": "build",
+          "reason": "PDV.tsx: ao clicar em mesa ocupada exibe toast error e impede selecao."
+        }
+      ],
+      "createdAt": "2026-08-30T04:00:00.000Z",
+      "updatedAt": "2026-08-30T04:15:00.000Z",
+      "path": ".opencode/taskcards/TC-088.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Ao clicar em uma mesa que ja esta ocupada (vermelha) no PDV, exibir um toast/warning avisando que a mesa ja esta ocupada e impedindo selecao.",
+      "acceptanceCriteria": [
+        "PDV 1 — Toast de aviso aparece ao clicar em mesa ocupada",
+        "PDV 2 — Mesa ocupada nao e selecionada (nao seta localPedido)",
+        "PDV 3 — Mesa livre continua funcionando normalmente",
+        "VALIDACAO 4 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Toast aparece ao clicar em mesa ocupada",
+        "Mesa livre continua selecionavel",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T04:15:00.000Z"
+    },
+    "TC-089": {
+      "id": "TC-089",
+      "title": "Ao selecionar mesa no menu, exibir pedidos da mesa",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-089",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T04:25:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-089",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T04:30:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-089",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T04:45:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: modal de detalhes agora mostra pedidos ativos da mesa (id, status, itens, valor). Carrega ao selecionar mesa."
+        }
+      ],
+      "createdAt": "2026-08-30T04:20:00.000Z",
+      "updatedAt": "2026-08-30T04:45:00.000Z",
+      "path": ".opencode/taskcards/TC-089.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Ao clicar em uma mesa no menu da Sala e seleciona-la, o painel de detalhes deve exibir os pedidos ativos daquela mesa (comanda aberta, itens, status).",
+      "acceptanceCriteria": [
+        "SALA 1 — Painel de detalhes mostra pedidos ativos da mesa selecionada",
+        "SALA 2 — Cada pedido exibe itens, status e valor",
+        "SALA 3 — Mesas sem pedidos mostram mensagem apropriada",
+        "SALA 4 — Botao de fechar conta disponible no painel",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Pedidos aparecem ao selecionar mesa com pedidos",
+        "Mesa sem pedidos mostra mensagem vazia",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T04:45:00.000Z"
+    },
+    "TC-090": {
+      "id": "TC-090",
+      "title": "Remover cards de Status e Tipo do painel de detalhes da mesa",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-090",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T04:55:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-090",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:00:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: removidos cards de Status e Tipo do modal de detalhes. Mantidos cabecalho e secao de pedidos."
+        }
+      ],
+      "createdAt": "2026-08-30T04:50:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "path": ".opencode/taskcards/TC-090.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Remover os cards de Status e Tipo do modal de detalhes da mesa na Sala, pois agora a secao de pedidos ja mostra essas informacoes.",
+      "acceptanceCriteria": [
+        "SALA 1 — Card de Status removido do modal",
+        "SALA 2 — Card de Tipo removido do modal",
+        "SALA 3 — Cabecalho com nome e local da mesa mantido",
+        "SALA 4 — Secao de pedidos mantida",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Modal nao mostra mais Status e Tipo",
+        "Pedidos continuam aparecendo",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T05:00:00.000Z"
+    },
+    "TC-091": {
+      "id": "TC-091",
+      "title": "Pedidos na area da mesa devem mostrar nomes dos produtos detalhadamente",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-091",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:15:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-091",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T05:20:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-091",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:25:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: itens agora mostram quantidade x nome do produto, preco total por item e observacao se houver."
+        }
+      ],
+      "createdAt": "2026-08-30T05:10:00.000Z",
+      "updatedAt": "2026-08-30T05:25:00.000Z",
+      "path": ".opencode/taskcards/TC-091.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Os pedidos exibidos no painel de detalhes da mesa devem mostrar os nomes dos produtos de forma clara e detalhada, com quantidade, nome do produto e preco unitario.",
+      "acceptanceCriteria": [
+        "SALA 1 — Cada item mostra quantidade, nome do produto e preco",
+        "SALA 2 — Nome do produto e legivel e destacado",
+        "SALA 3 — Total do pedido visivel",
+        "SALA 4 — Layout limpo e organizado",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Produtos aparecem com nome claro",
+        "Quantidade e preco visiveis",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T05:25:00.000Z"
+    },
+    "TC-092": {
+      "id": "TC-092",
+      "title": "Calculadora no pagamento so aparece ao clicar no icone",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-092",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:35:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-092",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:45:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: calculadora agora so aparece ao clicar no icone Calculator. Toggle showCalc controla visibilidade."
+        }
+      ],
+      "createdAt": "2026-08-30T05:30:00.000Z",
+      "updatedAt": "2026-08-30T05:45:00.000Z",
+      "path": ".opencode/taskcards/TC-092.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Na area de pagamento (Sala), a calculadora deve estar oculta por padrao e so aparecer ao clicar em um icone de calculadora. O icone deve ser criado na interface.",
+      "acceptanceCriteria": [
+        "PAG 1 — Icone de calculadora visivel na area de pagamento",
+        "PAG 2 — Calculadora oculta por padrao",
+        "PAG 3 — Ao clicar no icone, calculadora aparece",
+        "PAG 4 — Ao clicar novamente, calculadora some",
+        "PAG 5 — Calculadora funciona normalmente quando visivel",
+        "VALIDACAO 6 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Calculadora oculta por padrao",
+        "Toggle funciona ao clicar no icone",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T05:45:00.000Z"
+    },
+    "TC-093": {
+      "id": "TC-093",
+      "title": "Botoes Voltar e Confirmar no pagamento devem ficar estaticos (sem scroll)",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-093",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T05:55:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-093",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T06:05:00.000Z",
+          "actor": "build",
+          "reason": "Modal.tsx: adicionado prop footer. Sala.tsx: botoes Voltar e Confirmar movidos para footer (fora do scroll)."
+        }
+      ],
+      "createdAt": "2026-08-30T05:50:00.000Z",
+      "updatedAt": "2026-08-30T06:05:00.000Z",
+      "path": ".opencode/taskcards/TC-093.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Na area de pagamento (Sala), os botoes Voltar e Confirmar devem ficar fixos na parte inferior do modal, sem sair com a barra de rolagem do conteudo.",
+      "acceptanceCriteria": [
+        "PAG 1 — Botoes Voltar e Confirmar fixos no rodape do modal",
+        "PAG 2 — Conteudo acima rola normalmente",
+        "PAG 3 — Botoes sempre visiveis independentemente do scroll",
+        "VALIDACAO 4 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Botoes fixos no rodape",
+        "Conteudo rola sem afetar botoes",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T06:05:00.000Z"
+    },
+    "TC-094": {
+      "id": "TC-094",
+      "title": "Mover Forma de Pagamento, Valor Recebido e botoes para footer do Modal",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-094",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T06:15:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-094",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T06:20:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-094",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T06:35:00.000Z",
+          "actor": "build",
+          "reason": "Sala.tsx: Forma de Pagamento, Valor Recebido, Calculadora, PIX, Parcelamento e Botoes movidos para footer do Modal. Conteudo scrollavel tem apenas Resumo, Dividir Conta, Taxas e Total."
+        }
+      ],
+      "createdAt": "2026-08-30T06:10:00.000Z",
+      "updatedAt": "2026-08-30T06:35:00.000Z",
+      "path": ".opencode/taskcards/TC-094.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Mover os elementos Forma de Pagamento, Valor Recebido (com calculadora) e botoes Voltar/Confirmar para o footer do modal de pagamento, mantendo apenas o resumo no conteudo scrollavel.",
+      "acceptanceCriteria": [
+        "PAG 1 — Forma de Pagamento no footer",
+        "PAG 2 — Valor Recebido + Calculadora no footer",
+        "PAG 3 — Botoes Voltar/Confirmar no footer",
+        "PAG 4 — Resumo (pedidos + total) no conteudo scrollavel",
+        "PAG 5 — Footer sempre visivel",
+        "VALIDACAO 6 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Forma de Pagamento no footer",
+        "Valor Recebido no footer",
+        "Botoes no footer",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T06:35:00.000Z"
+    },
+    "TC-095": {
+      "id": "TC-095",
+      "title": "Remover duplicacao de Forma de Pagamento e elementos do conteudo scrollavel",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-095",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T06:45:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-095",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T06:50:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-095",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T06:55:00.000Z",
+          "actor": "build",
+          "reason": "Verificado: Forma de Pagamento aparece apenas 1 vez (no footer). Sem duplicacao no codigo."
+        }
+      ],
+      "createdAt": "2026-08-30T06:40:00.000Z",
+      "updatedAt": "2026-08-30T06:55:00.000Z",
+      "path": ".opencode/taskcards/TC-095.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Remover a duplicacao dos elementos Forma de Pagamento, Valor Recebido, Calculadora, Troco, PIX, Parcelamento, Recebido e Botoes que estao aparecendo tanto no conteudo scrollavel quanto no footer do modal de pagamento.",
+      "acceptanceCriteria": [
+        "PAG 1 — Forma de Pagamento aparece apenas no footer",
+        "PAG 2 — Valor Recebido aparece apenas no footer",
+        "PAG 3 — Botoes aparecem apenas no footer",
+        "PAG 4 — Sem duplicacao de elementos",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Sem duplicacao de elementos",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T06:55:00.000Z"
+    },
+    "TC-096": {
+      "id": "TC-096",
+      "title": "Evitar que o backend caia (tratamento de erros)",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-096",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T14:35:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-096",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T14:40:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-096",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T14:55:00.000Z",
+          "actor": "build",
+          "reason": "relatorios_cmv.py: try/except em todos os endpoints + import HTTPException. Backend reiniciado e rodando."
+        }
+      ],
+      "createdAt": "2026-08-30T14:30:00.000Z",
+      "updatedAt": "2026-08-30T14:55:00.000Z",
+      "path": ".opencode/taskcards/TC-096.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "O backend nao deve cair por erros nao tratados. Adicionar try/except nos endpoints criticos, especialmente relatorios_cmv.py que causou a queda por AttributeError: NoneType.",
+      "acceptanceCriteria": [
+        "BACK 1 — try/except em relatorios_cmv.py cmv_por_produto",
+        "BACK 2 — try/except em endpoints que usam .isoformat()",
+        "BACK 3 — Handler global de erros no FastAPI",
+        "BACK 4 — Backend nao cai mais por erros nao tratados",
+        "VALIDACAO 5 — Testar endpoint com dados invalidos"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/relatorios_cmv.py",
+        "neonbar/backend/app/main.py"
+      ],
+      "tests": [
+        "Endpoint nao cai com dados invalidos",
+        "Handler global funciona",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T14:55:00.000Z"
+    },
+    "TC-097": {
+      "id": "TC-097",
+      "title": "Carregar imagens dos produtos do Barize web para o Barize app",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-097",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T15:05:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-097",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T15:15:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-097",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T15:20:00.000Z",
+          "actor": "build",
+          "reason": "vite.config.ts: adicionado proxy /uploads para backend. Imagens agora funcionam no PDV do app."
+        }
+      ],
+      "createdAt": "2026-08-30T15:00:00.000Z",
+      "updatedAt": "2026-08-30T15:20:00.000Z",
+      "path": ".opencode/taskcards/TC-097.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "No menu PDV do Barize app, os produtos estao sem imagens. Carregar as imagens que ja existem no Barize web (frontend) e exibi-las no Barize app.",
+      "acceptanceCriteria": [
+        "PDV 1 — Produtos com imagem aparecem com imagem no PDV do app",
+        "PDV 2 — Produtos sem imagem continuam sem problemas",
+        "PDV 3 — Imagens carregam da API ou do diretorio uploads",
+        "VALIDACAO 4 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx",
+        "neonbar/app/src/services/api.ts"
+      ],
+      "tests": [
+        "Imagens aparecem no PDV",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T15:20:00.000Z"
+    },
+    "TC-098": {
+      "id": "TC-098",
+      "title": "Sincronizacao automatica entre Barize web e Barize app",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-098",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T15:45:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-098",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T15:50:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-098",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T15:55:00.000Z",
+          "actor": "build",
+          "reason": "PDV: polling 30s para produtos. Sala: polling 30s ocupadas + 60s mesas. Comandas e FilaPreparo ja tinham polling."
+        }
+      ],
+      "createdAt": "2026-08-30T15:30:00.000Z",
+      "updatedAt": "2026-08-30T15:55:00.000Z",
+      "path": ".opencode/taskcards/TC-098.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Todas as alteracoes feitas no Barize web (imagens, produtos, precos, categorias, etc.) devem ser automaticamente refletidas no Barize app sem necessidade de recarregar a pagina.",
+      "acceptanceCriteria": [
+        "APP 1 — App busca dados atualizados ao abrir telas",
+        "APP 2 — Polling periodico para manter dados frescos",
+        "APP 3 — Imagens atualizadas aparecem sem reload manual",
+        "APP 4 — Dados do PDV, Sala, Comandas sempre atualizados",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx",
+        "neonbar/app/src/pages/Sala.tsx",
+        "neonbar/app/src/pages/Comandas.tsx",
+        "neonbar/app/src/pages/FilaPreparo.tsx"
+      ],
+      "tests": [
+        "Dados atualizam sem reload",
+        "Imagens aparecem",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T15:55:00.000Z"
+    },
+    "TC-099": {
+      "id": "TC-099",
+      "title": "Implementar Cardapio Digital no Barize app",
+      "status": "backlog",
+      "statusHistory": [],
+      "createdAt": "2026-08-30T15:40:00.000Z",
+      "updatedAt": "2026-08-30T15:40:00.000Z",
+      "path": ".opencode/taskcards/TC-099.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Implementar a funcionalidade de Cardapio Digital no Barize app, replicando a funcionalidade que ja existe no Barize web. O cardapio digital permite aos clientes visualizar o menu com fotos, precos e descricao dos produtos.",
+      "acceptanceCriteria": [
+        "CARD 1 — Tela de Cardapio Digital no app",
+        "CARD 2 — Lista de produtos com fotos, nome, preco e descricao",
+        "CARD 3 — Filtro por categorias",
+        "CARD 4 — Busca de produtos",
+        "CARD 5 — Layout responsivo para celular",
+        "CARD 6 — Modo basico (nome, preco, foto)",
+        "VALIDACAO 7 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx",
+        "neonbar/app/src/App.tsx",
+        "neonbar/app/src/components/BottomNav.tsx"
+      ],
+      "tests": [
+        "Cardapio carrega produtos",
+        "Filtros funcionam",
+        "Busca funciona",
+        "Build OK"
+      ]
+    },
+    "TC-100": {
+      "id": "TC-100",
+      "title": "Implementar Cardapio Digital no Barize app",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-100",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:05:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-100",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T16:10:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-100",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:15:00.000Z",
+          "actor": "build",
+          "reason": "CardapioDigital.tsx ja existia. Adicionado link no menu Mais com icone Utensils."
+        }
+      ],
+      "createdAt": "2026-08-30T16:00:00.000Z",
+      "updatedAt": "2026-08-30T16:15:00.000Z",
+      "path": ".opencode/taskcards/TC-100.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Implementar a funcionalidade de Cardapio Digital no Barize app. O cardapio digital permite aos clientes visualizar o menu completo com fotos, precos, descricao e categorias dos produtos.",
+      "acceptanceCriteria": [
+        "CARD 1 — Tela de Cardapio Digital acessivel pelo menu",
+        "CARD 2 — Lista de produtos com fotos, nome, preco e descricao",
+        "CARD 3 — Filtro por categorias",
+        "CARD 4 — Busca de produtos",
+        "CARD 5 — Layout responsivo para celular",
+        "CARD 6 — Modo basico (nome, preco, foto)",
+        "CARD 7 — Sincronizacao com dados do web",
+        "VALIDACAO 8 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx",
+        "neonbar/app/src/App.tsx",
+        "neonbar/app/src/components/BottomNav.tsx"
+      ],
+      "tests": [
+        "Cardapio carrega produtos",
+        "Filtros funcionam",
+        "Busca funciona",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T16:15:00.000Z"
+    },
+    "TC-101": {
+      "id": "TC-101",
+      "title": "Adicionar area de descricao nos itens do Cardapio Digital",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-101",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:25:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-101",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T16:30:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-101",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:35:00.000Z",
+          "actor": "build",
+          "reason": "CardapioDigital.tsx: descricao sempre visivel (removido !basico), line-clamp-3, leading-relaxed para melhor legibilidade."
+        }
+      ],
+      "createdAt": "2026-08-30T16:20:00.000Z",
+      "updatedAt": "2026-08-30T16:35:00.000Z",
+      "path": ".opencode/taskcards/TC-101.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "O cardapio digital precisa exibir a descricao de cada item do produto. Ajustar o layout para ter uma area de texto descrevendo o produto.",
+      "acceptanceCriteria": [
+        "CARD 1 — Descricao do produto aparece no cardapio",
+        "CARD 2 — Descricao posicionada abaixo do nome/preco",
+        "CARD 3 — Texto com fonte menor e cor secundaria",
+        "CARD 4 — Layout responsivo",
+        "VALIDACAO 5 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/CardapioDigital.tsx"
+      ],
+      "tests": [
+        "Descricao aparece nos itens",
+        "Layout responsivo",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T16:35:00.000Z"
+    },
+    "TC-102": {
+      "id": "TC-102",
+      "title": "Inserir opcao de tema claro e escuro no Barize app",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-102",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:45:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-102",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T16:50:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-102",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T16:55:00.000Z",
+          "actor": "build",
+          "reason": "useTheme hook + ThemeInit no App.tsx + toggle visual no Mais.tsx com switch animado. localStorage salva preferencia."
+        }
+      ],
+      "createdAt": "2026-08-30T16:40:00.000Z",
+      "updatedAt": "2026-08-30T16:55:00.000Z",
+      "path": ".opencode/taskcards/TC-102.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Inserir a opcao de alternar entre tema claro e escuro no Barize app. O usuario deve poder mudar o tema nas configuracoes ou em um toggle rapido.",
+      "acceptanceCriteria": [
+        "THEME 1 — Toggle de tema claro/escuro disponivel",
+        "THEME 2 — Tema escuro (atual) continua funcionando",
+        "THEME 3 — Tema claro com cores adequadas",
+        "THEME 4 — Preferencia salva no localStorage",
+        "THEME 5 — Transicao suave entre temas",
+        "VALIDACAO 6 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/index.css",
+        "neonbar/app/src/pages/Mais.tsx",
+        "neonbar/app/src/components/BottomNav.tsx"
+      ],
+      "tests": [
+        "Toggle funciona",
+        "Tema salvo no localStorage",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T16:55:00.000Z"
+    },
+    "TC-103": {
+      "id": "TC-103",
+      "title": "Pedidos ativos nao devem mostrar pedidos entregues",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-103",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "analyzing",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T19:20:00.000Z",
+          "actor": "build",
+          "reason": "Inicio da analise"
+        },
+        {
+          "taskId": "TC-103",
+          "taskType": "card",
+          "from": "analyzing",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T19:25:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-103",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T19:30:00.000Z",
+          "actor": "build",
+          "reason": "Backend /ativos retorna apenas Novo/Preparando/Pronto. Frontend Sala.tsx 3 filtros atualizados."
+        }
+      ],
+      "createdAt": "2026-08-30T19:15:00.000Z",
+      "updatedAt": "2026-08-30T19:30:00.000Z",
+      "path": ".opencode/taskcards/TC-103.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Nos pedidos ativos, nao devem aparecer os pedidos entregues. Filtrar para mostrar apenas pedidos com status Novo, Preparando e Pronto.",
+      "acceptanceCriteria": [
+        "FILTRO 1 — Pedidos Entregue nao aparecem na lista de ativos",
+        "FILTRO 2 — Pedidos Cancelado nao aparecem na lista de ativos",
+        "FILTRO 3 — Apenas Novo, Preparando e Pronto aparecem",
+        "VALIDACAO 4 — Build + TypeScript OK"
+      ],
+      "filesInvolved": [
+        "neonbar/backend/app/routers/pedidos.py",
+        "neonbar/frontend/src/pages/Sala.tsx"
+      ],
+      "tests": [
+        "Pedidos entregues nao aparecem",
+        "Build OK"
+      ],
+      "completedAt": "2026-08-30T19:30:00.000Z"
+    },
+    "TC-104": {
+      "id": "TC-104",
+      "title": "Criar tunel no Cloudflare para o Barize app",
+      "status": "completed",
+      "statusHistory": [
+        {
+          "taskId": "TC-104",
+          "taskType": "card",
+          "from": "backlog",
+          "to": "executing",
+          "trigger": "user",
+          "timestamp": "2026-08-30T19:40:00.000Z",
+          "actor": "user",
+          "reason": "Aprovado"
+        },
+        {
+          "taskId": "TC-104",
+          "taskType": "card",
+          "from": "executing",
+          "to": "completed",
+          "trigger": "agent",
+          "timestamp": "2026-08-30T23:35:00.000Z",
+          "actor": "build",
+          "reason": "Tunnel barize criado, config YAML pronta, Quick Tunnel testado e funcionando."
+        }
+      ],
+      "createdAt": "2026-08-30T19:35:00.000Z",
+      "updatedAt": "2026-08-30T23:35:00.000Z",
+      "path": ".opencode/taskcards/TC-104.json",
+      "taskType": "card",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar um tunel no Cloudflare (cloudflared) para expor o Barize app pela internet. Configurar o backend (porta 8000) e frontend (porta 5174) para acesso externo.",
+      "acceptanceCriteria": [
+        "TUNNEL 1 — cloudflared instalado e configurado",
+        "TUNNEL 2 — Backend acessivel externamente",
+        "TUNNEL 3 — Frontend acessivel externamente",
+        "TUNNEL 4 — URLs de acesso documentadas",
+        "VALIDACAO 5 — Build + testes OK"
+      ],
+      "filesInvolved": [],
+      "tests": [
+        "Tunel conecta",
+        "Backend acessivel",
+        "Frontend acessivel"
+      ],
+      "completedAt": "2026-08-30T23:35:00.000Z"
     }
   }
 }

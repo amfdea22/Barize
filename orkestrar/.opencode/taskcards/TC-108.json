@@ -1,0 +1,27 @@
+{
+  "id": "TC-108",
+  "title": "Diminuir tamanho do cabeçalho do Cardápio Digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T00:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Reduzir o tamanho do cabeçalho do Cardápio Digital para ocupar menos espaço vertical.",
+  "acceptanceCriteria": [
+    "HEADER 1 — Logo reduzida de h-24/w-24 para h-20/w-20",
+    "HEADER 2 — Espaçamento py-6 reduzido para py-4",
+    "HEADER 3 — Margem inferior da logo mb-4 reduzida para mb-3",
+    "HEADER 4 — Título e subtítulo mantidos com tamanho legível",
+    "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Cabeçalho ocupa menos espaço vertical",
+    "Logo mantém qualidade e efeito neon",
+    "Título e subtítulo legíveis",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Ajuste sutil: apenas reduzir logo e padding do header."
+}

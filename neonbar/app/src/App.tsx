@@ -4,6 +4,7 @@ import BottomNav from './components/BottomNav';
 import ToastContainer from './components/Toast';
 
 const Login = lazy(() => import('./pages/Login'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const PDV = lazy(() => import('./pages/PDV'));
 const Comandas = lazy(() => import('./pages/Comandas'));
 const Estoque = lazy(() => import('./pages/Estoque'));
@@ -19,9 +20,12 @@ const DRE = lazy(() => import('./pages/DRE'));
 const Fornecedores = lazy(() => import('./pages/Fornecedores'));
 const POPs = lazy(() => import('./pages/POPs'));
 const Admin = lazy(() => import('./pages/Admin'));
+const Equipe = lazy(() => import('./pages/Equipe'));
+const Impressoras = lazy(() => import('./pages/Impressoras'));
 const AnaliseEstoque = lazy(() => import('./pages/AnaliseEstoque'));
 const FilaPreparo = lazy(() => import('./pages/FilaPreparo'));
 const CardapioDigital = lazy(() => import('./pages/CardapioDigital'));
+const PersonalizarCardapio = lazy(() => import('./pages/PersonalizarCardapio'));
 const Caixa = lazy(() => import('./pages/Caixa'));
 const KitchenDisplay = lazy(() => import('./pages/KitchenDisplay'));
 const GarcomApp = lazy(() => import('./pages/GarcomApp'));
@@ -87,7 +91,8 @@ export default function App() {
           {/* Protected routes */}
           <Route element={<RequireAuth />}>
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Navigate to="/pdv" replace />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/pdv" element={<PDV />} />
               <Route path="/comandas" element={<Comandas />} />
               <Route path="/estoque" element={<Estoque />} />
@@ -106,6 +111,9 @@ export default function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/analise-estoque" element={<AnaliseEstoque />} />
               <Route path="/fila-preparo" element={<FilaPreparo />} />
+              <Route path="/equipe" element={<Equipe />} />
+              <Route path="/impressoras" element={<Impressoras />} />
+              <Route path="/personalizar-cardapio" element={<PersonalizarCardapio />} />
             </Route>
           </Route>
 

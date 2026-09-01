@@ -1,0 +1,25 @@
+{
+  "id": "TC-107",
+  "title": "Importar logo original do Barize para o Cardápio Digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-08-31T23:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Importar a logo original do Barize (barize-logo.png) para o header do Cardápio Digital.",
+  "acceptanceCriteria": [
+    "LOGO 1 — Logo original barize-logo.png exibida no header do Cardápio Digital",
+    "LOGO 2 — Logo mantém proporção e qualidade (object-cover)",
+    "LOGO 3 — Efeito de borda neon e sombra preservados",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Logo original exibida no header",
+    "Logo com borda neon e sombra",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Logo encontrada em neonbar/app/public/barize-logo.png"
+}

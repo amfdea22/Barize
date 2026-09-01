@@ -1,0 +1,32 @@
+{
+  "id": "TC-116",
+  "title": "Criar opção editar cardápio digital no menu personalizar",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T04:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Criar opção de editar os itens, menu e botões do cardápio digital na página de personalização.",
+  "acceptanceCriteria": [
+    "EDIT 1 — Aba 'Editar Itens' na página de personalização",
+    "EDIT 2 — Lista de itens com opção de editar/excluir",
+    "EDIT 3 — Modal para editar nome, descrição, preço, categoria, imagem",
+    "EDIT 4 — Botão para adicionar novo item",
+    "EDIT 5 — Edição das categorias (Coquetéis, Vinhos, Cervejas, Petiscos)",
+    "EDIT 6 — Salvar alterações em localStorage",
+    "VALIDAÇÃO 7 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/PersonalizarCardapio.tsx"
+  ],
+  "tests": [
+    "Aba 'Editar Itens' funciona",
+    "Lista de itens exibida",
+    "Modal de edição abre e salva",
+    "Novo item pode ser adicionado",
+    "Item pode ser excluído",
+    "Categorias editáveis",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Adicionar aba de edição de itens na página de personalização do cardápio."
+}

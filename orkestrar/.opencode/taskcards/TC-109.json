@@ -1,0 +1,26 @@
+{
+  "id": "TC-109",
+  "title": "Corrigir logomarca duplicada no Cardápio Digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T00:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Corrigir logomarca Barize duplicada no Cardápio Digital — remover texto 'Barize' que aparece abaixo da imagem da logo.",
+  "acceptanceCriteria": [
+    "LOGO 1 — Apenas a imagem da logomarca exibida (sem texto 'Barize' abaixo)",
+    "LOGO 2 — Subtítulo 'High-End Cocktails' mantido abaixo da logo",
+    "LOGO 3 — Logo centralizada no header",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Apenas imagem da logo exibida",
+    "Texto 'Barize' não aparece",
+    "Subtítulo 'High-End Cocktails' visível",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Remover h1 com texto 'Barize' do header, manter apenas img e subtítulo."
+}

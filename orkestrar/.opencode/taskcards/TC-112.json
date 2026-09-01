@@ -1,0 +1,30 @@
+{
+  "id": "TC-112",
+  "title": "Implementar textos e figuras do cardápio de referência",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T02:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Copiar os textos e figuras do cardápio de referência e implementar no Cardápio Digital do app Barize.",
+  "acceptanceCriteria": [
+    "ITENS 1 — Negroni Clássico: Gin, Campari, Vermute tinto doce e twist de laranja",
+    "ITENS 2 — Moscow Mule: Vodka, espuma de gengibre, limão tahiti e xarope simples",
+    "ITENS 3 — Fritas Trufadas: Batatas fritas rústicas com azeite trufado e parmesão ralado",
+    "ITENS 4 — Old Fashioned: Bourbon premium, bitters de angostura, torrão de açúcar e casca de laranja",
+    "ITENS 5 — Dry Martini: Gin London Dry, Vermute seco e azeitona siciliana ou twist de limão",
+    "ITENS 6 — Cosmopolitan: Vodka, Cointreau, suco de cranberry e suco de limão fresco",
+    "ITENS 7 — Whisky Sour: Bourbon, suco de limão, xarope de açúcar e clara de ovo pasteurizada",
+    "VALIDAÇÃO 8 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Todos os 7 itens exibidos corretamente",
+    "Descrições conferem com a referência",
+    "Layout mantido",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Itens de exemplo do cardápio de referência para demonstração."
+}

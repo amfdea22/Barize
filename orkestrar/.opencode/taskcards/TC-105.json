@@ -1,0 +1,35 @@
+{
+  "id": "TC-105",
+  "title": "Redesign completo do Cardápio Digital com nova interface premium",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-08-31T22:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Redesenhar completamente a página Cardápio Digital (/cardapio) com interface premium conforme referência visual: header com logo BARIZE neon, cards horizontais com imagem à esquerda, navegação inferior por categorias (Coquetéis, Vinhos, Cervejas, Petiscos), tema escuro elegante com efeitos glassmorphism.",
+  "acceptanceCriteria": [
+    "HEADER 1 — Header com logo BARIZE (ícone de coquetel dentro de círculo neon azul), nome 'BARIZE' e subtítulo 'HIGH-END COCKTAILS'",
+    "CARDS 2 — Cards horizontais com imagem à esquerda (borda arredondada), nome do drink em negrito branco, descrição em cinza",
+    "NAVEGAÇÃO 3 — Barra de navegação inferior com 4 categorias: Coquetéis, Vinhos, Cervejas, Petiscos",
+    "DESIGN 4 — Tema escuro elegante com fundo gradiente, cards com efeito glassmorphism (borda semi-transparente, sombra sutil)",
+    "ANIMAÇÕES 5 — Transições suaves entre categorias, hover nos cards com efeito de brilho",
+    "BUSCA 6 — Campo de busca integrado no header para filtrar itens",
+    "RESPONSIVO 7 — Layout responsivo para mobile (cards empilhados) e desktop (grid)",
+    "PREÇO 8 — Preço exibido em destaque com formatação monetária",
+    "VALIDAÇÃO 9 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx",
+    "neonbar/app/src/index.css"
+  ],
+  "tests": [
+    "Header exibe logo BARIZE com efeito neon, nome e subtítulo",
+    "Cards horizontais com imagem, nome e descrição",
+    "Navegação inferior funciona entre categorias",
+    "Busca filtra itens corretamente",
+    "Animações de transição entre categorias",
+    "Layout responsivo mobile/desktop",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Referência visual: imagem fornecida pelo usuário. Design premium com tema escuro, logo neon, cards horizontais e navegação inferior por categorias."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "TC-113",
+  "title": "Criar descrições inteligentes para itens sem descrição",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T03:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Criar descrições inteligentes para itens do cardápio digital que estão sem descrição de ingredientes.",
+  "acceptanceCriteria": [
+    "DESC 1 — Função para gerar descrição inteligente baseada no nome do produto",
+    "DESC 2 — Descrições para categorias: Drinks, Cervejas, Vinhos, Porções",
+    "DESC 3 — Fallback para produtos sem descrição",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Produtos sem descrição exibem descrição gerada",
+    "Descrições são relevantes para a categoria",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Implementar função getSmartDescription() que gera descrições baseadas no nome e categoria."
+}

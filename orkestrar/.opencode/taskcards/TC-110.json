@@ -1,0 +1,26 @@
+{
+  "id": "TC-110",
+  "title": "Centralizar imagem da logomarca no Cardápio Digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T01:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Centralizar a imagem da logomarca Barize no header do Cardápio Digital.",
+  "acceptanceCriteria": [
+    "LOGO 1 — Imagem da logomarca centralizada horizontalmente no header",
+    "LOGO 2 — Logo mantém tamanho h-20/w-20",
+    "LOGO 3 — Efeito de borda neon e sombra preservados",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Logo centralizada horizontalmente",
+    "Logo com tamanho correto",
+    "Efeito neon visível",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Ajuste de centralização using mx-auto."
+}

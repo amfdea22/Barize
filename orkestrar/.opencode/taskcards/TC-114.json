@@ -1,0 +1,26 @@
+{
+  "id": "TC-114",
+  "title": "Inserir valores dos itens no cardápio digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T03:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Exibir os preços dos itens no cardápio digital do Barize.",
+  "acceptanceCriteria": [
+    "PREÇO 1 — Preço exibido em todos os cards do cardápio",
+    "PREÇO 2 — Formatação monetária (R$ XX,XX)",
+    "PREÇO 3 — Estilo destacado (cor primary-container, font-mono)",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Preço exibido em todos os cards",
+    "Formatação correta (R$ XX,XX)",
+    "Estilo visível e destacado",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Adicionar elemento de preço após a descrição no card."
+}

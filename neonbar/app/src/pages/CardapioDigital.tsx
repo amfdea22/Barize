@@ -1,75 +1,164 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { Search, Store } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 import type { Produto } from '../types';
 import api from '../services/api';
 
-const categoryNames: Record<string, string> = {
-  Drinks: 'Drinks',
-  Cervejas: 'Cervejas',
-  Bebidas: 'Bebidas',
-  Porções: 'Porções',
-  Destilado: 'Destilados',
-  Coquetel: 'Coquetéis',
-  'Não Alcoólico': 'Não Alcoólicos',
-  Vinhos: 'Vinhos',
-  Chopps: 'Chopps',
-};
-
-function getCatName(cat: string) {
-  return categoryNames[cat] || cat;
-}
-
-const categoryOrder = ['Drinks', 'Bebidas', 'Cervejas', 'Destilados', 'Coquetéis', 'Vinhos', 'Chopps', 'Porções', 'Não Alcoólicos'];
-
-const catAccent: Record<string, string> = {
-  Drinks: 'var(--color-primary-container)',
-  Cervejas: 'var(--color-secondary-container)',
-  Bebidas: 'var(--color-primary-container)',
-  Porções: 'var(--color-tertiary-container)',
-  Destilados: 'var(--color-secondary-container)',
-  Coquetéis: 'var(--color-primary-container)',
-  'Não Alcoólicos': 'var(--color-tertiary-container)',
-  Vinhos: 'var(--color-secondary-container)',
-  Chopps: 'var(--color-primary-container)',
-};
-
-function getCatAccent(cat: string) {
-  return catAccent[cat] || 'var(--color-primary-container)';
-}
-
-type ModoCardapio = 'completo' | 'basico';
-
-const MODO_KEY = 'barize-cardapio-modo';
-
-function loadModo(): ModoCardapio {
-  try {
-    return localStorage.getItem(MODO_KEY) === 'basico' ? 'basico' : 'completo';
-  } catch {
-    return 'completo';
+const demoItems = [
+  {
+    id: 1,
+    nome: 'Negroni Clássico',
+    descricao: 'Gin, Campari, Vermute tinto doce e twist de laranja.',
+    categoria: 'Drinks',
+    preco: 32,
+    imagem: '🍹',
+    foto_url: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=300&fit=crop'
+  },
+  {
+    id: 2,
+    nome: 'Moscow Mule',
+    descricao: 'Vodka, espuma de gengibre, limão tahiti e xarope simples.',
+    categoria: 'Drinks',
+    preco: 28,
+    imagem: '🍹',
+    foto_url: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&h=300&fit=crop'
+  },
+  {
+    id: 3,
+    nome: 'Fritas Trufadas',
+    descricao: 'Batatas fritas rústicas com azeite trufado e parmesão ralado.',
+    categoria: 'Porções',
+    preco: 35,
+    imagem: '🍟',
+    foto_url: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop'
+  },
+  {
+    id: 4,
+    nome: 'Old Fashioned',
+    descricao: 'Bourbon premium, bitters de angostura, torrão de açúcar e casca de laranja.',
+    categoria: 'Drinks',
+    preco: 35,
+    imagem: '🥃',
+    foto_url: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&h=300&fit=crop'
+  },
+  {
+    id: 5,
+    nome: 'Dry Martini',
+    descricao: 'Gin London Dry, Vermute seco e azeitona siciliana ou twist de limão.',
+    categoria: 'Drinks',
+    preco: 30,
+    imagem: '🍸',
+    foto_url: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&h=300&fit=crop'
+  },
+  {
+    id: 6,
+    nome: 'Cosmopolitan',
+    descricao: 'Vodka, Cointreau, suco de cranberry e suco de limão fresco.',
+    categoria: 'Drinks',
+    preco: 29,
+    imagem: '🍹',
+    foto_url: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop'
+  },
+  {
+    id: 7,
+    nome: 'Whisky Sour',
+    descricao: 'Bourbon, suco de limão, xarope de açúcar e clara de ovo pasteurizada.',
+    categoria: 'Drinks',
+    preco: 33,
+    imagem: '🥃',
+    foto_url: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&h=300&fit=crop'
   }
+];
+
+const categories = [
+  { id: 'coqueteis', label: 'Coquetéis', icon: 'local_bar', filter: ['Drinks', 'Coquetéis'] },
+  { id: 'vinhos', label: 'Vinhos', icon: 'wine_bar', filter: ['Vinhos'] },
+  { id: 'cervejas', label: 'Cervejas', icon: 'sports_bar', filter: ['Cervejas', 'Chopps'] },
+  { id: 'petiscos', label: 'Petiscos', icon: 'restaurant', filter: ['Porções'] },
+];
+
+function getCategoryForProduct(cat: string): string {
+  const lower = cat.toLowerCase();
+  if (lower.includes('drink') || lower.includes('coquetel')) return 'coqueteis';
+  if (lower.includes('vinho')) return 'vinhos';
+  if (lower.includes('cerveja') || lower.includes('chopp')) return 'cervejas';
+  if (lower.includes('porção') || lower.includes('petisco')) return 'petiscos';
+  return 'coqueteis';
+}
+
+function getBadge(produto: Produto): { text: string; color: string } | null {
+  if ((produto as any).novidade) return { text: 'Novo', color: 'bg-primary-container text-on-primary-fixed' };
+  if ((produto as any).popular) return { text: 'Popular', color: 'bg-surface-container-highest text-on-surface border border-outline/30' };
+  return null;
+}
+
+const smartDescriptions: Record<string, string> = {
+  // Drinks
+  'mojito': 'Refrescante combinação de rum branco, hortelã fresca, limão tahiti e açúcar. Servido com água sanitária.',
+  'caipirinha': 'A clássica brasileira com cachaça artesanal, limão tahiti fresco e açúcar. Perfecção em cada gole.',
+  'piña colada': 'Rum, leite de coco e abacaxi fresco. Uma fuga tropical para o paraíso.',
+  'margarita': 'Tequila premium, licor de laranja e suco de limão fresco. Bordas de sal opcional.',
+  'mojito de frutas': 'Rum branco com frutas frescas da estação, hortelã e limão. Refrescante e vibrante.',
+  'gin tonic': 'Gin artesanal com água tônica premium e botanicals frescos. Elegância em cada gole.',
+  'vodka tonic': 'Vodka premium com água tônica e frutas cítricas. Simplicidade sofisticada.',
+  'rum and coke': 'Rum escuro com cola artesanal e uma pitada de limão. Clássico atemporal.',
+  'whiskey cola': 'Whiskey bourbon com cola artesanal e gelo. Tradição e sabor.',
+  'café martini': 'Vodka, licor de café espresso e xarope de açúcar. Energia e sofisticação.',
+  
+  // Cervejas
+  'lager': 'Cerveja lager refrescante com notas de malte e lúpulo equilibrados. Perfeita para os dias quentes.',
+  'ipa': 'India Pale Ale com notas cítricas e florais. Amargor marcante e final persistente.',
+  'stout': 'Cerveja escura e encorpada com notas de café e chocolate. Perfeita para noites frias.',
+  'pilsner': 'Cerveja clara e refrescante com amargor sutil. Equilíbrio perfeito.',
+  'weiss': 'Cerveja de trigo alemã com notas de banana e cravo. Suave e refrescante.',
+  'amber': 'Cerveja ámbar com notas de caramelo e malte tostado. Sabor equilibrado.',
+  'ale': 'Cerveja artesanal com notas frutadas e especiadas. Caráter único.',
+  
+  // Vinhos
+  'tinto': 'Vinho tinto encorpado com notas de frutas escuras e especiadas. Perfeito com carnes vermelhas.',
+  'branco': 'Vinho branco fresco com notas cítricas e florais. Ideal com peixes e frutos do mar.',
+  'rosé': 'Vinho rosé refrescante com notas de frutas vermelhas. Perfeito para dias quentes.',
+  'espumante': 'Espumante elegante com bolhas finas e persistentes. Celebre os momentos especiais.',
+  'champagne': 'Champagne autêntico com notas de pão torrado e frutas secas. Luxo em cada gole.',
+  
+  // Porções
+  'batata frita': 'Batatas crocantes por fora e macias por dentro. Temperadas com sal e ervas finas.',
+  'onion rings': 'Anéis de cebola empanados e crocantes. Acompanham molho especial da casa.',
+  'nachos': 'Tortilhas crocantes com queijo derretido, guacamole e sour cream. Perfeito para compartilhar.',
+  'bolinho de bacalhau': 'Bolinhos crocantes com bacalhau fresco e ervas. Tradição portuguesa.',
+  'espetinho': 'Espetinhos grelhados com carne suculenta e temperos especiais.',
+  'porção de frios': 'Seleção de queijos, presuntos e azeitonas. Perfeito para acompanhar vinhos.',
+};
+
+function getSmartDescription(nome: string, categoria: string, descricaoOriginal?: string): string {
+  if (descricaoOriginal && descricaoOriginal.trim()) {
+    return descricaoOriginal;
+  }
+  
+  const nomeLower = nome.toLowerCase();
+  
+  // Procura por correspondência exata
+  for (const [key, desc] of Object.entries(smartDescriptions)) {
+    if (nomeLower.includes(key)) {
+      return desc;
+    }
+  }
+  
+  // Descrições genéricas por categoria
+  const genericByCategory: Record<string, string> = {
+    'Drinks': `Coquetel artesanal ${nome} preparado com ingredientes selecionados e técnicas Premium.`,
+    'Cervejas': `Cerveja ${nome} com sabor único e personalidade marcante.`,
+    'Vinhos': `Vinho ${nome} com notas complexas e final elegante.`,
+    'Porções': `Porção ${nome} preparada na hora com ingredientes frescos.`,
+    'Destilados': `Destilado ${nome} de qualidade premium.`,
+    'Não Alcoólicos': `Bebida ${nome} refrescante e saborosa.`,
+  };
+  
+  return genericByCategory[categoria] || `Produto ${nome} com qualidade garantida.`;
 }
 
 export default function CardapioDigital() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('');
-  const [modo, setModo] = useState<ModoCardapio>(loadModo);
-  const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
-  const mainRef = useRef<HTMLElement>(null);
-  const navRef = useRef<HTMLDivElement>(null);
-
-  const basico = modo === 'basico';
-
-  const toggleModo = () => {
-    setModo((prev) => {
-      const next = prev === 'completo' ? 'basico' : 'completo';
-      try {
-        localStorage.setItem(MODO_KEY, next);
-      } catch {}
-      return next;
-    });
-  };
+  const [activeCategory, setActiveCategory] = useState('coqueteis');
 
   useEffect(() => {
     api.get('/cardapio/')
@@ -79,306 +168,131 @@ export default function CardapioDigital() {
   }, []);
 
   const filtered = useMemo(() => {
-    if (!search) return produtos;
-    const q = search.toLowerCase();
-    return produtos.filter(
-      (p) =>
-        p.nome.toLowerCase().includes(q) ||
-        (p.descricao && p.descricao.toLowerCase().includes(q)) ||
-        getCatName(p.categoria).toLowerCase().includes(q)
-    );
-  }, [produtos, search]);
-
-  const grouped = useMemo(() => {
-    const groups: Record<string, Produto[]> = {};
-    for (const p of filtered) {
-      const cat = p.categoria || 'Outros';
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(p);
-    }
-    return Object.entries(groups).sort(([a], [b]) => {
-      const ia = categoryOrder.indexOf(getCatName(a));
-      const ib = categoryOrder.indexOf(getCatName(b));
-      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
-    });
-  }, [filtered]);
-
-  const categories = useMemo(() => grouped.map(([cat]) => cat), [grouped]);
-
-  useEffect(() => {
-    if (grouped.length > 0 && !activeCategory) {
-      setActiveCategory(grouped[0][0]);
-    }
-  }, [grouped, activeCategory]);
-
-  useEffect(() => {
-    const main = mainRef.current;
-    if (!main || grouped.length === 0) return;
-
-    const handleScroll = () => {
-      const scrollTop = main.scrollTop;
-      const headerOffset = 140;
-
-      let current = grouped[0][0];
-      for (const [cat] of grouped) {
-        const el = sectionRefs.current.get(cat);
-        if (el && el.offsetTop - headerOffset <= scrollTop) {
-          current = cat;
-        }
-      }
-      setActiveCategory(current);
-    };
-
-    main.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => main.removeEventListener('scroll', handleScroll);
-  }, [grouped]);
-
-  const scrollToCategory = useCallback((cat: string) => {
-    const el = sectionRefs.current.get(cat);
-    const main = mainRef.current;
-    if (el && main) {
-      main.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
-    }
-  }, []);
-
-  const setSectionRef = useCallback(
-    (cat: string) => (el: HTMLElement | null) => {
-      if (el) sectionRefs.current.set(cat, el);
-      else sectionRefs.current.delete(cat);
-    },
-    []
-  );
+    const allItems = [...demoItems, ...produtos];
+    return allItems.filter((p) => getCategoryForProduct(p.categoria) === activeCategory);
+  }, [produtos, activeCategory]);
 
   return (
-    <div className="h-screen flex flex-col bg-[var(--color-background)] text-[var(--color-on-surface)]">
-      <header className="sticky top-0 z-50 bg-[var(--color-surface)]/80 backdrop-blur-xl border-b border-[rgba(var(--overlay-rgb),0.06)]">
-        <div className="px-lg pt-md pb-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-container)] flex items-center justify-center shadow-[0_0_12px_rgba(0,229,255,0.2)]">
-                <Store size={20} className="text-[var(--color-on-primary-container)]" />
-              </div>
-              <div>
-                <h1 className="text-[18px] font-bold tracking-tight text-[var(--color-on-surface)] leading-tight">
-                  BARIZE
-                </h1>
-                <p className="text-[10px] font-mono text-[var(--color-on-surface-variant)] uppercase tracking-[0.15em]">
-                  Cardápio Digital
-                </p>
-                      </div>
-                    </div>
-            <div className="flex items-center gap-3">
-              <span className="text-label-md text-[var(--color-outline)]">
-                {filtered.length} {filtered.length === 1 ? 'item' : 'itens'}
-              </span>
-              <button
-                type="button"
-                onClick={toggleModo}
-                aria-pressed={basico}
-                title={basico ? 'Modo Básico ativo — clique para o modo Completo' : 'Ativar modo Básico (nome, preço e foto apenas)'}
-                className={[
-                  'px-3 py-1.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border transition-all duration-200 select-none',
-                  basico
-                    ? 'text-[var(--color-on-primary-container)] border-transparent shadow-[0_0_16px_rgba(0,229,255,0.2)]'
-                    : 'text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:text-[var(--color-on-surface)] hover:border-[rgba(var(--overlay-rgb),0.15)]',
-                ].join(' ')}
-                style={{ backgroundColor: basico ? 'var(--color-primary-container)' : 'var(--color-surface-container-high)' }}
-              >
-                {basico ? 'Básico' : 'Completo'}
-              </button>
-            </div>
-          </div>
-
-          <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-outline)]" />
-            <input
-              type="text"
-              placeholder="Buscar no cardápio..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.06)] rounded-lg pl-9 pr-3 py-2 text-body-md outline-none text-[var(--color-on-surface)] placeholder:text-[var(--color-on-surface-variant)]/40 transition-all duration-200 focus:border-[var(--color-primary-container)] focus:shadow-[0_0_0_1px_var(--color-primary-container)]"
-            />
-          </div>
+    <div className="min-h-screen bg-background text-on-background pb-[100px] pt-[220px]">
+      {/* Header - Glassmorphism */}
+      <header className="glassmorphism fixed top-0 w-full z-50 border-b border-outline/20 flex flex-col items-center justify-center py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+        <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-primary-container shadow-[0_0_15px_rgba(0,229,255,0.4)] mb-3 flex items-center justify-center bg-black mx-auto">
+          <img
+            src="/barize-logo.png"
+            alt="Barize Logo"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          <span className="material-symbols-outlined text-primary-container text-5xl hidden" data-weight="fill">local_bar</span>
         </div>
-
-        {categories.length > 0 && (
-          <nav
-            ref={navRef}
-            className="px-lg pb-2.5 overflow-x-auto"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            <style>{'nav::-webkit-scrollbar { display: none; }'}</style>
-            <div className="flex gap-2 min-w-max">
-              {categories.map((cat) => {
-                const isActive = activeCategory === cat;
-                const accent = getCatAccent(getCatName(cat));
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => scrollToCategory(cat)}
-                    className={[
-                      'relative px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap',
-                      'transition-all duration-300 ease-out select-none border',
-                      isActive
-                        ? 'text-[var(--color-on-primary-container)] border-transparent shadow-[0_0_16px_rgba(0,229,255,0.2)]'
-                        : 'text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container)] hover:border-[rgba(var(--overlay-rgb),0.15)]',
-                    ].join(' ')}
-                    style={{
-                      backgroundColor: isActive ? accent : 'var(--color-surface-container-high)',
-                    }}
-                  >
-                    {getCatName(cat)}
-                  </button>
-                );
-              })}
-            </div>
-          </nav>
-        )}
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-2xl tracking-[0.2em] text-on-surface font-light uppercase">
+            Barize
+          </h1>
+          <span className="text-[10px] text-primary/80 uppercase tracking-[0.3em] mt-2 font-medium">
+            Cardápio Digital
+          </span>
+        </div>
       </header>
 
-      <main
-        ref={mainRef}
-        className="flex-1 overflow-y-scroll scrollbar-visible"
-        style={{ scrollbarGutter: 'stable' }}
-      >
+      {/* Content */}
+      <main className="max-w-[1200px] mx-auto px-6">
         {loading ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 border-2 border-[var(--color-primary-container)] border-t-transparent rounded-full animate-spin" />
-              <span className="text-label-md text-[var(--color-outline)]">Carregando cardápio...</span>
-            </div>
+          <div className="flex flex-col items-center justify-center py-20">
+            <div className="w-12 h-12 border-2 border-primary-container/30 border-t-primary-container rounded-full animate-spin mb-4" />
+            <p className="text-on-surface-variant text-sm">Carregando cardápio...</p>
           </div>
-        ) : grouped.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full gap-3 px-lg">
-            <div className="w-16 h-16 rounded-full bg-[var(--color-surface-container)] flex items-center justify-center">
-              <Search size={28} className="text-[var(--color-outline)] opacity-40" />
-            </div>
-            <p className="text-body-md text-[var(--color-on-surface-variant)]">
-              {search ? 'Nenhum item encontrado' : 'Cardápio vazio'}
-            </p>
-            {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="text-label-md text-[var(--color-primary)] hover:underline focus:outline-none"
-              >
-                Limpar busca
-              </button>
-            )}
+        ) : filtered.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <span className="material-symbols-outlined text-6xl text-on-surface-variant/30 mb-4">local_bar</span>
+            <p className="text-on-surface-variant text-sm">Nenhum item encontrado</p>
           </div>
         ) : (
-          <div className="px-lg py-md space-y-8">
-            {grouped.map(([cat, items]) => (
-              <section
-                key={cat}
-                ref={setSectionRef(cat)}
-                data-category={cat}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-1 h-7 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: getCatAccent(getCatName(cat)) }}
-                  />
-                  <h2 className="text-headline-md font-bold text-[var(--color-on-surface)]">
-                    {getCatName(cat)}
-                  </h2>
-                  <span className="text-label-md text-[var(--color-outline)] ml-auto">
-                    {items.length}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {items.map((produto, idx) => (
-                    <div
-                      key={produto.id}
-                      className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] hover:border-[var(--color-primary-container)]/30 transition-all duration-500 ease-out overflow-hidden"
-                      style={{
-                        animation: 'fadeIn 0.35s ease-out both',
-                        animationDelay: `${(idx % 4) * 60}ms`,
-                      }}
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden relative bg-[var(--color-surface-container-high)]">
-                        {produto.foto_url ? (
-                          <img
-                            src={produto.foto_url}
-                            alt={produto.nome}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                          />
-                        ) : produto.imagem ? (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <span className="text-4xl transition-transform duration-500 group-hover:scale-110">
-                              {produto.imagem}
-                            </span>
-                          </div>
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <span className="text-4xl opacity-20">???</span>
-                          </div>
-                        )}
-
-                        <span
-                          className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border pointer-events-none"
-                          style={{
-                            backgroundColor: 'rgba(0,0,0,0.6)',
-                            borderColor: `color-mix(in srgb, ${getCatAccent(getCatName(cat))} 40%, transparent)`,
-                            color: getCatAccent(getCatName(cat)),
-                          }}
-                        >
-                          {getCatName(produto.categoria)}
-                        </span>
-
-                        <div
-                          className="absolute top-0 left-2 right-2 h-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{ backgroundColor: getCatAccent(getCatName(produto.categoria)) }}
-                        />
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((produto) => {
+              const badge = getBadge(produto);
+              return (
+                <article
+                  key={produto.id}
+                  className="bg-[#2a2a2a] rounded-2xl overflow-hidden flex md:flex-col hover:shadow-lg hover:shadow-primary-container/20 hover:border-primary-container/50 transition-all duration-300 group border border-outline/20"
+                >
+                  {/* Image */}
+                  <div className="w-[130px] md:w-full md:h-[220px] flex-shrink-0 bg-surface-container relative overflow-hidden">
+                    {produto.foto_url ? (
+                      <img
+                        src={produto.foto_url}
+                        alt={produto.nome}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-5xl">{produto.imagem || '🍹'}</span>
                       </div>
-
-                      <div className="p-3 space-y-1.5">
-                        <h3 className="text-[13px] font-semibold leading-snug text-[var(--color-on-surface)] break-words">
-                          {produto.nome}
-                        </h3>
-                        {produto.descricao && (
-                          <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-relaxed line-clamp-3">
-                            {produto.descricao}
-                          </p>
-                        )}
-                        <span
-                          className="inline-block font-mono text-[15px] font-semibold tracking-tight"
-                          style={{ color: getCatAccent(getCatName(produto.categoria)) }}
-                        >
-                          R$ {produto.preco_venda.toFixed(2)}
-                        </span>
+                    )}
+                    {badge && (
+                      <div className={`absolute top-2 right-2 ${badge.color} px-2 py-0.5 rounded text-[10px] uppercase shadow-sm font-medium`}>
+                        {badge.text}
                       </div>
+                    )}
+                  </div>
 
-                      {!basico && produto.ingredientes && (
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-16px)] opacity-0 group-hover:opacity-100 translate-y-0 group-hover:-translate-y-full transition-all duration-300 ease-out pointer-events-none">
-                          <div className="bg-[var(--color-surface-container-high)] text-[11px] leading-snug text-[var(--color-on-surface-variant)] px-3 py-2 rounded-lg border border-[rgba(var(--overlay-rgb),0.06)] shadow-xl backdrop-blur-sm">
-                            <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--color-primary-container)] block mb-0.5">Ingredientes</span>
-                            {produto.ingredientes}
-                          </div>
+                  {/* Info */}
+                  <div className="p-4 flex flex-col justify-between flex-1">
+                    <div>
+                      <h3 className="text-headline-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+                        {produto.nome}
+                      </h3>
+                      <p className="text-body-md text-on-surface-variant line-clamp-2 mt-1">
+                        {getSmartDescription(produto.nome, produto.categoria, produto.descricao)}
+                      </p>
+                      {produto.preco > 0 && (
+                        <div className="flex items-baseline gap-1 mt-3">
+                          <span className="text-[10px] text-primary/60 font-medium">R$</span>
+                          <span className="text-primary-container font-semibold text-lg tracking-tight">
+                            {produto.preco.toFixed(2).replace('.', ',')}
+                          </span>
                         </div>
                       )}
                     </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        )}
-
-        {!loading && grouped.length > 0 && (
-          <footer className="text-center py-6 px-lg">
-            <div className="w-12 h-0.5 bg-[var(--color-surface-container-high)] mx-auto mb-4 rounded-full" />
-            <p className="text-label-md text-[var(--color-outline)] mb-1">
-              BARIZE — Cardápio Digital
-            </p>
-            <p className="text-[10px] font-mono text-[var(--color-outline)]/50 tracking-wider">
-              &copy; {new Date().getFullYear()} Todos os direitos reservados
-            </p>
-          </footer>
+                  </div>
+                </article>
+              );
+            })}
+          </section>
         )}
       </main>
+
+      {/* Bottom Navigation - Material Symbols */}
+      <nav className="glassmorphism fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-4 border-t border-outline/30 md:hidden">
+        {categories.map((cat) => {
+          const isActive = activeCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`flex flex-col items-center justify-center transition-all active:scale-90 duration-150 ${
+                isActive ? 'text-primary-container' : 'text-on-surface-variant hover:text-primary'
+              }`}
+            >
+              <span
+                className={`material-symbols-outlined text-[28px] ${isActive ? 'font-semibold' : ''}`}
+                {...(isActive ? { 'data-weight': 'fill' } : {})}
+              >
+                {cat.icon}
+              </span>
+              <span className="text-[10px] mt-1 font-medium">
+                {cat.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }
-

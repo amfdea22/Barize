@@ -1,0 +1,26 @@
+{
+  "id": "TC-106",
+  "title": "Remover busca e adicionar descrições no Cardápio Digital",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-08-31T23:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Remover campo de busca do Cardápio Digital e garantir que todos os itens tenham descrição visível.",
+  "acceptanceCriteria": [
+    "SEARCH 1 — Campo de busca removido do header do Cardápio Digital",
+    "DESCRIPTION 2 — Todos os itens do cardápio exibem descrição abaixo do nome",
+    "DESCRIPTION 3 — Descrição com estilo text-on-surface-variant line-clamp-2",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/CardapioDigital.tsx"
+  ],
+  "tests": [
+    "Campo de busca não aparece no header",
+    "Todos os itens exibem descrição",
+    "Descrição formatada corretamente",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Simples: remover input de busca e manter descrição em todos os cards."
+}

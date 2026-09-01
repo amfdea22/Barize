@@ -1,0 +1,28 @@
+{
+  "id": "TC-117",
+  "title": "Inserir ícone de tema no Dashboard",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T05:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Inserir ícone de meia lua no Dashboard para alternar entre aparência clara e escura do app Barize.",
+  "acceptanceCriteria": [
+    "ICON 1 — Ícone de meia lua no header do Dashboard",
+    "ICON 2 — Clique alterna entre tema claro/escuro",
+    "ICON 3 — Ícone muda conforme tema atual (lua/sol)",
+    "ICON 4 — Tema persiste em localStorage",
+    "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx"
+  ],
+  "tests": [
+    "Ícone aparece no header",
+    "Clique alterna tema",
+    "Ícone reflete tema atual",
+    "Tema persiste ao recarregar",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Adicionar botão com ícone Moon/Sun no header do Dashboard usando useTheme hook."
+}
