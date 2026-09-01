@@ -1,0 +1,24 @@
+{
+  "id": "TC-122",
+  "title": "Texto branco no card de faturamento do Dashboard",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T08:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Trocar a cor do valor do faturamento no Dashboard para branco.",
+  "acceptanceCriteria": [
+    "TEXT 1 — Valor do faturamento exibido em branco (text-white)",
+    "TEXT 2 — Label 'Faturamento' mantido em text-white/80",
+    "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx"
+  ],
+  "tests": [
+    "Valor do faturamento em branco",
+    "Label em branco semi-transparente",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Trocar text-[var(--color-secondary-container)] por text-white no valor do card de faturamento."
+}

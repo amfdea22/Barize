@@ -79,28 +79,27 @@ export default function Dashboard() {
       <header className="sticky top-0 z-40 bg-gradient-to-r from-[#004f58] to-[#00363d] px-4 h-16 flex items-center justify-between shadow-lg shadow-[#004f58]/30">
         <button
           onClick={() => setDrawerOpen(true)}
-          className="p-2.5 rounded-xl bg-[var(--color-primary-container)]/20 hover:bg-[var(--color-primary-container)]/30 transition-all"
+          className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
         >
-          <Menu size={20} className="text-[var(--color-primary-container)]" />
+          <Menu size={20} className="text-white" />
         </button>
-        <div className="font-bold text-lg text-white tracking-tight">Barize</div>
         <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-xl bg-[var(--color-primary-container)]/20 hover:bg-[var(--color-primary-container)]/30 transition-all"
+            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
           >
             {theme === 'dark' ? (
-              <Sun size={20} className="text-[var(--color-primary-container)]" />
+              <Sun size={20} className="text-white" />
             ) : (
-              <Moon size={20} className="text-[var(--color-primary-container)]" />
+              <Moon size={20} className="text-white" />
             )}
           </button>
           <div ref={userButtonRef}>
             <button
               onClick={() => setUserMenuOpen(true)}
-              className="w-9 h-9 rounded-xl bg-[var(--color-primary-container)]/20 flex items-center justify-center hover:bg-[var(--color-primary-container)]/30 transition-all"
+              className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
             >
-              <span className="material-symbols-outlined text-[var(--color-primary-container)] text-lg">person</span>
+              <span className="material-symbols-outlined text-white text-lg">person</span>
             </button>
           </div>
         </div>
@@ -108,15 +107,15 @@ export default function Dashboard() {
 
       <main className="flex-1 overflow-y-auto px-4 py-6 space-y-6 pb-24">
         <section className="space-y-1">
-          <h1 className="text-2xl font-bold text-white">Olá!</h1>
-          <p className="text-sm text-white/70 flex items-center gap-1.5">
+          <h1 className="text-2xl font-bold text-on-surface">Olá!</h1>
+          <p className="text-sm text-on-surface-variant flex items-center gap-1.5">
             <Clock size={14} />
             {diasSemana[hoje.getDay()]}, {hoje.getDate()} de {meses[hoje.getMonth()]}
           </p>
         </section>
 
         <section className="grid grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-[#004f58] to-[#001f24] rounded-2xl p-4 flex flex-col justify-between min-h-[110px] shadow-lg shadow-[#004f58]/40">
+          <div className="bg-gradient-to-br from-[#004f58] to-[#001f24] rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
             <div className="flex items-center gap-2 text-white/80">
               <div className="w-8 h-8 rounded-lg bg-[var(--color-primary-container)]/20 flex items-center justify-center">
                 <Receipt size={18} className="text-[var(--color-primary-container)]" />
@@ -127,14 +126,14 @@ export default function Dashboard() {
               {carregando ? '—' : stats.totalPedidos}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-[#825500] to-[#452b00] rounded-2xl p-4 flex flex-col justify-between min-h-[110px] shadow-lg shadow-[#feaa00]/30">
+          <div className="bg-gradient-to-br from-[#825500] to-[#452b00] rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
             <div className="flex items-center gap-2 text-white/80">
               <div className="w-8 h-8 rounded-lg bg-[var(--color-secondary-container)]/20 flex items-center justify-center">
                 <TrendingUp size={18} className="text-[var(--color-secondary-container)]" />
               </div>
               <span className="text-xs font-bold uppercase tracking-wider">Faturamento</span>
             </div>
-            <div className="text-2xl font-bold text-[var(--color-secondary-container)] font-mono mt-4">
+            <div className="text-2xl font-bold text-white font-mono mt-4">
               {carregando ? '—' : `R$ ${stats.faturamentoTurno.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
             </div>
           </div>
@@ -145,7 +144,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => navigate('/pdv')}
-              className="bg-[#004f58]/80 backdrop-blur-md border border-white/20 text-white rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-[#004f58] active:brightness-90 transition-all"
+              className="bg-[#004f58]/80 backdrop-blur-md border border-[var(--color-outline)]/20 text-on-surface rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-[#004f58] active:brightness-90 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-container)]/25 flex items-center justify-center">
                 <PlusCircle size={28} className="text-[var(--color-primary-container)]" />
@@ -154,7 +153,7 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => navigate('/sala')}
-              className="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-white/20 active:brightness-90 transition-all"
+              className="bg-[var(--color-surface-container-high)] border border-[var(--color-outline)]/20 text-on-surface rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-[var(--color-surface-container-highest)] active:brightness-90 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-container)]/25 flex items-center justify-center">
                 <LayoutGrid size={28} className="text-[var(--color-primary-container)]" />
@@ -163,7 +162,7 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => navigate('/sala')}
-              className="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-white/20 active:brightness-90 transition-all"
+              className="bg-[var(--color-surface-container-high)] border border-[var(--color-outline)]/20 text-on-surface rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-[var(--color-surface-container-highest)] active:brightness-90 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-[var(--color-secondary-container)]/25 flex items-center justify-center">
                 <LogOut size={28} className="text-[var(--color-secondary-container)]" />
@@ -174,17 +173,17 @@ export default function Dashboard() {
         </section>
 
         {stats.ativoRecente.length > 0 && (
-          <section className="space-y-4 border-t border-white/10 pt-6">
-            <h2 className="text-lg font-semibold text-[var(--color-on-surface)]">Atividade Recente</h2>
-            <div className="flex flex-col bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden">
+          <section className="space-y-4 border-t border-[var(--color-outline)]/10 pt-6">
+            <h2 className="text-lg font-semibold text-on-surface">Atividade Recente</h2>
+            <div className="flex flex-col bg-[var(--color-surface-container)] backdrop-blur-md border border-[var(--color-outline)]/20 rounded-2xl overflow-hidden">
               {stats.ativoRecente.map((item, i) => (
                 <div
                   key={i}
                   className={`flex justify-between items-center px-5 py-4 ${
-                    i < stats.ativoRecente.length - 1 ? 'border-b border-white/10' : ''
-                  } hover:bg-white/10 transition-colors`}
+                    i < stats.ativoRecente.length - 1 ? 'border-b border-[var(--color-outline)]/10' : ''
+                  } hover:bg-[var(--color-surface-container-high)] transition-colors`}
                 >
-                  <span className="text-sm font-medium text-white uppercase">{item.nome}</span>
+                  <span className="text-sm font-medium text-on-surface uppercase">{item.nome}</span>
                   <span className="text-sm font-bold font-mono text-[var(--color-secondary-container)]">
                     R$ {item.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </span>

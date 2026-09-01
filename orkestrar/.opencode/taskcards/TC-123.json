@@ -1,0 +1,25 @@
+{
+  "id": "TC-123",
+  "title": "Melhorar visibilidade dos ícones da barra superior do Dashboard",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T08:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Mudar cor dos ícones da barra superior do Dashboard para branco com mais visibilidade sobre o fundo azul escuro.",
+  "acceptanceCriteria": [
+    "ICON 1 — Ícone hamburger em branco (text-white)",
+    "ICON 2 — Ícones de tema (Sun/Moon) em branco (text-white)",
+    "ICON 3 — Ícone de usuário em branco (text-white)",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx"
+  ],
+  "tests": [
+    "Ícones visíveis sobre fundo azul escuro",
+    "Ícones brancos com bom contraste",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Trocar text-[var(--color-primary-container)] por text-white nos ícones do header."
+}

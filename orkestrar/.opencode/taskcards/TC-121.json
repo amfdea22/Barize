@@ -1,0 +1,24 @@
+{
+  "id": "TC-121",
+  "title": "Retirar nome Barize da barra azul superior do Dashboard",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T07:30:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Retirar o texto 'Barize' da barra azul superior do Dashboard.",
+  "acceptanceCriteria": [
+    "HEADER 1 — Texto 'Barize' removido do header",
+    "HEADER 2 — Apenas botões hamburger, tema e usuário mantidos",
+    "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx"
+  ],
+  "tests": [
+    "Texto 'Barize' não aparece no header",
+    "Botões permanecem funcionais",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Remover div com texto 'Barize' do header do Dashboard."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "TC-120",
+  "title": "Corrigir cores de fonte na troca de tema claro/escuro",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T07:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Corrigir cores de fonte que estão fixas em branco e somem quando o tema é trocado para claro. Textos devem usar variáveis CSS para adaptar-se ao tema.",
+  "acceptanceCriteria": [
+    "TEXT 1 — Dashboard: 'Olá!' e data usam text-on-background em vez de text-white",
+    "TEXT 2 — Dashboard: Header 'Barize' usa text-on-background em vez de text-white",
+    "TEXT 3 — Dashboard: Cards de stats mantêm gradientes mas textos adaptam ao tema",
+    "TEXT 4 — Dashboard: Botões de ação rápida usam text-on-surface em vez de text-white",
+    "TEXT 5 — Drawer e UserMenu verificados para textos adaptáveis",
+    "VALIDAÇÃO 6 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx",
+    "neonbar/app/src/components/Drawer.tsx",
+    "neonbar/app/src/components/UserMenu.tsx"
+  ],
+  "tests": [
+    "Texto 'Olá!' visível no tema claro",
+    "Data visível no tema claro",
+    "Header 'Barize' visível no tema claro",
+    "Botões de ação visíveis no tema claro",
+    "Cards de stats legíveis no tema claro",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Trocar text-white e cores fixas por variáveis CSS como text-on-background, text-on-surface."
+}

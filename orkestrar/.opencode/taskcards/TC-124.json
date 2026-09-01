@@ -1,0 +1,26 @@
+{
+  "id": "TC-124",
+  "title": "Fundo cinza sólido nos cards Mapa de Mesas e Fechar Conta",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T09:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Mudar fundo dos cards Mapa de Mesas e Fechar Conta no Dashboard para cinza sólido sem transparência.",
+  "acceptanceCriteria": [
+    "CARD 1 — Card Mapa de Mesas com fundo cinza sólido (bg-surface-container-high)",
+    "CARD 2 — Card Fechar Conta com fundo cinza sólido (bg-surface-container-high)",
+    "CARD 3 — Sem backdrop-blur ou transparência",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/Dashboard.tsx"
+  ],
+  "tests": [
+    "Cards com fundo cinza sólido",
+    "Sem efeito de blur",
+    "Texto legível",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Trocar bg-[var(--color-surface-container-high)] backdrop-blur-md por bg-[var(--color-surface-container-high)] nos dois cards."
+}

@@ -1,6 +1,200 @@
 {
-  "nextId": 118,
+  "nextId": 125,
   "cards": {
+    "TC-124": {
+      "id": "TC-124",
+      "title": "Fundo cinza sólido nos cards Mapa de Mesas e Fechar Conta",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T09:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Mudar fundo dos cards Mapa de Mesas e Fechar Conta no Dashboard para cinza sólido sem transparência.",
+      "acceptanceCriteria": [
+        "CARD 1 — Card Mapa de Mesas com fundo cinza sólido (bg-surface-container-high)",
+        "CARD 2 — Card Fechar Conta com fundo cinza sólido (bg-surface-container-high)",
+        "CARD 3 — Sem backdrop-blur ou transparência",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Cards com fundo cinza sólido",
+        "Sem efeito de blur",
+        "Texto legível",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Trocar bg-[var(--color-surface-container-high)] backdrop-blur-md por bg-[var(--color-surface-container-high)] nos dois cards."
+    },
+    "TC-123": {
+      "id": "TC-123",
+      "title": "Melhorar visibilidade dos ícones da barra superior do Dashboard",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T08:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Mudar cor dos ícones da barra superior do Dashboard para branco com mais visibilidade sobre o fundo azul escuro.",
+      "acceptanceCriteria": [
+        "ICON 1 — Ícone hamburger em branco (text-white)",
+        "ICON 2 — Ícones de tema (Sun/Moon) em branco (text-white)",
+        "ICON 3 — Ícone de usuário em branco (text-white)",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Ícones visíveis sobre fundo azul escuro",
+        "Ícones brancos com bom contraste",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Trocar text-[var(--color-primary-container)] por text-white nos ícones do header."
+    },
+    "TC-122": {
+      "id": "TC-122",
+      "title": "Texto branco no card de faturamento do Dashboard",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T08:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Trocar a cor do valor do faturamento no Dashboard para branco.",
+      "acceptanceCriteria": [
+        "TEXT 1 — Valor do faturamento exibido em branco (text-white)",
+        "TEXT 2 — Label 'Faturamento' mantido em text-white/80",
+        "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Valor do faturamento em branco",
+        "Label em branco semi-transparente",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Trocar text-[var(--color-secondary-container)] por text-white no valor do card de faturamento."
+    },
+    "TC-121": {
+      "id": "TC-121",
+      "title": "Retirar nome Barize da barra azul superior do Dashboard",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T07:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Retirar o texto 'Barize' da barra azul superior do Dashboard.",
+      "acceptanceCriteria": [
+        "HEADER 1 — Texto 'Barize' removido do header",
+        "HEADER 2 — Apenas botões hamburger, tema e usuário mantidos",
+        "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Texto 'Barize' não aparece no header",
+        "Botões permanecem funcionais",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Remover div com texto 'Barize' do header do Dashboard."
+    },
+    "TC-120": {
+      "id": "TC-120",
+      "title": "Corrigir cores de fonte na troca de tema claro/escuro",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T07:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Corrigir cores de fonte que estão fixas em branco e somem quando o tema é trocado para claro. Textos devem usar variáveis CSS para adaptar-se ao tema.",
+      "acceptanceCriteria": [
+        "TEXT 1 — Dashboard: 'Olá!' e data usam text-on-background em vez de text-white",
+        "TEXT 2 — Dashboard: Header 'Barize' usa text-on-background em vez de text-white",
+        "TEXT 3 — Dashboard: Cards de stats mantêm gradientes mas textos adaptam ao tema",
+        "TEXT 4 — Dashboard: Botões de ação rápida usam text-on-surface em vez de text-white",
+        "TEXT 5 — Drawer e UserMenu verificados para textos adaptáveis",
+        "VALIDAÇÃO 6 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx",
+        "neonbar/app/src/components/Drawer.tsx",
+        "neonbar/app/src/components/UserMenu.tsx"
+      ],
+      "tests": [
+        "Texto 'Olá!' visível no tema claro",
+        "Data visível no tema claro",
+        "Header 'Barize' visível no tema claro",
+        "Botões de ação visíveis no tema claro",
+        "Cards de stats legíveis no tema claro",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Trocar text-white e cores fixas por variáveis CSS como text-on-background, text-on-surface."
+    },
+    "TC-119": {
+      "id": "TC-119",
+      "title": "Remover sombras dos cards de pedido e faturamento no Dashboard",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T06:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Remover sombras (shadow-lg) dos cards de Pedidos e Faturamento no Dashboard.",
+      "acceptanceCriteria": [
+        "SHADOW 1 — Card de Pedidos sem sombra shadow-lg",
+        "SHADOW 2 — Card de Faturamento sem sombra shadow-lg",
+        "SHADOW 3 — Visual limpo e flat mantido",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Dashboard.tsx"
+      ],
+      "tests": [
+        "Cards sem sombra visível",
+        "Layout mantido",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Remover classes shadow-lg e shadow-* dos dois cards de stats no Dashboard."
+    },
+    "TC-118": {
+      "id": "TC-118",
+      "title": "Personalizar temas claros e escuros do Barize App",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T06:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar página de personalização de temas claros e escuros do Barize App, permitindo ao usuário customizar cores primárias, secundárias, superfícies e fundos de cada tema.",
+      "acceptanceCriteria": [
+        "TEMA 1 — Página PersonalizarTemas com abas 'Escuro' e 'Claro'",
+        "TEMA 2 — Seletor de cor para primária, secundária, superfície e fundo de cada tema",
+        "TEMA 3 — Previews em tempo real para cada tema",
+        "TEMA 4 — Temas predefinidos (Velocity Dark, Neon Blue, Emerald, Violet)",
+        "TEMA 5 — Aplicar cores via CSS variables dinamicamente",
+        "TEMA 6 — Salvar preferências em localStorage e restaurar ao iniciar",
+        "TEMA 7 — Navegação a partir do menu Mais",
+        "VALIDAÇÃO 8 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PersonalizarTemas.tsx",
+        "neonbar/app/src/hooks/useTheme.ts",
+        "neonbar/app/src/App.tsx",
+        "neonbar/app/src/pages/Mais.tsx",
+        "neonbar/app/src/index.css"
+      ],
+      "tests": [
+        "Página PersonalizarTemas carrega corretamente",
+        "Abas Escuro/Claro funcionam",
+        "Seletor de cor altera preview em tempo real",
+        "Temas predefinidos são aplicados",
+        "Cores personalizadas são salvas em localStorage",
+        "Tema é restaurado ao recarregar app",
+        "Navegação pelo menu Mais funciona",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Implementar sistema de personalização de temas com CSS variables dinâmicas e persistência em localStorage."
+    },
     "TC-117": {
       "id": "TC-117",
       "title": "Inserir ícone de tema no Dashboard",
