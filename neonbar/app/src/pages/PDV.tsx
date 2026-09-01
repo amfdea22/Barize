@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle,
   Minus, Trash2, Banknote, CreditCard, QrCode, ArrowLeft, Check, Receipt,
-  ChevronDown, ChevronUp, Users,
+  ChevronDown, ChevronUp, Users, Calculator,
 } from 'lucide-react';
 import { toast } from '../components/Toast';
 import Badge from '../components/Badge';
@@ -113,6 +113,7 @@ export default function PDV() {
     total: number; forma_pagamento: FormaPagamento; troco: number;
     mesa: string; cliente: string; vendedor: string; observacao: string;
   } | null>(null);
+  const [showCalc, setShowCalc] = useState(true);
 
   const carregarProdutos = async () => {
     try {
@@ -584,7 +585,100 @@ export default function PDV() {
           </div>
         </div>
       </Modal>
-      <Modal open={showPagamento} onClose={() => !finalizando && setShowPagamento(false)} title="Pagamento">
+      <Modal open={showPagamento} onClose={() => !finalizando && setShowPagamento(false)} title="Pagamento"
+        footer={
+          <div className="space-y-4">
+            <div>
+              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Forma de Pagamento</label>
+              <div className="grid grid-cols-4 gap-2">
+                {FORMAS_PAGAMENTO.map(f => {
+                  const Icon = f.icon;
+                  const active = formaPagamento === f.key;
+                  return (
+                    <button key={f.key} type="button"
+                      onClick={() => { setFormaPagamento(f.key); setValorRecebido(''); }}
+                      className={`flex flex-col items-center gap-1.5 py-3 rounded-xl border transition-all cursor-pointer ${
+                        active
+                          ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] border-[var(--color-primary)]'
+                          : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border-transparent'
+                      }`}>
+                      <Icon size={20} />
+                      <span className="text-[10px] font-medium">{f.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-3">
+              <button
+                type="button"
+                onClick={() => { setDividirConta(!dividirConta); setValorCustom(''); }}
+                className={`w-full flex items-center justify-between h-11 px-4 rounded-lg border transition-all cursor-pointer ${
+                  dividirConta
+                    ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] border-[var(--color-primary)]'
+                    : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:bg-[var(--color-surface-container-highest)]'
+                }`}
+              >
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  <Users size={16} /> Dividir Conta
+                </span>
+                <span className="text-[11px] font-mono">{dividirConta ? 'ON' : 'OFF'}</span>
+              </button>
+              {dividirConta && (
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Pessoas</label>
+                    <div className="flex items-center gap-2">
+                      <button type="button" onClick={() => setQtdPessoas(Math.max(2, qtdPessoas - 1))}
+                        className="w-10 h-10 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] font-bold text-lg flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">-</button>
+                      <input type="number" min={2} max={20} value={qtdPessoas}
+                        onChange={e => setQtdPessoas(Math.max(2, Math.min(20, parseInt(e.target.value) || 2)))}
+                        className="flex-1 h-10 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] text-center font-mono font-bold outline-none focus:border-[var(--color-primary-container)] transition-colors" />
+                      <button type="button" onClick={() => setQtdPessoas(Math.min(20, qtdPessoas + 1))}
+                        className="w-10 h-10 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] font-bold text-lg flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer">+</button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <span className="text-sm text-amber-400 uppercase font-medium">Por pessoa</span>
+                    <span className="text-base font-bold text-amber-400 font-mono">R$ {valorPorPessoa.toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            {ehDinheiro && (
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Valor Recebido</label>
+                  <div className="bg-[var(--color-surface-container-lowest)] rounded-xl px-4 py-3 text-right text-lg font-bold font-mono text-[var(--color-on-surface)] h-12 flex items-center justify-end">
+                    {valorRecebido ? fmtValor(parseInt(valorRecebido, 10)) : 'R$ 0,00'}
+                  </div>
+                </div>
+                {troco > 0 && (
+                  <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-green-500/10 border border-green-500/30">
+                    <span className="text-sm text-green-400 uppercase font-medium">Troco</span>
+                    <span className="text-base font-bold text-green-400 font-mono">R$ {troco.toFixed(2)}</span>
+                  </div>
+                )}
+                <button type="button" onClick={() => setShowCalc(!showCalc)}
+                  className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] text-xs font-medium cursor-pointer hover:bg-[var(--color-surface-container-highest)] transition-colors">
+                  <Calculator size={14} />
+                  {showCalc ? 'Fechar Calculadora' : 'Abrir Calculadora'}
+                </button>
+                {showCalc && <TecladoNumerico onDigit={handleDigit} onBackspace={handleBackspace} onClear={handleClear} />}
+              </div>
+            )}
+            <div className="flex gap-3 pt-2">
+              <button type="button" onClick={() => setShowPagamento(false)} disabled={finalizando}
+                className="flex items-center justify-center gap-2 h-11 px-4 rounded-lg border border-[rgba(var(--overlay-rgb),0.15)] text-[var(--color-on-surface-variant)] transition-colors cursor-pointer text-sm shrink-0 disabled:opacity-40">
+                <ArrowLeft size={16} /> Voltar
+              </button>
+              <button type="button" onClick={finalizeSale} disabled={!podeConfirmar || finalizando}
+                className="flex-1 flex items-center justify-center gap-2 h-11 rounded-lg bg-[var(--color-primary-container)] text-[var(--color-on-primary)] font-bold text-sm uppercase tracking-wider transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+                {finalizando ? (<><div className="w-4 h-4 border-2 border-[var(--color-on-primary)] border-t-transparent rounded-full animate-spin" /> Finalizando...</>) : (<><Receipt size={16} /> Confirmar</>)}
+              </button>
+            </div>
+          </div>
+        }>
         <div className="space-y-5">
           <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-2">
             <div className="flex justify-between text-sm text-[var(--color-on-surface-variant)]">
@@ -681,6 +775,7 @@ export default function PDV() {
 ))}
               </div>
             </div>
+          </div>
           <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-on-surface)] cursor-pointer">
@@ -749,176 +844,7 @@ export default function PDV() {
               <span className="text-base font-bold text-[var(--color-on-surface)]">Total a Pagar</span>
               <span className="text-xl font-bold text-[var(--color-primary)] font-mono">R$ {total.toFixed(2)}</span>
             </div>
-          </div>
-
-          <div>
-            <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Forma de Pagamento</label>
-            <div className="grid grid-cols-4 gap-2">
-              {FORMAS_PAGAMENTO.map(f => {
-                const Icon = f.icon;
-                const active = formaPagamento === f.key;
-                return (
-                  <button key={f.key} type="button"
-                    onClick={() => { setFormaPagamento(f.key); setValorRecebido(''); }}
-                    className={`flex flex-col items-center gap-1.5 py-3 rounded-xl border transition-all cursor-pointer ${
-                      active
-                        ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] border-[var(--color-primary)]'
-                        : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border-transparent'
-                    }`}>
-                    <Icon size={20} />
-                    <span className="text-[10px] font-medium">{f.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dividir Conta */}
-          <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-3">
-            <button
-              type="button"
-              onClick={() => { setDividirConta(!dividirConta); setValorCustom(''); }}
-              className={`w-full flex items-center justify-between h-11 px-4 rounded-lg border transition-all cursor-pointer ${
-                dividirConta
-                  ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] border-[var(--color-primary)]'
-                  : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border-[rgba(var(--overlay-rgb),0.08)] hover:bg-[var(--color-surface-container-highest)]'
-              }`}
-            >
-              <span className="flex items-center gap-2 text-sm font-medium">
-                <Users size={16} /> Dividir Conta
-              </span>
-              <span className="text-[11px] font-mono">{dividirConta ? 'ON' : 'OFF'}</span>
-            </button>
-
-            {dividirConta && (
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Pessoas</label>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setQtdPessoas(Math.max(2, qtdPessoas - 1))}
-                      className="w-10 h-10 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] font-bold text-lg flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer"
-                    >
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      min={2}
-                      max={20}
-                      value={qtdPessoas}
-                      onChange={e => setQtdPessoas(Math.max(2, Math.min(20, parseInt(e.target.value) || 2)))}
-                      className="flex-1 h-10 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] text-center font-mono font-bold outline-none focus:border-[var(--color-primary-container)] transition-colors"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setQtdPessoas(Math.min(20, qtdPessoas + 1))}
-                      className="w-10 h-10 rounded-lg bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] font-bold text-lg flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                  <span className="text-sm text-amber-400 uppercase font-medium">Por pessoa</span>
-                  <span className="text-base font-bold text-amber-400 font-mono">R$ {valorPorPessoa.toFixed(2)}</span>
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Valor customizado por pessoa (opcional)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step="0.50"
-                    value={valorCustom}
-                    onChange={e => setValorCustom(e.target.value)}
-                    placeholder="R$ 0,00"
-                    className="w-full h-10 rounded-lg bg-[var(--color-surface-container-high)] border border-[rgba(var(--overlay-rgb),0.08)] text-sm text-[var(--color-on-surface)] px-3 outline-none focus:border-[var(--color-primary-container)] transition-colors placeholder:text-[var(--color-outline)]"
-                  />
-                  {valorCustomNum > 0 && (
-                    <p className="mt-1 text-[11px] text-[var(--color-on-surface-variant)] font-mono">
-                      {Math.ceil(total / valorCustomNum)} pessoa(s) × R$ {valorCustomNum.toFixed(2)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {ehDinheiro && (
-            <div className="space-y-3">
-              <div>
-                <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Valor Recebido</label>
-                <div className="bg-[var(--color-surface-container-lowest)] rounded-xl px-4 py-3 text-right text-lg font-bold font-mono text-[var(--color-on-surface)] h-12 flex items-center justify-end">
-                  {valorRecebido ? fmtValor(parseInt(valorRecebido, 10)) : 'R$ 0,00'}
-                </div>
-              </div>
-              {recebido > 0 && recebido < total && (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-sm text-amber-400">
-                  <AlertCircle size={14} />
-                  <span>Faltam R$ {(total - recebido).toFixed(2)}</span>
-                </div>
-              )}
-              {troco > 0 && (
-                <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <span className="text-sm text-green-400 uppercase font-medium">Troco</span>
-                  <span className="text-base font-bold text-green-400 font-mono">R$ {troco.toFixed(2)}</span>
-                </div>
-              )}
-              <TecladoNumerico onDigit={handleDigit} onBackspace={handleBackspace} onClear={handleClear} />
-            </div>
-          )}
-
-          {formaPagamento === 'pix' && (
-            <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 text-center">
-              <QrCode size={48} className="mx-auto text-[var(--color-primary-container)] mb-2" />
-              <p className="text-sm text-[var(--color-on-surface-variant)]">Aguardando pagamento via PIX</p>
-              <p className="text-xs text-[var(--color-outline)] mt-1">Valor: R$ {total.toFixed(2)}</p>
-            </div>
-          )}
-
-          {formaPagamento === 'cartao_credito' && (
-            <div>
-              <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Parcelamento</label>
-              <div className="flex gap-1.5 flex-wrap">
-                {[1,2,3,4,5,6,7,8,9,10,11,12].map(v => (
-                  <button key={v} onClick={() => setParcelas(v)}
-                    className={`px-3 h-9 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      parcelas === v
-                        ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]'
-                        : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)]'
-                    }`}>
-                    {v === 1 ? 'A vista' : `${v}x`}
-                  </button>
-                ))}
-              </div>
-              {parcelas > 1 && (
-                <p className="mt-2 text-xs text-[var(--color-on-surface-variant)] font-mono">{parcelas}x de R$ {(total / parcelas).toFixed(2)}</p>
-              )}
-            </div>
-          )}
-
-          {podeConfirmar && (
-            <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-green-500/10 border border-green-500/30">
-              <span className="text-sm text-green-400 uppercase font-medium flex items-center gap-2"><Check size={14} /> Recebido</span>
-              <span className="text-base font-bold text-green-400 font-mono">R$ {(ehDinheiro ? recebido : total).toFixed(2)}</span>
-            </div>
-          )}
-
-          <div className="flex gap-3 pt-2">
-            <button type="button" onClick={() => setShowPagamento(false)} disabled={finalizando}
-              className="flex items-center justify-center gap-2 h-11 px-4 rounded-lg border border-[rgba(var(--overlay-rgb),0.15)] text-[var(--color-on-surface-variant)] transition-colors cursor-pointer text-sm shrink-0 disabled:opacity-40">
-              <ArrowLeft size={16} /> Voltar
-            </button>
-            <button type="button" onClick={finalizeSale} disabled={!podeConfirmar || finalizando}
-              className="flex-1 flex items-center justify-center gap-2 h-11 rounded-lg bg-[var(--color-primary-container)] text-[var(--color-on-primary)] font-bold text-sm uppercase tracking-wider transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
-              {finalizando ? (<>
-                <div className="w-4 h-4 border-2 border-[var(--color-on-primary)] border-t-transparent rounded-full animate-spin" /> Finalizando...
-              </>) : (<><Receipt size={16} /> Confirmar</>)}
-            </button>
-          </div>
-          </div>
+        </div>
         </div>
       </Modal>
       <Modal open={!!ultimoPagamento} onClose={() => setUltimoPagamento(null)} title="Venda Finalizada">
