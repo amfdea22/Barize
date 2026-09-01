@@ -1,0 +1,26 @@
+{
+  "id": "TC-125",
+  "title": "Botão de carrinho estático sem barra de rolagem no PDV",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T10:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Garantir que o botão de carrinho no PDV fique estático (fixo na parte inferior) sem barra de rolagem.",
+  "acceptanceCriteria": [
+    "BOT 1 — Botão de carrinho fixo na parte inferior da tela",
+    "BOT 2 — Sem barra de rolagem no botão de carrinho",
+    "BOT 3 — Área de produtos rola independentemente",
+    "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/PDV.tsx"
+  ],
+  "tests": [
+    "Botão de carrinho visível sem scroll",
+    "Área de produtos rola corretamente",
+    "Botão sempre visível na parte inferior",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Verificar se o botão está dentro de um container com overflow ou se há algum estilo causando scrollbar."
+}

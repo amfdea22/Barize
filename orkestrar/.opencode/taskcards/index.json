@@ -1,6 +1,56 @@
 {
-  "nextId": 125,
+  "nextId": 127,
   "cards": {
+    "TC-126": {
+      "id": "TC-126",
+      "title": "Texto centralizado no botão Adicionar Pedido do PDV",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T11:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Centralizar o texto do botão 'Adicionar Pedido' no PDV ao selecionar item.",
+      "acceptanceCriteria": [
+        "TEXT 1 — Texto 'Adicionar Pedido' centralizado horizontalmente no botão",
+        "TEXT 2 — Botão mantém estilo e funcionalidade",
+        "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Texto centralizado no botão",
+        "Botão funcional",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Botão já tem flex items-center justify-center — verificar se há algum estilo conflitante."
+    },
+    "TC-125": {
+      "id": "TC-125",
+      "title": "Botão de carrinho estático sem barra de rolagem no PDV",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T10:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Garantir que o botão de carrinho no PDV fique estático (fixo na parte inferior) sem barra de rolagem.",
+      "acceptanceCriteria": [
+        "BOT 1 — Botão de carrinho fixo na parte inferior da tela",
+        "BOT 2 — Sem barra de rolagem no botão de carrinho",
+        "BOT 3 — Área de produtos rola independentemente",
+        "VALIDAÇÃO 4 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Botão de carrinho visível sem scroll",
+        "Área de produtos rola corretamente",
+        "Botão sempre visível na parte inferior",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Verificar se o botão está dentro de um container com overflow ou se há algum estilo causando scrollbar."
+    },
     "TC-124": {
       "id": "TC-124",
       "title": "Fundo cinza sólido nos cards Mapa de Mesas e Fechar Conta",

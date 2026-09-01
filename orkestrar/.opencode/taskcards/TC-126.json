@@ -1,0 +1,24 @@
+{
+  "id": "TC-126",
+  "title": "Texto centralizado no botão Adicionar Pedido do PDV",
+  "status": "draft",
+  "taskType": "card",
+  "createdAt": "2026-09-01T11:00:00.000Z",
+  "createdBy": "user",
+  "agent": "build",
+  "objective": "Centralizar o texto do botão 'Adicionar Pedido' no PDV ao selecionar item.",
+  "acceptanceCriteria": [
+    "TEXT 1 — Texto 'Adicionar Pedido' centralizado horizontalmente no botão",
+    "TEXT 2 — Botão mantém estilo e funcionalidade",
+    "VALIDAÇÃO 3 — Build + lint frontend OK (0 erros)"
+  ],
+  "filesInvolved": [
+    "neonbar/app/src/pages/PDV.tsx"
+  ],
+  "tests": [
+    "Texto centralizado no botão",
+    "Botão funcional",
+    "Build + lint frontend OK"
+  ],
+  "notes": "Botão já tem flex items-center justify-center — verificar se há algum estilo conflitante."
+}

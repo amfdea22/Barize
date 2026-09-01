@@ -398,7 +398,7 @@ export default function PDV() {
         )}
       </div>
 
-      <div className="safe-bottom border-t border-[rgba(var(--overlay-rgb),0.1)] bg-[rgba(var(--glass-rgb),0.8)] backdrop-blur-[16px]">
+      <div className="sticky bottom-0 z-30 safe-bottom border-t border-[rgba(var(--overlay-rgb),0.1)] bg-[var(--color-surface)]">
         {cart.length > 0 ? (
           <div className="px-4 py-3">
             <button onClick={() => setShowCart(true)}
