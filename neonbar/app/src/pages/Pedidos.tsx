@@ -19,9 +19,9 @@ const STATUS_CONFIG: Record<
   { label: string; color: string; borderClass: string; badgeBg: string; btnBg: string; btnLabel: string; nextStatus: PedidoStatus | null }
 > = {
   Novo: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
-  Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Pronto' },
-  Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: 'bg-purple-500 text-white', btnLabel: 'Servir Agora', nextStatus: 'Entregue' },
-  Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: 'bg-[#2a2a2a] text-gray-400', btnLabel: 'Concluído', nextStatus: null },
+  Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
+  Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: '', btnLabel: '', nextStatus: null },
+  Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: '', btnLabel: 'Concluído', nextStatus: null },
   Cancelado: { label: 'Cancelado', color: 'text-red-400', borderClass: 'border-l-red-400', badgeBg: 'bg-red-400/20', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
   Arquivado: { label: 'Arquivado', color: 'text-gray-500', borderClass: 'border-l-gray-600', badgeBg: 'bg-gray-600/20', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
 };
@@ -190,6 +190,7 @@ export default function Pedidos() {
               const cfg = STATUS_CONFIG[pedido.status as PedidoStatus] || STATUS_CONFIG.Novo;
               const timer = formatTimer(pedido.created_at, now);
               const isActive = pedido.status === 'Novo' || pedido.status === 'Preparando' || pedido.status === 'Pronto';
+              const isPronto = pedido.status === 'Pronto';
               const isEntregue = pedido.status === 'Entregue';
               const isCancelado = pedido.status === 'Cancelado';
               
@@ -259,13 +260,18 @@ export default function Pedidos() {
 
                   {/* Action Button */}
                   <div className="px-3 pb-3">
-                    {cfg.nextStatus && isActive ? (
+                    {cfg.nextStatus && isActive && !isPronto ? (
                       <button
                         onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
                         className={`w-full h-10 rounded-lg ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer`}
                       >
                         {cfg.btnLabel}
                       </button>
+                    ) : isPronto ? (
+                      <div className="w-full h-10 rounded-lg bg-[#2a2a2a] text-gray-400 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 cursor-default">
+                        <span className="material-symbols-outlined text-[14px]">check</span>
+                        Servido
+                      </div>
                     ) : isActive ? (
                       <button
                         onClick={() => setCancelPedido(pedido)}
