@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  Search,
   Clock,
-  MessageSquare,
   RefreshCw,
   X,
   CheckCircle,
@@ -18,25 +16,20 @@ type StatusFilter = 'ativos' | '' | 'Novo' | 'Preparando' | 'Pronto' | 'Entregue
 
 const STATUS_CONFIG: Record<
   PedidoStatus,
-  { label: string; color: string; glow: string; bg: string; border: string; btnBg: string; btnLabel: string; nextStatus: PedidoStatus | null }
+  { label: string; color: string; borderColor: string; btnBg: string; btnLabel: string; nextStatus: PedidoStatus | null }
 > = {
-  Novo: { label: 'Novo', color: 'text-cyan-400', glow: 'shadow-[0px_0px_8px_rgba(0,218,243,0.3)]', bg: 'bg-cyan-400/10', border: 'border-cyan-400/30', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
-  Preparando: { label: 'Preparando', color: 'text-amber-400', glow: 'shadow-[0px_0px_8px_rgba(254,170,0,0.3)]', bg: 'bg-amber-400/10', border: 'border-amber-400/30', btnBg: 'bg-amber-400 text-black', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
-  Pronto: { label: 'Pronto', color: 'text-green-400', glow: 'shadow-[0px_0px_8px_rgba(0,200,83,0.3)]', bg: 'bg-green-400/10', border: 'border-green-400/30', btnBg: 'bg-purple-500 text-white', btnLabel: 'Servir Agora', nextStatus: 'Entregue' },
-  Entregue: { label: 'Entregue', color: 'text-gray-400', glow: '', bg: 'bg-white/5', border: 'border-white/10', btnBg: 'bg-[#2a2a2a] text-gray-500', btnLabel: 'Concluído', nextStatus: null },
-  Cancelado: { label: 'Cancelado', color: 'text-red-400', glow: '', bg: 'bg-red-400/10', border: 'border-red-400/20', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
-  Arquivado: { label: 'Arquivado', color: 'text-gray-500', glow: '', bg: 'bg-white/5', border: 'border-white/10', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
+  Novo: { label: 'Novo', color: 'text-cyan-400', borderColor: 'border-t-cyan-400', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
+  Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderColor: 'border-t-cyan-400', btnBg: 'bg-amber-400 text-black', btnLabel: 'Finalizar', nextStatus: 'Pronto' },
+  Pronto: { label: 'Pronto', color: 'text-green-400', borderColor: 'border-t-green-400', btnBg: 'bg-[#2a2a2a] text-gray-400', btnLabel: 'Servido', nextStatus: 'Entregue' },
+  Entregue: { label: 'Entregue', color: 'text-gray-400', borderColor: 'border-t-gray-500', btnBg: '', btnLabel: 'Concluído', nextStatus: null },
+  Cancelado: { label: 'Cancelado', color: 'text-red-400', borderColor: 'border-t-red-400', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
+  Arquivado: { label: 'Arquivado', color: 'text-gray-500', borderColor: 'border-t-gray-600', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
 };
 
-const STATUS_FILTERS: Array<{ key: StatusFilter; label: string }> = [
-  { key: 'ativos', label: 'Ativos' },
-  { key: '', label: 'Todos' },
-  { key: 'Novo', label: 'Novos' },
-  { key: 'Preparando', label: 'Preparando' },
-  { key: 'Pronto', label: 'Prontos' },
-  { key: 'Entregue', label: 'Entregues' },
-  { key: 'Arquivado', label: 'Arquivados' },
-  { key: 'Cancelado', label: 'Cancelados' },
+const STATUS_FILTERS: Array<{ key: StatusFilter; label: string; icon: string }> = [
+  { key: 'ativos', label: 'Todos', icon: 'list' },
+  { key: 'Preparando', label: 'Em Preparo', icon: 'pending' },
+  { key: 'Pronto', label: 'Aguardando', icon: 'schedule' },
 ];
 
 function parseDate(s?: string | null): number {
@@ -47,13 +40,13 @@ function parseDate(s?: string | null): number {
   return d.getTime();
 }
 
-function formatTimer(created?: string | null, now: number = Date.now()) {
+function formatElapsed(created?: string | null, now: number = Date.now()) {
   const ms = parseDate(created);
-  if (isNaN(ms)) return '--:--';
-  const diff = Math.floor((now - ms) / 1000);
-  const mins = Math.floor(diff / 60);
-  const secs = diff % 60;
-  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  if (isNaN(ms)) return '00 min';
+  const diff = Math.floor((now - ms) / 60000);
+  if (diff < 1) return 'agora';
+  if (diff === 1) return '1 min';
+  return `${diff} min`;
 }
 
 function getMinutesElapsed(created?: string | null, now: number = Date.now()) {
@@ -65,14 +58,11 @@ function getMinutesElapsed(created?: string | null, now: number = Date.now()) {
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('ativos');
-  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [cancelPedido, setCancelPedido] = useState<Pedido | null>(null);
   const [motivoCancelamento, setMotivoCancelamento] = useState('');
   const [cancelling, setCancelling] = useState(false);
   const [now, setNow] = useState(Date.now());
-  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
   useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
 
@@ -88,18 +78,6 @@ export default function Pedidos() {
 
   useEffect(() => { loadData(); }, [loadData]);
   useEffect(() => { const interval = setInterval(loadData, 10000); return () => clearInterval(interval); }, [loadData]);
-
-  useEffect(() => {
-    if (!showFilterDropdown) return;
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('[data-filter-dropdown]')) {
-        setShowFilterDropdown(false);
-      }
-    };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, [showFilterDropdown]);
 
   const handleStatusChange = async (id: number, status: PedidoStatus) => {
     try {
@@ -127,23 +105,19 @@ export default function Pedidos() {
     }
   };
 
-  const filtered = pedidos.filter((p) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return (
-      String(p.id).includes(q) ||
-      (p.mesa || '').toLowerCase().includes(q) ||
-      (p.cliente || '').toLowerCase().includes(q)
-    );
-  });
+  const filtered = pedidos;
 
   const activePedidos = pedidos.filter(
     (p) => p.status === 'Novo' || p.status === 'Preparando' || p.status === 'Pronto'
   );
 
-  const tempoMedio = activePedidos.length > 0
-    ? Math.round(activePedidos.reduce((acc, p) => acc + getMinutesElapsed(p.created_at, now), 0) / activePedidos.length)
-    : 0;
+  const atrasados = activePedidos.filter(p => getMinutesElapsed(p.created_at, now) > 10).length;
+
+  const getCount = (filter: StatusFilter) => {
+    if (filter === 'ativos') return activePedidos.length;
+    if (filter === '') return pedidos.length;
+    return pedidos.filter(p => p.status === filter).length;
+  };
 
   if (loading) {
     return (
@@ -158,15 +132,11 @@ export default function Pedidos() {
 
   return (
     <div className="min-h-screen bg-[#131313]">
-      {/* TopAppBar */}
+      {/* Header */}
       <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-12 bg-[#131313] border-b border-white/10">
         <div className="flex items-center gap-2">
-          <img 
-            className="w-8 h-8 rounded-full object-cover" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbCrx3Mg8po9xJhaWT8Jsu0LeY7TUO_KuKO91JJRAXQRYnbUK5yBf8y6V7gF_cnOqHGBDqx4C-rFNASl_o_JduSQ06oCid68qghk-ZIyBdBxBvXqJ98k9GsmvotPPaNzfMTHGs4UQLMlF-E3kmA9E29GA74vQ7jsA78Rs2sF4kyJ6Hy_QmFKsZvGHGaiqJAb5Vwbty_eNSsWw6uMJ3bBD8gSdv4QNtgW2kP8q4Upo3qNJg7cEDtbaQ"
-            alt="Barize" 
-          />
-          <span className="text-base font-bold text-cyan-400 tracking-tighter">BARIZE</span>
+          <span className="material-symbols-outlined text-cyan-400 text-[24px]">local_bar</span>
+          <span className="text-lg font-bold text-cyan-400 tracking-tight">Barize</span>
         </div>
         <button onClick={loadData} className="p-2 text-cyan-400 active:scale-95 transition-transform">
           <RefreshCw size={20} />
@@ -174,234 +144,148 @@ export default function Pedidos() {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 md:px-6 max-w-7xl mx-auto py-6 pt-[72px] pb-[90px]">
-        {/* Header Section */}
-        <div className="mb-6 flex flex-col gap-3">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#e5e2e1] mb-1 tracking-tight">Pedidos Ativos</h1>
-            <p className="text-sm text-[#bac9cc]">{activePedidos.length} ativo(s) • Tempo médio: {tempoMedio}min</p>
-          </div>
-
-          {/* Search */}
-          <div className="relative">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input
-              type="text"
-              placeholder="Buscar por ID, mesa ou cliente..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 rounded-xl bg-[#1c1b1b] border border-white/10 text-xs font-mono text-[#e5e2e1] placeholder:text-gray-500 focus:outline-none focus:border-cyan-400/50 transition-all"
-            />
-          </div>
+      <main className="px-4 md:px-6 max-w-2xl mx-auto py-6 pt-[72px] pb-[90px]">
+        {/* Title Section */}
+        <div className="mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-[#e5e2e1] mb-1 tracking-tight">Pedidos Ativos</h1>
+          <p className="text-sm text-[#bac9cc]">{activePedidos.length} pedidos na fila{atrasados > 0 ? ` • ${atrasados} em atraso` : ''}</p>
+        </div>
           
-          {/* Filters */}
-          <div className="relative" data-filter-dropdown>
-            <button
-              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-              className="w-full h-10 px-4 rounded-xl bg-[#1c1b1b] border border-white/10 text-[10px] font-mono font-bold uppercase tracking-wider text-[#e5e2e1] flex items-center justify-between transition-all cursor-pointer hover:border-cyan-400/30"
-            >
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                {STATUS_FILTERS.find(f => f.key === statusFilter)?.label || 'Todos'}
-              </span>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className={`text-gray-400 transition-transform duration-200 ${showFilterDropdown ? 'rotate-180' : ''}`}>
-                <path d="M2.5 3.75L5 6.25L7.5 3.75" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-
-            {showFilterDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-1 py-1 bg-[#1c1b1b] border border-white/10 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-[20px] z-50 overflow-hidden">
-                {STATUS_FILTERS.map((f) => (
-                  <button
-                    key={f.key}
-                    onClick={() => { setStatusFilter(f.key); setShowFilterDropdown(false); }}
-                    className={`w-full h-9 px-4 flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                      statusFilter === f.key
-                        ? 'bg-cyan-400/10 text-cyan-400'
-                        : 'text-gray-400 hover:bg-white/5'
-                    }`}
-                  >
-                    <span className={`w-1.5 h-1.5 rounded-full ${
-                      statusFilter === f.key ? 'bg-cyan-400' : 'bg-transparent'
-                    }`} />
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Filters */}
+        <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide mb-4">
+          {STATUS_FILTERS.map(filter => {
+            const count = getCount(filter.key);
+            const isActive = statusFilter === filter.key;
+            return (
+              <button
+                key={filter.key}
+                onClick={() => setStatusFilter(filter.key)}
+                className={`h-10 px-4 rounded-full font-medium text-[13px] whitespace-nowrap active:scale-95 transition-all flex items-center justify-center gap-1.5 ${
+                  isActive
+                    ? 'bg-[#00e5ff] text-black shadow-[0px_0px_8px_rgba(0,218,243,0.3)]'
+                    : 'bg-[#2a2a2a] text-[#e5e2e1] border border-white/10 hover:bg-[#393939]'
+                }`}
+              >
+                {isActive && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
+                {filter.label} ({count})
+              </button>
+            );
+          })}
         </div>
 
-        {/* Orders Grid */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Orders List */}
+        <div className="space-y-4">
           {filtered.length === 0 ? (
-            <div className="col-span-full flex flex-col items-center justify-center py-16 gap-3">
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
               <CheckCircle size={48} className="text-gray-600" />
-              <p className="text-gray-500 text-sm">{search ? 'Nenhum pedido encontrado' : 'Nenhum pedido nesta categoria'}</p>
+              <p className="text-gray-500 text-sm">Nenhum pedido nesta categoria</p>
             </div>
           ) : (
             filtered.map(pedido => {
               const cfg = STATUS_CONFIG[pedido.status as PedidoStatus] || STATUS_CONFIG.Novo;
-              const timer = formatTimer(pedido.created_at, now);
-              const isExpanded = expandedId === pedido.id;
+              const timer = formatElapsed(pedido.created_at, now);
               const isActive = pedido.status === 'Novo' || pedido.status === 'Preparando' || pedido.status === 'Pronto';
               const isEntregue = pedido.status === 'Entregue';
               const isCancelado = pedido.status === 'Cancelado';
+              const isPronto = pedido.status === 'Pronto';
               
               return (
                 <div
                   key={pedido.id}
-                  className={`relative rounded-2xl overflow-hidden transition-all duration-300 ${
-                    pedido.status === 'Novo'
-                      ? `bg-gradient-to-br from-cyan-500/10 to-blue-500/5 border border-cyan-500/30 shadow-[0_0_20px_rgba(0,218,243,0.15)]`
-                      : `bg-[#1a1a1a] border border-white/5`
-                  } ${isEntregue || isCancelado ? 'opacity-50' : ''}`}
+                  className={`bg-[#1c1b1b] rounded-xl border border-t-4 ${cfg.borderColor} overflow-hidden transition-all duration-200 ${
+                    isEntregue || isCancelado ? 'opacity-50' : ''
+                  }`}
                 >
-                  {/* Color Accent Bar */}
-                  <div className={`absolute top-0 left-0 w-1 h-full ${
-                    pedido.status === 'Novo' ? 'bg-cyan-400' :
-                    pedido.status === 'Preparando' ? 'bg-amber-400' :
-                    pedido.status === 'Pronto' ? 'bg-green-400' :
-                    pedido.status === 'Entregue' ? 'bg-gray-500' :
-                    'bg-red-400'
-                  }`} />
-
-                  {/* Card Content */}
-                  <div
-                    onClick={() => setExpandedId(isExpanded ? null : pedido.id)}
-                    className="p-4 pl-5 cursor-pointer active:bg-white/5 transition-colors"
-                  >
-                    {/* Header */}
+                  {/* Card Header */}
+                  <div className="px-4 pt-4 pb-3">
                     <div className="flex justify-between items-start mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className={`text-xl font-black font-mono ${cfg.color}`}>
-                          #{pedido.id}
-                        </span>
+                      <div>
                         {pedido.mesa && (
-                          <span className="text-[10px] font-bold text-cyan-400 bg-cyan-400/15 px-2 py-0.5 rounded-full">
-                            Mesa {pedido.mesa}
-                          </span>
+                          <h3 className="text-lg font-bold text-[#e5e2e1] mb-0.5">
+                            {pedido.mesa.includes('BALC') ? `BALCÃO ${pedido.mesa}` : `MESA ${pedido.mesa}`}
+                          </h3>
+                        )}
+                        <p className="text-sm text-gray-400">
+                          {pedido.cliente || 'Walk-in'} • #{String(pedido.id).padStart(4, '0')}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          pedido.status === 'Novo' ? 'bg-cyan-400/20 text-cyan-400' :
+                          pedido.status === 'Preparando' ? 'bg-amber-400/20 text-amber-400' :
+                          pedido.status === 'Pronto' ? 'bg-green-400/20 text-green-400' :
+                          pedido.status === 'Entregue' ? 'bg-gray-500/20 text-gray-400' :
+                          'bg-red-400/20 text-red-400'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            pedido.status === 'Novo' ? 'bg-cyan-400 animate-pulse' :
+                            pedido.status === 'Preparando' ? 'bg-amber-400' :
+                            pedido.status === 'Pronto' ? 'bg-green-400' :
+                            pedido.status === 'Entregue' ? 'bg-gray-400' :
+                            'bg-red-400'
+                          }`} />
+                          {cfg.label}
+                        </div>
+                        {isActive && (
+                          <div className="flex items-center gap-1 text-amber-400">
+                            <Clock size={12} />
+                            <span className="text-[11px] font-mono font-bold">{timer}</span>
+                          </div>
                         )}
                       </div>
-                      {isActive && (
-                        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/15 text-amber-400">
-                          <Clock size={12} />
-                          <span className="text-[11px] font-mono font-bold">{timer}</span>
-                        </div>
-                      )}
                     </div>
-
-                    {/* Client Name */}
-                    <p className={`text-sm font-semibold mb-3 ${isEntregue || isCancelado ? 'text-gray-500' : 'text-white'}`}>
-                      {pedido.cliente || `Pedido #${pedido.id}`}
-                    </p>
 
                     {/* Items */}
-                    <div className="space-y-1.5 mb-3">
-                      {pedido.itens.slice(0, 3).map((item, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <span className="text-[11px] font-bold text-cyan-400 bg-cyan-400/10 w-6 h-5 flex items-center justify-center rounded">
-                            {item.quantidade}x
-                          </span>
-                          <span className={`text-[12px] truncate ${isEntregue || isCancelado ? 'text-gray-500' : 'text-gray-200'}`}>
-                            {item.nome}
-                          </span>
-                        </div>
-                      ))}
-                      {pedido.itens.length > 3 && (
-                        <p className="text-[10px] text-gray-500 pl-8">+{pedido.itens.length - 3} mais itens</p>
-                      )}
-                    </div>
-
-                    {/* Status Badge */}
-                    <div className="flex items-center justify-between">
-                      <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                        pedido.status === 'Novo' ? 'bg-cyan-400/20 text-cyan-400 animate-pulse' :
-                        pedido.status === 'Preparando' ? 'bg-amber-400/20 text-amber-400' :
-                        pedido.status === 'Pronto' ? 'bg-green-400/20 text-green-400' :
-                        pedido.status === 'Entregue' ? 'bg-gray-500/20 text-gray-400' :
-                        'bg-red-400/20 text-red-400'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${
-                          pedido.status === 'Novo' ? 'bg-cyan-400' :
-                          pedido.status === 'Preparando' ? 'bg-amber-400' :
-                          pedido.status === 'Pronto' ? 'bg-green-400' :
-                          pedido.status === 'Entregue' ? 'bg-gray-400' :
-                          'bg-red-400'
-                        }`} />
-                        {cfg.label}
-                      </div>
-                      {pedido.total > 0 && (
-                        <span className="text-[11px] font-mono font-bold text-gray-400">
-                          R$ {pedido.total.toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Expanded Content */}
-                  {isExpanded && (
-                    <div className="px-5 pb-4 space-y-3 border-t border-white/10">
-                      {/* All Items */}
-                      <div className="pt-3 space-y-2">
-                        {pedido.itens.map((item, idx) => (
-                          <div key={idx} className="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
-                            <div className="flex items-center gap-2">
-                              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-400/10 w-6 h-5 flex items-center justify-center rounded">
-                                {item.quantidade}x
-                              </span>
-                              <div className="flex flex-col">
-                                <span className="text-[12px] text-gray-200">{item.nome}</span>
-                                {item.observacao && (
-                                  <span className="text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded mt-0.5 w-fit">
-                                    {item.observacao}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
+                    <div className="space-y-2 mb-4">
+                      {pedido.itens.map((item, i) => (
+                        <div key={i} className="flex flex-col">
+                          <div className="flex justify-between items-center">
+                            <span className={`text-[13px] ${isEntregue || isCancelado ? 'text-gray-500' : 'text-[#e5e2e1]'}`}>
+                              {item.quantidade}x {item.nome}
+                            </span>
                             {item.preco > 0 && (
-                              <span className="text-[11px] font-mono text-gray-400">
-                                R$ {(item.quantidade * item.preco).toFixed(2)}
+                              <span className={`text-[12px] font-mono ${isEntregue || isCancelado ? 'text-gray-600' : 'text-gray-400'}`}>
+                                R$ {(item.quantidade * item.preco).toFixed(0)}
                               </span>
                             )}
                           </div>
-                        ))}
-                      </div>
-
-                      {/* Observation */}
-                      {pedido.observacao && (
-                        <div className="flex items-start gap-2 p-2.5 rounded-xl bg-amber-400/5 border border-amber-400/15">
-                          <MessageSquare size={12} className="text-amber-400 mt-0.5 shrink-0" />
-                          <span className="text-[10px] text-amber-400/80 italic">{pedido.observacao}</span>
+                          {item.observacao && (
+                            <span className="text-[10px] text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-2 py-0.5 rounded-full inline-block w-fit mt-1">
+                              {item.observacao}
+                            </span>
+                          )}
                         </div>
-                      )}
-
-                      {/* Actions */}
-                      <div className="flex gap-2 pt-2">
-                        {cfg.nextStatus && isActive && (
-                          <button
-                            onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
-                            className={`flex-1 h-11 rounded-xl ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer`}
-                          >
-                            {cfg.btnLabel}
-                          </button>
-                        )}
-                        {isActive && (
-                          <button
-                            onClick={() => setCancelPedido(pedido)}
-                            className="h-11 px-4 rounded-xl bg-red-400/10 text-red-400 border border-red-400/20 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer"
-                          >
-                            <X size={12} /> Cancelar
-                          </button>
-                        )}
-                        {!isActive && (
-                          <div className="flex-1 text-center text-[10px] font-mono text-gray-500 uppercase tracking-wider py-3">
-                            {isCancelado ? 'Pedido cancelado' : 'Pedido entregue'}
-                          </div>
-                        )}
-                      </div>
+                      ))}
                     </div>
-                  )}
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="px-4 pb-4">
+                    {cfg.nextStatus && isActive ? (
+                      <button
+                        onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
+                        className={`w-full h-12 rounded-xl ${cfg.btnBg} text-[13px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer`}
+                      >
+                        {isPronto ? (
+                          <span className="material-symbols-outlined text-[18px]">restaurant</span>
+                        ) : (
+                          <span className="material-symbols-outlined text-[18px]">play_arrow</span>
+                        )}
+                        {cfg.btnLabel}
+                      </button>
+                    ) : isActive ? (
+                      <button
+                        onClick={() => setCancelPedido(pedido)}
+                        className="w-full h-12 rounded-xl bg-red-400/10 text-red-400 border border-red-400/20 text-[13px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+                      >
+                        <X size={16} /> Cancelar
+                      </button>
+                    ) : (
+                      <div className="text-center text-[11px] font-mono text-gray-500 uppercase tracking-wider py-3">
+                        {isCancelado ? 'Pedido cancelado' : 'Pedido entregue'}
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })
