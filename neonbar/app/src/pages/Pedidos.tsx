@@ -11,6 +11,7 @@ import {
 import { pedidosService } from '../services/api';
 import { toast } from '../components/Toast';
 import Modal from '../components/Modal';
+import BottomNav from '../components/BottomNav';
 import type { Pedido } from '../types';
 
 type PedidoStatus = 'Novo' | 'Preparando' | 'Pronto' | 'Entregue' | 'Cancelado' | 'Arquivado';
@@ -385,24 +386,7 @@ export default function Pedidos() {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 h-[72px] bg-[#131313] border-t border-white/10">
-        <div className="flex flex-col items-center justify-center bg-[#00e5ff] text-black rounded-xl px-6 py-1 shadow-[0px_0px_8px_rgba(0,218,243,0.3)] active:scale-90 transition-transform cursor-pointer">
-          <span className="material-symbols-outlined text-[22px]">receipt_long</span>
-          <span className="text-[12px] font-medium mt-1">Orders</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-[#bac9cc] px-6 py-1 hover:text-[#00e5ff] transition-all active:scale-90 cursor-pointer">
-          <span className="material-symbols-outlined text-[22px]">grid_view</span>
-          <span className="text-[12px] font-medium mt-1">Tables</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-[#bac9cc] px-6 py-1 hover:text-[#00e5ff] transition-all active:scale-90 cursor-pointer">
-          <span className="material-symbols-outlined text-[22px]">inventory_2</span>
-          <span className="text-[12px] font-medium mt-1">Stock</span>
-        </div>
-        <div className="flex flex-col items-center justify-center text-[#bac9cc] px-6 py-1 hover:text-[#00e5ff] transition-all active:scale-90 cursor-pointer">
-          <span className="material-symbols-outlined text-[22px]">menu_book</span>
-          <span className="text-[12px] font-medium mt-1">Menu</span>
-        </div>
-      </nav>
+      <BottomNav />
 
       {/* Cancel Modal */}
       <Modal open={!!cancelPedido} onClose={() => { setCancelPedido(null); setMotivoCancelamento(''); }}>
