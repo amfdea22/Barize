@@ -18,8 +18,8 @@ const STATUS_CONFIG: Record<
   PedidoStatus,
   { label: string; color: string; borderClass: string; badgeBg: string; btnBg: string; btnLabel: string; nextStatus: PedidoStatus | null }
 > = {
-  Novo: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
-  Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
+  Novo: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-amber-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
+  Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-green-500 text-white', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
   Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: '', btnLabel: '', nextStatus: null },
   Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: '', btnLabel: 'Concluído', nextStatus: null },
   Cancelado: { label: 'Cancelado', color: 'text-red-400', borderClass: 'border-l-red-400', badgeBg: 'bg-red-400/20', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
@@ -263,19 +263,19 @@ export default function Pedidos() {
                     {cfg.nextStatus && isActive && !isPronto ? (
                       <button
                         onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
-                        className={`w-full h-10 rounded-lg ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer`}
+                        className={`w-full h-10 rounded-lg ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg`}
                       >
                         {cfg.btnLabel}
                       </button>
                     ) : isPronto ? (
-                      <div className="w-full h-10 rounded-lg bg-[#2a2a2a] text-gray-400 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 cursor-default">
+                      <div className="w-full h-10 rounded-lg bg-green-500/20 text-green-400 border border-green-500/30 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 cursor-default">
                         <span className="material-symbols-outlined text-[14px]">check</span>
                         Servido
                       </div>
                     ) : isActive ? (
                       <button
                         onClick={() => setCancelPedido(pedido)}
-                        className="w-full h-10 rounded-lg bg-red-400/10 text-red-400 border border-red-400/20 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer"
+                        className="w-full h-10 rounded-lg bg-red-500 text-white text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg"
                       >
                         <X size={12} /> Cancelar
                       </button>
