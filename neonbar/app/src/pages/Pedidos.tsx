@@ -11,7 +11,6 @@ import {
 import { pedidosService } from '../services/api';
 import { toast } from '../components/Toast';
 import Modal from '../components/Modal';
-import BottomNav from '../components/BottomNav';
 import type { Pedido } from '../types';
 
 type PedidoStatus = 'Novo' | 'Preparando' | 'Pronto' | 'Entregue' | 'Cancelado' | 'Arquivado';
@@ -409,9 +408,6 @@ export default function Pedidos() {
           )}
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNav />
 
       {/* Cancel Modal */}
       <Modal open={!!cancelPedido} onClose={() => { setCancelPedido(null); setMotivoCancelamento(''); }}>
