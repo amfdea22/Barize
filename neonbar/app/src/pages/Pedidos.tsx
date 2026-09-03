@@ -29,6 +29,7 @@ const STATUS_CONFIG: Record<
 const STATUS_FILTERS: Array<{ key: StatusFilter; label: string; icon: string }> = [
   { key: 'ativos', label: 'Todos', icon: 'list' },
   { key: 'Preparando', label: 'Em Preparo', icon: 'pending' },
+  { key: 'Pronto', label: 'Prontos', icon: 'check_circle' },
   { key: 'Entregue', label: 'Entregues', icon: 'done_all' },
   { key: 'Cancelado', label: 'Cancelados', icon: 'cancel' },
 ];
