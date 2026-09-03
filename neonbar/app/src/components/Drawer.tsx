@@ -17,6 +17,7 @@ import {
   Package,
   Users,
   LogOut,
+  Bike,
 } from 'lucide-react';
 
 interface DrawerProps {
@@ -31,8 +32,9 @@ const menuSections = [
     items: [
       { to: '/pdv', icon: ShoppingCart, label: 'PDV', color: 'text-[var(--color-primary-container)]', bg: 'bg-[var(--color-primary-container)]/20' },
       { to: '/sala', icon: Store, label: 'Salão', color: 'text-[var(--color-primary-container)]', bg: 'bg-[var(--color-primary-container)]/20' },
-      { to: '/comandas', icon: ClipboardList, label: 'Pedidos', color: 'text-[var(--color-primary-container)]', bg: 'bg-[var(--color-primary-container)]/20' },
+      { to: '/pedidos', icon: ClipboardList, label: 'Pedidos', color: 'text-[var(--color-primary-container)]', bg: 'bg-[var(--color-primary-container)]/20' },
       { to: '/fila-preparo', icon: CookingPot, label: 'Fila de Preparo', color: 'text-amber-400', bg: 'bg-amber-400/20' },
+      { to: '/delivery', icon: Bike, label: 'Delivery', color: 'text-cyan-400', bg: 'bg-cyan-400/20' },
       { to: '/cardapio', icon: Utensils, label: 'Cardápio Digital', color: 'text-emerald-400', bg: 'bg-emerald-400/20' },
     ],
   },

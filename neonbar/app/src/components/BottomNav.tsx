@@ -19,7 +19,7 @@ import {
 
 const mainTabs = [
   { to: '/', icon: LayoutDashboard, label: 'Início' },
-  { to: '/comandas', icon: ClipboardList, label: 'Pedidos' },
+  { to: '/pedidos', icon: ClipboardList, label: 'Pedidos' },
   { to: '/delivery', icon: Bike, label: 'Delivery' },
   { to: '/pdv', icon: ShoppingCart, label: 'PDV' },
   { to: '/mais', icon: Settings, label: 'Mais' },
@@ -34,8 +34,8 @@ export default function BottomNav() {
         {mainTabs.map((tab) => {
           const isActive = tab.to === '/'
             ? location.pathname === '/' || location.pathname === '/dashboard'
-            : tab.to === '/comandas'
-            ? location.pathname === '/comandas' || location.pathname.startsWith('/fila-preparo')
+            : tab.to === '/pedidos'
+            ? location.pathname === '/pedidos' || location.pathname === '/comandas' || location.pathname.startsWith('/fila-preparo')
             : tab.to === '/sala'
             ? location.pathname === '/sala'
             : location.pathname.startsWith(tab.to);
