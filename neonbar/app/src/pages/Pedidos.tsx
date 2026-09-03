@@ -26,10 +26,11 @@ const STATUS_CONFIG: Record<
   Arquivado: { label: 'Arquivado', color: 'text-gray-500', borderClass: 'border-l-gray-600', badgeBg: 'bg-gray-600/20', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
 };
 
-const STATUS_FILTERS: Array<{ key: StatusFilter; label: string }> = [
-  { key: 'ativos', label: 'Todos' },
-  { key: 'Preparando', label: 'Em Preparo' },
-  { key: 'Novo', label: 'Aguardando' },
+const STATUS_FILTERS: Array<{ key: StatusFilter; label: string; icon: string }> = [
+  { key: 'ativos', label: 'Todos', icon: 'list' },
+  { key: 'Preparando', label: 'Em Preparo', icon: 'pending' },
+  { key: 'Entregue', label: 'Entregues', icon: 'done_all' },
+  { key: 'Cancelado', label: 'Cancelados', icon: 'cancel' },
 ];
 
 function parseDate(s?: string | null): number {
@@ -166,12 +167,13 @@ export default function Pedidos() {
               <button
                 key={filter.key}
                 onClick={() => setStatusFilter(filter.key)}
-                className={`h-10 px-5 rounded-full font-medium text-[13px] whitespace-nowrap active:scale-95 transition-all ${
+                className={`h-10 px-5 rounded-full font-medium text-[13px] whitespace-nowrap active:scale-95 transition-all flex items-center justify-center gap-1.5 ${
                   isActive
                     ? 'bg-[#00e5ff] text-black shadow-[0px_0px_8px_rgba(0,218,243,0.3)]'
                     : 'bg-[#2a2a2a] text-[#e5e2e1] border border-white/10 hover:bg-[#393939]'
                 }`}
               >
+                <span className="material-symbols-outlined text-[16px]">{filter.icon}</span>
                 {filter.label} ({count})
               </button>
             );
