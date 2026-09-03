@@ -20,7 +20,7 @@ const STATUS_CONFIG: Record<
 > = {
   Novo: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-amber-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
   Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-green-500 text-white', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
-  Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: '', btnLabel: '', nextStatus: null },
+  Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Servido', nextStatus: 'Entregue' },
   Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: '', btnLabel: 'Concluído', nextStatus: null },
   Cancelado: { label: 'Cancelado', color: 'text-red-400', borderClass: 'border-l-red-400', badgeBg: 'bg-red-400/20', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
   Arquivado: { label: 'Arquivado', color: 'text-gray-500', borderClass: 'border-l-gray-600', badgeBg: 'bg-gray-600/20', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
@@ -193,7 +193,6 @@ export default function Pedidos() {
               const cfg = STATUS_CONFIG[pedido.status as PedidoStatus] || STATUS_CONFIG.Novo;
               const timer = formatTimer(pedido.created_at, now);
               const isActive = pedido.status === 'Novo' || pedido.status === 'Preparando' || pedido.status === 'Pronto';
-              const isPronto = pedido.status === 'Pronto';
               const isEntregue = pedido.status === 'Entregue';
               const isCancelado = pedido.status === 'Cancelado';
               
@@ -263,18 +262,13 @@ export default function Pedidos() {
 
                   {/* Action Button */}
                   <div className="px-3 pb-3">
-                    {cfg.nextStatus && isActive && !isPronto ? (
+                    {cfg.nextStatus && isActive ? (
                       <button
                         onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
                         className={`w-full h-10 rounded-lg ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg`}
                       >
                         {cfg.btnLabel}
                       </button>
-                    ) : isPronto ? (
-                      <div className="w-full h-10 rounded-lg bg-green-500/20 text-green-400 border border-green-500/30 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 cursor-default">
-                        <span className="material-symbols-outlined text-[14px]">check</span>
-                        Servido
-                      </div>
                     ) : isActive ? (
                       <button
                         onClick={() => setCancelPedido(pedido)}
