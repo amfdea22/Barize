@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle,
   Minus, Trash2, Banknote, CreditCard, QrCode, ArrowLeft, Check, Receipt,
@@ -73,6 +74,7 @@ function TecladoNumerico({ onDigit, onBackspace, onClear }: { onDigit: (d: strin
   );
 }
 export default function PDV() {
+  const navigate = useNavigate();
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [categoriasSistema, setCategoriasSistema] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +101,6 @@ export default function PDV() {
   const [showPagamento, setShowPagamento] = useState(false);
   const [formaPagamento, setFormaPagamento] = useState<FormaPagamento>('dinheiro');
   const [valorRecebido, setValorRecebido] = useState('');
-  const [parcelas, setParcelas] = useState(1);
   const [finalizando, setFinalizando] = useState(false);
   const [dividirConta, setDividirConta] = useState(false);
   const [qtdPessoas, setQtdPessoas] = useState(2);
@@ -113,7 +114,7 @@ export default function PDV() {
     total: number; forma_pagamento: FormaPagamento; troco: number;
     mesa: string; cliente: string; vendedor: string; observacao: string;
   } | null>(null);
-  const [showCalc, setShowCalc] = useState(true);
+  const [showCalc, setShowCalc] = useState(false);
 
   const carregarProdutos = async () => {
     try {
@@ -564,7 +565,14 @@ export default function PDV() {
             <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Tipo de Pedido</label>
             <div className="grid grid-cols-4 gap-2">
               {TIPOS_PEDIDO.map(t => (
-                <button key={t.key} type="button" onClick={() => setTipoPedido(t.key)}
+                <button key={t.key} type="button" onClick={() => {
+                  if (t.key === 'delivery') {
+                    navigate('/delivery');
+                    setShowNovoPedido(false);
+                    return;
+                  }
+                  setTipoPedido(t.key);
+                }}
                   className={`flex flex-col items-center gap-1 py-3 rounded-xl border transition-all cursor-pointer ${
                     tipoPedido === t.key
                       ? 'bg-[var(--color-primary-container)]/10 text-[var(--color-primary-container)] border-[var(--color-primary)]/40'

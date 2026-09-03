@@ -2,7 +2,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   ShoppingCart,
-  Package,
   Settings,
   Store,
   CookingPot,
@@ -15,13 +14,14 @@ import {
   Calculator,
   BarChart3,
   Utensils,
+  Bike,
 } from 'lucide-react';
 
 const mainTabs = [
   { to: '/', icon: LayoutDashboard, label: 'Início' },
   { to: '/comandas', icon: ClipboardList, label: 'Pedidos' },
+  { to: '/delivery', icon: Bike, label: 'Delivery' },
   { to: '/pdv', icon: ShoppingCart, label: 'PDV' },
-  { to: '/sala', icon: Store, label: 'Mesas' },
   { to: '/mais', icon: Settings, label: 'Mais' },
 ];
 
