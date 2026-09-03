@@ -168,13 +168,13 @@ export default function Pedidos() {
               <button
                 key={filter.key}
                 onClick={() => setStatusFilter(filter.key)}
-                className={`h-10 px-5 rounded-full font-medium text-[13px] whitespace-nowrap active:scale-95 transition-all flex items-center justify-center gap-1.5 ${
+                className={`h-8 px-3 rounded-lg font-medium text-[11px] whitespace-nowrap active:scale-95 transition-all flex items-center justify-center gap-1 ${
                   isActive
                     ? 'bg-[#00e5ff] text-black shadow-[0px_0px_8px_rgba(0,218,243,0.3)]'
                     : 'bg-[#2a2a2a] text-[#e5e2e1] border border-white/10 hover:bg-[#393939]'
                 }`}
               >
-                <span className="material-symbols-outlined text-[16px]">{filter.icon}</span>
+                <span className="material-symbols-outlined text-[14px]">{filter.icon}</span>
                 {filter.label} ({count})
               </button>
             );
