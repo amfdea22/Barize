@@ -22,10 +22,10 @@ def listar_pedidos_ativos(
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Retorna todos os pedidos ativos (Novo, Preparando, Pronto)."""
+    """Retorna todos os pedidos ativos (Novo, Preparando, Pronto, Entregue)."""
     pedidos = (
         db.query(Pedido)
-        .filter(Pedido.status.in_(["Novo", "Preparando", "Pronto"]))
+        .filter(Pedido.status.in_(["Novo", "Preparando", "Pronto", "Entregue"]))
         .order_by(Pedido.created_at.desc())
         .all()
     )
