@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Receipt, PlusCircle, LayoutGrid, LogOut, Menu, TrendingUp, Clock, Moon, Sun, Bike, Users, AlertTriangle, CheckCircle2, Timer, Package } from 'lucide-react';
-import api from '../services/api';
+import api, { financeiroService } from '../services/api';
 import Drawer from '../components/Drawer';
 import UserMenu from '../components/UserMenu';
 import { useTheme } from '../hooks/useTheme';
@@ -40,15 +40,15 @@ export default function Dashboard() {
   useEffect(() => {
     async function carregarStats() {
       try {
-        const [pedidosRes, mesasRes, caixaRes] = await Promise.allSettled([
+        const [pedidosRes, mesasRes, painelRes] = await Promise.allSettled([
           api.get('/pedidos/ativos'),
           api.get('/admin/mesas/?ativo=1'),
-          api.get('/caixa/resumo-diario'),
+          financeiroService.carregarPainel(),
         ]);
 
         const pedidos = pedidosRes.status === 'fulfilled' ? (Array.isArray(pedidosRes.value.data) ? pedidosRes.value.data : []) : [];
         const mesas = mesasRes.status === 'fulfilled' ? (Array.isArray(mesasRes.value.data) ? mesasRes.value.data : []) : [];
-        const caixa = caixaRes.status === 'fulfilled' ? caixaRes.value.data || {} : {};
+        const painel = painelRes.status === 'fulfilled' ? (painelRes.value as any) : {};
 
         const pedidosNovos = pedidos.filter((p: any) => p.status === 'Novo').length;
         const pedidosPreparando = pedidos.filter((p: any) => p.status === 'Preparando').length;
@@ -64,8 +64,6 @@ export default function Dashboard() {
         const mesasOcupadas = mesasComPedidos.size;
         const mesasLivres = mesas.length - mesasOcupadas;
 
-        let faturamento = caixa.total_recebido || caixa.faturamento || 0;
-
         const ativoRecente = pedidos.slice(0, 5).map((p: any) => ({
           nome: p.mesa || 'Pedido',
           valor: `R$ ${(p.total || 0).toFixed(2)}`,
@@ -80,7 +78,7 @@ export default function Dashboard() {
           pedidosEntregues,
           mesasOcupadas,
           mesasLivres,
-          faturamentoTurno: faturamento,
+          faturamentoTurno: painel.receitaHoje || 0,
           ativoRecente,
         });
       } catch (err) {
