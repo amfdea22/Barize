@@ -21,7 +21,7 @@ const STATUS_CONFIG: Record<
   Novo: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-amber-400 text-black', btnLabel: 'Iniciar Preparo', nextStatus: 'Preparando' },
   Preparando: { label: 'Em Preparo', color: 'text-cyan-400', borderClass: 'border-l-cyan-400', badgeBg: 'bg-cyan-400/20', btnBg: 'bg-green-500 text-white', btnLabel: 'Marcar Pronto', nextStatus: 'Pronto' },
   Pronto: { label: 'Pronto', color: 'text-green-400', borderClass: 'border-l-green-400', badgeBg: 'bg-green-400/20', btnBg: 'bg-cyan-400 text-black', btnLabel: 'Servido', nextStatus: 'Entregue' },
-  Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: '', btnLabel: 'Concluído', nextStatus: null },
+  Entregue: { label: 'Entregue', color: 'text-gray-400', borderClass: 'border-l-gray-500', badgeBg: 'bg-gray-500/20', btnBg: 'bg-gray-500 text-white', btnLabel: 'Arquivar', nextStatus: 'Arquivado' },
   Cancelado: { label: 'Cancelado', color: 'text-red-400', borderClass: 'border-l-red-400', badgeBg: 'bg-red-400/20', btnBg: '', btnLabel: 'Cancelado', nextStatus: null },
   Arquivado: { label: 'Arquivado', color: 'text-gray-500', borderClass: 'border-l-gray-600', badgeBg: 'bg-gray-600/20', btnBg: '', btnLabel: 'Arquivado', nextStatus: null },
 };
@@ -31,6 +31,7 @@ const STATUS_FILTERS: Array<{ key: StatusFilter; label: string; icon: string }> 
   { key: 'Preparando', label: 'Em Preparo', icon: 'pending' },
   { key: 'Pronto', label: 'Prontos', icon: 'check_circle' },
   { key: 'Entregue', label: 'Entregues', icon: 'done_all' },
+  { key: 'Arquivado', label: 'Arquivados', icon: 'archive' },
   { key: 'Cancelado', label: 'Cancelados', icon: 'cancel' },
 ];
 
@@ -273,8 +274,13 @@ export default function Pedidos() {
                         <X size={12} /> Cancelar
                       </button>
                     ) : (
-                      <div className="text-center text-[10px] font-mono text-[var(--color-outline)] uppercase tracking-wider py-2">
-                        {isCancelado ? 'Cancelado' : 'Entregue'}
+                      <div className="text-center text-[10px] font-mono text-[var(--color-outline)] py-2 space-y-0.5">
+                        <span className="uppercase tracking-wider">{isCancelado ? 'Cancelado' : 'Arquivado'}</span>
+                        {(pedido as any).arquivado_em && (
+                          <p className="text-[9px] text-[var(--color-outline)] opacity-70">
+                            {new Date((pedido as any).arquivado_em).toLocaleString('pt-BR')}
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>
