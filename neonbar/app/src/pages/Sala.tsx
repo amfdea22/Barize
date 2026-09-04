@@ -545,7 +545,7 @@ export default function Sala() {
       </div>
 
       {/* Detail Modal */}
-      <Modal open={showDetail} onClose={() => { setShowDetail(false); setSelecionadaId(null); }}>
+      <Modal open={showDetail} onClose={() => { setShowDetail(false); setSelecionadaId(null); }} title={`${currentLabel} ${detailMesa?.nome || ''}`}>
         {detailMesa && (
           <div className="space-y-5">
             {/* Header */}
