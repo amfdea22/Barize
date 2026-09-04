@@ -50,6 +50,9 @@ export default function Sala() {
   const [showCalc, setShowCalc] = useState(false);
   const [activeMenuMesaId, setActiveMenuMesaId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [showAddComandaModal, setShowAddComandaModal] = useState(false);
+  const [addComandaMesa, setAddComandaMesa] = useState<Mesa | null>(null);
+  const [comandaNumero, setComandaNumero] = useState('');
   const [ultimoPagamento, setUltimoPagamento] = useState<{
     itens: any[]; subtotal: number; desconto: number; taxa: number;
     total: number; forma_pagamento: string; troco: number;
@@ -467,7 +470,9 @@ export default function Sala() {
                             onClick={(e) => {
                               e.stopPropagation();
                               setActiveMenuMesaId(null);
-                              handleMesaClick(mesa);
+                              setAddComandaMesa(mesa);
+                              setComandaNumero('');
+                              setShowAddComandaModal(true);
                             }}
                             className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left"
                           >
@@ -1120,6 +1125,71 @@ export default function Sala() {
             </div>
           </div>
         )}
+      </Modal>
+
+      {/* Modal Adicionar Comanda */}
+      <Modal open={showAddComandaModal} onClose={() => setShowAddComandaModal(false)}>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-container)]/20 flex items-center justify-center">
+              <ClipboardList size={18} className="text-[var(--color-primary-container)]" />
+            </div>
+            <div>
+              <h2 className="text-base font-bold text-[var(--color-on-surface)]">Adicionar Comanda</h2>
+              <p className="text-xs text-[var(--color-on-surface-variant)]">
+                Mesa: <span className="font-mono font-bold">{addComandaMesa?.nome}</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] text-[var(--color-on-surface-variant)] mb-2 block">
+              Número da Comanda
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={comandaNumero}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                setComandaNumero(value);
+              }}
+              placeholder="Ex: 001"
+              autoFocus
+              className="w-full h-12 px-4 rounded-xl bg-[var(--color-surface-container)] border border-[rgba(var(--overlay-rgb),0.1)] text-lg font-mono font-bold text-[var(--color-on-surface)] placeholder:text-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary-container)]/50 transition-all text-center"
+            />
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <button
+              onClick={() => {
+                setShowAddComandaModal(false);
+                setAddComandaMesa(null);
+                setComandaNumero('');
+              }}
+              className="flex-1 h-11 rounded-xl border border-[rgba(var(--overlay-rgb),0.1)] text-xs font-mono font-bold uppercase tracking-wider text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.05)] transition-all cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={() => {
+                if (!comandaNumero.trim()) {
+                  toast.error('Digite o número da comanda');
+                  return;
+                }
+                toast.success(`Comanda #${comandaNumero} adicionada à mesa ${addComandaMesa?.nome}`);
+                setShowAddComandaModal(false);
+                setAddComandaMesa(null);
+                setComandaNumero('');
+              }}
+              disabled={!comandaNumero.trim()}
+              className="flex-1 h-11 rounded-xl bg-[var(--color-primary-container)] text-[var(--color-on-primary)] text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40"
+            >
+              Confirmar
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
