@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Receipt, CircleDollarSign, PlusCircle, LayoutGrid, LogOut, Menu, TrendingUp, Clock, Moon, Sun } from 'lucide-react';
+import { Receipt, CircleDollarSign, PlusCircle, LayoutGrid, LogOut, Menu, TrendingUp, Clock, Moon, Sun, Bike } from 'lucide-react';
 import api from '../services/api';
 import Drawer from '../components/Drawer';
 import UserMenu from '../components/UserMenu';
@@ -76,7 +76,7 @@ export default function Dashboard() {
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <UserMenu open={userMenuOpen} onClose={() => setUserMenuOpen(false)} anchorRef={userButtonRef} />
 
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#004f58] to-[#00363d] px-4 h-16 flex items-center justify-between shadow-lg shadow-[#004f58]/30">
+      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#004f58] to-[#00363d] px-4 h-16 flex items-center justify-between shadow-lg shadow-[#004f58]/30 rounded-b-3xl">
         <button
           onClick={() => setDrawerOpen(true)}
           className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
@@ -168,6 +168,15 @@ export default function Dashboard() {
                 <LogOut size={28} className="text-[var(--color-secondary-container)]" />
               </div>
               <span className="text-base font-semibold text-left mt-auto">Fechar Conta</span>
+            </button>
+            <button
+              onClick={() => navigate('/delivery')}
+              className="bg-[var(--color-surface-container-high)] border border-[var(--color-outline)]/20 text-on-surface rounded-2xl p-5 flex flex-col items-start gap-4 min-h-[130px] hover:bg-[var(--color-surface-container-highest)] active:brightness-90 transition-all"
+            >
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/25 flex items-center justify-center">
+                <Bike size={28} className="text-cyan-400" />
+              </div>
+              <span className="text-base font-semibold text-left mt-auto">Delivery</span>
             </button>
           </div>
         </section>
