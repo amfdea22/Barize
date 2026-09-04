@@ -24,7 +24,7 @@ import {
 interface UserMenuProps {
   open: boolean;
   onClose: () => void;
-  anchorRef?: React.RefObject<HTMLDivElement>;
+  anchorRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 interface Estabelecimento {

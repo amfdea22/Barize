@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Receipt, CircleDollarSign, PlusCircle, LayoutGrid, LogOut, Menu, TrendingUp, Clock, Moon, Sun, Bike } from 'lucide-react';
+import { Receipt, PlusCircle, LayoutGrid, LogOut, Menu, TrendingUp, Clock, Moon, Sun, Bike } from 'lucide-react';
 import api from '../services/api';
 import Drawer from '../components/Drawer';
 import UserMenu from '../components/UserMenu';
