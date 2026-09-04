@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator, MoreVertical, ClipboardList, Merge } from 'lucide-react';
+import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator, ClipboardList, Merge } from 'lucide-react';
 import { mesasService, pedidosService, pagamentosService, pdvService } from '../services/api';
 import { toast } from '../components/Toast';
 import Badge from '../components/Badge';
@@ -454,7 +454,7 @@ export default function Sala() {
                         }}
                         className="absolute top-1 left-1 w-6 h-6 rounded-full bg-[var(--color-surface-container-high)] flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer z-10"
                       >
-                        <MoreVertical size={12} className="text-[var(--color-on-surface-variant)]" />
+                        <Plus size={12} className="text-[var(--color-on-surface-variant)]" />
                       </button>
 
                       {/* Dropdown menu */}
