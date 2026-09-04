@@ -87,6 +87,7 @@ export default function PDV() {
   const [pedidoNome, setPedidoNome] = useState('');
   const [localPedido, setLocalPedido] = useState('');
   const [showNovoPedido, setShowNovoPedido] = useState(true);
+  const [minimizedNovoPedido, setMinimizedNovoPedido] = useState(false);
   const [cliente, setCliente] = useState('');
   const [vendedor, setVendedor] = useState('');
   const [descontoPercentual, setDescontoPercentual] = useState(0);
@@ -526,7 +527,7 @@ export default function PDV() {
           </div>
         </div>
       </Modal>
-      <Modal open={showNovoPedido} onClose={() => setShowNovoPedido(false)} title="Novo Pedido">
+      <Modal open={showNovoPedido && !minimizedNovoPedido} onClose={() => {}} onMinimize={() => setMinimizedNovoPedido(true)} title="Novo Pedido" minimizable>
         <div ref={selectionAreaRef} className={`space-y-5 pb-4 transition-all duration-300 ${highlightSelection ? 'ring-2 ring-[var(--color-primary-container)]/50 rounded-xl p-2 -m-2 bg-[var(--color-primary-container)]/5' : ''}`}>
           {highlightSelection && (
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--color-primary-container)]/10 border border-[var(--color-primary-container)]/30">
@@ -958,6 +959,17 @@ export default function PDV() {
           </div>
         )}
       </Modal>
+
+      {/* Floating button to reopen minimized Novo Pedido */}
+      {minimizedNovoPedido && (
+        <button
+          onClick={() => setMinimizedNovoPedido(false)}
+          className="fixed bottom-4 right-4 z-40 flex items-center gap-2 px-4 py-3 rounded-2xl bg-[var(--color-primary-container)] text-[var(--color-on-primary)] font-bold text-sm shadow-lg hover:shadow-xl active:scale-95 transition-all cursor-pointer"
+        >
+          <ShoppingCart size={18} />
+          Novo Pedido
+        </button>
+      )}
     </div>
   );
 }

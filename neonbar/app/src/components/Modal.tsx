@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { X } from 'lucide-react';
+import { X, Minus } from 'lucide-react';
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
+  onMinimize?: () => void;
   title?: string;
   children: ReactNode;
   footer?: ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'full';
+  minimizable?: boolean;
 }
 
 const sizeClasses = {
@@ -18,7 +20,7 @@ const sizeClasses = {
   full: 'w-[calc(100vw-2rem)]',
 };
 
-export default function Modal({ open, onClose, title, children, footer, size = 'lg' }: ModalProps) {
+export default function Modal({ open, onClose, onMinimize, title, children, footer, size = 'lg', minimizable = false }: ModalProps) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -37,12 +39,22 @@ export default function Modal({ open, onClose, title, children, footer, size = '
         {title && (
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-[rgba(var(--overlay-rgb),0.08)] shrink-0">
             <h2 className="text-base font-bold text-[var(--color-on-surface)]">{title}</h2>
-            <button
-              onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-[var(--color-surface-container-high)] text-[var(--color-outline)] hover:text-[var(--color-on-surface)] transition-colors cursor-pointer"
-            >
-              <X size={18} />
-            </button>
+            <div className="flex items-center gap-1">
+              {minimizable && onMinimize && (
+                <button
+                  onClick={onMinimize}
+                  className="p-1.5 rounded-lg hover:bg-[var(--color-surface-container-high)] text-[var(--color-outline)] hover:text-[var(--color-on-surface)] transition-colors cursor-pointer"
+                >
+                  <Minus size={18} />
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-lg hover:bg-[var(--color-surface-container-high)] text-[var(--color-outline)] hover:text-[var(--color-on-surface)] transition-colors cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
           </div>
         )}
         <div className="overflow-y-auto p-5 flex-1 min-h-0">{children}</div>
