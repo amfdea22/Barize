@@ -196,7 +196,7 @@ export default function Sala() {
       const res = await pedidosService.listarTodos();
       const data = res.data;
       const pedidos = Array.isArray(data) ? data.filter((p: any) => 
-        p.mesa === mesa.nome && ['Novo', 'Preparando', 'Pronto'].includes(p.status)
+        p.mesa === mesa.nome && ['Novo', 'Preparando', 'Pronto', 'Entregue'].includes(p.status)
       ) : [];
       setPedidosMesa(pedidos);
       setShowPagamento(true);
