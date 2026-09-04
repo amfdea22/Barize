@@ -259,7 +259,7 @@ export default function Pedidos() {
 
                   {/* Action Button */}
                   <div className="px-3 pb-3">
-                    {cfg.nextStatus && isActive ? (
+                    {cfg.nextStatus ? (
                       <button
                         onClick={() => handleStatusChange(pedido.id, cfg.nextStatus!)}
                         className={`w-full h-10 rounded-lg ${cfg.btnBg} text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg`}
