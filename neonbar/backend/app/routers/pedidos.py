@@ -173,6 +173,8 @@ def atualizar_status_pedido(
         pedido.iniciado_em = agora
     if data.status == "Pronto" and not pedido.pronto_em:
         pedido.pronto_em = agora
+    if data.status == "Arquivado":
+        pedido.arquivado_em = agora
     db.commit()
     db.refresh(pedido)
 

@@ -48,5 +48,6 @@ class PedidoResponse(BaseModel):
     iniciado_em: Optional[datetime] = None
     pronto_em: Optional[datetime] = None
     tempo_preparo_estimado: Optional[int] = None
+    arquivado_em: Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)

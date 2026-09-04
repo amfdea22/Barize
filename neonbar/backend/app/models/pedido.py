@@ -23,3 +23,4 @@ class Pedido(Base):
     iniciado_em = Column(DateTime(timezone=True), nullable=True)
     pronto_em = Column(DateTime(timezone=True), nullable=True)
     tempo_preparo_estimado = Column(Integer, nullable=True)  # minutos estimados
+    arquivado_em = Column(DateTime(timezone=True), nullable=True)
