@@ -135,32 +135,25 @@ export default function Pedidos() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)]">
+    <div className="min-h-screen bg-[var(--color-surface)] pb-24">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-[var(--color-background)]/80 backdrop-blur-xl border-b border-[rgba(var(--overlay-rgb),0.08)]">
-        <div className="flex justify-between items-center px-4 h-14">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--color-primary-container)] to-[var(--color-primary)] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.3)]">
-              <span className="material-symbols-outlined text-[var(--color-on-primary)] text-[20px]">local_bar</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-[var(--color-on-surface)] tracking-tight leading-tight">BARIZE</span>
-              <span className="text-[9px] font-medium text-[var(--color-on-surface-variant)] uppercase tracking-widest">Pedidos</span>
-            </div>
+      <div className="sticky top-0 z-40 bg-gradient-to-br from-cyan-600 via-cyan-500 to-blue-600 px-4 pt-6 pb-8 rounded-b-3xl">
+        <div className="flex items-center justify-between mb-1">
+          <div>
+            <p className="text-cyan-100 text-xs">{activePedidos.length} pedidos na fila • Tempo médio: {tempoMedio}min</p>
+            <h1 className="text-white text-xl font-bold">Pedidos Ativos</h1>
           </div>
-          <button onClick={loadData} className="w-9 h-9 rounded-xl bg-[var(--color-surface-container-high)] flex items-center justify-center text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-primary-container)] active:scale-95 transition-all">
-            <RefreshCw size={16} />
+          <button
+            onClick={loadData}
+            className="p-2.5 rounded-xl bg-white/15 backdrop-blur-sm cursor-pointer active:scale-95 transition-transform"
+          >
+            <RefreshCw size={22} className="text-white" />
           </button>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="px-4 md:px-6 max-w-7xl mx-auto py-6 pt-[80px] pb-[90px]">
-        {/* Title Section */}
-        <div className="mb-5">
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-on-surface)] mb-1 tracking-tight">Pedidos Ativos</h1>
-          <p className="text-sm text-[var(--color-on-surface-variant)]">{activePedidos.length} pedidos na fila • Tempo médio: {tempoMedio}min</p>
-        </div>
+      <main className="px-4 md:px-6 max-w-7xl mx-auto py-4">
           
         {/* Filters - Horizontal Buttons */}
         <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide mb-4">
