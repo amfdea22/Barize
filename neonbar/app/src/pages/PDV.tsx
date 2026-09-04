@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search, ShoppingCart, Plus, X, CheckCircle2, AlertCircle,
@@ -115,6 +115,8 @@ export default function PDV() {
     mesa: string; cliente: string; vendedor: string; observacao: string;
   } | null>(null);
   const [showCalc, setShowCalc] = useState(false);
+  const selectionAreaRef = useRef<HTMLDivElement>(null);
+  const [highlightSelection, setHighlightSelection] = useState(false);
 
   const carregarProdutos = async () => {
     try {
@@ -181,6 +183,17 @@ export default function PDV() {
     });
     toast.success(`${produto.nome} adicionado`);
   }, []);
+
+  const handleProductClick = useCallback((produto: Produto) => {
+    if (!localPedido) {
+      selectionAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setHighlightSelection(true);
+      setTimeout(() => setHighlightSelection(false), 3000);
+      toast.info('Selecione a Mesa/Balcão e o Tipo de Pedido');
+      return;
+    }
+    addToCart(produto);
+  }, [localPedido, addToCart]);
 
   const removeFromCart = useCallback((produtoId: number) => {
     setCart(prev => prev.filter(item => item.produto.id !== produtoId));
@@ -369,7 +382,7 @@ export default function PDV() {
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {filtered.map(p => (
-              <div key={p.id} onClick={() => addToCart(p)}
+              <div key={p.id} onClick={() => handleProductClick(p)}
                 className="group relative bg-[var(--color-surface-container)] rounded-xl border border-[rgba(var(--overlay-rgb),0.06)] active:scale-[0.96] transition-all cursor-pointer overflow-hidden">
                 <div className="aspect-[4/3] bg-[var(--color-surface-container-high)] overflow-hidden">
                   {p.foto_url ? (
@@ -514,7 +527,13 @@ export default function PDV() {
         </div>
       </Modal>
       <Modal open={showNovoPedido} onClose={() => setShowNovoPedido(false)} title="Novo Pedido">
-        <div className="space-y-5 pb-4">
+        <div ref={selectionAreaRef} className={`space-y-5 pb-4 transition-all duration-300 ${highlightSelection ? 'ring-2 ring-[var(--color-primary-container)]/50 rounded-xl p-2 -m-2 bg-[var(--color-primary-container)]/5' : ''}`}>
+          {highlightSelection && (
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--color-primary-container)]/10 border border-[var(--color-primary-container)]/30">
+              <AlertCircle size={14} className="text-[var(--color-primary-container)] shrink-0" />
+              <span className="text-[11px] font-mono text-[var(--color-primary-container)]">Selecione a Mesa/Balcão e o Tipo de Pedido antes de adicionar itens</span>
+            </div>
+          )}
           {mesasSalao.length > 0 && (
             <div>
               <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-2">Mesa</label>
