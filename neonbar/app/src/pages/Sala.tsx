@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator, MoreVertical, ClipboardList, Merge } from 'lucide-react';
 import { mesasService, pedidosService, pagamentosService, pdvService } from '../services/api';
 import { toast } from '../components/Toast';
 import Badge from '../components/Badge';
@@ -48,6 +48,8 @@ export default function Sala() {
   const [chargeCover, setChargeCover] = useState(true);
   const [isencaoMotivo, setIsencaoMotivo] = useState('');
   const [showCalc, setShowCalc] = useState(false);
+  const [activeMenuMesaId, setActiveMenuMesaId] = useState<number | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const [ultimoPagamento, setUltimoPagamento] = useState<{
     itens: any[]; subtotal: number; desconto: number; taxa: number;
     total: number; forma_pagamento: string; troco: number;
@@ -94,6 +96,18 @@ export default function Sala() {
       clearInterval(intervalMesas);
     };
   }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setActiveMenuMesaId(null);
+      }
+    }
+    if (activeMenuMesaId !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [activeMenuMesaId]);
 
   const isBalcao = (m: Mesa) => {
     const l = (m.local || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -387,50 +401,93 @@ export default function Sala() {
                   const isSelected = selecionadaId === mesa.id;
                   const isOcupada = mesasOcupadas.has(mesa.nome);
                   return (
-                    <button
-                      key={mesa.id}
-                      onClick={() => handleMesaClick(mesa)}
-                      className={`relative aspect-square flex flex-col items-center justify-center gap-1.5 rounded-2xl border-2 transition-all duration-200 cursor-pointer active:scale-[0.96] min-h-[80px] ${
-                        isSelected
-                          ? 'bg-[rgba(0,229,255,0.15)] border-[var(--color-primary-container)] shadow-[0_0_20px_rgba(0,229,255,0.35),inset_0_0_16px_rgba(0,229,255,0.08)] scale-[1.03]'
-                          : isOcupada
-                            ? 'bg-[rgba(255,191,36,0.06)] border-[rgba(255,191,36,0.25)] shadow-[0_0_8px_rgba(255,191,36,0.1)]'
-                            : 'bg-[var(--color-surface-container)] border-[rgba(255,255,255,0.06)] hover:border-[rgba(0,229,255,0.2)] hover:shadow-[0_0_8px_rgba(0,229,255,0.08)]'
-                      }`}
-                    >
-                      {/* Selected check */}
-                      {isSelected && (
-                        <span className="absolute top-2 left-2 w-5 h-5 rounded-full bg-[var(--color-primary-container)] flex items-center justify-center">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                    <div key={mesa.id} className="relative">
+                      <button
+                        onClick={() => handleMesaClick(mesa)}
+                        className={`w-full aspect-square flex flex-col items-center justify-center gap-1.5 rounded-2xl border-2 transition-all duration-200 cursor-pointer active:scale-[0.96] min-h-[80px] ${
+                          isSelected
+                            ? 'bg-[rgba(0,229,255,0.15)] border-[var(--color-primary-container)] shadow-[0_0_20px_rgba(0,229,255,0.35),inset_0_0_16px_rgba(0,229,255,0.08)] scale-[1.03]'
+                            : isOcupada
+                              ? 'bg-[rgba(255,191,36,0.06)] border-[rgba(255,191,36,0.25)] shadow-[0_0_8px_rgba(255,191,36,0.1)]'
+                              : 'bg-[var(--color-surface-container)] border-[rgba(255,255,255,0.06)] hover:border-[rgba(0,229,255,0.2)] hover:shadow-[0_0_8px_rgba(0,229,255,0.08)]'
+                        }`}
+                      >
+                        {/* Selected check */}
+                        {isSelected && (
+                          <span className="absolute top-2 left-2 w-5 h-5 rounded-full bg-[var(--color-primary-container)] flex items-center justify-center">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                          </span>
+                        )}
+
+                        {/* Status dot */}
+                        <span className={`absolute top-2 right-2 w-2 h-2 rounded-full ${
+                          isOcupada
+                            ? 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]'
+                            : 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]'
+                        }`} />
+
+                        <span className={`text-lg font-bold font-mono transition-all ${
+                          isSelected
+                            ? 'text-[var(--color-primary-container)] text-xl'
+                            : isOcupada
+                              ? 'text-amber-400'
+                              : 'text-[var(--color-on-surface)]'
+                        }`}>
+                          {mesa.nome}
                         </span>
+
+                        {/* Status pill */}
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-mono font-bold uppercase tracking-wider ${
+                          isOcupada
+                            ? 'bg-amber-400/15 text-amber-400 border border-amber-400/20'
+                            : 'bg-emerald-400/15 text-emerald-400 border border-emerald-400/20'
+                        }`}>
+                          {isOcupada ? 'Ocupada' : 'Livre'}
+                        </span>
+                      </button>
+
+                      {/* 3-dot menu button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveMenuMesaId(activeMenuMesaId === mesa.id ? null : mesa.id);
+                        }}
+                        className="absolute top-1 left-1 w-6 h-6 rounded-full bg-[var(--color-surface-container-high)] flex items-center justify-center hover:bg-[var(--color-surface-container-highest)] transition-colors cursor-pointer z-10"
+                      >
+                        <MoreVertical size={12} className="text-[var(--color-on-surface-variant)]" />
+                      </button>
+
+                      {/* Dropdown menu */}
+                      {activeMenuMesaId === mesa.id && (
+                        <div
+                          ref={menuRef}
+                          className="absolute top-8 left-0 w-44 bg-[var(--color-surface)] rounded-xl shadow-2xl border border-[var(--color-outline)]/20 z-50 overflow-hidden animate-fade-in"
+                        >
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveMenuMesaId(null);
+                              handleMesaClick(mesa);
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left"
+                          >
+                            <ClipboardList size={14} className="text-[var(--color-primary-container)]" />
+                            <span className="text-xs font-medium text-[var(--color-on-surface)]">Adicionar Comanda</span>
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveMenuMesaId(null);
+                              toast.info('Agrupar mesas em breve');
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left border-t border-[var(--color-outline)]/10"
+                          >
+                            <Merge size={14} className="text-[var(--color-secondary-container)]" />
+                            <span className="text-xs font-medium text-[var(--color-on-surface)]">Agrupar Mesas</span>
+                          </button>
+                        </div>
                       )}
-
-                      {/* Status dot */}
-                      <span className={`absolute top-2 right-2 w-2 h-2 rounded-full ${
-                        isOcupada
-                          ? 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]'
-                          : 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]'
-                      }`} />
-
-                      <span className={`text-lg font-bold font-mono transition-all ${
-                        isSelected
-                          ? 'text-[var(--color-primary-container)] text-xl'
-                          : isOcupada
-                            ? 'text-amber-400'
-                            : 'text-[var(--color-on-surface)]'
-                      }`}>
-                        {mesa.nome}
-                      </span>
-
-                      {/* Status pill */}
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-mono font-bold uppercase tracking-wider ${
-                        isOcupada
-                          ? 'bg-amber-400/15 text-amber-400 border border-amber-400/20'
-                          : 'bg-emerald-400/15 text-emerald-400 border border-emerald-400/20'
-                      }`}>
-                        {isOcupada ? 'Ocupada' : 'Livre'}
-                      </span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
