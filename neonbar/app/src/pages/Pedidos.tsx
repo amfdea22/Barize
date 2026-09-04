@@ -135,18 +135,18 @@ export default function Pedidos() {
   }
 
   return (
-    <div className="min-h-screen bg-[#131313]">
+    <div className="min-h-screen bg-[var(--color-background)]">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-12 bg-[#131313] border-b border-white/10">
+      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-12 bg-[var(--color-background)] border-b border-[rgba(var(--overlay-rgb),0.1)]">
         <div className="flex items-center gap-2">
           <img 
             className="w-8 h-8 rounded-full object-cover" 
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbCrx3Mg8po9xJhaWT8Jsu0LeY7TUO_KuKO91JJRAXQRYnbUK5yBf8y6V7gF_cnOqHGBDqx4C-rFNASl_o_JduSQ06oCid68qghk-ZIyBdBxBvXqJ98k9GsmvotPPaNzfMTHGs4UQLMlF-E3kmA9E29GA74vQ7jsA78Rs2sF4kyJ6Hy_QmFKsZvGHGaiqJAb5Vwbty_eNSsWw6uMJ3bBD8gSdv4QNtgW2kP8q4Upo3qNJg7cEDtbaQ"
             alt="Barize" 
           />
-          <span className="text-base font-bold text-cyan-400 tracking-tighter">BARIZE</span>
+          <span className="text-base font-bold text-[var(--color-primary-container)] tracking-tighter">BARIZE</span>
         </div>
-        <button onClick={loadData} className="p-2 text-cyan-400 active:scale-95 transition-transform">
+        <button onClick={loadData} className="p-2 text-[var(--color-primary-container)] active:scale-95 transition-transform">
           <RefreshCw size={20} />
         </button>
       </header>
@@ -155,8 +155,8 @@ export default function Pedidos() {
       <main className="px-4 md:px-6 max-w-7xl mx-auto py-6 pt-[72px] pb-[90px]">
         {/* Title Section */}
         <div className="mb-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#e5e2e1] mb-1 tracking-tight">Pedidos Ativos</h1>
-          <p className="text-sm text-[#bac9cc]">{activePedidos.length} pedidos na fila • Tempo médio: {tempoMedio}min</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-on-surface)] mb-1 tracking-tight">Pedidos Ativos</h1>
+          <p className="text-sm text-[var(--color-on-surface-variant)]">{activePedidos.length} pedidos na fila • Tempo médio: {tempoMedio}min</p>
         </div>
           
         {/* Filters - Horizontal Buttons */}
@@ -170,8 +170,8 @@ export default function Pedidos() {
                 onClick={() => setStatusFilter(filter.key)}
                 className={`h-8 px-3 rounded-lg font-medium text-[11px] whitespace-nowrap active:scale-95 transition-all flex items-center justify-center gap-1 ${
                   isActive
-                    ? 'bg-[#00e5ff] text-black shadow-[0px_0px_8px_rgba(0,218,243,0.3)]'
-                    : 'bg-[#2a2a2a] text-[#e5e2e1] border border-white/10 hover:bg-[#393939]'
+                    ? 'bg-[var(--color-primary-container)] text-[var(--color-on-primary)] shadow-[0px_0px_8px_rgba(0,218,243,0.3)]'
+                    : 'bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] border border-[rgba(var(--overlay-rgb),0.1)] hover:bg-[var(--color-surface-container-highest)]'
                 }`}
               >
                 <span className="material-symbols-outlined text-[14px]">{filter.icon}</span>
@@ -185,8 +185,8 @@ export default function Pedidos() {
         <div className="grid grid-cols-2 gap-3">
           {filtered.length === 0 ? (
             <div className="col-span-full flex flex-col items-center justify-center py-16 gap-3">
-              <CheckCircle size={48} className="text-gray-600" />
-              <p className="text-gray-500 text-sm">Nenhum pedido nesta categoria</p>
+              <CheckCircle size={48} className="text-[var(--color-outline)]" />
+              <p className="text-[var(--color-outline)] text-sm">Nenhum pedido nesta categoria</p>
             </div>
           ) : (
             filtered.map(pedido => {
@@ -199,7 +199,7 @@ export default function Pedidos() {
               return (
                 <div
                   key={pedido.id}
-                  className={`bg-[#1c1b1b] rounded-xl border-l-4 ${cfg.borderClass} overflow-hidden transition-all duration-200 ${
+                  className={`bg-[var(--color-surface-container)] rounded-xl border-l-4 ${cfg.borderClass} overflow-hidden transition-all duration-200 ${
                     isEntregue || isCancelado ? 'opacity-50' : ''
                   }`}
                 >
@@ -214,7 +214,7 @@ export default function Pedidos() {
                         {cfg.label}
                       </div>
                       {isActive && (
-                        <div className="flex items-center gap-1 text-amber-400">
+                        <div className="flex items-center gap-1 text-[var(--color-secondary-container)]">
                           <Clock size={12} />
                           <span className="text-[11px] font-mono font-bold">{timer}</span>
                         </div>
@@ -224,12 +224,12 @@ export default function Pedidos() {
                     {/* Mesa/Balcão + Cliente */}
                     <div className="mb-2">
                       {pedido.mesa && (
-                        <h3 className="text-[13px] font-bold text-[#e5e2e1]">
+                        <h3 className="text-[13px] font-bold text-[var(--color-on-surface)]">
                           {pedido.mesa.includes('BALC') ? `BALC ${pedido.mesa}` : `MESA ${pedido.mesa}`}
                         </h3>
                       )}
                       {pedido.cliente && (
-                        <p className="text-[12px] text-gray-400">{pedido.cliente}</p>
+                        <p className="text-[12px] text-[var(--color-on-surface-variant)]">{pedido.cliente}</p>
                       )}
                     </div>
 
@@ -238,24 +238,24 @@ export default function Pedidos() {
                       {pedido.itens.slice(0, 3).map((item, i) => (
                         <div key={i} className="flex flex-col">
                           <div className="flex justify-between items-start">
-                            <span className={`text-[12px] ${isEntregue || isCancelado ? 'text-gray-500' : 'text-[#e5e2e1]'}`}>
+                            <span className={`text-[12px] ${isEntregue || isCancelado ? 'text-[var(--color-outline)]' : 'text-[var(--color-on-surface)]'}`}>
                               {item.quantidade}x {item.nome}
                             </span>
                             {item.preco > 0 && (
-                              <span className={`text-[11px] font-mono ${isEntregue || isCancelado ? 'text-gray-600' : 'text-gray-400'}`}>
+                              <span className={`text-[11px] font-mono ${isEntregue || isCancelado ? 'text-[var(--color-outline)]' : 'text-[var(--color-on-surface-variant)]'}`}>
                                 R$ {(item.quantidade * item.preco).toFixed(2)}
                               </span>
                             )}
                           </div>
                           {item.observacao && (
-                            <span className="text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded inline-block w-fit mt-0.5">
+                            <span className="text-[9px] text-[var(--color-secondary-container)] bg-[var(--color-secondary-container)]/10 border border-[var(--color-secondary-container)]/20 px-1.5 py-0.5 rounded inline-block w-fit mt-0.5">
                               {item.observacao}
                             </span>
                           )}
                         </div>
                       ))}
                       {pedido.itens.length > 3 && (
-                        <p className="text-[9px] text-gray-500">+{pedido.itens.length - 3} mais itens</p>
+                        <p className="text-[9px] text-[var(--color-outline)]">+{pedido.itens.length - 3} mais itens</p>
                       )}
                     </div>
                   </div>
@@ -272,12 +272,12 @@ export default function Pedidos() {
                     ) : isActive ? (
                       <button
                         onClick={() => setCancelPedido(pedido)}
-                        className="w-full h-10 rounded-lg bg-red-500 text-white text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+                        className="w-full h-10 rounded-lg bg-[var(--color-error)] text-[var(--color-on-error)] text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 active:scale-[0.98] transition-all cursor-pointer shadow-lg"
                       >
                         <X size={12} /> Cancelar
                       </button>
                     ) : (
-                      <div className="text-center text-[10px] font-mono text-gray-500 uppercase tracking-wider py-2">
+                      <div className="text-center text-[10px] font-mono text-[var(--color-outline)] uppercase tracking-wider py-2">
                         {isCancelado ? 'Cancelado' : 'Entregue'}
                       </div>
                     )}
@@ -293,21 +293,21 @@ export default function Pedidos() {
       <Modal open={!!cancelPedido} onClose={() => { setCancelPedido(null); setMotivoCancelamento(''); }}>
         <div className="space-y-5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-400/10 flex items-center justify-center border border-red-400/20">
-              <AlertTriangle size={18} className="text-red-400" />
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-error-container)] flex items-center justify-center border border-[var(--color-error)]/20">
+              <AlertTriangle size={18} className="text-[var(--color-error)]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#e5e2e1]">Cancelar Pedido</h2>
-              <p className="text-xs font-mono text-gray-400">Pedido #{cancelPedido?.id}</p>
+              <h2 className="text-base font-bold text-[var(--color-on-surface)]">Cancelar Pedido</h2>
+              <p className="text-xs font-mono text-[var(--color-on-surface-variant)]">Pedido #{cancelPedido?.id}</p>
             </div>
           </div>
 
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-[var(--color-on-surface-variant)]">
             Tem certeza que deseja cancelar este pedido? Esta ação não pode ser desfeita.
           </p>
 
           <div>
-            <label className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] text-gray-400 mb-2 block">
+            <label className="text-[9px] font-mono font-bold uppercase tracking-[0.15em] text-[var(--color-on-surface-variant)] mb-2 block">
               Motivo (opcional)
             </label>
             <input
@@ -315,21 +315,21 @@ export default function Pedidos() {
               value={motivoCancelamento}
               onChange={(e) => setMotivoCancelamento(e.target.value)}
               placeholder="Ex: Cliente desistiu..."
-              className="w-full h-10 px-4 rounded-xl bg-[#1c1b1b] border border-white/10 text-xs font-mono text-[#e5e2e1] placeholder:text-gray-500 focus:outline-none focus:border-cyan-400/50 transition-all"
+              className="w-full h-10 px-4 rounded-xl bg-[var(--color-surface-container)] border border-[rgba(var(--overlay-rgb),0.1)] text-xs font-mono text-[var(--color-on-surface)] placeholder:text-[var(--color-outline)] focus:outline-none focus:border-[var(--color-primary-container)]/50 transition-all"
             />
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={() => { setCancelPedido(null); setMotivoCancelamento(''); }}
-              className="flex-1 h-11 rounded-xl border border-white/10 text-xs font-mono font-bold uppercase tracking-wider text-gray-400 hover:bg-white/5 transition-all cursor-pointer"
+              className="flex-1 h-11 rounded-xl border border-[rgba(var(--overlay-rgb),0.1)] text-xs font-mono font-bold uppercase tracking-wider text-[var(--color-on-surface-variant)] hover:bg-[rgba(var(--overlay-rgb),0.05)] transition-all cursor-pointer"
             >
               Voltar
             </button>
             <button
               onClick={handleCancel}
               disabled={cancelling}
-              className="flex-1 h-11 rounded-xl bg-red-500 text-white text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40"
+              className="flex-1 h-11 rounded-xl bg-[var(--color-error)] text-[var(--color-on-error)] text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40"
             >
               {cancelling ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
