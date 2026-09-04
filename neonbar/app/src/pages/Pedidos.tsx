@@ -255,6 +255,22 @@ export default function Pedidos() {
                         <p className="text-[9px] text-[var(--color-outline)]">+{pedido.itens.length - 3} mais itens</p>
                       )}
                     </div>
+
+                    {/* Timestamp */}
+                    {(isEntregue || isCancelado || pedido.status === 'Arquivado') && (
+                      <div className="px-3 pb-2">
+                        <p className="text-[9px] font-mono text-[var(--color-outline)] opacity-60">
+                          {pedido.status === 'Arquivado' && pedido.arquivado_em
+                            ? `Arquivado: ${new Date(pedido.arquivado_em).toLocaleString('pt-BR')}`
+                            : pedido.updated_at
+                              ? `${isEntregue ? 'Entregue' : 'Cancelado'}: ${new Date(pedido.updated_at).toLocaleString('pt-BR')}`
+                              : pedido.created_at
+                                ? `Criado: ${new Date(pedido.created_at).toLocaleString('pt-BR')}`
+                                : ''
+                          }
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Action Button */}
@@ -274,13 +290,8 @@ export default function Pedidos() {
                         <X size={12} /> Cancelar
                       </button>
                     ) : (
-                      <div className="text-center text-[10px] font-mono text-[var(--color-outline)] py-2 space-y-0.5">
-                        <span className="uppercase tracking-wider">{isCancelado ? 'Cancelado' : 'Arquivado'}</span>
-                        {pedido.arquivado_em && (
-                          <p className="text-[9px] text-[var(--color-outline)] opacity-70">
-                            {new Date(pedido.arquivado_em).toLocaleString('pt-BR')}
-                          </p>
-                        )}
+                      <div className="text-center text-[10px] font-mono text-[var(--color-outline)] uppercase tracking-wider py-2">
+                        {isCancelado ? 'Cancelado' : 'Arquivado'}
                       </div>
                     )}
                   </div>
