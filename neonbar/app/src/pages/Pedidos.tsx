@@ -276,9 +276,9 @@ export default function Pedidos() {
                     ) : (
                       <div className="text-center text-[10px] font-mono text-[var(--color-outline)] py-2 space-y-0.5">
                         <span className="uppercase tracking-wider">{isCancelado ? 'Cancelado' : 'Arquivado'}</span>
-                        {(pedido as any).arquivado_em && (
+                        {pedido.arquivado_em && (
                           <p className="text-[9px] text-[var(--color-outline)] opacity-70">
-                            {new Date((pedido as any).arquivado_em).toLocaleString('pt-BR')}
+                            {new Date(pedido.arquivado_em).toLocaleString('pt-BR')}
                           </p>
                         )}
                       </div>

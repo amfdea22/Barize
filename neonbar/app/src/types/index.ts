@@ -449,6 +449,7 @@ export interface Pedido {
   iniciado_em?: string;
   pronto_em?: string;
   tempo_preparo_estimado?: number;
+  arquivado_em?: string;
 }
 
 export interface PedidoCreate {
