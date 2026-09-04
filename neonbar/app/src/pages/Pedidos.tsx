@@ -137,24 +137,27 @@ export default function Pedidos() {
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-12 bg-[var(--color-background)] border-b border-[rgba(var(--overlay-rgb),0.1)]">
-        <div className="flex items-center gap-2">
-          <img 
-            className="w-8 h-8 rounded-full object-cover" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbCrx3Mg8po9xJhaWT8Jsu0LeY7TUO_KuKO91JJRAXQRYnbUK5yBf8y6V7gF_cnOqHGBDqx4C-rFNASl_o_JduSQ06oCid68qghk-ZIyBdBxBvXqJ98k9GsmvotPPaNzfMTHGs4UQLMlF-E3kmA9E29GA74vQ7jsA78Rs2sF4kyJ6Hy_QmFKsZvGHGaiqJAb5Vwbty_eNSsWw6uMJ3bBD8gSdv4QNtgW2kP8q4Upo3qNJg7cEDtbaQ"
-            alt="Barize" 
-          />
-          <span className="text-base font-bold text-[var(--color-primary-container)] tracking-tighter">BARIZE</span>
+      <header className="fixed top-0 left-0 w-full z-50 bg-[var(--color-background)]/80 backdrop-blur-xl border-b border-[rgba(var(--overlay-rgb),0.08)]">
+        <div className="flex justify-between items-center px-4 h-14">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--color-primary-container)] to-[var(--color-primary)] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.3)]">
+              <span className="material-symbols-outlined text-[var(--color-on-primary)] text-[20px]">local_bar</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-[var(--color-on-surface)] tracking-tight leading-tight">BARIZE</span>
+              <span className="text-[9px] font-medium text-[var(--color-on-surface-variant)] uppercase tracking-widest">Pedidos</span>
+            </div>
+          </div>
+          <button onClick={loadData} className="w-9 h-9 rounded-xl bg-[var(--color-surface-container-high)] flex items-center justify-center text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-primary-container)] active:scale-95 transition-all">
+            <RefreshCw size={16} />
+          </button>
         </div>
-        <button onClick={loadData} className="p-2 text-[var(--color-primary-container)] active:scale-95 transition-transform">
-          <RefreshCw size={20} />
-        </button>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 md:px-6 max-w-7xl mx-auto py-6 pt-[72px] pb-[90px]">
+      <main className="px-4 md:px-6 max-w-7xl mx-auto py-6 pt-[80px] pb-[90px]">
         {/* Title Section */}
-        <div className="mb-4">
+        <div className="mb-5">
           <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-on-surface)] mb-1 tracking-tight">Pedidos Ativos</h1>
           <p className="text-sm text-[var(--color-on-surface-variant)]">{activePedidos.length} pedidos na fila • Tempo médio: {tempoMedio}min</p>
         </div>
