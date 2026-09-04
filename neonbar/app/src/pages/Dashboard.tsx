@@ -76,7 +76,7 @@ export default function Dashboard() {
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <UserMenu open={userMenuOpen} onClose={() => setUserMenuOpen(false)} anchorRef={userButtonRef} />
 
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#004f58] to-[#00363d] px-4 h-16 flex items-center justify-between shadow-lg shadow-[#004f58]/30 rounded-b-3xl">
+      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#004f58] to-[#00363d] px-4 h-16 flex items-center justify-between shadow-lg shadow-[#004f58]/30">
         <button
           onClick={() => setDrawerOpen(true)}
           className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
