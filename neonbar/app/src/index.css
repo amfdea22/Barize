@@ -8,75 +8,68 @@
   font-variation-settings: 'FILL' 1;
 }
 
-.glassmorphism {
-  background: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ═══ Velocity Dark — Design System (idêntico ao web) ═══ */
+/* ═══ Nocturne Azure — Design System ═══ */
 :root {
   color-scheme: dark;
   --overlay-rgb: 255, 255, 255;
-  --glass-rgb: 28, 27, 27;
-  --neutral-rgb: 59, 73, 76;
+  --glass-rgb: 15, 32, 53;
+  --neutral-rgb: 62, 72, 79;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
   --overlay-rgb: 0, 0, 0;
   --glass-rgb: 255, 255, 255;
-  --neutral-rgb: 59, 73, 76;
+  --neutral-rgb: 62, 72, 79;
 }
 
 @theme {
-  /* Surface */
-  --color-surface: #131313;
-  --color-surface-dim: #131313;
-  --color-surface-bright: #393939;
-  --color-surface-lowest: #0e0e0e;
-  --color-surface-low: #1c1b1b;
-  --color-surface-container: #201f1f;
-  --color-surface-container-low: #1c1b1b;
-  --color-surface-container-high: #2a2a2a;
-  --color-surface-container-highest: #353534;
-  --color-surface-high: #2a2a2a;
-  --color-surface-highest: #353534;
+  /* Surface — Nocturne Azure */
+  --color-surface: #091422;
+  --color-surface-dim: #091422;
+  --color-surface-bright: #2f3a49;
+  --color-surface-lowest: #040f1c;
+  --color-surface-low: #111c2a;
+  --color-surface-container: #16202f;
+  --color-surface-container-low: #111c2a;
+  --color-surface-container-high: #202b3a;
+  --color-surface-container-highest: #2b3545;
+  --color-surface-high: #202b3a;
+  --color-surface-highest: #2b3545;
 
   /* On-Surface */
-  --color-on-surface: #e5e2e1;
-  --color-on-surface-variant: #bac9cc;
-  --color-inverse-surface: #e5e2e1;
-  --color-inverse-on-surface: #313030;
+  --color-on-surface: #d8e3f7;
+  --color-on-surface-variant: #bdc8d1;
+  --color-inverse-surface: #d8e3f7;
+  --color-inverse-on-surface: #263140;
 
   /* Outline */
-  --color-outline: #849396;
-  --color-outline-variant: #3b494c;
-  --color-surface-tint: #00daf3;
+  --color-outline: #87929a;
+  --color-outline-variant: #3e484f;
+  --color-surface-tint: #7bd0ff;
 
-  /* Primary - Electric Blue */
-  --color-primary: #c3f5ff;
-  --color-on-primary: #00363d;
-  --color-primary-container: #00e5ff;
-  --color-on-primary-container: #00626e;
-  --color-inverse-primary: #006875;
-  --color-primary-fixed: #9cf0ff;
-  --color-primary-fixed-dim: #00daf3;
+  /* Primary — Sky Azure */
+  --color-primary: #8ed5ff;
+  --color-on-primary: #00354a;
+  --color-primary-container: #38bdf8;
+  --color-on-primary-container: #004965;
+  --color-inverse-primary: #00668a;
+  --color-primary-fixed: #c4e7ff;
+  --color-primary-fixed-dim: #7bd0ff;
 
-  /* Secondary - Neon Amber */
-  --color-secondary: #ffcf8f;
-  --color-on-secondary: #452b00;
-  --color-secondary-container: #feaa00;
-  --color-on-secondary-container: #684300;
-  --color-secondary-fixed: #ffddb3;
-  --color-secondary-fixed-dim: #ffb950;
+  /* Secondary — Electric Cyan */
+  --color-secondary: #bdf4ff;
+  --color-on-secondary: #00363d;
+  --color-secondary-container: #00e3fd;
+  --color-on-secondary-container: #00616d;
+  --color-secondary-fixed: #9cf0ff;
+  --color-secondary-fixed-dim: #00daf3;
 
-  /* Tertiary - Purple */
-  --color-tertiary: #f2e9ff;
-  --color-on-tertiary: #3c0090;
-  --color-tertiary-container: #d9c8ff;
-  --color-on-tertiary-container: #6c00f7;
+  /* Tertiary — Soft Ultramarine */
+  --color-tertiary: #afcfff;
+  --color-on-tertiary: #00315d;
+  --color-tertiary-container: #7bb4ff;
+  --color-on-tertiary-container: #00457e;
 
   /* Error */
   --color-error: #ffb4ab;
@@ -85,29 +78,37 @@
   --color-on-error-container: #ffdad6;
 
   /* Background */
-  --color-background: #131313;
-  --color-on-background: #e5e2e1;
-  --color-surface-variant: #353534;
+  --color-background: #091422;
+  --color-on-background: #d8e3f7;
+  --color-surface-variant: #2b3545;
 
-  /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Typography — Plus Jakarta Sans */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  /* Radius — Nocturne Azure */
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
 
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 40px;
+  /* Spacing — Nocturne Azure */
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  --spacing-3xl: 2.5rem;
+  --spacing-screen: 1.25rem;
+  --spacing-gutter: 0.75rem;
+  --spacing-card-sm: 0.75rem;
+  --spacing-card-md: 1.25rem;
+  --spacing-card-lg: 1.5rem;
 }
 
-/* ═══ Light Theme Override (vibrant) ═══ */
+/* ═══ Light Theme Override ═══ */
 :root[data-theme="light"] {
   --color-surface: #fbfbfa;
   --color-surface-dim: #d6d8d4;
@@ -196,25 +197,38 @@ body {
   border-radius: 9999px;
 }
 
-/* ═══ Glass Effect ═══ */
+/* ═══ Glass Effect — Nocturne Azure ═══ */
 .glass {
-  background: rgba(var(--glass-rgb), 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 32, 53, 0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
 }
 .glass-border {
-  border: 1px solid rgba(var(--overlay-rgb), 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.10);
 }
 
-/* ═══ Glow Effects ═══ */
+.glassmorphism {
+  background: rgba(15, 32, 53, 0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* ═══ Glow Effects — Nocturne Azure ═══ */
 .glow-primary {
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.30);
 }
 .glow-secondary {
-  box-shadow: 0 0 12px rgba(254, 170, 0, 0.25);
+  box-shadow: 0 0 16px rgba(0, 227, 253, 0.30);
 }
 .glow-error {
-  box-shadow: 0 0 12px rgba(147, 0, 10, 0.25);
+  box-shadow: 0 0 16px rgba(255, 180, 171, 0.25);
+}
+
+/* ═══ Hero Card Glow ═══ */
+.hero-glow {
+  box-shadow: 0 16px 36px -6px rgba(56, 189, 248, 0.32);
 }
 
 /* ═══ Animations ═══ */
@@ -225,8 +239,8 @@ body {
 .animate-fade-in { animation: fade-in 0.2s ease-out; }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
-  50% { box-shadow: 0 0 12px 4px rgba(0, 229, 255, 0.2); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+  50% { box-shadow: 0 0 16px 4px rgba(56, 189, 248, 0.2); }
 }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
@@ -260,7 +274,7 @@ body {
 }
 .animate-slide-down { animation: slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 
-/* Scrollbar moderna e fina */
+/* ═══ Scrollbar ═══ */
 .scrollbar-hide::-webkit-scrollbar {
   height: 4px;
 }
@@ -268,9 +282,9 @@ body {
   background: transparent;
 }
 .scrollbar-hide::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 4px;
 }
 .scrollbar-hide::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.20);
 }
