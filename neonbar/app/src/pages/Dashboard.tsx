@@ -122,7 +122,7 @@ export default function Dashboard() {
         <div className="h-16 px-5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <button
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => setDrawerOpen(!drawerOpen)}
               className="w-11 h-11 rounded-full flex items-center justify-center bg-[#202b3a]/60 text-[#bdc8d1] hover:text-[#38bdf8] transition-colors flex-shrink-0"
             >
               <span className="material-symbols-outlined text-[20px]">menu</span>
