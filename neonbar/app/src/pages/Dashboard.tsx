@@ -121,6 +121,12 @@ export default function Dashboard() {
       <header className="fixed top-0 w-full z-50 bg-[#040f1c]/70 backdrop-blur-2xl shadow-[0_1px_16px_rgba(0,0,0,0.35)]">
         <div className="h-16 px-5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="w-11 h-11 rounded-full flex items-center justify-center bg-[#202b3a]/60 text-[#bdc8d1] hover:text-[#38bdf8] transition-colors flex-shrink-0"
+            >
+              <span className="material-symbols-outlined text-[20px]">menu</span>
+            </button>
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#38bdf8] to-[#00e3fd] flex items-center justify-center flex-shrink-0">
               <span className="text-[#091422] font-bold text-xs">B</span>
             </div>
