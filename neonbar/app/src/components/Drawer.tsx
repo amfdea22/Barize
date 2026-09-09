@@ -83,16 +83,16 @@ export default function Drawer({ open, onClose }: DrawerProps) {
         className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity"
         onClick={onClose}
       />
-      <div className="fixed inset-y-0 left-0 w-80 bg-[var(--color-surface)] z-50 flex flex-col animate-slide-in-left shadow-2xl">
-        <div className="relative p-6 pb-4 bg-gradient-to-br from-[#004f58] to-[#001f24]">
+      <div className="fixed inset-y-0 left-0 w-80 bg-[#091422] z-50 flex flex-col animate-slide-in-left shadow-2xl border-r border-white/10">
+        <div className="relative p-6 pb-4 bg-gradient-to-br from-[#38bdf8] to-[#1e40af]">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-xl bg-[var(--color-primary-container)]/20 hover:bg-[var(--color-primary-container)]/30 transition-colors"
+            className="absolute top-4 right-4 p-2 rounded-xl bg-white/20 hover:bg-white/30 transition-colors"
           >
-            <X size={18} className="text-[var(--color-primary-container)]" />
+            <X size={18} className="text-white" />
           </button>
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-2xl">B</span>
             </div>
             <div>
@@ -115,28 +115,28 @@ export default function Drawer({ open, onClose }: DrawerProps) {
                     navigate(item.to);
                     onClose();
                   }}
-                  className="w-full flex items-center gap-4 px-6 py-3.5 text-left hover:bg-[#004f58]/30 active:bg-[#004f58]/50 transition-all duration-150"
+                  className="w-full flex items-center gap-4 px-6 py-3.5 text-left hover:bg-[#38bdf8]/15 active:bg-[#38bdf8]/25 transition-all duration-150"
                 >
                   <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center`}>
                     <item.icon size={20} className={item.color} />
                   </div>
-                  <span className="text-sm font-medium text-[var(--color-on-surface)]">{item.label}</span>
+                  <span className="text-sm font-medium text-[#d8e3f7]">{item.label}</span>
                 </button>
               ))}
             </div>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-[var(--color-outline)]">
+        <div className="p-4 border-t border-white/10">
           <button
             onClick={() => {
               localStorage.removeItem('barize_token');
               navigate('/login');
             }}
-            className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl text-[var(--color-error)] hover:bg-[var(--color-error-container)]/15 active:bg-[var(--color-error-container)]/25 transition-colors"
+            className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl text-[#ffb4ab] hover:bg-[#ffb4ab]/10 active:bg-[#ffb4ab]/20 transition-colors"
           >
-            <div className="w-10 h-10 rounded-xl bg-[var(--color-error-container)]/20 flex items-center justify-center">
-              <LogOut size={20} className="text-[var(--color-error)]" />
+            <div className="w-10 h-10 rounded-xl bg-[#ffb4ab]/20 flex items-center justify-center">
+              <LogOut size={20} className="text-[#ffb4ab]" />
             </div>
             <span className="text-sm font-medium">Sair do Sistema</span>
           </button>
