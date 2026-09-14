@@ -1,6 +1,612 @@
 {
-  "nextId": 127,
+  "nextId": 181,
   "cards": {
+    "TC-180": {
+      "id": "TC-180",
+      "title": "Formato cupom nao fiscal - adicionar atendente e layout real",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T05:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-179": {
+      "id": "TC-179",
+      "title": "Imprimir cupom antes de fechar conta e pagamento",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T04:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-178": {
+      "id": "TC-178",
+      "title": "Erro ao imprimir cupom - investigar e corrigir",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T04:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-177": {
+      "id": "TC-177",
+      "title": "Menu Relatorio e Ranking de Drinks (vendas, CMV, lucro, prejuizos)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T03:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-176": {
+      "id": "TC-176",
+      "title": "Cupom de pagamento nao esta saindo a impressao",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T03:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-175": {
+      "id": "TC-175",
+      "title": "Admin - CRUD Lotes, Funcionarios, Mesas, Impressoras",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-174": {
+      "id": "TC-174",
+      "title": "Estoque - CRUD insumos + Auto-Reposicao",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-173": {
+      "id": "TC-173",
+      "title": "PDV - CRUD produtos (admin/gerente)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-172": {
+      "id": "TC-172",
+      "title": "Caixa - fechar caixa, pagamento, historico",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-171": {
+      "id": "TC-171",
+      "title": "Fichas Tecnicas - edicao, filtros, view modes",
+      "status": "executing",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-170": {
+      "id": "TC-170",
+      "title": "Adicionar permissoes de edicao em todos os menus do app (como no web)",
+      "status": "analyzing",
+      "taskType": "card",
+      "createdAt": "2026-09-14T02:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-169": {
+      "id": "TC-169",
+      "title": "Auditar tunel Groq do Barize - mostrando Radar FX ao inves do Barize",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T01:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "notes": "Corrigido: tunel reconfigurado de localhost:3015 (Radar FX) para localhost:5174 (Barize). Backend e Frontend reiniciados."
+    },
+    "TC-168": {
+      "id": "TC-168",
+      "title": "Erro ao salvar comanda no modal editar comanda",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T01:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-167": {
+      "id": "TC-167",
+      "title": "Campo nova comanda: numero, mesa e atendente",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T00:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-166": {
+      "id": "TC-166",
+      "title": "Inserir opcao de editar comanda e cadastrar comanda com todas informacoes e nome do atendente",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T00:20:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-165": {
+      "id": "TC-165",
+      "title": "Aumentar tamanho da fonte do titulo Comandas no cabecalho impressao",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T00:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-164": {
+      "id": "TC-164",
+      "title": "Formato quadrado nos cards de comanda do menu Impressao",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-14T00:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-163": {
+      "id": "TC-163",
+      "title": "Painel de impressao de comanda para cliente com novo menu",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T23:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Criar um painel dedicado para impressao de comandas voltado ao cliente, com novo menu de navegacao no app Barize.",
+      "acceptanceCriteria": [
+        "MENU 1 — Novo item 'Comanda' no menu lateral/Drawer do app Barize",
+        "PAINEL 2 — Tela de Impressao de Comanda com lista de comandas abertas/fechadas",
+        "FILTRO 3 — Filtros por status (Aberta, Fechada, Todas) e por mesa",
+        "IMPRESSAO 4 — Botao 'Imprimir' em cada comanda que envia para impressora BT conectada",
+        "PREVIEW 5 — Preview do cupom antes de imprimir (formato 54mm)",
+        "AUTO-REFRESH 6 — Atualizacao automatica da lista de comandas",
+        "RESPONSIVO 7 — Layout responsivo mobile-first",
+        "VALIDACAO 8 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/ImpressaoComanda.tsx",
+        "neonbar/app/src/components/Drawer.tsx",
+        "neonbar/app/src/App.tsx"
+      ],
+      "tests": [
+        "Novo menu 'Comanda' aparece no Drawer",
+        "Painel lista comandas abertas e fechadas",
+        "Filtros funcionam corretamente",
+        "Botao Imprimir envia para BT",
+        "Preview mostra cupom formatado",
+        "Auto-refresh atualiza lista",
+        "Layout responsivo OK",
+        "Build + lint OK"
+      ],
+      "notes": "Painel dedicado para o garcom/cliente imprimir comandas. Deve usar o bluetoothPrinter ja existente e o formato 54mm."
+    },
+    "TC-159": {
+      "id": "TC-159",
+      "title": "Preview da comanda antes de imprimir",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T20:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-160": {
+      "id": "TC-160",
+      "title": "Corrigir botoes editar comanda",
+      "status": "completed",
+      "taskType": "fix",
+      "createdAt": "2026-09-13T21:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-161": {
+      "id": "TC-161",
+      "title": "Corrigir estoque Caipirinha (50 Cachaca > 10 disp)",
+      "status": "completed",
+      "taskType": "fix",
+      "createdAt": "2026-09-13T22:05:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-162": {
+      "id": "TC-162",
+      "title": "Botao Comandas no Dashboard leva para /comandas",
+      "status": "completed",
+      "taskType": "fix",
+      "createdAt": "2026-09-13T22:10:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-158": {
+      "id": "TC-158",
+      "title": "Adicionar garcom na comanda + editar comanda",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T19:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-157": {
+      "id": "TC-157",
+      "title": "Padronizar impressao com formato da comanda PDV 58mm",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-156": {
+      "id": "TC-156",
+      "title": "Auto-busca de impressoras Bluetooth e USB",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T18:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "notes": "Mensagem de erro melhorada. Web Bluetooth so funciona em HTTPS/localhost. No Android, o usuario deve parear a impressora primeiro nas Configuracoes do celular antes de usar no app."
+    },
+    "TC-155": {
+      "id": "TC-155",
+      "title": "Remover max-w-md do modal Nova Configuracao impressora",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T17:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-154": {
+      "id": "TC-154",
+      "title": "Melhorar modal de nova configuracao de impressora",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T17:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-153": {
+      "id": "TC-153",
+      "title": "Adicionar conexão USB para impressora",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T16:30:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-152": {
+      "id": "TC-152",
+      "title": "Permitir configuração de impressora via app Barize",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T16:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-151": {
+      "id": "TC-151",
+      "title": "Configurar impressora via Bluetooth",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T15:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-150": {
+      "id": "TC-150",
+      "title": "Configurar impressora para imprimir comanda",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T14:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-149": {
+      "id": "TC-149",
+      "title": "Implementar regras de negócio para comandas do Barize",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T13:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-148": {
+      "id": "TC-148",
+      "title": "Inserir opção de novo pedido no PDV para mesas ocupadas",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T12:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-147": {
+      "id": "TC-147",
+      "title": "Configurar tema claro do app Barize com cores que realcem o design",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T11:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-146": {
+      "id": "TC-146",
+      "title": "Padronizar todos os cards dos painéis do app Barize para formato quadrado",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-13T10:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-145": {
+      "id": "TC-145",
+      "title": "Corrigir menu lateral para ficar abaixo da barra superior do Dashboard",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-09T12:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-144": {
+      "id": "TC-144",
+      "title": "Dashboard Barize: implementar designer Nexora Glass",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-09T00:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-143": {
+      "id": "TC-143",
+      "title": "Barize cards: alterar cor para azul claro",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-04T03:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-142": {
+      "id": "TC-142",
+      "title": "Dashboard Barize Web: replicar dashboard do app Barize",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-04T02:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-141": {
+      "id": "TC-141",
+      "title": "Dashboard Faturamento: sincronizar com dados reais da API",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-04T01:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-140": {
+      "id": "TC-140",
+      "title": "Dashboard Barize: sincronizar dados e implementar funcionalidades",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-04T00:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-139": {
+      "id": "TC-139",
+      "title": "PDV: modal Novo Pedido com minimize ao invés de fechar (X)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-03T19:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-138": {
+      "id": "TC-138",
+      "title": "PDV: ao clicar no produto sem tipo/local, mostrar área de seleção",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-03T18:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-137": {
+      "id": "TC-137",
+      "title": "Após criar comanda redirecionar para PDV para adicionar itens",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-03T17:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-136": {
+      "id": "TC-136",
+      "title": "PDV obrigatório escolher tipo de pedido e local antes de adicionar itens",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-03T16:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-135": {
+      "id": "TC-135",
+      "title": "Input para número da comanda ao clicar em Adicionar Comanda",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-03T15:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-134": {
+      "id": "TC-134",
+      "title": "Trocar botão 3 pontinhos por + nos cards de mesa",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-03T14:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-133": {
+      "id": "TC-133",
+      "title": "Menu 3 pontinhos nos cards de mesa (adicionar comanda + agrupar mesas)",
+      "status": "completed",
+      "taskType": "card",
+      "createdAt": "2026-09-03T13:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-132": {
+      "id": "TC-132",
+      "title": "Painel de pagamento mostrar itens ao invés de pedidos #",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-03T12:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-131": {
+      "id": "TC-131",
+      "title": "Menu Delivery completo com sincronização em todos os botões do app",
+      "status": "backlog",
+      "taskType": "card",
+      "createdAt": "2026-09-02T12:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build"
+    },
+    "TC-130": {
+      "id": "TC-130",
+      "title": "Ajustar design da página Pedidos conforme imagem de referência",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-02T08:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Apenas ajustar design/layout da página Pedidos conforme imagem de referência, sem alterar funcionalidades existentes.",
+      "acceptanceCriteria": [
+        "DESIGN 1 — Header com logo Mixology_Pro e ícone settings",
+        "DESIGN 2 — Título 'Pedidos Ativos' com estatísticas",
+        "DESIGN 3 — Filtros horizontais: Todos (14), Em Preparo (5), Aguardando",
+        "DESIGN 4 — Cards em grid 2 colunas com borda lateral colorida",
+        "DESIGN 5 — Badge de status com ícone Material Symbols",
+        "DESIGN 6 — Timer com ícone timer",
+        "DESIGN 7 — Itens com quantidade, nome, preço e observação",
+        "DESIGN 8 — Botões de ação: Servido (cyan), Iniciar Preparo (amber), Servir Agora (purple), Finalizar (green), Concluído (gray)",
+        "DESIGN 9 — Bottom nav: Orders (active cyan), Tables, Stock, Menu",
+        "FUNC 10 — Funcionalidades existentes preservadas (filtros, status, ações)",
+        "VALIDAÇÃO 11 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Pedidos.tsx"
+      ],
+      "tests": [
+        "Design conforme imagem de referência",
+        "Filtros funcionam corretamente",
+        "Cards exibem dados corretos",
+        "Botões de ação funcionam",
+        "Bottom nav funciona",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Apenas ajustar design, não mudar lógica de negócio."
+    },
+    "TC-129": {
+      "id": "TC-129",
+      "title": "Nova interface de Pedidos do App Barize",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T14:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Implementar nova interface e design na área de Pedidos do App Barize seguindo a imagem de referência.",
+      "acceptanceCriteria": [
+        "HEADER 1 — Header com logomarca e ícone de configurações",
+        "TITLE 2 — Título 'Pedidos Ativos' com estatísticas (pedidos na fila, tempo médio)",
+        "FILTERS 3 — Abas de filtro: Todos, Em Preparo, Aguardando, Pronto, Entregue",
+        "GRID 4 — Cards em grid 2 colunas com layout responsivo",
+        "CARD 5 — Cada card com: status badge, timer, mesa/balcão, cliente, itens, botão de ação",
+        "STATUS 6 — Badges coloridos por status (Em Preparo=azul, Aguardando=amarelo, Pronto=verde, Entregue=cinza)",
+        "ACTIONS 7 — Botões de ação: Servir, Iniciar Preparo, Servir Agora, Finalizar",
+        "NAV 8 — Bottom navigation: Orders, Tables, Stock, Menu",
+        "VALIDAÇÃO 9 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/Pedidos.tsx",
+        "neonbar/app/src/components/OrderCard.tsx"
+      ],
+      "tests": [
+        "Header com logo e configurações visível",
+        "Estatísticas exibidas corretamente",
+        "Filtros funcionam",
+        "Cards exibem status, timer, itens",
+        "Botões de ação funcionam",
+        "Bottom navigation funciona",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Seguir design da imagem de referência: fundo escuro, cards com bordas coloridas, badges de status, timers, botões de ação coloridos."
+    },
+    "TC-128": {
+      "id": "TC-128",
+      "title": "Área de pagamento estática sem scroll no PDV",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T13:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Tornar a área de pagamento (Forma de Pagamento, Dividir Conta, Valor Recebido, Calculadora) estática sem barra de rolagem no modal de pagamento do PDV.",
+      "acceptanceCriteria": [
+        "AREA 1 — Forma de Pagamento fixa sem scroll",
+        "AREA 2 — Dividir Conta fixo sem scroll",
+        "AREA 3 — Valor Recebido + Calculadora fixos sem scroll",
+        "AREA 4 — Parte superior (Subtotal, Desconto, etc.) rola independentemente",
+        "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx"
+      ],
+      "tests": [
+        "Forma de Pagamento sempre visível",
+        "Dividir Conta sempre visível",
+        "Valor Recebido + Calculadora sempre visíveis",
+        "Subtotal e desconto rolam se necessário",
+        "Build + lint frontend OK"
+      ],
+      "notes": "Usar prop footer do Modal para parte estática."
+    },
+    "TC-127": {
+      "id": "TC-127",
+      "title": "Opção de minimizar calculadora em todas as áreas de pagamento",
+      "status": "draft",
+      "taskType": "card",
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "createdBy": "user",
+      "agent": "build",
+      "objective": "Adicionar opção de minimizar/expandir a calculadora (TecladoNumerico) em todas as áreas de pagamento: PDV, Sala e Caixa.",
+      "acceptanceCriteria": [
+        "CALC 1 — PDV: botão toggle para mostrar/esconder TecladoNumerico",
+        "CALC 2 — Sala: já possui toggle (verificar funcionamento)",
+        "CALC 3 — Caixa: já possui toggle (verificar funcionamento)",
+        "CALC 4 — Todos usam mesma lógica de minimizar/maximizar",
+        "VALIDAÇÃO 5 — Build + lint frontend OK (0 erros)"
+      ],
+      "filesInvolved": [
+        "neonbar/app/src/pages/PDV.tsx",
+        "neonbar/app/src/pages/Sala.tsx",
+        "neonbar/app/src/pages/Caixa.tsx"
+      ],
+      "tests": [
+        "PDV: calculadora minimiza e expande",
+        "Sala: calculadora minimiza e expande",
+        "Caixa: calculadora minimiza e expande",
+        "Build + lint frontend OK"
+      ],
+      "notes": "PDV não possui toggle para TecladoNumerico — adicionar showCalc state e botão toggle."
+    },
     "TC-126": {
       "id": "TC-126",
       "title": "Texto centralizado no botão Adicionar Pedido do PDV",

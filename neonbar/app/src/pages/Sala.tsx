@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator, ClipboardList, Merge } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Store, Plus, X, Pencil, Trash2, Power, CreditCard, Check, Banknote, QrCode, ArrowLeft, Receipt, Users, AlertCircle, CheckCircle2, Calculator, ClipboardList, Merge, ShoppingCart } from 'lucide-react';
 import { mesasService, pedidosService, pagamentosService, pdvService } from '../services/api';
 import { toast } from '../components/Toast';
+import { bluetoothPrinter } from '../services/bluetoothPrinter';
 import Badge from '../components/Badge';
 import Modal from '../components/Modal';
-import Visualizador80mm from '../components/pdv/Visualizador80mm';
+import Visualizador58mm from '../components/pdv/Visualizador58mm';
 import { CupomPrintActions } from '../components/pdv/CupomPDV';
 
 type Mesa = {
@@ -18,6 +20,7 @@ type Mesa = {
 type Tab = 'mesas' | 'balcao';
 
 export default function Sala() {
+  const navigate = useNavigate();
   const [mesas, setMesas] = useState<Mesa[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -320,7 +323,7 @@ export default function Sala() {
       <header className="safe-top border-b border-[rgba(255,255,255,0.06)] bg-[rgba(var(--glass-rgb),0.6)] backdrop-blur-[20px]">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[rgba(0,229,255,0.2)] to-[rgba(0,218,243,0.08)] flex items-center justify-center border border-[rgba(0,229,255,0.2)] shadow-[0_0_12px_rgba(0,229,255,0.15)]">
+            <div className="w-10 h-10 bg-gradient-to-br from-[rgba(0,229,255,0.2)] to-[rgba(0,218,243,0.08)] flex items-center justify-center border border-[rgba(0,229,255,0.2)] shadow-[0_0_12px_rgba(0,229,255,0.15)]">
               <Store size={20} className="text-[var(--color-primary-container)]" />
             </div>
             <div>
@@ -464,8 +467,19 @@ export default function Sala() {
                       {activeMenuMesaId === mesa.id && (
                         <div
                           ref={menuRef}
-                          className="absolute top-8 left-0 w-44 bg-[var(--color-surface)] rounded-xl shadow-2xl border border-[var(--color-outline)]/20 z-50 overflow-hidden animate-fade-in"
+                          className="absolute top-8 left-0 w-44 bg-[var(--color-surface)] shadow-2xl border border-[var(--color-outline)]/20 z-50 overflow-hidden animate-fade-in"
                         >
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveMenuMesaId(null);
+                              navigate(`/pdv?mesa=${mesa.id}`);
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left"
+                          >
+                            <ShoppingCart size={14} className="text-[var(--color-primary-container)]" />
+                            <span className="text-xs font-medium text-[var(--color-on-surface)]">Inserir Pedido</span>
+                          </button>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -474,9 +488,9 @@ export default function Sala() {
                               setComandaNumero('');
                               setShowAddComandaModal(true);
                             }}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left"
+                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[var(--color-surface-container-high)] transition-colors text-left border-t border-[var(--color-outline)]/10"
                           >
-                            <ClipboardList size={14} className="text-[var(--color-primary-container)]" />
+                            <ClipboardList size={14} className="text-[var(--color-secondary-container)]" />
                             <span className="text-xs font-medium text-[var(--color-on-surface)]">Adicionar Comanda</span>
                           </button>
                           <button
@@ -500,7 +514,7 @@ export default function Sala() {
 
             {currentList.length === 0 && (
               <div className="flex flex-col items-center justify-center h-40 text-[var(--color-outline)] gap-3">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--color-surface-container)] border border-[rgba(255,255,255,0.06)] flex items-center justify-center">
+                <div className="w-16 h-16 bg-[var(--color-surface-container)] border border-[rgba(255,255,255,0.06)] flex items-center justify-center">
                   <Store size={28} className="opacity-30" />
                 </div>
                 <span className="text-xs font-mono tracking-wider">
@@ -576,7 +590,7 @@ export default function Sala() {
                 ) : (
                   <div className="space-y-2">
                     {pedidosMesa.map((p: any) => (
-                      <div key={p.id} className="p-3 rounded-xl bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.04)]">
+                      <div key={p.id} className="p-3 bg-[var(--color-surface-container-high)] border border-[rgba(255,255,255,0.04)]">
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-[10px] font-mono font-bold text-[var(--color-on-surface)]">Pedido #{p.id}</span>
                           <span className={`text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full ${
@@ -767,7 +781,7 @@ export default function Sala() {
               <div className="space-y-2">
                 <div>
                   <label className="block text-[10px] font-medium text-[var(--color-on-surface-variant)] font-mono tracking-[0.05em] uppercase mb-1">Valor Recebido</label>
-                  <div className="bg-[var(--color-surface-container-lowest)] rounded-xl px-4 py-2 text-right text-lg font-bold font-mono text-[var(--color-on-surface)] h-10 flex items-center justify-end">
+                  <div className="bg-[var(--color-surface-container-lowest)] px-4 py-2 text-right text-lg font-bold font-mono text-[var(--color-on-surface)] h-10 flex items-center justify-end">
                     {valorRecebido ? fmtValor(parseInt(valorRecebido, 10)) : 'R$ 0,00'}
                   </div>
                 </div>
@@ -811,7 +825,7 @@ export default function Sala() {
 
             {/* PIX */}
             {formaPagamento === 'pix' && (
-              <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-3 text-center">
+              <div className="bg-[var(--color-surface-container-lowest)] p-3 text-center">
                 <QrCode size={36} className="mx-auto text-[var(--color-primary-container)] mb-1" />
                 <p className="text-xs text-[var(--color-on-surface-variant)]">Aguardando pagamento via PIX</p>
                 <p className="text-[10px] text-[var(--color-outline)] mt-0.5">Valor: R$ {total.toFixed(2)}</p>
@@ -888,7 +902,7 @@ export default function Sala() {
           ) : (
             <>
               {/* Resumo */}
-              <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-2">
+              <div className="bg-[var(--color-surface-container-lowest)] p-4 space-y-2">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--color-on-surface-variant)]">
                     Mesa {pagamentoMesa?.nome}
@@ -910,7 +924,7 @@ export default function Sala() {
               </div>
 
               {/* Dividir Conta */}
-              <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-3">
+              <div className="bg-[var(--color-surface-container-lowest)] p-4 space-y-3">
                 <button
                   type="button"
                   onClick={() => { setDividirConta(!dividirConta); setValorCustom(''); }}
@@ -983,7 +997,7 @@ export default function Sala() {
           </div>
 
           {/* Taxas Opcionais */}
-          <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-3">
+          <div className="bg-[var(--color-surface-container-lowest)] p-4 space-y-3">
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-on-surface)] cursor-pointer">
                 <input
@@ -1033,7 +1047,7 @@ export default function Sala() {
           </div>
 
           {/* Resumo Atualizado */}
-          <div className="bg-[var(--color-surface-container-lowest)] rounded-xl p-4 space-y-2">
+          <div className="bg-[var(--color-surface-container-lowest)] p-4 space-y-2">
             <div className="flex justify-between text-sm text-[var(--color-on-surface-variant)]">
               <span>Subtotal</span><span className="font-mono">R$ {subtotal.toFixed(2)}</span>
             </div>
@@ -1065,7 +1079,7 @@ export default function Sala() {
               <CheckCircle2 size={16} />
               <span>Pagamento registrado com sucesso!</span>
             </div>
-            <div className="space-y-2 bg-[var(--color-surface-container-lowest)] rounded-xl p-4">
+            <div className="space-y-2 bg-[var(--color-surface-container-lowest)] p-4">
               <div className="flex justify-between items-center pt-2 border-t border-[rgba(var(--overlay-rgb),0.08)]">
                 <span className="text-base font-bold text-[var(--color-on-surface)]">Total</span>
                 <span className="text-xl font-bold text-[var(--color-primary)] font-mono">R$ {ultimoPagamento.total.toFixed(2)}</span>
@@ -1082,7 +1096,7 @@ export default function Sala() {
 
             {/* Preview do Cupom */}
             <div className="overflow-x-auto flex justify-center py-2">
-              <Visualizador80mm
+              <Visualizador58mm
                 itens={ultimoPagamento.itens.map((p: any) => ({ nome: `Pedido #${p.id}`, quantidade: 1, preco: p.total || 0 }))}
                 subtotal={ultimoPagamento.subtotal}
                 desconto={ultimoPagamento.desconto}
@@ -1103,21 +1117,48 @@ export default function Sala() {
                 onPrint={async () => {
                   if (!ultimoPagamento) return;
                   try {
-                    await pdvService.imprimirCupom({
-                      itens: ultimoPagamento.itens,
-                      subtotal: ultimoPagamento.subtotal,
-                      desconto: ultimoPagamento.desconto,
-                      taxa: ultimoPagamento.taxa,
-                      valor_final: ultimoPagamento.total,
-                      forma_pagamento: ultimoPagamento.forma_pagamento,
-                      mesa: ultimoPagamento.mesa,
-                      cliente: ultimoPagamento.cliente,
-                      vendedor: ultimoPagamento.vendedor,
-                      observacao: ultimoPagamento.observacao,
-                    });
-                    toast.success('Cupom enviado para impressão!');
-                  } catch {
-                    toast.error('Erro ao enviar cupom para impressão');
+                    // Verifica/conecta Bluetooth automaticamente
+                    let btOk = bluetoothPrinter.getConnectionStatus();
+                    if (!btOk) {
+                      btOk = await bluetoothPrinter.autoConnect();
+                    }
+
+                    if (btOk) {
+                      await bluetoothPrinter.imprimirFechamento({
+                        comanda_numero: 'PDV',
+                        mesa: ultimoPagamento.mesa || 'BALCAO',
+                        cliente: ultimoPagamento.cliente || undefined,
+                        atendente: ultimoPagamento.vendedor || undefined,
+                        itens: ultimoPagamento.itens.map(i => ({
+                          nome: i.produto.nome,
+                          quantidade: i.quantidade,
+                          preco: i.produto.preco_venda,
+                        })),
+                        valor_bruto: ultimoPagamento.subtotal,
+                        desconto: ultimoPagamento.desconto,
+                        taxa: ultimoPagamento.taxa,
+                        valor_final: ultimoPagamento.total,
+                        forma_pagamento: ultimoPagamento.forma_pagamento,
+                      });
+                      toast.success('Cupom impresso!');
+                    } else {
+                      await pdvService.imprimirCupom({
+                        itens: ultimoPagamento.itens,
+                        subtotal: ultimoPagamento.subtotal,
+                        desconto: ultimoPagamento.desconto,
+                        taxa: ultimoPagamento.taxa,
+                        valor_final: ultimoPagamento.total,
+                        forma_pagamento: ultimoPagamento.forma_pagamento,
+                        mesa: ultimoPagamento.mesa,
+                        cliente: ultimoPagamento.cliente,
+                        vendedor: ultimoPagamento.vendedor,
+                        observacao: ultimoPagamento.observacao,
+                      });
+                      toast.success('Cupom enviado para impressao!');
+                    }
+                  } catch (err) {
+                    console.error('Erro ao imprimir cupom:', err);
+                    toast.error('Erro ao imprimir cupom');
                   }
                 }}
                 onClose={() => setUltimoPagamento(null)}
@@ -1131,11 +1172,11 @@ export default function Sala() {
       <Modal open={showAddComandaModal} onClose={() => setShowAddComandaModal(false)}>
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-container)]/20 flex items-center justify-center">
+            <div className="w-10 h-10 bg-[var(--color-primary-container)]/20 flex items-center justify-center">
               <ClipboardList size={18} className="text-[var(--color-primary-container)]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[var(--color-on-surface)]">Adicionar Comanda</h2>
+              <h2 className="text-base font-bold text-[var(--color-on-surface)]">Nova Comanda</h2>
               <p className="text-xs text-[var(--color-on-surface-variant)]">
                 Mesa: <span className="font-mono font-bold">{addComandaMesa?.nome}</span>
               </p>
@@ -1161,6 +1202,12 @@ export default function Sala() {
             />
           </div>
 
+          <div className="p-3 bg-[var(--color-primary-container)]/5 border border-[var(--color-primary-container)]/15">
+            <p className="text-[11px] text-[var(--color-on-surface-variant)] leading-relaxed">
+              Uma nova comanda será criada vinculada a esta mesa. O pedido será aberto automaticamente no PDV para adicionar os itens.
+            </p>
+          </div>
+
           <div className="flex gap-3 pt-2">
             <button
               onClick={() => {
@@ -1178,15 +1225,18 @@ export default function Sala() {
                   toast.error('Digite o número da comanda');
                   return;
                 }
-                toast.success(`Comanda #${comandaNumero} adicionada à mesa ${addComandaMesa?.nome}`);
+                const mesa = addComandaMesa;
+                const numComanda = comandaNumero.trim();
                 setShowAddComandaModal(false);
                 setAddComandaMesa(null);
                 setComandaNumero('');
+                navigate(`/pdv?mesa=${mesa?.id}&comanda=${numComanda}`);
               }}
               disabled={!comandaNumero.trim()}
               className="flex-1 h-11 rounded-xl bg-[var(--color-primary-container)] text-[var(--color-on-primary)] text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40"
             >
-              Confirmar
+              <ShoppingCart size={14} />
+              Abrir Comanda
             </button>
           </div>
         </div>
